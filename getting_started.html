@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="A Fast Forward Error Correction Tool (AFFECT)">
+    <meta name="author" content="Adrien CASSAGNE">
+
+    <title>AFFECT website</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+  
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">AFFECT</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="download.html">Download</a></li>
+            <li class="active"><a href="getting_started.html">Getting started</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="community.html">Community</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container marketing">
+      <h1>Getting started</h1>
+
+      <p>If you downloaded the code from the <a href="download.html">Download</a> page, you do not need to compile the binary and you can directly jump to the <a href="#run_the_code">Run the code</a> section.</p>
+
+      <h2>Get the source code</h2>
+
+      <h3>Install git</h3>
+
+      <div class="shell-wrap">
+        <p class="shell-top-bar">Install git</p>
+        <ul class="shell-body">
+          <li class="shell-body-in">sudo apt-get install git</li>
+        </ul>
+      </div>
+
+      <h3>Clone the github repository</h3>
+
+      <div class="shell-wrap">
+        <p class="shell-top-bar">Clone the repository into your laptop</p>
+        <ul class="shell-body">
+          <li class="shell-body-in">git clone https://www.potionmagic.eu:8080/hpc/affect.git</li>
+          <li class="shell-body-in">cd affect</li>
+        </ul>
+      </div>
+
+      <h2>Prepare the compilation of the code</h2>
+
+      <h3>Install cmake</h3>
+
+      This project use <strong>cmake</strong> in order to generate a specific Makefile.
+
+      <div class="shell-wrap">
+        <p class="shell-top-bar">Install cmake</p>
+        <ul class="shell-body">
+          <li class="shell-body-in">sudo apt-get install cmake</li>
+        </ul>
+      </div>
+
+      <h3>Generate the makefile</h3>
+
+      <div class="shell-wrap">
+        <p class="shell-top-bar">Generate the makefile with cmake</p>
+        <ul class="shell-body">
+          <li class="shell-body-in">mkdir build</li>
+          <li class="shell-body-in">cd build</li>
+          <li class="shell-body-in">cmake ..</li>
+        </ul>
+      </div>
+
+      This command will generate many files but we are just interessting in some of them:
+      <ul>
+        <li><strong>Makefile</strong> : used to compile the code (we don't have to modify directly the Makefile),</li>
+        <li><strong>CMakeCache.txt</strong> : the most important file, the Makefile refers to this file for the compiling options (flags, librairies, etc.).</li>
+      </ul>
+
+      <h3>Modifying the CMakeCache.txt</h3>
+
+      <p>By default the configuration file is configured to generate a debug binary. If we want to produce a release binary we have to modify the <strong>CMAKE_BUILD_TYPE:STRING</strong> variable like this:</p>
+
+      <pre>CMAKE_BUILD_TYPE:STRING=Release</pre>
+
+      <p>We can also add some flags in the <strong>CMAKE_CXX_FLAGS:STRING</strong> variable:</p>
+
+      <pre>CMAKE_CXX_FLAGS:STRING=-Wall -march=native -funroll-loops</pre>
+
+      <p>There is also numerous specific flags to configure the static optimizations inside the decoders (you have to add those flags in the <strong>CMAKE_CXX_FLAGS:STRING</strong> variable):</p>
+
+      <ul>
+        <li><strong>-DDATA_64_BIT</strong>: use 64-bit data inside the decoder (floating point representation for the output channel values, integer for the bits),</li>
+        <li><strong>-DDATA_32_BIT</strong>: use 32-bit data inside the decoder (floating point representation for the output channel values, integer for the bits, this is the default when we don't specify any flag),</li>
+        <li><strong>-DDATA_16_BIT</strong>: use 16-bit data inside the decoder (fixed point representation for the channel values, integer for the bits),</li>
+        <li><strong>-DDATA_8_BIT</strong>: use 8-bit data inside the decoder (fixed point representation for the channel values, integer for the bits),<:li>
+        <li><strong>-DMULTI_TYPES_COMPILATION</strong>: build a binary with all the previous types (specific type can be selected at runtime),</li>
+        <li><strong>-DENABLE_BIT_PACKING</strong>: use the bit packing technique to compress the storage of the bits inside the decoder (work only with SC_FAST decoder and in 8-bit mode).</li>
+      </ul>
+
+      <p>Notice that the hard coded SIMD set of instructions needs also some specific compiler flags (it has been tested on <strong>g++-4.8</strong>):</p>
+
+      <ul>
+        <li><strong>-msse2</strong>: enable the SSE2 set of instructions on x86 CPUs (128-bit vector size, required for 32-bit data),</li>
+        <li><strong>-mssse3</strong>: enable the SSSE3 set of instructions on x86 CPUs (128-bit vector size, specifically required for 32-bit data and the SC_FAST decoder),</li>
+        <li><strong>-msse4.1</strong>: enable the SSE4.1 set of instructions on x86 CPUs (128-bit vector size, required for 8-bit and 16-bit data),</li>
+        <li><strong>-mavx</strong>: enable the AVX set of instructions on x86 CPUs (256-bit vector size, required for 32-bit data),</li>
+        <li><strong>-mavx2</strong>: enable the AVX2 set of instructions on x86 CPUs (256-bit vector size, required for 8-bit and 16-bit data),</li>
+        <li><strong>-mfpu=neon</strong>: enable the NEON set of instructions on ARMv7 and ARMv8 CPUs (128-bit vector size, required for 8-bit, 16-bit data and 32-bit data),</li>
+        <li><strong>-march=native</strong>: let the compiler choose the best set of instructions available on the current x86 architecture (it does not work for ARMv7 architectures since the NEON instructions are not IEEE 754 compatible).</li>
+      </ul>
+
+      <h4>Enabling the multi-threading</h4>
+
+      <p>The code supports Monte Carlo multi-threaded execution. To enable it you have to add the <strong>-pthread</strong> flag in the <strong>CMAKE_CXX_FLAGS:STRING</strong> variable:</p>
+
+      <pre>CMAKE_CXX_FLAGS:STRING=-Wall -march=native -funroll-loops -pthread</pre>
+
+      <h4>Enabling the cool bash mode</h4>
+
+      <p>Enable the colors and boldfaces in the shell with the <strong>-DENABLE_COOL_BASH</strong> flag:</p>
+
+      <pre>CMAKE_CXX_FLAGS:STRING=-Wall -march=native -funroll-loops -pthread -DENABLE_COOL_BASH</pre>
+
+      <h2>Compile with make</h2>
+
+      <div class="shell-wrap">
+        <p class="shell-top-bar">Compile the code</p>
+        <ul class="shell-body">
+          <li class="shell-body-in">make -j 8</li>
+        </ul>
+      </div>
+
+      This command will use the generated Makefile.
+
+      <h2 id="run_the_code">Run the code</h2>
+
+      <h3>Decoding of the Polar codes with the Successive Cancellation decoder</h3>
+
+      <div class="shell-wrap">
+        <p class="shell-top-bar">Example of run with the Polar codes</p>
+        <ul class="shell-body">
+          <li class="shell-body-in">./bin/affect --simu-type BFER --code-type POLAR -K 1024 -N 2048 --snr-min 1.5 --snr-max 3.01 --dec-algo SC --dec-implem FAST</li>
+          <li class="shell-body-out"># -------------------------------------------------</li>
+          <li class="shell-body-out"># ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----</li>
+          <li class="shell-body-out"># -------------------------------------------------</li>
+          <li class="shell-body-out">#</li>
+          <li class="shell-body-out"># Simulation parameters:</li>
+          <li class="shell-body-out"># * Simulation type                = BFER</li>
+          <li class="shell-body-out"># * Code type                      = POLAR codes</li>
+          <li class="shell-body-out"># * Number of information bits (K) = 1024</li>
+          <li class="shell-body-out"># * Codeword length            (N) = 2048</li>
+          <li class="shell-body-out"># * SNR min                        = 1.5 dB</li>
+          <li class="shell-body-out"># * SNR max                        = 3.01 dB</li>
+          <li class="shell-body-out"># * SNR step                       = 0.1 dB</li>
+          <li class="shell-body-out"># * Domain                         = LLR</li>
+          <li class="shell-body-out"># * Channel type                   = RAND_NORM</li>
+          <li class="shell-body-out"># * Codewords generation method    = LCG</li>
+          <li class="shell-body-out"># * Type of bits               (B) = int (4 bytes)</li>
+          <li class="shell-body-out"># * Type of reals              (R) = float (4 bytes)</li>
+          <li class="shell-body-out"># * Max frame error count     (FE) = 100</li>
+          <li class="shell-body-out"># * Systematic encoding            = on</li>
+          <li class="shell-body-out"># * Decoding algorithm             = SC</li>
+          <li class="shell-body-out"># * Decoding implementation        = FAST</li>
+          <li class="shell-body-out">#</li>
+          <li class="shell-body-out"># The simulation is running...</li>
+          <li class="shell-body-out"># ------|----------|----------|----------|----------|----------||-------|-------|-------|---------|---------|----------||----------|----------</li>
+          <li class="shell-body-out">#   SNR |      FRA |       BE |       FE |      BER |      FER ||    LD |   DEC |    ST |    CTHR |    ITHR |  LATENCY || SIM_CTHR |    ET/RT </li>
+          <li class="shell-body-out">#  (dB) |          |          |          |          |          ||   (%) |   (%) |   (%) |  (Mb/s) |  (Mb/s) |     (us) ||   (Mb/s) | (hhmmss) </li>
+          <li class="shell-body-out"># ------|----------|----------|----------|----------|----------||-------|-------|-------|---------|---------|----------||----------|----------</li>
+          <li class="shell-body-out">   1.50 |      379 |     6946 |      100 | 1.79e-02 | 2.64e-01 ||   1.9 |  96.2 |   2.0 |   88.84 |   44.42 |    23.05 ||    16.38 | 00h00'00  </li>
+          <li class="shell-body-out">   1.60 |      412 |     6046 |      100 | 1.43e-02 | 2.43e-01 ||   1.8 |  96.2 |   2.0 |  110.50 |   55.25 |    18.53 ||    20.95 | 00h00'00  </li>
+          <li class="shell-body-out">   1.70 |      661 |     6458 |      100 | 9.54e-03 | 1.51e-01 ||   1.9 |  96.1 |   2.0 |  113.70 |   56.85 |    18.01 ||    21.64 | 00h00'00  </li>
+          <li class="shell-body-out">   1.80 |     1055 |     6360 |      100 | 5.89e-03 | 9.48e-02 ||   1.9 |  96.1 |   2.0 |  111.91 |   55.96 |    18.30 ||    21.72 | 00h00'00  </li>
+          <li class="shell-body-out">   1.90 |     1297 |     4668 |      100 | 3.51e-03 | 7.71e-02 ||   1.9 |  96.1 |   2.0 |  112.83 |   56.41 |    18.15 ||    21.82 | 00h00'00  </li>
+          <li class="shell-body-out">   2.00 |     2214 |     4502 |      100 | 1.99e-03 | 4.52e-02 ||   1.8 |  96.3 |   1.9 |  108.97 |   54.49 |    18.79 ||    21.83 | 00h00'00  </li>
+          <li class="shell-body-out">   2.10 |     3413 |     4740 |      100 | 1.36e-03 | 2.93e-02 ||   1.8 |  96.3 |   1.9 |  109.94 |   54.97 |    18.63 ||    22.01 | 00h00'00  </li>
+          <li class="shell-body-out">   2.20 |     5054 |     4038 |      100 | 7.80e-04 | 1.98e-02 ||   1.8 |  96.3 |   1.9 |  108.68 |   54.34 |    18.84 ||    21.97 | 00h00'00  </li>
+          <li class="shell-body-out">   2.30 |     9212 |     3904 |      100 | 4.14e-04 | 1.09e-02 ||   1.8 |  96.3 |   1.9 |  107.65 |   53.82 |    19.02 ||    21.92 | 00h00'00  </li>
+          <li class="shell-body-out">   2.40 |    15303 |     3715 |      100 | 2.37e-04 | 6.53e-03 ||   1.8 |  96.3 |   1.9 |  107.56 |   53.78 |    19.04 ||    21.92 | 00h00'01  </li>
+          <li class="shell-body-out">   2.50 |    20176 |     4216 |      100 | 2.04e-04 | 4.96e-03 ||   1.8 |  96.4 |   1.9 |  105.43 |   52.71 |    19.43 ||    21.62 | 00h00'01  </li>
+          <li class="shell-body-out">   2.60 |    57870 |     3798 |      100 | 6.41e-05 | 1.73e-03 ||   1.7 |  96.4 |   1.9 |  104.93 |   52.46 |    19.52 ||    21.68 | 00h00'05  </li>
+          <li class="shell-body-out">   2.70 |   102395 |     3230 |      100 | 3.08e-05 | 9.77e-04 ||   1.7 |  96.4 |   1.9 |  106.00 |   53.00 |    19.32 ||    21.89 | 00h00'09  </li>
+          <li class="shell-body-out">   2.80 |   184649 |     3009 |      100 | 1.59e-05 | 5.42e-04 ||   1.7 |  96.4 |   1.9 |  106.24 |   53.12 |    19.28 ||    21.97 | 00h00'17  </li>
+          <li class="shell-body-out">   2.90 |   408020 |     3770 |      100 | 9.02e-06 | 2.45e-04 ||   1.7 |  96.5 |   1.8 |  103.14 |   51.57 |    19.86 ||    21.82 | 00h00'38  </li>
+          <li class="shell-body-out">   3.00 |   560407 |     3118 |      100 | 5.43e-06 | 1.78e-04 ||   1.7 |  96.5 |   1.8 |  102.96 |   51.48 |    19.89 ||    21.75 | 00h00'52  </li>
+          <li class="shell-body-out"># End of the simulation.</li>
+        </ul>
+      </div>
+
+      <h3>Decoding of the Turbo codes with the LTE BCJR decoder (8 states trellis)</h3>
+
+      <div class="shell-wrap">
+        <p class="shell-top-bar">Example of run with the Turbo codes</p>
+        <ul class="shell-body">
+          <li class="shell-body-in">./bin/affect --simu-type BFER --code-type TURBO -K 1024 -N 3072 --snr-min 0.0 --snr-max 1.31 --dec-algo LTE --dec-implem FAST --max-iter 6</li>
+          <li class="shell-body-out"># -------------------------------------------------</li>
+          <li class="shell-body-out"># ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----</li>
+          <li class="shell-body-out"># -------------------------------------------------</li>
+          <li class="shell-body-out">#</li>
+          <li class="shell-body-out"># Simulation parameters:</li>
+          <li class="shell-body-out"># * Simulation type                = BFER</li>
+          <li class="shell-body-out"># * Code type                      = TURBO codes</li>
+          <li class="shell-body-out"># * Number of information bits (K) = 1024</li>
+          <li class="shell-body-out"># * Codeword length            (N) = 3072 + 12 (tail bits)</li>
+          <li class="shell-body-out"># * SNR min                        = 0 dB</li>
+          <li class="shell-body-out"># * SNR max                        = 1.01 dB</li>
+          <li class="shell-body-out"># * SNR step                       = 0.1 dB</li>
+          <li class="shell-body-out"># * Domain                         = LLR</li>
+          <li class="shell-body-out"># * Channel type                   = AWGN</li>
+          <li class="shell-body-out"># * Codewords generation method    = LCG</li>
+          <li class="shell-body-out"># * Type of bits               (B) = int (4 bytes)</li>
+          <li class="shell-body-out"># * Type of reals              (R) = float (4 bytes)</li>
+          <li class="shell-body-out"># * Max frame error count     (FE) = 100</li>
+          <li class="shell-body-out"># * Systematic encoding            = on</li>
+          <li class="shell-body-out"># * Decoding algorithm             = LTE</li>
+          <li class="shell-body-out"># * Decoding implementation        = FAST</li>
+          <li class="shell-body-out"># * Decoding iterations per frame  = 6</li>
+          <li class="shell-body-out"># * Buffered encoding              = on</li>
+          <li class="shell-body-out"># * Interleaver                    = LTE</li>
+          <li class="shell-body-out"># * Scaling factor                 = LTE_VEC</li>
+          <li class="shell-body-out">#</li>
+          <li class="shell-body-out"># The simulation is running...</li>
+          <li class="shell-body-out"># ------|----------|----------|----------|----------|----------||-------|-------|-------|---------|---------|----------||----------|----------</li>
+          <li class="shell-body-out">#   SNR |      FRA |       BE |       FE |      BER |      FER ||    LD |   DEC |    ST |    CTHR |    ITHR |  LATENCY || SIM_CTHR |    ET/RT </li>
+          <li class="shell-body-out">#  (dB) |          |          |          |          |          ||   (%) |   (%) |   (%) |  (Mb/s) |  (Mb/s) |     (us) ||   (Mb/s) | (hhmmss) </li>
+          <li class="shell-body-out"># ------|----------|----------|----------|----------|----------||-------|-------|-------|---------|---------|----------||----------|----------</li>
+          <li class="shell-body-out">   0.00 |      110 |    13406 |      100 | 1.19e-01 | 9.09e-01 ||   0.4 |  99.4 |   0.1 |    6.98 |    2.33 |   439.83 ||     5.68 | 00h00'00  </li>
+          <li class="shell-body-out">   0.10 |      116 |    12227 |      100 | 1.03e-01 | 8.62e-01 ||   0.4 |  99.5 |   0.1 |    7.82 |    2.61 |   393.00 ||     6.38 | 00h00'00  </li>
+          <li class="shell-body-out">   0.20 |      133 |     9681 |      100 | 7.11e-02 | 7.52e-01 ||   0.4 |  99.5 |   0.1 |    7.87 |    2.62 |   390.22 ||     6.42 | 00h00'00  </li>
+          <li class="shell-body-out">   0.30 |      180 |     7538 |      100 | 4.09e-02 | 5.56e-01 ||   0.4 |  99.5 |   0.1 |    7.86 |    2.62 |   390.83 ||     6.43 | 00h00'00  </li>
+          <li class="shell-body-out">   0.40 |      208 |     6884 |      100 | 3.23e-02 | 4.81e-01 ||   0.4 |  99.5 |   0.1 |    7.87 |    2.62 |   390.26 ||     6.43 | 00h00'00  </li>
+          <li class="shell-body-out">   0.50 |      310 |     6114 |      100 | 1.93e-02 | 3.23e-01 ||   0.4 |  99.5 |   0.1 |    7.90 |    2.63 |   388.65 ||     6.47 | 00h00'00  </li>
+          <li class="shell-body-out">   0.60 |      651 |     4749 |      100 | 7.12e-03 | 1.54e-01 ||   0.4 |  99.5 |   0.1 |    7.92 |    2.64 |   387.89 ||     6.48 | 00h00'00  </li>
+          <li class="shell-body-out">   0.70 |     1267 |     5015 |      100 | 3.87e-03 | 7.89e-02 ||   0.4 |  99.5 |   0.1 |    7.93 |    2.64 |   387.52 ||     6.48 | 00h00'00  </li>
+          <li class="shell-body-out">   0.80 |     2911 |     3447 |      100 | 1.16e-03 | 3.44e-02 ||   0.4 |  99.6 |   0.1 |    7.96 |    2.65 |   385.83 ||     6.52 | 00h00'01  </li>
+          <li class="shell-body-out">   0.90 |     7844 |     2796 |      100 | 3.48e-04 | 1.27e-02 ||   0.4 |  99.5 |   0.1 |    7.93 |    2.64 |   387.26 ||     6.49 | 00h00'03  </li>
+          <li class="shell-body-out">   1.00 |    21695 |     2430 |      100 | 1.09e-04 | 4.61e-03 ||   0.4 |  99.4 |   0.1 |    7.65 |    2.55 |   401.36 ||     6.24 | 00h00'10  </li>
+          <li class="shell-body-out"># End of the simulation.</li>
+        </ul>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>2016 IMS/INRIA Bordeaux.</p>
+      </footer>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </body>
+</html>
