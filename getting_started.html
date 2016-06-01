@@ -109,11 +109,11 @@
       <p>There is also numerous specific flags to configure the static optimizations inside the decoders (you have to add those flags in the <strong>CMAKE_CXX_FLAGS:STRING</strong> variable):</p>
 
       <ul>
-        <li><strong>-DDATA_64_BIT</strong>: use 64-bit data inside the decoder (floating point representation for the output channel values, integer for the bits),</li>
-        <li><strong>-DDATA_32_BIT</strong>: use 32-bit data inside the decoder (floating point representation for the output channel values, integer for the bits, this is the default when we don't specify any flag),</li>
-        <li><strong>-DDATA_16_BIT</strong>: use 16-bit data inside the decoder (fixed point representation for the channel values, integer for the bits),</li>
-        <li><strong>-DDATA_8_BIT</strong>: use 8-bit data inside the decoder (fixed point representation for the channel values, integer for the bits),<:li>
-        <li><strong>-DMULTI_TYPES_COMPILATION</strong>: build a binary with all the previous types (specific type can be selected at runtime),</li>
+        <li><strong>-DPREC_64_BIT</strong>: use 64-bit precision inside the decoder (floating point representation for the output channel values, integer for the bits),</li>
+        <li><strong>-DPREC_32_BIT</strong>: use 32-bit precision inside the decoder (floating point representation for the output channel values, integer for the bits, this is the default when we don't specify any flag),</li>
+        <li><strong>-DPREC_16_BIT</strong>: use 16-bit precision inside the decoder (fixed point representation for the channel values, integer for the bits),</li>
+        <li><strong>-DPREC_8_BIT</strong>: use 8-bit precision inside the decoder (fixed point representation for the channel values, integer for the bits),<:li>
+        <li><strong>-DMULTI_PREC</strong>: build a binary with all the previous precisions (specific type can be selected at runtime),</li>
         <li><strong>-DENABLE_BIT_PACKING</strong>: use the bit packing technique to compress the storage of the bits inside the decoder (work only with SC_FAST decoder and in 8-bit mode).</li>
       </ul>
 
