@@ -67,116 +67,116 @@
       <hr>
       
       <h2 id="program_parameters">Program parameters</h2>
-      <p>AFF3CT is a command line style program which runs over a standard console. This section describes the various arguments you can play with. Depending on the type of simulation you want to run, some arguments can be available or unavailable. Full command line examples are given in the <a href="#run_examples">Running examples</a> section.</p>
+      <p>AFF3CT is a command line style program which runs over a standard console. This section describes the various parameters you can play with. Depending on the type of simulation you want to run, some arguments can be available or unavailable. Full command line examples are given in the <a href="#run_examples">Running examples</a> section.</p>
 
       <h3 id="common_parameters">Common parameters</h3>
       <table class="table">
         <thead>
           <tr>
-            <th>Arguments</th>
+            <th>Parameters</th>
             <th>Values</th>
             <th>Description</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td nowrap><pre>--code-type</pre></td>
+            <td nowrap><span class="parameters">--code-type</span></td>
             <td>POLAR, TURBO, RA, REPETITION, RSC</td>
             <td>The family of error correction codes to be simulated.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--simu-type</pre></td>
+            <td nowrap><span class="parameters">--simu-type</span></td>
             <td>BFER, EXIT</td>
             <td>The type of simulation. It can be either a frame and bit error rate simulation or an EXIT chart simulation.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--version</pre></td>
+            <td nowrap><span class="parameters">--version</span></td>
             <td></td>
             <td>AFF3CT software version.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--help, -h</pre></td>
+            <td nowrap><span class="parameters">--help, -h</span></td>
             <td></td>
             <td>Display the help.</td>
           </tr>          
 
           <tr>
-            <td nowrap><pre>-K</pre></td>
+            <td nowrap><span class="parameters">-K</span></td>
             <td>Integer</td>
             <td>The number of information bits per frame.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>-N</pre></td>
+            <td nowrap><span class="parameters">-N</span></td>
             <td>Integer</td>
             <td>The frame length (information bits + redundancy bits).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--snr-min</pre></td>
+            <td nowrap><span class="parameters">--snr-min</span></td>
             <td>Float</td>
             <td>Minimum value of Signal over Noise Ratio to be simulated (in dB).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--snr-max</pre></td>
+            <td nowrap><span class="parameters">--snr-max</span></td>
             <td>Float</td>
             <td>Maximum value of Signal over Noise Ratio to be simulated (in dB).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--snr-step</pre></td>
+            <td nowrap><span class="parameters">--snr-step</span></td>
             <td>Float</td>
             <td>Step value of Signal over Noise Ratio to be simulated (in dB).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--disable-display</pre></td>
+            <td nowrap><span class="parameters">--disable-display</span></td>
             <td></td>
             <td>Add this parameter to inhibit console output.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--prec</pre></td>
+            <td nowrap><span class="parameters">--prec</span></td>
             <td>8, 16, 32, 64</td>
             <td>Format of the bits and LLRs (number of bits).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--qn-bits</pre></td>
+            <td nowrap><span class="parameters">--qn-bits</span></td>
             <td>Integer</td>
             <td>Dynamic of the LLRs (available when --prec is set to 8 or 16).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--qpoint-pos</pre></td>
+            <td nowrap><span class="parameters">--qpoint-pos</span></td>
             <td>Integer</td>
             <td>Number of fractional bits (fixed point logic).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--n-threads</pre></td>
+            <td nowrap><span class="parameters">--n-threads</span></td>
             <td>Integer</td>
             <td>Number of parallel threads to be launched.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--code-gen-method</pre></td>
+            <td nowrap><span class="parameters">--code-gen-method</span></td>
             <td>RAND, LCG, AZCW</td>
             <td>Statistical method to generate input frames (RAND: STL C++ library ; LCG: Linear Congruential Generator ; AZCW: All Zero CodeWord).</td>
           </tr>   
 
           <tr>
-            <td nowrap><pre>--channel-type</pre></td>
+            <td nowrap><span class="parameters">--channel-type</span></td>
             <td>NO, AWGN, AWGN_GSL</td>
             <td>The type of channel to be used in the simulation (NO: No channel, AWGN: STL normal distribution ; AWGN_GSL: GNU Scientific Library normal distribution).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--stop-time</pre></td>
+            <td nowrap><span class="parameters">--stop-time</span></td>
             <td>Integer</td>
             <td>The limit of simulation time for each SNR value (in seconds).</td>
           </tr>
@@ -188,20 +188,20 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Arguments</th>
+            <th>Parameters</th>
             <th>Values</th>
             <th>Description</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td nowrap><pre>--max-fe</pre></td>
+            <td nowrap><span class="parameters">--max-fe</span></td>
             <td>Integer</td>
             <td>Number of simulated frame errors.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--enable-debug</pre></td>
+            <td nowrap><span class="parameters">--enable-debug</span></td>
             <td></td>
             <td>Enable debugging output, displaying intermediate values taken by binary and real vectors in the simulation chain.</td>
           </tr>         
@@ -212,26 +212,26 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Arguments</th>
+            <th>Parameters</th>
             <th>Values</th>
             <th>Description</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td nowrap><pre>--sig-a-min</pre></td>
+            <td nowrap><span class="parameters">--sig-a-min</span></td>
             <td>Float</td>
             <td>Minimum value of &#963<sub>A</sub>, which is a parameter for the Gaussian model of <i>a priori</i> input in EXIT charts.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--sig-a-max</pre></td>
+            <td nowrap><span class="parameters">--sig-a-max</span></td>
             <td>Float</td>
             <td>Maximum value of &#963<sub>A</sub>, which is a parameter for the Gaussian model of <i>a priori</i> input in EXIT charts.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--sig-a-max</pre></td>
+            <td nowrap><span class="parameters">--sig-a-step</span></td>
             <td>Float</td>
             <td>Step value of &#963<sub>A</sub>, which is a parameter for the Gaussian model of <i>a priori</i> input in EXIT charts.</td>
           </tr>
@@ -243,81 +243,81 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Arguments</th>
+            <th>Parameters</th>
             <th>Values</th>
             <th>Description</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td nowrap><pre>--disable-sys-enc</pre></td>
+            <td nowrap><span class="parameters">--disable-sys-enc</span></td>
             <td></td>
             <td>Disable systematic encoding, which is enabled by default.</td>
           </tr>      
 
           <tr>
-            <td nowrap><pre>-L</pre></td>
+            <td nowrap><span class="parameters">-L</span></td>
             <td>Integer</td>
             <td>Set the list depth in SC List decoders.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--dec-algo</pre></td>
+            <td nowrap><span class="parameters">--dec-algo</span></td>
             <td>SC, SCL, SCAN</td>
             <td>Choose decoding algorithm of the polar codes (SC: Successive Cancellation ; SCL: Successive Cancellation List ; SCAN : Soft Cancellation).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--dec-implem</pre></td>
+            <td nowrap><span class="parameters">--dec-implem</span></td>
             <td>NAIVE, FAST</td>
             <td>Choose decoding implementation of the polar codes (NAIVE is the basic version, FAST is an optimized version).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--dec-simd-strat</pre></td>
+            <td nowrap><span class="parameters">--dec-simd-strat</span></td>
             <td>INTRA, INTER</td>
             <td>Choose the SIMD strategy to adopt in the decoding. Vectorization increases the decoding throughput. (INTRA: SIMD is used to speed up the decoding of a frame, INTER: SIMD is used to decode multiple frames simultaneously)</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--code-sigma</pre></td>
+            <td nowrap><span class="parameters">--code-sigma</span></td>
             <td>Float</td>
             <td>Specify a fixed value for the frozen bits generation.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--awgn-codes-dir</pre></td>
+            <td nowrap><span class="parameters">--awgn-codes-dir</span></td>
             <td>Path to directory</td>
             <td>Choose a directory to store and read frozen bits files.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--awgn-codes-file</pre></td>
+            <td nowrap><span class="parameters">--awgn-codes-file</span></td>
             <td>Path to file</td>
             <td>Choose a file to use fixed frozen bits file.</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--crc-type</pre></td>
+            <td nowrap><span class="parameters">--crc-type</span></td>
             <td>CRC-32-GZIP, CRC-24-LTEA, CRC-16-IBM, CRC-16-CCITT, CRC-8-DVB-S2, CRC-4-ITU, CRC-3-0x3, CRC-2-0x2, CRC-1-0x1</td>
             <td>Concatenate a cyclic redundancy check to the error correcting code (used in the SCL decoder).</td>
           </tr>
 
           <!--
           <tr>
-            <td nowrap><pre>--fb-gen-method</pre></td>
+            <td nowrap><span class="parameters">--fb-gen-method</span></td>
             <td>TV, GA</td>
             <td>Choose a method for the construction of polar codes(TV: Use method described by Tal &amp; Vardy, <a href="https://arxiv.org/pdf/1105.6164.pdf">How To Construct Polar Codes</a>, GA: </td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--bin-pb-path</pre></td>
+            <td nowrap><span class="parameters">--bin-pb-path</span></td>
             <td>Path do file</td>
             <td>Path to polar_bounds program</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--puncturer</pre></td>
+            <td nowrap><span class="parameters">--puncturer</span></td>
             <td>WANGLIU</td>
             <td>Choose a puncturing method for punctured or shortened polar codes</td>
           </tr> -->
@@ -328,7 +328,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Arguments</th>
+            <th>Parameters</th>
             <th>Values</th>
             <th>Description</th>
           </tr>
@@ -336,37 +336,37 @@
         <tbody>
 
           <tr>
-            <td nowrap><pre>--dec-algo</pre></td>
+            <td nowrap><span class="parameters">--dec-algo</span></td>
             <td>BCJR</td>
             <td>Choose decoding algorithm of the inner RSC codes (BCJR: Bahl-Cocke-Jelinek-Raviv algorithm).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--dec-implem</pre></td>
+            <td nowrap><span class="parameters">--dec-implem</span></td>
             <td>STD, FAST, VERY_FAST</td>
             <td>Different implementations of the algorithm (STD: naive implementation, FAST and VERY FAST: optimized versions).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--dec-simd-strat</pre></td>
+            <td nowrap><span class="parameters">--dec-simd-strat</span></td>
             <td>INTRA, INTER</td>
             <td>Choose the SIMD strategy to adopt in the decoding. Vectorization increases the decoding throughput. (INTRA: SIMD is used to speed up the decoding of a frame, INTER: SIMD is used to decode multiple frames simultaneously)</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--interleaver</pre></td>
+            <td nowrap><span class="parameters">--interleaver</span></td>
             <td>NO, LTE, RANDOM</td>
             <td>Choose the interleaver for the iterative process (NO: no interleaver, LTE : LTE standard interleaver, RANDOM : random interleaver (constant during simulation)).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--scaling-factor</pre></td>
+            <td nowrap><span class="parameters">--scaling-factor</span></td>
             <td>NO, LTE, LTE_VEC, ARRAY, FLOAT</td>
             <td>Choose the scaling factor for the iterative process (NO: no scaling factor, LTE: scaling factor is 0.75, LTE_VEC: optimized version of LTE scaling factor, ARRAY: custom scaling factor (changing over iterations), FLOAT: custom constant value).</td>
           </tr>
 
           <tr>
-            <td nowrap><pre>--crc-type</pre></td>
+            <td nowrap><span class="parameters">--crc-type</span></td>
             <td>CRC-32-GZIP, CRC-24-LTEA, CRC-16-IBM, CRC-16-CCITT, CRC-8-DVB-S2, CRC-4-ITU, CRC-3-0x3, CRC-2-0x2, CRC-1-0x1</td>
             <td>Concatenate a cyclic redundancy check to the error correcting code.</td>
           </tr>

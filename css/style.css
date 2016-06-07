@@ -6,6 +6,14 @@ body {
 }
 
 
+.parameters 
+{
+  white-space:pre;
+  font-weight: bold;
+  font: 16px 'Andale Mono', Consolas, 'Courier New';
+  margin-right: 10px;
+}
+
 /* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
