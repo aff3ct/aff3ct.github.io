@@ -41,15 +41,17 @@
       </div>
     </nav>
 
-    <div class="container marketing">
+  <div class="container marketing">
       <h1>Documentation</h1>
 
-      <h2>Table:</h2>
       <ul>
-        <li><a href="#general">General</a>
+        <li><a href="#program_parameters">Program parameters</a>
           <ul>
-            <li><a href="#main_params">Main code parameters</a></li>
-            <li><a href="#perf_params">Performance parameters</a></li>
+            <li><a href="#common_parameters">Common parameters</a></li>
+            <li><a href="#bfer_parameters">BFER simulations parameters</a></li>
+            <li><a href="#exit_parameters">EXIT simulations parameters</a></li>
+            <li><a href="#polar_parameters">Polar codes parameters</a></li>
+            <li><a href="#turbo_parameters">Turbo codes parameters</a></li>
           </ul>
         </li>
         <li><a href="#run_examples">Running examples</a>
@@ -62,21 +64,326 @@
           </ul>
         </li>
       </ul>
-
       <hr>
+      
+      <h2 id="program_parameters">Program parameters</h2>
+      <p>AFF3CT is a command line style program which runs over a standard console. This section describes the various arguments you can play with. Depending on the type of simulation you want to run, some arguments can be available or unavailable. Full command line examples are given in the <a href="#run_examples">Running examples</a> section.</p>
 
-      <h2 id="general">General</h2>
-      <h3 id="main_params">Main code parameters</h3>
-      <h3 id="perf_params">Performance parameters</h3>
+      <h3 id="common_parameters">Common parameters</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Arguments</th>
+            <th>Values</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td nowrap><pre>--code-type</pre></td>
+            <td>POLAR, TURBO, RA, REPETITION, RSC</td>
+            <td>The family of error correction codes to be simulated.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--simu-type</pre></td>
+            <td>BFER, EXIT</td>
+            <td>The type of simulation. It can be either a frame and bit error rate simulation or an EXIT chart simulation.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--version</pre></td>
+            <td></td>
+            <td>AFF3CT software version.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--help, -h</pre></td>
+            <td></td>
+            <td>Display the help.</td>
+          </tr>          
+
+          <tr>
+            <td nowrap><pre>-K</pre></td>
+            <td>Natural</td>
+            <td>The number of information bits per frame.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>-N</pre></td>
+            <td>Natural</td>
+            <td>The frame length (information bits + redundancy bits).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--snr-min</pre></td>
+            <td>Float</td>
+            <td>Minimum value of Signal over Noise Ratio to be simulated (in dB).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--snr-max</pre></td>
+            <td>Float</td>
+            <td>Maximum value of Signal over Noise Ratio to be simulated (in dB).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--snr-step</pre></td>
+            <td>Float</td>
+            <td>Step value of Signal over Noise Ratio to be simulated (in dB).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--disable-display</pre></td>
+            <td></td>
+            <td>Add this parameter to inhibit console output.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--prec</pre></td>
+            <td>8, 16, 32, 64</td>
+            <td>Format of the bits and LLRs (number of bits).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--qn-bits</pre></td>
+            <td>Natural</td>
+            <td>Dynamic of the LLRs (available when --prec is set to 8 or 16).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--qpoint-pos</pre></td>
+            <td>Natural</td>
+            <td>Number of fractional bits (fixed point logic).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--n-threads</pre></td>
+            <td>Natural</td>
+            <td>Number of parallel threads to be launched.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--code-gen-method</pre></td>
+            <td>RAND, LCG, AZCW</td>
+            <td>Statistical method to generate input frames (RAND: STL C++ library ; LCG: Linear Congruential Generator ; AZCW: All Zero CodeWord).</td>
+          </tr>   
+
+          <tr>
+            <td nowrap><pre>--channel-type</pre></td>
+            <td>NO, AWGN, AWGN_GSL</td>
+            <td>The type of channel to be used in the simulation (NO: No channel, AWGN: STL normal distribution ; AWGN_GSL: GNU Scientific Library normal distribution).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--stop-time</pre></td>
+            <td>Natural</td>
+            <td>The limit of simulation time for each SNR value (in seconds).</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <h3 id="bfer_parameters">BFER simulations parameters</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Arguments</th>
+            <th>Values</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td nowrap><pre>--max-fe</pre></td>
+            <td>Natural</td>
+            <td>Number of simulated frame errors.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--enable-debug</pre></td>
+            <td></td>
+            <td>Enable debugging output, displaying intermediate values taken by binary and real vectors in the simulation chain.</td>
+          </tr>         
+      </table>
+
+      <h3 id="exit_parameters"> EXIT chart simulations parameters</h3>
+      <p> For further informations about EXIT charts, please see the academic paper from Stephan ten Brink, <a href="http://www.cse.lehigh.edu/~jingli/teach/S2003turbo/notes/EXIT.pdf">Convergence Behavior of Iteratively Decoded Parallel Concatenated Codes</a>.</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Arguments</th>
+            <th>Values</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td nowrap><pre>--sig-a-min</pre></td>
+            <td>Float</td>
+            <td>Minimum value of &#963<sub>A</sub>, which is a parameter for the Gaussian model of <i>a priori</i> input in EXIT charts.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--sig-a-max</pre></td>
+            <td>Float</td>
+            <td>Maximum value of &#963<sub>A</sub>, which is a parameter for the Gaussian model of <i>a priori</i> input in EXIT charts.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--sig-a-max</pre></td>
+            <td>Float</td>
+            <td>Step value of &#963<sub>A</sub>, which is a parameter for the Gaussian model of <i>a priori</i> input in EXIT charts.</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <h3 id="polar_parameters"> Polar codes parameters</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Arguments</th>
+            <th>Values</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td nowrap><pre>--disable-sys-enc</pre></td>
+            <td></td>
+            <td>Disable systematic encoding, which is enabled by default.</td>
+          </tr>      
+
+          <tr>
+            <td nowrap><pre>-L</pre></td>
+            <td>Natural</td>
+            <td>Set the list depth in SC List decoders.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--dec-algo</pre></td>
+            <td>SC, SCL, SCAN</td>
+            <td>Choose decoding algorithm of the polar codes (SC: Successive Cancellation ; SCL: Successive Cancellation List ; SCAN : Soft Cancellation).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--dec-implem</pre></td>
+            <td>NAIVE, FAST</td>
+            <td>Choose decoding implementation of the polar codes (NAIVE is the basic version, FAST is an optimized version).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--dec-simd-strat</pre></td>
+            <td>INTRA, INTER</td>
+            <td>Choose the SIMD strategy to adopt in the decoding. Vectorization increases the decoding throughput. (INTRA: SIMD is used to speed up the decoding of a frame, INTER: SIMD is used to decode multiple frames simultaneously)</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--code-sigma</pre></td>
+            <td>Float</td>
+            <td>Specify a fixed value for the frozen bits generation.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--awgn-codes-dir</pre></td>
+            <td>Path to directory</td>
+            <td>Choose a directory to store and read frozen bits files.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--awgn-codes-file</pre></td>
+            <td>Path to file</td>
+            <td>Choose a file to use fixed frozen bits file.</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--crc-type</pre></td>
+            <td>CRC-32-GZIP, CRC-24-LTEA, CRC-16-IBM, CRC-16-CCITT, CRC-8-DVB-S2, CRC-4-ITU, CRC-3-0x3, CRC-2-0x2, CRC-1-0x1</td>
+            <td>Concatenate a cyclic redundancy check to the error correcting code (used in the SCL decoder).</td>
+          </tr>
+
+          <!--
+          <tr>
+            <td nowrap><pre>--fb-gen-method</pre></td>
+            <td>TV, GA</td>
+            <td>Choose a method for the construction of polar codes(TV: Use method described by Tal &amp; Vardy, <a href="https://arxiv.org/pdf/1105.6164.pdf">How To Construct Polar Codes</a>, GA: </td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--bin-pb-path</pre></td>
+            <td>Path do file</td>
+            <td>Path to polar_bounds program</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--puncturer</pre></td>
+            <td>WANGLIU</td>
+            <td>Choose a puncturing method for punctured or shortened polar codes</td>
+          </tr> -->
+        </tbody>
+      </table>
+
+      <h3 id="turbo_parameters"> Turbo codes parameters</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Arguments</th>
+            <th>Values</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td nowrap><pre>--dec-algo</pre></td>
+            <td>BCJR</td>
+            <td>Choose decoding algorithm of the inner RSC codes (BCJR: Bahl-Cocke-Jelinek-Raviv algorithm).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--dec-implem</pre></td>
+            <td>STD, FAST, VERY_FAST</td>
+            <td>Different implementations of the algorithm (STD: naive implementation, FAST and VERY FAST: optimized versions).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--dec-simd-strat</pre></td>
+            <td>INTRA, INTER</td>
+            <td>Choose the SIMD strategy to adopt in the decoding. Vectorization increases the decoding throughput. (INTRA: SIMD is used to speed up the decoding of a frame, INTER: SIMD is used to decode multiple frames simultaneously)</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--interleaver</pre></td>
+            <td>NO, LTE, RANDOM</td>
+            <td>Choose the interleaver for the iterative process (NO: no interleaver, LTE : LTE standard interleaver, RANDOM : random interleaver (constant during simulation)).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--scaling-factor</pre></td>
+            <td>NO, LTE, LTE_VEC, ARRAY, FLOAT</td>
+            <td>Choose the scaling factor for the iterative process (NO: no scaling factor, LTE: scaling factor is 0.75, LTE_VEC: optimized version of LTE scaling factor, ARRAY: custom scaling factor (changing over iterations), FLOAT: custom constant value).</td>
+          </tr>
+
+          <tr>
+            <td nowrap><pre>--crc-type</pre></td>
+            <td>CRC-32-GZIP, CRC-24-LTEA, CRC-16-IBM, CRC-16-CCITT, CRC-8-DVB-S2, CRC-4-ITU, CRC-3-0x3, CRC-2-0x2, CRC-1-0x1</td>
+            <td>Concatenate a cyclic redundancy check to the error correcting code.</td>
+          </tr>
+
+        </tbody>
+      </table>
 
       <h2 id="run_examples">Running examples</h2>
       <h3 id="run_polar_codes">Run Polar codes</h3>
             <div class="shell-wrap">
         <p class="shell-top-bar">Example of run with the Polar codes</p>
         <ul class="shell-body">
-          <li class="shell-body-in">./aff3ct --simu-type BFER --code-type POLAR -K 1024 -N 2048 --snr-min 1.5 --snr-max 3.01 --code-sigma 0.862 --dec-algo SC --dec-implem FAST</li>
+          <li class="shell-body-in">./aff3ct --simu-type BFER 
+--code-type POLAR -K 1024 -N 2048 --snr-min 1.5 --snr-max 3.01 
+--code-sigma 0.862 --dec-algo SC --dec-implem FAST</li>
           <li class="shell-body-out"># -------------------------------------------------</li>
-          <li class="shell-body-out"># ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----</li>
+          <li class="shell-body-out"># ---- A FAST FORWARD ERROR CORRECTION TOOL &gt;&gt; ----</li>
           <li class="shell-body-out"># -------------------------------------------------</li>
           <li class="shell-body-out">#</li>
           <li class="shell-body-out"># Simulation parameters:</li>
@@ -130,9 +437,11 @@
             <div class="shell-wrap">
         <p class="shell-top-bar">Example of run with the Turbo codes</p>
         <ul class="shell-body">
-          <li class="shell-body-in">./aff3ct --simu-type BFER --code-type TURBO -K 1024 -N 3072 --snr-min 0.0 --snr-max 1.01 --dec-algo LTE --dec-implem FAST --max-iter 6</li>
+          <li class="shell-body-in">./aff3ct --simu-type BFER 
+--code-type TURBO -K 1024 -N 3072 --snr-min 0.0 --snr-max 1.01 
+--dec-algo LTE --dec-implem FAST --max-iter 6</li>
           <li class="shell-body-out"># -------------------------------------------------</li>
-          <li class="shell-body-out"># ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----</li>
+          <li class="shell-body-out"># ---- A FAST FORWARD ERROR CORRECTION TOOL &gt;&gt; ----</li>
           <li class="shell-body-out"># -------------------------------------------------</li>
           <li class="shell-body-out">#</li>
           <li class="shell-body-out"># Simulation parameters:</li>
