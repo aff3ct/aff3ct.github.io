@@ -27,7 +27,7 @@
       ga('send', 'pageview');
 
       var trackDownloadLink = function(url) {
-        ga('send', 'event', 'outbound', 'click', url, {
+        ga('send', 'event', 'download', 'click', url, {
          'transport': 'beacon',
          'hitCallback': function(){document.location = url;}
         });
