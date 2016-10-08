@@ -2,7 +2,7 @@ var searchData=
 [
   ['encoder_5fazcw',['Encoder_AZCW',['../classEncoder__AZCW.html',1,'']]],
   ['encoder_5fcoset',['Encoder_coset',['../classEncoder__coset.html',1,'']]],
-  ['encoder_5finterface',['Encoder_interface',['../classEncoder__interface.html',1,'']]],
+  ['encoder_5fi',['Encoder_i',['../classEncoder__i.html',1,'']]],
   ['encoder_5fldpc_5fazcw',['Encoder_LDPC_AZCW',['../classEncoder__LDPC__AZCW.html',1,'']]],
   ['encoder_5fldpc_5fcoset',['Encoder_LDPC_coset',['../classEncoder__LDPC__coset.html',1,'']]],
   ['encoder_5fldpc_5fsys',['Encoder_LDPC_sys',['../classEncoder__LDPC__sys.html',1,'']]],

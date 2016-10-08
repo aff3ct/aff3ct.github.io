@@ -122,14 +122,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="classSC__CRC__module.html">SC_CRC_module</a>(<a class="code" href="classSC__CRC.html">SC_CRC&lt;B&gt;</a> &amp;crc, <span class="keyword">const</span> sc_core::sc_module_name name = <span class="stringliteral">&quot;SC_CRC_module&quot;</span>)</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    : sc_module(name), s_in(<span class="stringliteral">&quot;s_in&quot;</span>), s_out(<span class="stringliteral">&quot;s_out&quot;</span>),</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;      crc(crc),</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      U_K(crc.<a class="code" href="classCRC__interface.html#a29410cc8c8ac92361c4b4a9b5dade0fc">K</a> * crc.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      U_K(crc.<a class="code" href="classCRC__i.html#a32005141fa5d5a773a15c5297a6ace3b">K</a> * crc.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>)</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        s_in.register_b_transport(<span class="keyword">this</span>, &amp;SC_CRC_module::b_transport);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    }</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">void</span> resize_buffers()</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>)U_K.size() != crc.<a class="code" href="classCRC__interface.html#a29410cc8c8ac92361c4b4a9b5dade0fc">K</a> * crc.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>) U_K.resize(crc.<a class="code" href="classCRC__interface.html#a29410cc8c8ac92361c4b4a9b5dade0fc">K</a> * crc.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>)U_K.size() != crc.<a class="code" href="classCRC__i.html#a32005141fa5d5a773a15c5297a6ace3b">K</a> * crc.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>) U_K.resize(crc.<a class="code" href="classCRC__i.html#a32005141fa5d5a773a15c5297a6ace3b">K</a> * crc.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">private</span>:</div>
@@ -140,7 +140,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">const</span> B* buffer_in = (B*)trans.get_data_ptr();</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        std::copy(buffer_in, buffer_in + U_K.size(), U_K.begin());</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        crc.<a class="code" href="classCRC__interface.html#ac0c8ad6c80d341a07eafc0a9779c87dc">build</a>(U_K);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        crc.<a class="code" href="classCRC__i.html#a0340762db26f650a13d4f3ea21f34052">build</a>(U_K);</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        tlm::tlm_generic_payload payload;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        payload.set_data_ptr((<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*)U_K.data());</div>
@@ -152,7 +152,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;};</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">class </span><a class="code" href="classSC__CRC.html">SC_CRC</a> : <span class="keyword">public</span> <a class="code" href="classCRC__interface.html">CRC_interface</a>&lt;B&gt;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">class </span><a class="code" href="classSC__CRC.html">SC_CRC</a> : <span class="keyword">public</span> <a class="code" href="classCRC__i.html">CRC_i</a>&lt;B&gt;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">friend</span> <a class="code" href="classSC__CRC__module.html">SC_CRC_module&lt;B&gt;</a>;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
@@ -160,14 +160,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="classSC__CRC__module.html">SC_CRC_module&lt;B&gt;</a> *module;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="classSC__CRC.html">SC_CRC</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classCRC__interface.html#a29410cc8c8ac92361c4b4a9b5dade0fc">K</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_CRC&quot;</span>) </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    : <a class="code" href="classCRC__interface.html">CRC_interface</a>&lt;B&gt;(K, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module(nullptr) {}</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="classSC__CRC.html">SC_CRC</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classCRC__i.html#a32005141fa5d5a773a15c5297a6ace3b">K</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_CRC&quot;</span>) </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    : CRC_interface&lt;B&gt;(K, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module(nullptr) {}</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSC__CRC.html">SC_CRC</a>() { <span class="keywordflow">if</span> (module != <span class="keyword">nullptr</span>) { <span class="keyword">delete</span> module; module = <span class="keyword">nullptr</span>; } }</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
 <div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classSC__CRC.html#a81b9ec6b569c0cc3cd4487210714c572">   78</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classSC__CRC.html#a81b9ec6b569c0cc3cd4487210714c572">set_n_frames</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>)</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <a class="code" href="classModule.html#ace2db121879b2d61bf51920c715b132e">CRC_interface&lt;B&gt;::set_n_frames</a>(n_frames);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <a class="code" href="classModule.html#ace2db121879b2d61bf51920c715b132e">CRC_i&lt;B&gt;::set_n_frames</a>(n_frames);</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">if</span> (module != <span class="keyword">nullptr</span>)</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            module-&gt;resize_buffers();</div>
@@ -183,23 +183,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__CRC.html">CRC</a> = <a class="code" href="classSC__CRC.html">SC_CRC&lt;B&gt;</a>;</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__CRC.html">CRC</a> = <a class="code" href="classCRC__interface.html">CRC_interface&lt;B&gt;</a>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__CRC.html">CRC</a> = <a class="code" href="classCRC__i.html">CRC_i&lt;B&gt;</a>;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_CRC_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classModule_html_ace2db121879b2d61bf51920c715b132e"><div class="ttname"><a href="classModule.html#ace2db121879b2d61bf51920c715b132e">Module::set_n_frames</a></div><div class="ttdeci">virtual void set_n_frames(const int n_frames)</div><div class="ttdoc">Set the number of frames. </div><div class="ttdef"><b>Definition:</b> Module.hpp:45</div></div>
 <div class="ttc" id="classSC__CRC_html"><div class="ttname"><a href="classSC__CRC.html">SC_CRC</a></div><div class="ttdef"><b>Definition:</b> SC_CRC.hpp:16</div></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
-<div class="ttc" id="classCRC__interface_html_a29410cc8c8ac92361c4b4a9b5dade0fc"><div class="ttname"><a href="classCRC__interface.html#a29410cc8c8ac92361c4b4a9b5dade0fc">CRC_interface::K</a></div><div class="ttdeci">const int K</div><div class="ttdef"><b>Definition:</b> CRC.hpp:30</div></div>
+<div class="ttc" id="classCRC__i_html_a32005141fa5d5a773a15c5297a6ace3b"><div class="ttname"><a href="classCRC__i.html#a32005141fa5d5a773a15c5297a6ace3b">CRC_i::K</a></div><div class="ttdeci">const int K</div><div class="ttdef"><b>Definition:</b> CRC.hpp:30</div></div>
+<div class="ttc" id="classCRC__i_html_a0340762db26f650a13d4f3ea21f34052"><div class="ttname"><a href="classCRC__i.html#a0340762db26f650a13d4f3ea21f34052">CRC_i::build</a></div><div class="ttdeci">virtual void build(mipp::vector&lt; B &gt; &amp;U_K)=0</div><div class="ttdoc">Computes and adds the CRC in the vector of information bits (the CRC bits are often put at the end of...</div></div>
+<div class="ttc" id="classCRC__i_html"><div class="ttname"><a href="classCRC__i.html">CRC_i</a></div><div class="ttdoc">Adds/builds and checks a Cyclic Redundancy Check (CRC) for a set of information bits. </div><div class="ttdef"><b>Definition:</b> CRC.hpp:27</div></div>
 <div class="ttc" id="classSC__CRC_html_a81b9ec6b569c0cc3cd4487210714c572"><div class="ttname"><a href="classSC__CRC.html#a81b9ec6b569c0cc3cd4487210714c572">SC_CRC::set_n_frames</a></div><div class="ttdeci">virtual void set_n_frames(const int n_frames)</div><div class="ttdoc">Set the number of frames. </div><div class="ttdef"><b>Definition:</b> SC_CRC.hpp:78</div></div>
 <div class="ttc" id="classSC__CRC__module_html"><div class="ttname"><a href="classSC__CRC__module.html">SC_CRC_module</a></div><div class="ttdef"><b>Definition:</b> SC_CRC.hpp:19</div></div>
-<div class="ttc" id="classCRC__interface_html_ac0c8ad6c80d341a07eafc0a9779c87dc"><div class="ttname"><a href="classCRC__interface.html#ac0c8ad6c80d341a07eafc0a9779c87dc">CRC_interface::build</a></div><div class="ttdeci">virtual void build(mipp::vector&lt; B &gt; &amp;U_K)=0</div><div class="ttdoc">Computes and adds the CRC in the vector of information bits (the CRC bits are often put at the end of...</div></div>
-<div class="ttc" id="classCRC__interface_html"><div class="ttname"><a href="classCRC__interface.html">CRC_interface</a></div><div class="ttdoc">Adds/builds and checks a Cyclic Redundancy Check (CRC) for a set of information bits. </div><div class="ttdef"><b>Definition:</b> CRC.hpp:27</div></div>
 <div class="ttc" id="classModule_html_a7e126daadf13414b91f1b9caa70db3e8"><div class="ttname"><a href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">Module::n_frames</a></div><div class="ttdeci">int n_frames</div><div class="ttdef"><b>Definition:</b> Module.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 8 2016 00:28:47 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 8 2016 11:21:44 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

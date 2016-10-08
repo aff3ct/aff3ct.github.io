@@ -13,7 +13,7 @@ var searchData=
   ['predicate_5fite',['Predicate_ite',['../classPredicate__ite.html',1,'']]],
   ['prng_5fmt19937',['PRNG_MT19937',['../classPRNG__MT19937.html',1,'']]],
   ['prng_5fmt19937_5fsimd',['PRNG_MT19937_simd',['../classPRNG__MT19937__simd.html',1,'']]],
-  ['puncturer_5finterface',['Puncturer_interface',['../classPuncturer__interface.html',1,'']]],
+  ['puncturer_5fi',['Puncturer_i',['../classPuncturer__i.html',1,'']]],
   ['puncturer_5fno',['Puncturer_NO',['../classPuncturer__NO.html',1,'']]],
   ['puncturer_5fpolar_5fwangliu',['Puncturer_polar_wangliu',['../classPuncturer__polar__wangliu.html',1,'']]]
 ];

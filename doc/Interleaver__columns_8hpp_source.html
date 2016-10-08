@@ -130,25 +130,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            std::shuffle(pi_temp.begin(), pi_temp.end(), g);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">auto</span> row = 0; row &lt; M; row++)</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                this-&gt;<a class="code" href="classInterleaver__interface.html#afcb3dc9cb1cf39c8150fde6bcfdbb7ff">pi</a>[column + column_number * row] = pi_temp[row];</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>[column + column_number * row] = pi_temp[row];</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        }</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; (int)this-&gt;<a class="code" href="classInterleaver__interface.html#a414f7d24dc2d807a20aee9b21587c260">pi_inv</a>.size(); i++)</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            this-&gt;<a class="code" href="classInterleaver__interface.html#a414f7d24dc2d807a20aee9b21587c260">pi_inv</a>[this-&gt;<a class="code" href="classInterleaver__interface.html#afcb3dc9cb1cf39c8150fde6bcfdbb7ff">pi</a>[i]] = i;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; (int)this-&gt;<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>.size(); i++)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            this-&gt;<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>[this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>[i]] = i;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">/* INTERLEAVER_COLUMNS_HPP */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="classInterleaver__interface_html_afcb3dc9cb1cf39c8150fde6bcfdbb7ff"><div class="ttname"><a href="classInterleaver__interface.html#afcb3dc9cb1cf39c8150fde6bcfdbb7ff">Interleaver_interface::pi</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:31</div></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
-<div class="ttc" id="classInterleaver__interface_html_a414f7d24dc2d807a20aee9b21587c260"><div class="ttname"><a href="classInterleaver__interface.html#a414f7d24dc2d807a20aee9b21587c260">Interleaver_interface::pi_inv</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi_inv</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:32</div></div>
+<div class="ttc" id="classInterleaver__i_html_a8aaaee552090231e962bb72d70c4d471"><div class="ttname"><a href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">Interleaver_i::pi_inv</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi_inv</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:32</div></div>
 <div class="ttc" id="classInterleaver__columns_html_aaced5b7a62e2f6c2122765915cf87267"><div class="ttname"><a href="classInterleaver__columns.html#aaced5b7a62e2f6c2122765915cf87267">Interleaver_columns::gen_lookup_tables</a></div><div class="ttdeci">void gen_lookup_tables()</div><div class="ttdoc">Generates the interleaving and deinterleaving lookup tables. This method defines the interleaver and ...</div><div class="ttdef"><b>Definition:</b> Interleaver_columns.hpp:26</div></div>
+<div class="ttc" id="classInterleaver__i_html_aa97e6330e4603487d85bf0cd917ae504"><div class="ttname"><a href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">Interleaver_i::pi</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:31</div></div>
 <div class="ttc" id="classInterleaver__columns_html"><div class="ttname"><a href="classInterleaver__columns.html">Interleaver_columns</a></div><div class="ttdef"><b>Definition:</b> Interleaver_columns.hpp:11</div></div>
 <div class="ttc" id="classSC__Interleaver_html"><div class="ttname"><a href="classSC__Interleaver.html">SC_Interleaver</a></div><div class="ttdef"><b>Definition:</b> SC_Interleaver.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 8 2016 00:28:47 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 8 2016 11:21:44 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

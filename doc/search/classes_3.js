@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['decoder_5finterface',['Decoder_interface',['../classDecoder__interface.html',1,'']]],
+  ['decoder_5fi',['Decoder_i',['../classDecoder__i.html',1,'']]],
   ['decoder_5fldpc_5fbp_5fflooding',['Decoder_LDPC_BP_flooding',['../classDecoder__LDPC__BP__flooding.html',1,'']]],
   ['decoder_5fldpc_5fbp_5fflooding_5fmin_5fsum',['Decoder_LDPC_BP_flooding_min_sum',['../classDecoder__LDPC__BP__flooding__min__sum.html',1,'']]],
   ['decoder_5fldpc_5fbp_5fflooding_5fsum_5fproduct',['Decoder_LDPC_BP_flooding_sum_product',['../classDecoder__LDPC__BP__flooding__sum__product.html',1,'']]],

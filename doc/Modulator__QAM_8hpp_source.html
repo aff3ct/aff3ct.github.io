@@ -110,7 +110,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    mipp::vector&lt;std::complex&lt;R&gt;&gt; constellation;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="classModulator__QAM.html">Modulator_QAM</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModulator__interface.html#a6f03a9b10be320fcf24370ba28abe297">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> bits_per_symbol = 2, <span class="keyword">const</span> R sigma = 1.0, <span class="keyword">const</span> <span class="keywordtype">bool</span> disable_sig2 = <span class="keyword">false</span>, </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="classModulator__QAM.html">Modulator_QAM</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModulator__i.html#a4358d431f9c3cd799fbdc0defee88137">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> bits_per_symbol = 2, <span class="keyword">const</span> R sigma = 1.0, <span class="keyword">const</span> <span class="keywordtype">bool</span> disable_sig2 = <span class="keyword">false</span>, </div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                  <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;Modulator_QAM&quot;</span>);</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classModulator__QAM.html">Modulator_QAM</a>();</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
@@ -128,8 +128,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif // MODULATOR_QAM_HPP_</span></div>
 <div class="ttc" id="classSC__Modulator_html"><div class="ttname"><a href="classSC__Modulator.html">SC_Modulator</a></div><div class="ttdef"><b>Definition:</b> SC_Modulator.hpp:16</div></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
+<div class="ttc" id="classModulator__i_html_a4358d431f9c3cd799fbdc0defee88137"><div class="ttname"><a href="classModulator__i.html#a4358d431f9c3cd799fbdc0defee88137">Modulator_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Modulator.hpp:32</div></div>
 <div class="ttc" id="classModulator__QAM_html_a522b934d430bb0e58f83d4ce7c110ce7"><div class="ttname"><a href="classModulator__QAM.html#a522b934d430bb0e58f83d4ce7c110ce7">Modulator_QAM::modulate</a></div><div class="ttdeci">virtual void modulate(const mipp::vector&lt; B &gt; &amp;X_N1, mipp::vector&lt; R &gt; &amp;X_N2)</div><div class="ttdoc">Modulates a vector of bits or symbols. </div></div>
-<div class="ttc" id="classModulator__interface_html_a6f03a9b10be320fcf24370ba28abe297"><div class="ttname"><a href="classModulator__interface.html#a6f03a9b10be320fcf24370ba28abe297">Modulator_interface::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Modulator.hpp:32</div></div>
 <div class="ttc" id="classModulator__QAM_html"><div class="ttname"><a href="classModulator__QAM.html">Modulator_QAM</a></div><div class="ttdef"><b>Definition:</b> Modulator_QAM.hpp:12</div></div>
 <div class="ttc" id="classModulator__QAM_html_ace0ed3b9e8d73ddce93dadd1fc4315d1"><div class="ttname"><a href="classModulator__QAM.html#ace0ed3b9e8d73ddce93dadd1fc4315d1">Modulator_QAM::get_buffer_size_after_modulation</a></div><div class="ttdeci">int get_buffer_size_after_modulation(const int N)</div><div class="ttdoc">Gets the vector size after the modulation (considering a given frame size). </div></div>
 <div class="ttc" id="classModule_html_a7e126daadf13414b91f1b9caa70db3e8"><div class="ttname"><a href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">Module::n_frames</a></div><div class="ttdeci">int n_frames</div><div class="ttdef"><b>Definition:</b> Module.hpp:22</div></div>
@@ -137,7 +137,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 8 2016 00:28:47 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 8 2016 11:21:44 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

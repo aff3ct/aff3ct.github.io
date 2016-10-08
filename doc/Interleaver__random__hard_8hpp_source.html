@@ -312,27 +312,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="classInterleaver__random__hard.html#aecd0404d8d9d005b28d708c264116f81">  223</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classInterleaver__random__hard.html#aecd0404d8d9d005b28d708c264116f81">gen_lookup_tables</a>()</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    {</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        assert(this-&gt;<a class="code" href="classInterleaver__interface.html#afcb3dc9cb1cf39c8150fde6bcfdbb7ff">pi</a>.size() == 4224);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        assert(this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>.size() == 4224);</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> i = 0; i &lt; this-&gt;<a class="code" href="classInterleaver__interface.html#afcb3dc9cb1cf39c8150fde6bcfdbb7ff">pi</a>.size(); i++)</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            this-&gt;<a class="code" href="classInterleaver__interface.html#afcb3dc9cb1cf39c8150fde6bcfdbb7ff">pi</a>[i] = interleaver_random_hard[i];</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> i = 0; i &lt; this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>.size(); i++)</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>[i] = interleaver_random_hard[i];</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        </div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; (int)this-&gt;<a class="code" href="classInterleaver__interface.html#a414f7d24dc2d807a20aee9b21587c260">pi_inv</a>.size(); i++)</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            this-&gt;<a class="code" href="classInterleaver__interface.html#a414f7d24dc2d807a20aee9b21587c260">pi_inv</a>[this-&gt;<a class="code" href="classInterleaver__interface.html#afcb3dc9cb1cf39c8150fde6bcfdbb7ff">pi</a>[i]] = i;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; (int)this-&gt;<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>.size(); i++)</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            this-&gt;<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>[this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>[i]] = i;</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    }</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;};</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">/* INTERLEAVER_RANDOM_HARD_HPP */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classInterleaver__random__hard_html_aecd0404d8d9d005b28d708c264116f81"><div class="ttname"><a href="classInterleaver__random__hard.html#aecd0404d8d9d005b28d708c264116f81">Interleaver_random_hard::gen_lookup_tables</a></div><div class="ttdeci">void gen_lookup_tables()</div><div class="ttdoc">Generates the interleaving and deinterleaving lookup tables. This method defines the interleaver and ...</div><div class="ttdef"><b>Definition:</b> Interleaver_random_hard.hpp:223</div></div>
-<div class="ttc" id="classInterleaver__interface_html_afcb3dc9cb1cf39c8150fde6bcfdbb7ff"><div class="ttname"><a href="classInterleaver__interface.html#afcb3dc9cb1cf39c8150fde6bcfdbb7ff">Interleaver_interface::pi</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:31</div></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
-<div class="ttc" id="classInterleaver__interface_html_a414f7d24dc2d807a20aee9b21587c260"><div class="ttname"><a href="classInterleaver__interface.html#a414f7d24dc2d807a20aee9b21587c260">Interleaver_interface::pi_inv</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi_inv</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:32</div></div>
+<div class="ttc" id="classInterleaver__i_html_a8aaaee552090231e962bb72d70c4d471"><div class="ttname"><a href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">Interleaver_i::pi_inv</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi_inv</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:32</div></div>
+<div class="ttc" id="classInterleaver__i_html_aa97e6330e4603487d85bf0cd917ae504"><div class="ttname"><a href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">Interleaver_i::pi</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:31</div></div>
 <div class="ttc" id="classInterleaver__random__hard_html"><div class="ttname"><a href="classInterleaver__random__hard.html">Interleaver_random_hard</a></div><div class="ttdef"><b>Definition:</b> Interleaver_random_hard.hpp:213</div></div>
 <div class="ttc" id="classSC__Interleaver_html"><div class="ttname"><a href="classSC__Interleaver.html">SC_Interleaver</a></div><div class="ttdef"><b>Definition:</b> SC_Interleaver.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 8 2016 00:28:47 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 8 2016 11:21:44 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

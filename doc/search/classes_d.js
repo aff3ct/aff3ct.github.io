@@ -73,10 +73,10 @@ var searchData=
   ['simulation_5fexit',['Simulation_EXIT',['../classSimulation__EXIT.html',1,'']]],
   ['simulation_5fexit_5fpolar',['Simulation_EXIT_polar',['../classSimulation__EXIT__polar.html',1,'']]],
   ['simulation_5fexit_5frsc',['Simulation_EXIT_RSC',['../classSimulation__EXIT__RSC.html',1,'']]],
-  ['siso_5finterface',['SISO_interface',['../classSISO__interface.html',1,'']]],
+  ['siso_5fi',['SISO_i',['../classSISO__i.html',1,'']]],
   ['source_5fazcw',['Source_AZCW',['../classSource__AZCW.html',1,'']]],
   ['source_5ffixed',['Source_fixed',['../classSource__fixed.html',1,'']]],
-  ['source_5finterface',['Source_interface',['../classSource__interface.html',1,'']]],
+  ['source_5fi',['Source_i',['../classSource__i.html',1,'']]],
   ['source_5frandom',['Source_random',['../classSource__random.html',1,'']]],
   ['source_5frandom_5ffast',['Source_random_fast',['../classSource__random__fast.html',1,'']]]
 ];
