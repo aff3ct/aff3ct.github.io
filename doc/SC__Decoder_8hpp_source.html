@@ -166,7 +166,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="classSC__Decoder.html">SC_Decoder</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">K</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_Decoder&quot;</span>)</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    : Decoder_interface&lt;B,R&gt;(K, N, n_frames, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module(nullptr) {}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    : <a class="code" href="classDecoder__i.html">Decoder_i</a>&lt;B,R&gt;(K, N, n_frames, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module(nullptr) {}</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSC__Decoder.html">SC_Decoder</a>() { <span class="keywordflow">if</span> (module != <span class="keyword">nullptr</span>) { <span class="keyword">delete</span> module; module = <span class="keyword">nullptr</span>; } }</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
@@ -197,7 +197,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 8 2016 11:21:44 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 10 2016 10:11:02 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -216,7 +216,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <a class="code" href="classSC__Puncturer.html">SC_Puncturer</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classPuncturer__i.html#a33137201dfd52a54c19f20c475bf783f">K</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classPuncturer__i.html#ad134b59f7d0935f242fcac64d5548ce1">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classPuncturer__i.html#a852a3e7424f33b39f711756de187339c">N_code</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1, </div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                 <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_Puncturer&quot;</span>)</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    : Puncturer_interface&lt;B,Q&gt;(K, N, N_code, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    : <a class="code" href="classPuncturer__i.html">Puncturer_i</a>&lt;B,Q&gt;(K, N, N_code, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>),</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      module_punct(nullptr), module_depunct(nullptr) {}</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSC__Puncturer.html">SC_Puncturer</a>() </div>
@@ -270,7 +270,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 8 2016 11:21:44 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 10 2016 10:11:03 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

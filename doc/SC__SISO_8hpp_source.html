@@ -163,7 +163,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="classSC__SISO.html">SC_SISO</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> K, <span class="keyword">const</span> <span class="keywordtype">int</span> N, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_SISO&quot;</span>)</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    : SISO_interface&lt;R&gt;(K, N, n_frames, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module_siso(nullptr) {}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    : <a class="code" href="classSISO__i.html">SISO_i</a>&lt;R&gt;(K, N, n_frames, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module_siso(nullptr) {}</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSC__SISO.html">SC_SISO</a>() { <span class="keywordflow">if</span> (module_siso != <span class="keyword">nullptr</span>) { <span class="keyword">delete</span> module_siso; module_siso = <span class="keyword">nullptr</span>; } }</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
@@ -191,7 +191,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 8 2016 11:21:44 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 10 2016 10:11:02 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

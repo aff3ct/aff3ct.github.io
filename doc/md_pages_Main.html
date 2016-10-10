@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>AFF3CT: How to visualize simulated data (PyBER)</title>
+<title>AFF3CT: Main</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -76,56 +76,56 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">How to visualize simulated data (PyBER) </div>  </div>
+<div class="title">Main </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><b>AFF3CT</b> comes with a <em>Bit/Frame Error Rate</em> (BER and FER) specific visualization tool: the <b>PyBER</b> plotter. <b>PyBER</b> is written in <em>Python</em> and directly plots curves from the standard <b>AFF3CT</b> output.</p>
-<h2>Install Python 3 and dependencies</h2>
-<p>First install <em>Python 3</em> and the Python 3 package manager <em>PIP</em>:</p>
-<blockquote class="doxtable">
-<p>$ sudo apt-get install python3 python3-pip</p>
-<p></p>
-</blockquote>
-<p>Next, install the required dependencies to run <b>PyBER</b>:</p>
-<blockquote class="doxtable">
-<p>$ sudo pip numpy pyqt5</p>
-<p></p>
-</blockquote>
-<h2>Run PyBER</h2>
-<p>From the <code>plotter/PyBER/</code> directory:</p>
-<blockquote class="doxtable">
-<p>$ python3 pyBER.py</p>
-<p></p>
-</blockquote>
-<p>By default, <b>PyBER</b> shows the folders and files located in the <code>tests</code> directory. The program only shows the file with the following extensions:</p>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#mainpage">Welcome on the official AFF3CT documentation </a></li>
+</ul>
+</div>
+<div class="textblock"><h1><a class="anchor" id="mainpage"></a>
+Welcome on the official AFF3CT documentation </h1>
+<p><b>AFF3CT</b> is an <b>Open-source software</b> (<em>MIT license</em>) dedicated to the <b>Forward Error Correction (FEC or channel coding) simulations</b>. It is written in <b>C++11</b> and it supports a large range of codes: from the well-spread <b>Turbo codes</b> to the very new <b>Polar codes</b>. The support of the <b>Low-Density Parity-Check (LDPC) codes</b> is under development. A particular emphasis is given to <b>the simulation throughput performance</b> (hundreds of Mb/s on today's CPUs) and the portability of the code.</p>
+<p>You can get the code source from the <b>GitHub repository</b>: <a href="https://github.com/aff3ct/aff3ct">https://github.com/aff3ct/aff3ct</a>.</p>
+<p><b>AFF3CT</b> works with many compilers (<code>g++</code>, <code>clang++</code>, <code>icpc</code>, <code>msvc++</code>) and on the most common operating systems (Linux, MacOS X and Windows).</p>
+<h2>Structure and philosophy of the code</h2>
+<p>In <b>AFF3CT</b> it is all about <a class="el" href="classSimulation.html">Simulation</a> and <a class="el" href="classModule.html" title="A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...">Module</a>. A <a class="el" href="classSimulation.html">Simulation</a> object links a set of <a class="el" href="classModule.html" title="A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...">Module</a> objects together. Here is the list of available type of <a class="el" href="classSimulation.html">Simulation</a>:</p>
 <ul>
-<li><code>*.txt</code>,</li>
-<li><code>*.dat</code>,</li>
-<li><code>*.data</code>,</li>
-<li><code>*.perf</code>.</li>
+<li><a class="el" href="classSimulation__BFER.html">Simulation_BFER</a>: dedicated to the Bit Error Rate (BER) and Frame Error Rate (FER) performances,</li>
+<li><a class="el" href="classSimulation__BFERI.html">Simulation_BFERI</a>: dedicated to the BER/FER performances with turbo-demodulation between the demodulator and the decoder,</li>
+<li><a class="el" href="classSimulation__EXIT.html">Simulation_EXIT</a>: dedicated to the EXtrinsic Information Transfer (EXIT) chart.</li>
 </ul>
 <div class="image">
-<img src="../pages/PyBER_start.png"  alt="Screenshot when starting PyBER"/>
+<img src="../images/bfer_bferi.png"  alt="Communication chain"/>
 </div>
-<h2>Display existing simulations</h2>
-<p>The <code>tests/data</code> folder contains a set of simulations pre-ran with <b>AFF3CT</b>. You can select the corresponding files in the <code>data</code> folder and take a look on the decoding performances. You can display more than one curve at a time by selecting a set of files (keep the <code>ctrl</code> or <code>maj</code> key pressed and select the files you want to compare with the left mousse button).</p>
+<p>Many <a class="el" href="classModule.html" title="A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...">Module</a> objects can be used in a <a class="el" href="classSimulation.html">Simulation</a>:</p>
+<ul>
+<li><a class="el" href="classSource__i.html" title="Generates a message. ">Source_i</a>,</li>
+<li><a class="el" href="classCRC__i.html" title="Adds/builds and checks a Cyclic Redundancy Check (CRC) for a set of information bits. ">CRC_i</a>,</li>
+<li><a class="el" href="classEncoder__i.html" title="Encodes a vector of information bits (a message) and adds some redundancy (parity bits)...">Encoder_i</a>,</li>
+<li><a class="el" href="classPuncturer__i.html" title="Punctures a codeword to match a frame size. ">Puncturer_i</a>,</li>
+<li><a class="el" href="classInterleaver__i.html" title="Interleaves or deinterleaves a vector. ">Interleaver_i</a>,</li>
+<li><a class="el" href="classModulator__i.html" title="Modulates, filters and/or demodulates a signal. ">Modulator_i</a>,</li>
+<li><a class="el" href="classChannel__i.html" title="The Channel is the physical transmission medium. ">Channel_i</a>,</li>
+<li><a class="el" href="classQuantizer__i.html" title="Quantizes floating-point data to fixed-point representation. ">Quantizer_i</a>,</li>
+<li><a class="el" href="classCoset__i.html" title="Performs the coset approach (flips the bits or the signs depending on the initial codeword)...">Coset_i</a>,</li>
+<li><a class="el" href="classDecoder__i.html" title="A Decoder is an algorithm dedicated to find the initial sequence of information bits (before the nois...">Decoder_i</a>,</li>
+<li><a class="el" href="classMonitor__i.html" title="Monitors the simulated frames, tells if there is a frame errors and counts the number of bit errors...">Monitor_i</a>.</li>
+</ul>
+<h2>Related pages</h2>
+<ol type="1">
+<li><a href="md__home_adrien_workspace_HPC_aff3ct_README.html">How to compile and run the code</a></li>
+<li><a href="md_pages_PyBER.html">How to visualize simulated data (PyBER)</a></li>
+<li><a href="md_pages_Paper_results.html">Reproduce scientific results</a> <hr/>
+</li>
+</ol>
 <div class="image">
-<img src="../pages/PyBER_plot.png"  alt="Plot some curves with PyBER"/>
-</div>
-<h2>Run a new simulation and visualize the results</h2>
-<p>Lets assume that you have compiled <b>AFF3CT</b> and you are in the <code>build</code> directory. You can launch a new simulation and redirect the standard output in a file like this:</p>
-<blockquote class="doxtable">
-<p>$ ./bin/aff3ct &ndash;sim-type BFER &ndash;cde-type TURBO -K 1024 -N 3072 -m 0.0 -M 1.01 &ndash;dec-type LTE &ndash;dec-implem FAST -i 6 &gt; ../tests/data/turbo_simu.txt</p>
-<p></p>
-</blockquote>
-<p>You have just created a new file (<code>../tests/data/turbo_simu.txt</code>) and you can visualize it. Notice than <b>PyBER</b> is able to update the curves in real time (no user action is needed to refresh the selected file(s)).</p>
-<div class="image">
-<img src="../pages/PyBER_plot2.png"  alt="Plot AFF3CT data with PyBER"/>
+<img src="../images/AFF3CT.png"  alt="Example of AFF3CT output"/>
 </div>
  </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 7 2016 16:05:19 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 10 2016 09:50:38 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

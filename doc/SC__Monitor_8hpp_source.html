@@ -170,7 +170,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="classSC__Monitor.html">SC_Monitor</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#a8304abe6a3c0bcd842ea6b8e00802077">K</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#ac9446b7076f640cbc1a0fac613ffe714">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_Monitor&quot;</span>)</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    : Monitor_interface&lt;B&gt;(K, N, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module(nullptr) {}</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    : <a class="code" href="classMonitor__i.html">Monitor_i</a>&lt;B&gt;(K, N, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module(nullptr) {}</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSC__Monitor.html">SC_Monitor</a>() {<span class="keywordflow">if</span> (module != <span class="keyword">nullptr</span>) { <span class="keyword">delete</span> module; module = <span class="keyword">nullptr</span>; }};</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
@@ -210,7 +210,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 8 2016 11:21:44 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 10 2016 10:11:03 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

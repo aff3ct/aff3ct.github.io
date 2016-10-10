@@ -82,22 +82,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><p><b>AFF3CT</b> is an <b>Open-source software</b> (<em>MIT license</em>) dedicated to the <b>Forward Error Correction (FEC or channel coding) simulations</b>. It is written in <b>C++11</b> and it supports a large range of codes: from the well-spread <b>Turbo codes</b> to the very new <b>Polar codes</b>. The support of the <b>Low-Density Parity-Check (LDPC) codes</b> is under development. A particular emphasis is given to <b>the simulation throughput performance</b> (hundreds of Mb/s on today's CPUs) and the portability of the code.</p>
 <p>You can get the code source from the <b>GitHub repository</b>: <a href="https://github.com/aff3ct/aff3ct">https://github.com/aff3ct/aff3ct</a>.</p>
 <p><b>AFF3CT</b> works with many compilers (<code>g++</code>, <code>clang++</code>, <code>icpc</code>, <code>msvc++</code>) and on the most common operating systems (Linux, MacOS X and Windows).</p>
-<h2>Related pages</h2>
-<ol type="1">
-<li><a href="md__home_adrien_workspace_HPC_aff3ct_README.html">How to compile and run the code</a></li>
-<li><a href="md_pages_PyBER.html">How to visualize simulated data (PyBER)</a></li>
-<li><a href="md_pages_Paper_results.html">Reproduce scientific results</a></li>
-</ol>
 <h2>Structure and philosophy of the code</h2>
 <p>In <b>AFF3CT</b> it is all about <a class="el" href="classSimulation.html">Simulation</a> and <a class="el" href="classModule.html" title="A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...">Module</a>. A <a class="el" href="classSimulation.html">Simulation</a> object links a set of <a class="el" href="classModule.html" title="A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...">Module</a> objects together. Here is the list of available type of <a class="el" href="classSimulation.html">Simulation</a>:</p>
 <ul>
-<li><a class="el" href="classSimulation__BFER.html">Simulation_BFER</a>: dedicated to the Bit Error Rate (BER) and Frame Error Rate (FER) performances,</li>
+<li><a class="el" href="classSimulation__BFER.html">Simulation_BFER</a>: dedicated to the <a href="https://en.wikipedia.org/wiki/Bit_error_rate">Bit Error Rate</a> (BER) and Frame Error Rate (FER) performances,</li>
 <li><a class="el" href="classSimulation__BFERI.html">Simulation_BFERI</a>: dedicated to the BER/FER performances with turbo-demodulation between the demodulator and the decoder,</li>
-<li><a class="el" href="classSimulation__EXIT.html">Simulation_EXIT</a>: dedicated to the EXtrinsic Information Transfer (EXIT) chart.</li>
-</ul>
+<li><p class="startli"><a class="el" href="classSimulation__EXIT.html">Simulation_EXIT</a>: dedicated to the <a href="https://en.wikipedia.org/wiki/EXIT_chart">EXtrinsic Information Transfer</a> (EXIT) chart.</p>
 <div class="image">
-<img src="../images/bfer_bferi.png"  alt="Communication chain"/>
+<img src="../images/bfer_bferi_prod.svg"  title="Communication chain" style="width:95%"/>
 </div>
+</li>
+</ul>
 <p>Many <a class="el" href="classModule.html" title="A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...">Module</a> objects can be used in a <a class="el" href="classSimulation.html">Simulation</a>:</p>
 <ul>
 <li><a class="el" href="classSource__i.html" title="Generates a message. ">Source_i</a>,</li>
@@ -110,16 +105,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li><a class="el" href="classQuantizer__i.html" title="Quantizes floating-point data to fixed-point representation. ">Quantizer_i</a>,</li>
 <li><a class="el" href="classCoset__i.html" title="Performs the coset approach (flips the bits or the signs depending on the initial codeword)...">Coset_i</a>,</li>
 <li><a class="el" href="classDecoder__i.html" title="A Decoder is an algorithm dedicated to find the initial sequence of information bits (before the nois...">Decoder_i</a>,</li>
-<li><a class="el" href="classMonitor__i.html" title="Monitors the simulated frames, tells if there is a frame errors and counts the number of bit errors...">Monitor_i</a>. <hr/>
-</li>
+<li><a class="el" href="classMonitor__i.html" title="Monitors the simulated frames, tells if there is a frame errors and counts the number of bit errors...">Monitor_i</a>.</li>
 </ul>
+<h2>Related pages</h2>
+<ol type="1">
+<li><a href="md__home_adrien_workspace_HPC_aff3ct_README.html">How to compile and run the code</a></li>
+<li><a href="md_pages_PyBER.html">How to visualize simulated data (PyBER)</a></li>
+<li><a href="md_pages_Paper_results.html">Reproduce scientific results</a> <hr/>
+</li>
+</ol>
 <div class="image">
 <img src="../images/AFF3CT.png"  alt="Example of AFF3CT output"/>
 </div>
  </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 8 2016 11:22:55 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 10 2016 10:11:37 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
