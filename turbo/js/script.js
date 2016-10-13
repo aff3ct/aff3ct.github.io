@@ -116,7 +116,7 @@ function generateSvgGraph(encoder, decoder, idSvg, ite)
 	var coefX = 50;
 	var coefY = 40;
 	var padX  = 20;
-	var padY  = 20;
+	var padY  = 40;
 
 	// modify the size of the svg depending on the frame size
 	$(idSvg).attr("width",  padX * 2 + coefX * (K + n_ff));
@@ -149,6 +149,9 @@ function generateSvgGraph(encoder, decoder, idSvg, ite)
 		var x1 = padX + (i +0) * coefX;
 		var x2 = padX + (i +1) * coefX;
 
+		var encoderBit = 0;
+		var decoderBit = 0;
+
 		for (j = 0; j < n_states; j++)
 		{
 			var y1 = padY + j           * coefY;
@@ -156,6 +159,9 @@ function generateSvgGraph(encoder, decoder, idSvg, ite)
 
 			var isEncoderTransition = (encoderTransition[i]    == jIndexS0[j]) && (jIndexS0Rev[jIndexS0[j]] == prevStateEnc);
 			var isDecoderTransition = (decoderTransition[i][1] == jIndexS0[j]) && (jIndexS0Rev[jIndexS0[j]] == decoderTransition[i][0]);
+
+			if (isEncoderTransition) encoderBit = 0;
+			if (isDecoderTransition) decoderBit = 0;
 
 			var color       = (isEncoderTransition) ? "black"   : "#C7C7C7";
 			color           = (isDecoderTransition) ? "#3b8217" : color;
@@ -184,6 +190,9 @@ function generateSvgGraph(encoder, decoder, idSvg, ite)
 			var isEncoderTransition = (encoderTransition[i]    == jIndexS1[j]) && (jIndexS1Rev[jIndexS1[j]] == prevStateEnc);
 			var isDecoderTransition = (decoderTransition[i][1] == jIndexS1[j]) && (jIndexS1Rev[jIndexS1[j]] == decoderTransition[i][0]);
 
+			if (isEncoderTransition) encoderBit = 1;
+			if (isDecoderTransition) decoderBit = 1;
+
 			var color       = (isEncoderTransition) ? "black"   : "#C7C7C7";
 			color           = (isDecoderTransition) ? "#3b8217" : color;
 			var strokeWidth = (isEncoderTransition) ? 2         : 1;
@@ -201,6 +210,19 @@ function generateSvgGraph(encoder, decoder, idSvg, ite)
 			                "<title>bit = 1, "                      + 
 			                "gamma = " + gamma + "</title></line>");
 		}
+
+		var bitColor = (decoderBit == encoderBit) ? "#3b8217" : "#821717";
+
+		$(idSvg).append("<text "                                    +
+		                "x=\"" + ((x1 + x2) / 2) + "\" "            +
+		                "y=\"" + 15 + "\""                          +
+		                "style=\"text-anchor: middle; "             +
+		                "        font-family: Arial; "              +
+		                "        font-size  : 12px; "               +
+		                "        stroke     : " + bitColor + "; "   +
+		                "        fill       : " + bitColor + "; \"" +
+		                ">" + decoderBit                            +
+		                "</text>");
 
 		prevStateEnc = encoderTransition[i];
 	}
