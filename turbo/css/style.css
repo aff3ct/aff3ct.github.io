@@ -1,0 +1,54 @@
+html {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 100%;
+	background: #333;
+}
+
+#page-wrapper {
+	background: #FFF;
+	padding: 1em;
+	margin: 1em 1em 1em 1em;
+	min-height: 300px;
+	border-top: 5px solid #3b8217;
+	box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+#control {
+	display: none;
+}
+
+#legend {
+	width:360px;
+	float:right;
+	display:none;
+}
+
+#iteText {
+	width: 50px;
+}
+
+#fraText {
+	width: 50px;
+}
+
+#siso {
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	overflow: auto;
+	display: none;
+	clear:both;
+}
+
+h1 {
+	margin-top: 0;
+}
+
+img {
+	max-width: 100%;
+}
+
+#fileDisplayArea {
+	margin-top: 2em;
+	width: 100%;
+	overflow-x: auto;
+}
