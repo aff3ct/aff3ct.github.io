@@ -299,6 +299,119 @@ function generateSvgGraph(encoder, decoder, idSvg, ite)
 	$(idSvg).html($(idSvg).html());
 }
 
+function launch(jsonData)
+{
+	var curFra = 0;
+	var curIte = 0;
+	var nFra = Object.keys(jsonData).length -1;
+
+	var upSvg = function upSvg(encoder, decoder, ite)
+	{
+		generateSvgGraph(encoder, decoder, "#svg-natural",     ite);
+		generateSvgGraph(encoder, decoder, "#svg-interleaved", ite);
+		
+		$(".nIte").html(" [ite. " + (curIte +1) + "/" + decoder.n_ite + " - K = " + encoder.K + " - R = " + encoder.R + " - poly = " + encoder.poly + "]");
+		$(".nFra").html("(" + (curFra +1) + "/" + nFra + ")");
+	}
+
+	upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
+
+	$("#fileSelection").hide();
+	$("#control").show();
+	$("#legend").show();
+	$("#siso").show();
+
+	$("#radiusCB").click(function() 
+	{
+		variableRadius = !variableRadius;
+		upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
+	});
+
+	$("#opacityCB").click(function() 
+	{
+		opacity = !opacity;
+		upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
+	});
+
+	$("#bigLinesCB").click(function() 
+	{
+		bigLines = !bigLines;
+		upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
+	});
+
+
+	$("#nextButton").click(function() 
+	{
+		if (curIte < jsonData[curFra][1].n_ite -1)
+		{
+			upSvg(jsonData[curFra][0], jsonData[curFra][1], ++curIte);
+		}
+	});
+
+	$("#prevButton").click(function() 
+	{
+		if (curIte >= 1)
+		{
+			upSvg(jsonData[curFra][0], jsonData[curFra][1], --curIte);
+		}
+	});
+
+	$(document).keydown(function(e)
+	{
+		if (e.keyCode == 78) // "n"
+		{
+			if (curIte < jsonData[curFra][1].n_ite -1)
+			{
+				upSvg(jsonData[curFra][0], jsonData[curFra][1], ++curIte);
+			}
+		}
+	});
+
+	$(document).keydown(function(e)
+	{
+		if (e.keyCode == 80) // "p"
+		{
+			if (curIte >= 1)
+			{
+				upSvg(jsonData[curFra][0], jsonData[curFra][1], --curIte);
+			}
+		}
+	});
+
+	$('#iteForm').submit(function () 
+	{
+		var wishIte = parseInt($("#iteText").val()) -1;
+
+		if (curIte != wishIte && wishIte >= 0 && wishIte < jsonData[curFra][1].n_ite)
+		{
+			curIte = wishIte;
+			upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
+		}
+		else
+		{
+			$("#iteText").val(curIte +1);
+		}
+		return false;
+	});
+
+	$('#fraForm').submit(function () 
+	{
+		var wishFra = parseInt($("#fraText").val()) -1;
+
+		if (curFra != wishFra && wishFra >= 0 && wishFra < nFra)
+		{
+			curFra = wishFra;
+			curIte = 0;
+			upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
+		}
+		else
+		{
+			$("#fraText").val(curFra +1);
+		}
+		return false;
+	})
+}
+
 window.onload = function() 
 {
 	var fileInput = document.getElementById('fileInput');
@@ -307,123 +420,14 @@ window.onload = function()
 		var file = fileInput.files[0];
 		var jsonExt = /^.*\.json$/;
 
-		if (file.name.match(jsonExt)) 
+		if (file.name.match(jsonExt))
 		{
 			var reader = new FileReader();
-
 			reader.onload = function(e) 
 			{
-				var curFra = 0;
-				var curIte = 0;
 				var jsonData = JSON.parse(reader.result);
-				var nFra = Object.keys(jsonData).length -1;
-
-				var upSvg = function upSvg(encoder, decoder, ite)
-				{
-					generateSvgGraph(encoder, decoder, "#svg-natural",     ite);
-					generateSvgGraph(encoder, decoder, "#svg-interleaved", ite);
-					
-					$(".nIte").html(" [ite. " + (curIte +1) + "/" + decoder.n_ite + " - K = " + encoder.K + " - R = " + encoder.R + " - poly = " + encoder.poly + "]");
-					$(".nFra").html("(" + (curFra +1) + "/" + nFra + ")");
-				}
-
-				upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
-
-				$("#fileSelection").hide();
-				$("#control").show();
-				$("#legend").show();
-				$("#siso").show();
-
-				$("#radiusCB").click(function() 
-				{
-					variableRadius = !variableRadius;
-					upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
-				});
-
-				$("#opacityCB").click(function() 
-				{
-					opacity = !opacity;
-					upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
-				});
-
-				$("#bigLinesCB").click(function() 
-				{
-					bigLines = !bigLines;
-					upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
-				});
-
-
-				$("#nextButton").click(function() 
-				{
-					if (curIte < jsonData[curFra][1].n_ite -1)
-					{
-						upSvg(jsonData[curFra][0], jsonData[curFra][1], ++curIte);
-					}
-				});
-
-				$("#prevButton").click(function() 
-				{
-					if (curIte >= 1)
-					{
-						upSvg(jsonData[curFra][0], jsonData[curFra][1], --curIte);
-					}
-				});
-
-				$(document).keydown(function(e)
-				{
-					if (e.keyCode == 78) // "n"
-					{
-						if (curIte < jsonData[curFra][1].n_ite -1)
-						{
-							upSvg(jsonData[curFra][0], jsonData[curFra][1], ++curIte);
-						}
-					}
-				});
-
-				$(document).keydown(function(e)
-				{
-					if (e.keyCode == 80) // "p"
-					{
-						if (curIte >= 1)
-						{
-							upSvg(jsonData[curFra][0], jsonData[curFra][1], --curIte);
-						}
-					}
-				});
-
-				$('#iteForm').submit(function () 
-				{
-					var wishIte = parseInt($("#iteText").val()) -1;
-
-					if (curIte != wishIte && wishIte >= 0 && wishIte < jsonData[curFra][1].n_ite)
-					{
-						curIte = wishIte;
-						upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
-					}
-					else
-					{
-						$("#iteText").val(curIte +1);
-					}
-					return false;
-				});
-
-				$('#fraForm').submit(function () 
-				{
-					var wishFra = parseInt($("#fraText").val()) -1;
-
-					if (curFra != wishFra && wishFra >= 0 && wishFra < nFra)
-					{
-						curFra = wishFra;
-						curIte = 0;
-						upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
-					}
-					else
-					{
-						$("#fraText").val(curFra +1);
-					}
-					return false;
-				});
-			}
+				launch(jsonData);
+			};
 
 			reader.readAsText(file);
 		} 
