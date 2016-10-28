@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>AFF3CT: /home/adrien/workspace/HPC/aff3ct/src/Module/Channel/AWGN/GSL/Channel_AWGN_GSL_LLR.hpp Source File</title>
+<title>AFF3CT: /home/adrien/workspace/HPC/aff3ct/src/Module/Channel/Additive/AWGN/GSL/Channel_AWGN_GSL_LLR.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7a678c4f5ebb49c12cb98071857a26cf.html">Module</a></li><li class="navelem"><a class="el" href="dir_0966f6f524eae7eefac4578004c4dda2.html">Channel</a></li><li class="navelem"><a class="el" href="dir_bfc17d441a7f2859b5ad9e3f44b5d790.html">AWGN</a></li><li class="navelem"><a class="el" href="dir_69ce9682bd003e7a5eab701546329085.html">GSL</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_0254ab4982fce5621fd6dac702f5707b.html">src</a></li><li class="navelem"><a class="el" href="dir_b04d6be4a19f9a18c2ac38b850dfb17a.html">Module</a></li><li class="navelem"><a class="el" href="dir_96c3966e05862c92fd1d84d8b7a11e8c.html">Channel</a></li><li class="navelem"><a class="el" href="dir_3b42bd4552b77eb47ba3e2e1bd069e4f.html">Additive</a></li><li class="navelem"><a class="el" href="dir_1c760a150a383e416d0a98a94f06f62d.html">AWGN</a></li><li class="navelem"><a class="el" href="dir_534ea80bf45c06f8a3e88cb71331e40a.html">GSL</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -96,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;gsl/gsl_randist.h&gt;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;gsl/gsl_rng.h&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;../../Channel.hpp&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;../../../Channel.hpp&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
 <div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classChannel__AWGN__GSL__LLR.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="classChannel__AWGN__GSL__LLR.html">Channel_AWGN_GSL_LLR</a> : <span class="keyword">public</span> <a class="code" href="classSC__Channel.html">Channel</a>&lt;R&gt;</div>
@@ -119,14 +119,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
 <div class="ttc" id="classChannel__AWGN__GSL__LLR_html"><div class="ttname"><a href="classChannel__AWGN__GSL__LLR.html">Channel_AWGN_GSL_LLR</a></div><div class="ttdef"><b>Definition:</b> Channel_AWGN_GSL_LLR.hpp:12</div></div>
-<div class="ttc" id="classChannel__i_html_ae897a6704bef948c156e8a8d4016fb77"><div class="ttname"><a href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">Channel_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Channel.hpp:30</div></div>
+<div class="ttc" id="classChannel__i_html_ae897a6704bef948c156e8a8d4016fb77"><div class="ttname"><a href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">Channel_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Channel.hpp:31</div></div>
 <div class="ttc" id="classChannel__AWGN__GSL__LLR_html_ab6a4a94079fc8370b85b9df8e859e4a9"><div class="ttname"><a href="classChannel__AWGN__GSL__LLR.html#ab6a4a94079fc8370b85b9df8e859e4a9">Channel_AWGN_GSL_LLR::add_noise</a></div><div class="ttdeci">virtual void add_noise(const mipp::vector&lt; R &gt; &amp;X_N, mipp::vector&lt; R &gt; &amp;Y_N)</div><div class="ttdoc">Adds the noise to a perfectly clear signal. </div></div>
 <div class="ttc" id="classSC__Channel_html"><div class="ttname"><a href="classSC__Channel.html">SC_Channel</a></div><div class="ttdef"><b>Definition:</b> SC_Channel.hpp:16</div></div>
 <div class="ttc" id="classModule_html_a7e126daadf13414b91f1b9caa70db3e8"><div class="ttname"><a href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">Module::n_frames</a></div><div class="ttdeci">int n_frames</div><div class="ttdef"><b>Definition:</b> Module.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:02 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:26 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

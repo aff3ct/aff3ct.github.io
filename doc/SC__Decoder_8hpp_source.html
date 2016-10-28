@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7a678c4f5ebb49c12cb98071857a26cf.html">Module</a></li><li class="navelem"><a class="el" href="dir_9999cbaad869c5734297768354031f0f.html">Decoder</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_0254ab4982fce5621fd6dac702f5707b.html">src</a></li><li class="navelem"><a class="el" href="dir_b04d6be4a19f9a18c2ac38b850dfb17a.html">Module</a></li><li class="navelem"><a class="el" href="dir_fb794367b5556dadef15d649258b4aff.html">Decoder</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -143,61 +143,59 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">const</span> R* buffer_in = (R*)trans.get_data_ptr();</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        std::copy(buffer_in, buffer_in + Y_N.size(), Y_N.begin());</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        decoder.<a class="code" href="classDecoder__i.html#abb18c2dd8cf6b17b9975075092a84669">load</a>  (Y_N);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        decoder.<a class="code" href="classDecoder__i.html#a87019b27e97125630fdd9f15c2135adb">decode</a>(   );</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        decoder.<a class="code" href="classDecoder__i.html#aefe7caae6c5f557ff6cd40bdf16d1088">store</a> (V_K);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        tlm::tlm_generic_payload payload;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        payload.set_data_ptr((<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*)V_K.data());</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        payload.set_data_length(V_K.size() * <span class="keyword">sizeof</span>(B));</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        sc_core::sc_time zero_time(sc_core::SC_ZERO_TIME);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        s_out-&gt;b_transport(payload, zero_time);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;};</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">class </span><a class="code" href="classSC__Decoder.html">SC_Decoder</a> : <span class="keyword">public</span> <a class="code" href="classDecoder__i.html">Decoder_i</a>&lt;B,R&gt;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;{</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">friend</span> <a class="code" href="classSC__Decoder__module.html">SC_Decoder_module&lt;B,R&gt;</a>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="classSC__Decoder__module.html">SC_Decoder_module&lt;B,R&gt;</a> *module;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="classSC__Decoder.html">SC_Decoder</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">K</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_Decoder&quot;</span>)</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    : <a class="code" href="classDecoder__i.html">Decoder_i</a>&lt;B,R&gt;(K, N, n_frames, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module(nullptr) {}</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSC__Decoder.html">SC_Decoder</a>() { <span class="keywordflow">if</span> (module != <span class="keyword">nullptr</span>) { <span class="keyword">delete</span> module; module = <span class="keyword">nullptr</span>; } }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> create_sc_module()</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        this-&gt;module = <span class="keyword">new</span> <a class="code" href="classSC__Decoder__module.html">SC_Decoder_module&lt;B,R&gt;</a>(*<span class="keyword">this</span>, this-&gt;<a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>.c_str());</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;};</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Decoder.html">Decoder</a> = <a class="code" href="classSC__Decoder.html">SC_Decoder&lt;B,R&gt;</a>;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Decoder.html">Decoder</a> = <a class="code" href="classDecoder__i.html">Decoder_i&lt;B,R&gt;</a>;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DECODER_HPP_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="classDecoder__i_html_abb18c2dd8cf6b17b9975075092a84669"><div class="ttname"><a href="classDecoder__i.html#abb18c2dd8cf6b17b9975075092a84669">Decoder_i::load</a></div><div class="ttdeci">virtual void load(const mipp::vector&lt; R &gt; &amp;Y_N)=0</div><div class="ttdoc">Loads the noisy frame into the Decoder. </div></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        decoder.<a class="code" href="classDecoder__i.html#adc1c24439963350b052e255debb028b7">hard_decode</a>(Y_N, V_K);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        tlm::tlm_generic_payload payload;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        payload.set_data_ptr((<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*)V_K.data());</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        payload.set_data_length(V_K.size() * <span class="keyword">sizeof</span>(B));</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        sc_core::sc_time zero_time(sc_core::SC_ZERO_TIME);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        s_out-&gt;b_transport(payload, zero_time);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;};</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">class </span><a class="code" href="classSC__Decoder.html">SC_Decoder</a> : <span class="keyword">public</span> <a class="code" href="classDecoder__i.html">Decoder_i</a>&lt;B,R&gt;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">friend</span> <a class="code" href="classSC__Decoder__module.html">SC_Decoder_module&lt;B,R&gt;</a>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="classSC__Decoder__module.html">SC_Decoder_module&lt;B,R&gt;</a> *module;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="classSC__Decoder.html">SC_Decoder</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">K</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classDecoder__i.html#aa7c0af6ff47cc7f9bb160d00683a8476">simd_inter_frame_level</a> = 1,</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;               <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_Decoder&quot;</span>)</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    : <a class="code" href="classDecoder__i.html">Decoder_i</a>&lt;B,R&gt;(K, N, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classDecoder__i.html#aa7c0af6ff47cc7f9bb160d00683a8476">simd_inter_frame_level</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module(nullptr) {}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSC__Decoder.html">SC_Decoder</a>() { <span class="keywordflow">if</span> (module != <span class="keyword">nullptr</span>) { <span class="keyword">delete</span> module; module = <span class="keyword">nullptr</span>; } }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">void</span> create_sc_module()</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        this-&gt;module = <span class="keyword">new</span> <a class="code" href="classSC__Decoder__module.html">SC_Decoder_module&lt;B,R&gt;</a>(*<span class="keyword">this</span>, this-&gt;<a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>.c_str());</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;};</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Decoder.html">Decoder</a> = <a class="code" href="classSC__Decoder.html">SC_Decoder&lt;B,R&gt;</a>;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Decoder.html">Decoder</a> = <a class="code" href="classDecoder__i.html">Decoder_i&lt;B,R&gt;</a>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DECODER_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
 <div class="ttc" id="classSC__Decoder_html"><div class="ttname"><a href="classSC__Decoder.html">SC_Decoder</a></div><div class="ttdef"><b>Definition:</b> SC_Decoder.hpp:16</div></div>
+<div class="ttc" id="classDecoder__i_html_adc1c24439963350b052e255debb028b7"><div class="ttname"><a href="classDecoder__i.html#adc1c24439963350b052e255debb028b7">Decoder_i::hard_decode</a></div><div class="ttdeci">void hard_decode(const mipp::vector&lt; R &gt; &amp;Y_N, mipp::vector&lt; B &gt; &amp;V_K, const bool load=true, const bool store=true, const bool store_fast=false, const bool unpack=false)</div><div class="ttdoc">Decodes the noisy frame. </div><div class="ttdef"><b>Definition:</b> Decoder.hpp:87</div></div>
 <div class="ttc" id="classSC__Decoder__module_html"><div class="ttname"><a href="classSC__Decoder__module.html">SC_Decoder_module</a></div><div class="ttdef"><b>Definition:</b> SC_Decoder.hpp:19</div></div>
-<div class="ttc" id="classDecoder__i_html_aefe7caae6c5f557ff6cd40bdf16d1088"><div class="ttname"><a href="classDecoder__i.html#aefe7caae6c5f557ff6cd40bdf16d1088">Decoder_i::store</a></div><div class="ttdeci">virtual void store(mipp::vector&lt; B &gt; &amp;V_K) const =0</div><div class="ttdoc">Stores the decoded information bits (have to be called after the decode method). </div></div>
-<div class="ttc" id="classDecoder__i_html"><div class="ttname"><a href="classDecoder__i.html">Decoder_i</a></div><div class="ttdoc">A Decoder is an algorithm dedicated to find the initial sequence of information bits (before the nois...</div><div class="ttdef"><b>Definition:</b> Decoder.hpp:29</div></div>
-<div class="ttc" id="classDecoder__i_html_a434f69cf2d559d3773a6a9920e366364"><div class="ttname"><a href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">Decoder_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Decoder.hpp:33</div></div>
-<div class="ttc" id="classDecoder__i_html_a70e67c53afdaa7a53f6197c85ce07fe0"><div class="ttname"><a href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">Decoder_i::K</a></div><div class="ttdeci">const int K</div><div class="ttdef"><b>Definition:</b> Decoder.hpp:32</div></div>
+<div class="ttc" id="classDecoder__i_html_aa7c0af6ff47cc7f9bb160d00683a8476"><div class="ttname"><a href="classDecoder__i.html#aa7c0af6ff47cc7f9bb160d00683a8476">Decoder_i::simd_inter_frame_level</a></div><div class="ttdeci">const int simd_inter_frame_level</div><div class="ttdef"><b>Definition:</b> Decoder.hpp:47</div></div>
+<div class="ttc" id="classDecoder__i_html"><div class="ttname"><a href="classDecoder__i.html">Decoder_i</a></div><div class="ttdoc">A Decoder is an algorithm dedicated to find the initial sequence of information bits (before the nois...</div><div class="ttdef"><b>Definition:</b> Decoder.hpp:31</div></div>
+<div class="ttc" id="classDecoder__i_html_a434f69cf2d559d3773a6a9920e366364"><div class="ttname"><a href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">Decoder_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Decoder.hpp:46</div></div>
+<div class="ttc" id="classDecoder__i_html_a70e67c53afdaa7a53f6197c85ce07fe0"><div class="ttname"><a href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">Decoder_i::K</a></div><div class="ttdeci">const int K</div><div class="ttdef"><b>Definition:</b> Decoder.hpp:45</div></div>
 <div class="ttc" id="classModule_html_a7e126daadf13414b91f1b9caa70db3e8"><div class="ttname"><a href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">Module::n_frames</a></div><div class="ttdeci">int n_frames</div><div class="ttdef"><b>Definition:</b> Module.hpp:22</div></div>
-<div class="ttc" id="classDecoder__i_html_a87019b27e97125630fdd9f15c2135adb"><div class="ttname"><a href="classDecoder__i.html#a87019b27e97125630fdd9f15c2135adb">Decoder_i::decode</a></div><div class="ttdeci">virtual void decode()=0</div><div class="ttdoc">Decodes the noisy frame (have to be called after the load method). </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:02 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:26 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

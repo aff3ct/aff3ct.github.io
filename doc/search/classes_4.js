@@ -3,19 +3,17 @@ var searchData=
   ['encoder_5fazcw',['Encoder_AZCW',['../classEncoder__AZCW.html',1,'']]],
   ['encoder_5fcoset',['Encoder_coset',['../classEncoder__coset.html',1,'']]],
   ['encoder_5fi',['Encoder_i',['../classEncoder__i.html',1,'']]],
-  ['encoder_5fldpc_5fazcw',['Encoder_LDPC_AZCW',['../classEncoder__LDPC__AZCW.html',1,'']]],
-  ['encoder_5fldpc_5fcoset',['Encoder_LDPC_coset',['../classEncoder__LDPC__coset.html',1,'']]],
-  ['encoder_5fldpc_5fsys',['Encoder_LDPC_sys',['../classEncoder__LDPC__sys.html',1,'']]],
   ['encoder_5fno',['Encoder_NO',['../classEncoder__NO.html',1,'']]],
   ['encoder_5fpolar',['Encoder_polar',['../classEncoder__polar.html',1,'']]],
   ['encoder_5fpolar_5fsys',['Encoder_polar_sys',['../classEncoder__polar__sys.html',1,'']]],
   ['encoder_5fra',['Encoder_RA',['../classEncoder__RA.html',1,'']]],
   ['encoder_5frepetition_5fsys',['Encoder_repetition_sys',['../classEncoder__repetition__sys.html',1,'']]],
   ['encoder_5frsc3_5fcpe_5fsys',['Encoder_RSC3_CPE_sys',['../classEncoder__RSC3__CPE__sys.html',1,'']]],
-  ['encoder_5frsc3_5fsys',['Encoder_RSC3_sys',['../classEncoder__RSC3__sys.html',1,'']]],
-  ['encoder_5frsc4_5fsys',['Encoder_RSC4_sys',['../classEncoder__RSC4__sys.html',1,'']]],
+  ['encoder_5frsc_5fgeneric_5fjson_5fsys',['Encoder_RSC_generic_json_sys',['../classEncoder__RSC__generic__json__sys.html',1,'']]],
+  ['encoder_5frsc_5fgeneric_5fsys',['Encoder_RSC_generic_sys',['../classEncoder__RSC__generic__sys.html',1,'']]],
   ['encoder_5frsc_5fsys',['Encoder_RSC_sys',['../classEncoder__RSC__sys.html',1,'']]],
   ['encoder_5fsys',['Encoder_sys',['../classEncoder__sys.html',1,'']]],
   ['encoder_5fturbo',['Encoder_turbo',['../classEncoder__turbo.html',1,'']]],
-  ['encoder_5fturbo_5flegacy',['Encoder_turbo_legacy',['../classEncoder__turbo__legacy.html',1,'']]]
+  ['encoder_5fturbo_5flegacy',['Encoder_turbo_legacy',['../classEncoder__turbo__legacy.html',1,'']]],
+  ['encoder_5fuser',['Encoder_user',['../classEncoder__user.html',1,'']]]
 ];

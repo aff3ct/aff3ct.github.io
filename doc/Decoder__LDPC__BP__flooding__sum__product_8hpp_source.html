@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>AFF3CT: /home/adrien/workspace/HPC/aff3ct/src/Module/Decoder/LDPC/BP/Decoder_LDPC_BP_flooding_sum_product.hpp Source File</title>
+<title>AFF3CT: /home/adrien/workspace/HPC/aff3ct/src/Module/Decoder/LDPC/BP/Flooding/SPA/Decoder_LDPC_BP_flooding_sum_product.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7a678c4f5ebb49c12cb98071857a26cf.html">Module</a></li><li class="navelem"><a class="el" href="dir_9999cbaad869c5734297768354031f0f.html">Decoder</a></li><li class="navelem"><a class="el" href="dir_37d11244f3b7a7472c988b64c5b63415.html">LDPC</a></li><li class="navelem"><a class="el" href="dir_9adfcb33d6d58ccf58014faae262a727.html">BP</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_0254ab4982fce5621fd6dac702f5707b.html">src</a></li><li class="navelem"><a class="el" href="dir_b04d6be4a19f9a18c2ac38b850dfb17a.html">Module</a></li><li class="navelem"><a class="el" href="dir_fb794367b5556dadef15d649258b4aff.html">Decoder</a></li><li class="navelem"><a class="el" href="dir_f3be589f7bfde49f2a493b6b01e8286e.html">LDPC</a></li><li class="navelem"><a class="el" href="dir_d96364629d2867acc31b66b8edc5ed9e.html">BP</a></li><li class="navelem"><a class="el" href="dir_65cab6f493ac6f620f0e533d4743e86e.html">Flooding</a></li><li class="navelem"><a class="el" href="dir_05d26fc3d599e5029015e722f69cb3dd.html">SPA</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,34 +91,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef DECODER_LDPC_BP_FLOODING_SUM_PRODUCT_HPP_</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define DECODER_LDPC_BP_FLOODING_SUM_PRODUCT_HPP_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;Decoder_LDPC_BP_flooding.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../Decoder_LDPC_BP_flooding.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R&gt;</div>
 <div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classDecoder__LDPC__BP__flooding__sum__product.html">    7</a></span>&#160;<span class="keyword">class </span><a class="code" href="classDecoder__LDPC__BP__flooding__sum__product.html">Decoder_LDPC_BP_flooding_sum_product</a> : <span class="keyword">public</span> <a class="code" href="classDecoder__LDPC__BP__flooding.html">Decoder_LDPC_BP_flooding</a>&lt;B,R&gt;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <a class="code" href="classDecoder__LDPC__BP__flooding__sum__product.html">Decoder_LDPC_BP_flooding_sum_product</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;<a class="code" href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">K</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> &amp;<a class="code" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; n_ite, </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;                                         <span class="keyword">const</span> std ::vector&lt;unsigned char&gt; &amp;n_variables_per_parity,</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;                                         <span class="keyword">const</span> std ::vector&lt;unsigned char&gt; &amp;n_parities_per_variable,</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                                         <span class="keyword">const</span> std ::vector&lt;unsigned int &gt; &amp;transpose,</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                                         <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;Decoder_LDPC_BP_flooding_sum_product&quot;</span>);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classDecoder__LDPC__BP__flooding__sum__product.html">Decoder_LDPC_BP_flooding_sum_product</a>();</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="comment">// BP functions for decoding</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> BP_process();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;};</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DECODER_LDPC_BP_FLOODING_SUM_PRODUCT_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    mipp::vector&lt;R&gt; values;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <a class="code" href="classDecoder__LDPC__BP__flooding__sum__product.html">Decoder_LDPC_BP_flooding_sum_product</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;<a class="code" href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">K</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> &amp;<a class="code" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; n_ite, </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                                         <span class="keyword">const</span> <a class="code" href="classAList__reader.html">AList_reader</a> &amp;alist_data,</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                                         <span class="keyword">const</span> <span class="keywordtype">bool</span> enable_syndrome = <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                                         <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1,</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                                         <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;Decoder_LDPC_BP_flooding_sum_product&quot;</span>);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classDecoder__LDPC__BP__flooding__sum__product.html">Decoder_LDPC_BP_flooding_sum_product</a>();</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="comment">// BP functions for decoding</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> BP_process();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;};</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DECODER_LDPC_BP_FLOODING_SUM_PRODUCT_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
+<div class="ttc" id="classAList__reader_html"><div class="ttname"><a href="classAList__reader.html">AList_reader</a></div><div class="ttdef"><b>Definition:</b> AList_reader.hpp:7</div></div>
 <div class="ttc" id="classDecoder__LDPC__BP__flooding__sum__product_html"><div class="ttname"><a href="classDecoder__LDPC__BP__flooding__sum__product.html">Decoder_LDPC_BP_flooding_sum_product</a></div><div class="ttdef"><b>Definition:</b> Decoder_LDPC_BP_flooding_sum_product.hpp:7</div></div>
-<div class="ttc" id="classDecoder__LDPC__BP__flooding_html"><div class="ttname"><a href="classDecoder__LDPC__BP__flooding.html">Decoder_LDPC_BP_flooding</a></div><div class="ttdef"><b>Definition:</b> Decoder_LDPC_BP_flooding.hpp:7</div></div>
-<div class="ttc" id="classDecoder__i_html_a434f69cf2d559d3773a6a9920e366364"><div class="ttname"><a href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">Decoder_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Decoder.hpp:33</div></div>
-<div class="ttc" id="classDecoder__i_html_a70e67c53afdaa7a53f6197c85ce07fe0"><div class="ttname"><a href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">Decoder_i::K</a></div><div class="ttdeci">const int K</div><div class="ttdef"><b>Definition:</b> Decoder.hpp:32</div></div>
+<div class="ttc" id="classDecoder__LDPC__BP__flooding_html"><div class="ttname"><a href="classDecoder__LDPC__BP__flooding.html">Decoder_LDPC_BP_flooding</a></div><div class="ttdef"><b>Definition:</b> Decoder_LDPC_BP_flooding.hpp:9</div></div>
+<div class="ttc" id="classDecoder__i_html_a434f69cf2d559d3773a6a9920e366364"><div class="ttname"><a href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">Decoder_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Decoder.hpp:46</div></div>
+<div class="ttc" id="classDecoder__i_html_a70e67c53afdaa7a53f6197c85ce07fe0"><div class="ttname"><a href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">Decoder_i::K</a></div><div class="ttdeci">const int K</div><div class="ttdef"><b>Definition:</b> Decoder.hpp:45</div></div>
+<div class="ttc" id="classModule_html_a7e126daadf13414b91f1b9caa70db3e8"><div class="ttname"><a href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">Module::n_frames</a></div><div class="ttdeci">int n_frames</div><div class="ttdef"><b>Definition:</b> Module.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:02 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:26 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

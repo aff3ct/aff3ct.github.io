@@ -85,6 +85,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classDecoder__polar__SC__naive-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -106,43 +107,39 @@ Inheritance diagram for Decoder_polar_SC_naive&lt; B, R, F, G, H &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5afbf0e219eaed65fc9d759c9032fef9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5afbf0e219eaed65fc9d759c9032fef9"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Decoder_polar_SC_naive</b> (const int &amp;<a class="el" href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">K</a>, const int &amp;<a class="el" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a>, const mipp::vector&lt; B &gt; &amp;frozen_bits, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Decoder_polar_SC_naive&quot;)</td></tr>
-<tr class="separator:a5afbf0e219eaed65fc9d759c9032fef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe646e04028f7809c823fca6d1bce5a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__polar__SC__naive.html#afe646e04028f7809c823fca6d1bce5a7">load</a> (const mipp::vector&lt; R &gt; &amp;Y_N)</td></tr>
-<tr class="memdesc:afe646e04028f7809c823fca6d1bce5a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the noisy frame into the Decoder.  <a href="#afe646e04028f7809c823fca6d1bce5a7">More...</a><br/></td></tr>
-<tr class="separator:afe646e04028f7809c823fca6d1bce5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8074c3a039fdb2696b1045230c69b148"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8074c3a039fdb2696b1045230c69b148"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__polar__SC__naive.html#a8074c3a039fdb2696b1045230c69b148">decode</a> ()</td></tr>
-<tr class="memdesc:a8074c3a039fdb2696b1045230c69b148"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes the noisy frame (have to be called after the load method). <br/></td></tr>
-<tr class="separator:a8074c3a039fdb2696b1045230c69b148"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0745c92a7839312fd420ce03ed265aee"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__polar__SC__naive.html#a0745c92a7839312fd420ce03ed265aee">store</a> (mipp::vector&lt; B &gt; &amp;V_K) const </td></tr>
-<tr class="memdesc:a0745c92a7839312fd420ce03ed265aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the decoded information bits (have to be called after the decode method).  <a href="#a0745c92a7839312fd420ce03ed265aee">More...</a><br/></td></tr>
-<tr class="separator:a0745c92a7839312fd420ce03ed265aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a574eeed6776acd2c13205b2049c01d3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__polar__SC__naive.html#a574eeed6776acd2c13205b2049c01d3f">set_n_frames</a> (const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>)</td></tr>
-<tr class="memdesc:a574eeed6776acd2c13205b2049c01d3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number of frames.  <a href="#a574eeed6776acd2c13205b2049c01d3f">More...</a><br/></td></tr>
-<tr class="separator:a574eeed6776acd2c13205b2049c01d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98b318d14000bc7c7a8f689ddc63b5e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98b318d14000bc7c7a8f689ddc63b5e6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Decoder_polar_SC_naive</b> (const int &amp;<a class="el" href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">K</a>, const int &amp;<a class="el" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a>, const mipp::vector&lt; B &gt; &amp;frozen_bits, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Decoder_polar_SC_naive&quot;)</td></tr>
+<tr class="separator:a98b318d14000bc7c7a8f689ddc63b5e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classSC__Decoder"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classSC__Decoder')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classSC__Decoder.html">SC_Decoder&lt; B, R &gt;</a></td></tr>
-<tr class="memitem:a1db06aea2124bdffcb5c74812a5b968e inherit pub_methods_classSC__Decoder"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1db06aea2124bdffcb5c74812a5b968e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SC_Decoder</b> (const int <a class="el" href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">K</a>, const int <a class="el" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a>, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;SC_Decoder&quot;)</td></tr>
-<tr class="separator:a1db06aea2124bdffcb5c74812a5b968e inherit pub_methods_classSC__Decoder"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f8bfe798260d19775cdb61bf38b9ea7 inherit pub_methods_classSC__Decoder"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f8bfe798260d19775cdb61bf38b9ea7"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SC_Decoder</b> (const int <a class="el" href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">K</a>, const int <a class="el" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a>, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const int <a class="el" href="classDecoder__i.html#aa7c0af6ff47cc7f9bb160d00683a8476">simd_inter_frame_level</a>=1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;SC_Decoder&quot;)</td></tr>
+<tr class="separator:a2f8bfe798260d19775cdb61bf38b9ea7 inherit pub_methods_classSC__Decoder"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99b14d64e7674d283bd3c02f6b563683 inherit pub_methods_classSC__Decoder"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99b14d64e7674d283bd3c02f6b563683"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>create_sc_module</b> ()</td></tr>
 <tr class="separator:a99b14d64e7674d283bd3c02f6b563683 inherit pub_methods_classSC__Decoder"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classDecoder__i"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classDecoder__i')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classDecoder__i.html">Decoder_i&lt; B, R &gt;</a></td></tr>
-<tr class="memitem:ae193ffafbbc69a12608874a3cdcc7600 inherit pub_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#ae193ffafbbc69a12608874a3cdcc7600">Decoder_i</a> (const int <a class="el" href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">K</a>, const int <a class="el" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a>, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Decoder_i&quot;)</td></tr>
-<tr class="memdesc:ae193ffafbbc69a12608874a3cdcc7600 inherit pub_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ae193ffafbbc69a12608874a3cdcc7600">More...</a><br/></td></tr>
-<tr class="separator:ae193ffafbbc69a12608874a3cdcc7600 inherit pub_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18405d5b997aa6ad6f8451dfe991af11 inherit pub_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#a18405d5b997aa6ad6f8451dfe991af11">Decoder_i</a> (const int <a class="el" href="classDecoder__i.html#a70e67c53afdaa7a53f6197c85ce07fe0">K</a>, const int <a class="el" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a>, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const int <a class="el" href="classDecoder__i.html#aa7c0af6ff47cc7f9bb160d00683a8476">simd_inter_frame_level</a>=1, std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Decoder_i&quot;)</td></tr>
+<tr class="memdesc:a18405d5b997aa6ad6f8451dfe991af11 inherit pub_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a18405d5b997aa6ad6f8451dfe991af11">More...</a><br/></td></tr>
+<tr class="separator:a18405d5b997aa6ad6f8451dfe991af11 inherit pub_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56658c3d91eb4a8923b640eb5356d9e5 inherit pub_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56658c3d91eb4a8923b640eb5356d9e5"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#a56658c3d91eb4a8923b640eb5356d9e5">~Decoder_i</a> ()</td></tr>
 <tr class="memdesc:a56658c3d91eb4a8923b640eb5356d9e5 inherit pub_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr class="separator:a56658c3d91eb4a8923b640eb5356d9e5 inherit pub_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a479813e437f3d2cf42bc2bbb776aff1e inherit pub_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#a479813e437f3d2cf42bc2bbb776aff1e">store_fast</a> (mipp::vector&lt; B &gt; &amp;V) const </td></tr>
-<tr class="memdesc:a479813e437f3d2cf42bc2bbb776aff1e inherit pub_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the decoded codeword, may or may not contain the redundancy bits (parity) (should be called over the standard store method).  <a href="#a479813e437f3d2cf42bc2bbb776aff1e">More...</a><br/></td></tr>
-<tr class="separator:a479813e437f3d2cf42bc2bbb776aff1e inherit pub_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18cca66792bb747a555646296797a40a inherit pub_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#a18cca66792bb747a555646296797a40a">unpack</a> (mipp::vector&lt; B &gt; &amp;V) const </td></tr>
-<tr class="memdesc:a18cca66792bb747a555646296797a40a inherit pub_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be called after the store_fast method if store_fast return the bits in a non-standard format. The unpack method converts those bits into a standard format.  <a href="#a18cca66792bb747a555646296797a40a">More...</a><br/></td></tr>
-<tr class="separator:a18cca66792bb747a555646296797a40a inherit pub_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc1c24439963350b052e255debb028b7 inherit pub_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#adc1c24439963350b052e255debb028b7">hard_decode</a> (const mipp::vector&lt; R &gt; &amp;Y_N, mipp::vector&lt; B &gt; &amp;V_K, const bool <a class="el" href="classDecoder__i.html#abb18c2dd8cf6b17b9975075092a84669">load</a>=true, const bool <a class="el" href="classDecoder__i.html#aefe7caae6c5f557ff6cd40bdf16d1088">store</a>=true, const bool <a class="el" href="classDecoder__i.html#a479813e437f3d2cf42bc2bbb776aff1e">store_fast</a>=false, const bool <a class="el" href="classDecoder__i.html#a18cca66792bb747a555646296797a40a">unpack</a>=false)</td></tr>
+<tr class="memdesc:adc1c24439963350b052e255debb028b7 inherit pub_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes the noisy frame.  <a href="#adc1c24439963350b052e255debb028b7">More...</a><br/></td></tr>
+<tr class="separator:adc1c24439963350b052e255debb028b7 inherit pub_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ddb1d93f03aee1ae17e801410eaab57 inherit pub_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top">std::chrono::nanoseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#a3ddb1d93f03aee1ae17e801410eaab57">get_load_duration</a> () const </td></tr>
+<tr class="memdesc:a3ddb1d93f03aee1ae17e801410eaab57 inherit pub_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the duration of the data loading in the decoding process.  <a href="#a3ddb1d93f03aee1ae17e801410eaab57">More...</a><br/></td></tr>
+<tr class="separator:a3ddb1d93f03aee1ae17e801410eaab57 inherit pub_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9da9612d088dd07278c4f6ef266f4d8c inherit pub_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top">std::chrono::nanoseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#a9da9612d088dd07278c4f6ef266f4d8c">get_decode_duration</a> () const </td></tr>
+<tr class="memdesc:a9da9612d088dd07278c4f6ef266f4d8c inherit pub_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the duration of the decoding process (without loads and stores).  <a href="#a9da9612d088dd07278c4f6ef266f4d8c">More...</a><br/></td></tr>
+<tr class="separator:a9da9612d088dd07278c4f6ef266f4d8c inherit pub_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e97c436360c27328702cdf5c96876c0 inherit pub_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top">std::chrono::nanoseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#a9e97c436360c27328702cdf5c96876c0">get_store_duration</a> () const </td></tr>
+<tr class="memdesc:a9e97c436360c27328702cdf5c96876c0 inherit pub_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the duration of the data storing in the decoding process.  <a href="#a9e97c436360c27328702cdf5c96876c0">More...</a><br/></td></tr>
+<tr class="separator:a9e97c436360c27328702cdf5c96876c0 inherit pub_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85bc8802b58e54e5b6649fd12257d101 inherit pub_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#a85bc8802b58e54e5b6649fd12257d101">get_simd_inter_frame_level</a> () const </td></tr>
+<tr class="memdesc:a85bc8802b58e54e5b6649fd12257d101 inherit pub_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of frames absorbed by the SIMD instructions.  <a href="#a85bc8802b58e54e5b6649fd12257d101">More...</a><br/></td></tr>
+<tr class="separator:a85bc8802b58e54e5b6649fd12257d101 inherit pub_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classModule"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classModule')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classModule.html">Module</a></td></tr>
 <tr class="memitem:ac4851d2fec5f8dfab18fdd9ea4882fd7 inherit pub_methods_classModule"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModule.html#ac4851d2fec5f8dfab18fdd9ea4882fd7">Module</a> (const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Module&quot;)</td></tr>
 <tr class="memdesc:ac4851d2fec5f8dfab18fdd9ea4882fd7 inherit pub_methods_classModule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac4851d2fec5f8dfab18fdd9ea4882fd7">More...</a><br/></td></tr>
@@ -151,12 +148,35 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModule.html#a57f2a54e7dacfb7a67355f1412c07130">~Module</a> ()</td></tr>
 <tr class="memdesc:a57f2a54e7dacfb7a67355f1412c07130 inherit pub_methods_classModule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr class="separator:a57f2a54e7dacfb7a67355f1412c07130 inherit pub_methods_classModule"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace2db121879b2d61bf51920c715b132e inherit pub_methods_classModule"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModule.html#ace2db121879b2d61bf51920c715b132e">set_n_frames</a> (const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>)</td></tr>
+<tr class="memdesc:ace2db121879b2d61bf51920c715b132e inherit pub_methods_classModule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number of frames.  <a href="#ace2db121879b2d61bf51920c715b132e">More...</a><br/></td></tr>
+<tr class="separator:ace2db121879b2d61bf51920c715b132e inherit pub_methods_classModule"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82914ce3cc86d9b40ffe381126a27690 inherit pub_methods_classModule"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModule.html#a82914ce3cc86d9b40ffe381126a27690">get_n_frames</a> () const </td></tr>
 <tr class="memdesc:a82914ce3cc86d9b40ffe381126a27690 inherit pub_methods_classModule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of frames.  <a href="#a82914ce3cc86d9b40ffe381126a27690">More...</a><br/></td></tr>
 <tr class="separator:a82914ce3cc86d9b40ffe381126a27690 inherit pub_methods_classModule"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4dd8f6f5fa7d1c9801e850436b1d5cf inherit pub_methods_classModule"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModule.html#aa4dd8f6f5fa7d1c9801e850436b1d5cf">rename</a> (const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>)</td></tr>
 <tr class="memdesc:aa4dd8f6f5fa7d1c9801e850436b1d5cf inherit pub_methods_classModule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rename the <a class="el" href="classModule.html" title="A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...">Module</a>.  <a href="#aa4dd8f6f5fa7d1c9801e850436b1d5cf">More...</a><br/></td></tr>
 <tr class="separator:aa4dd8f6f5fa7d1c9801e850436b1d5cf inherit pub_methods_classModule"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:afe646e04028f7809c823fca6d1bce5a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__polar__SC__naive.html#afe646e04028f7809c823fca6d1bce5a7">load</a> (const mipp::vector&lt; R &gt; &amp;Y_N)</td></tr>
+<tr class="memdesc:afe646e04028f7809c823fca6d1bce5a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the noisy frame into the Decoder.  <a href="#afe646e04028f7809c823fca6d1bce5a7">More...</a><br/></td></tr>
+<tr class="separator:afe646e04028f7809c823fca6d1bce5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae60399ef2f00d380cb8fd0ad0826ae75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae60399ef2f00d380cb8fd0ad0826ae75"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__polar__SC__naive.html#ae60399ef2f00d380cb8fd0ad0826ae75">hard_decode</a> ()</td></tr>
+<tr class="memdesc:ae60399ef2f00d380cb8fd0ad0826ae75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes the noisy frame (have to be called after the load method). <br/></td></tr>
+<tr class="separator:ae60399ef2f00d380cb8fd0ad0826ae75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0745c92a7839312fd420ce03ed265aee"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__polar__SC__naive.html#a0745c92a7839312fd420ce03ed265aee">store</a> (mipp::vector&lt; B &gt; &amp;V_K) const </td></tr>
+<tr class="memdesc:a0745c92a7839312fd420ce03ed265aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the decoded information bits (have to be called after the decode method).  <a href="#a0745c92a7839312fd420ce03ed265aee">More...</a><br/></td></tr>
+<tr class="separator:a0745c92a7839312fd420ce03ed265aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classDecoder__i"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classDecoder__i')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classDecoder__i.html">Decoder_i&lt; B, R &gt;</a></td></tr>
+<tr class="memitem:a479813e437f3d2cf42bc2bbb776aff1e inherit pro_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#a479813e437f3d2cf42bc2bbb776aff1e">store_fast</a> (mipp::vector&lt; B &gt; &amp;V) const </td></tr>
+<tr class="memdesc:a479813e437f3d2cf42bc2bbb776aff1e inherit pro_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the decoded codeword, may or may not contain the redundancy bits (parity) (should be called over the standard store method).  <a href="#a479813e437f3d2cf42bc2bbb776aff1e">More...</a><br/></td></tr>
+<tr class="separator:a479813e437f3d2cf42bc2bbb776aff1e inherit pro_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18cca66792bb747a555646296797a40a inherit pro_methods_classDecoder__i"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#a18cca66792bb747a555646296797a40a">unpack</a> (mipp::vector&lt; B &gt; &amp;V) const </td></tr>
+<tr class="memdesc:a18cca66792bb747a555646296797a40a inherit pro_methods_classDecoder__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be called after the store_fast method if store_fast return the bits in a non-standard format. The unpack method converts those bits into a standard format.  <a href="#a18cca66792bb747a555646296797a40a">More...</a><br/></td></tr>
+<tr class="separator:a18cca66792bb747a555646296797a40a inherit pro_methods_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -174,6 +194,8 @@ const mipp::vector&lt; B &gt; &amp;&#160;</td><td class="memItemRight" valign="b
 <tr class="separator:a70e67c53afdaa7a53f6197c85ce07fe0 inherit pro_attribs_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a434f69cf2d559d3773a6a9920e366364 inherit pro_attribs_classDecoder__i"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#a434f69cf2d559d3773a6a9920e366364">N</a></td></tr>
 <tr class="separator:a434f69cf2d559d3773a6a9920e366364 inherit pro_attribs_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7c0af6ff47cc7f9bb160d00683a8476 inherit pro_attribs_classDecoder__i"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDecoder__i.html#aa7c0af6ff47cc7f9bb160d00683a8476">simd_inter_frame_level</a></td></tr>
+<tr class="separator:aa7c0af6ff47cc7f9bb160d00683a8476 inherit pro_attribs_classDecoder__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classModule"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classModule')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classModule.html">Module</a></td></tr>
 <tr class="memitem:a7e126daadf13414b91f1b9caa70db3e8 inherit pro_attribs_classModule"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a></td></tr>
 <tr class="separator:a7e126daadf13414b91f1b9caa70db3e8 inherit pro_attribs_classModule"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -207,7 +229,7 @@ template&lt;typename B , typename R , proto_f&lt; R &gt; F, proto_g&lt; B, R &gt
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -221,42 +243,6 @@ template&lt;typename B , typename R , proto_f&lt; R &gt; F, proto_g&lt; B, R &gt
 </dl>
 
 <p>Implements <a class="el" href="classDecoder__i.html#abb18c2dd8cf6b17b9975075092a84669">Decoder_i&lt; B, R &gt;</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a574eeed6776acd2c13205b2049c01d3f"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename B , typename R , proto_f&lt; R &gt; F, proto_g&lt; B, R &gt; G, proto_h&lt; B, R &gt; H&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classDecoder__polar__SC__naive.html">Decoder_polar_SC_naive</a>&lt; B, R, F, G, H &gt;::set_n_frames </td>
-          <td>(</td>
-          <td class="paramtype">const int&#160;</td>
-          <td class="paramname"><em>n_frames</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Set the number of frames. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">n_frames</td><td>number of frames to process in this <a class="el" href="classModule.html" title="A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...">Module</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Reimplemented from <a class="el" href="classModule.html#ace2db121879b2d61bf51920c715b132e">Module</a>.</p>
 
 </div>
 </div>
@@ -279,7 +265,7 @@ template&lt;typename B , typename R , proto_f&lt; R &gt; F, proto_g&lt; B, R &gt
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -304,7 +290,7 @@ template&lt;typename B , typename R , proto_f&lt; R &gt; F, proto_g&lt; B, R &gt
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:08 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:32 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

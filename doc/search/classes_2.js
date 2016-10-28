@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['channel_5fadditive_5fuser',['Channel_additive_user',['../classChannel__additive__user.html',1,'']]],
   ['channel_5fawgn_5ffast_5fllr',['Channel_AWGN_fast_LLR',['../classChannel__AWGN__fast__LLR.html',1,'']]],
   ['channel_5fawgn_5ffast_5flr',['Channel_AWGN_fast_LR',['../classChannel__AWGN__fast__LR.html',1,'']]],
   ['channel_5fawgn_5fgsl_5fllr',['Channel_AWGN_GSL_LLR',['../classChannel__AWGN__GSL__LLR.html',1,'']]],
@@ -10,6 +11,7 @@ var searchData=
   ['channel_5fawgn_5fstd_5flr',['Channel_AWGN_std_LR',['../classChannel__AWGN__std__LR.html',1,'']]],
   ['channel_5fi',['Channel_i',['../classChannel__i.html',1,'']]],
   ['channel_5fno',['Channel_NO',['../classChannel__NO.html',1,'']]],
+  ['channel_5frayleigh_5fllr',['Channel_Rayleigh_LLR',['../classChannel__Rayleigh__LLR.html',1,'']]],
   ['contents_5fsc',['Contents_SC',['../classContents__SC.html',1,'']]],
   ['contents_5fscl',['Contents_SCL',['../classContents__SCL.html',1,'']]],
   ['coset_5fbit',['Coset_bit',['../classCoset__bit.html',1,'']]],

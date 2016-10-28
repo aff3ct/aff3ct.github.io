@@ -100,14 +100,15 @@ Inheritance diagram for Interleaver_random&lt; T &gt;:</div>
 <area href="classSC__Interleaver.html" alt="SC_Interleaver&lt; T &gt;" shape="rect" coords="0,112,153,136"/>
 <area href="classInterleaver__i.html" title="Interleaves or deinterleaves a vector. " alt="Interleaver_i&lt; T &gt;" shape="rect" coords="0,56,153,80"/>
 <area href="classModule.html" title="A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module..." alt="Module" shape="rect" coords="0,0,153,24"/>
+<area href="classInterleaver__uniform.html" alt="Interleaver_uniform&lt; T &gt;" shape="rect" coords="0,224,153,248"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae87a5f10249dd76e2b4236fff48c10c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae87a5f10249dd76e2b4236fff48c10c9"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Interleaver_random</b> (int size, const int seed=-1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Interleaver_random&quot;)</td></tr>
-<tr class="separator:ae87a5f10249dd76e2b4236fff48c10c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dce6c874ea53d53dfac997c3f020182"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2dce6c874ea53d53dfac997c3f020182"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Interleaver_random</b> (int size, const int seed=0, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Interleaver_random&quot;)</td></tr>
+<tr class="separator:a2dce6c874ea53d53dfac997c3f020182"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classSC__Interleaver"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classSC__Interleaver')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classSC__Interleaver.html">SC_Interleaver&lt; T &gt;</a></td></tr>
 <tr class="memitem:a825ef8ac9610448dde7b3db07d9acfa4 inherit pub_methods_classSC__Interleaver"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a825ef8ac9610448dde7b3db07d9acfa4"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SC_Interleaver</b> (const int size, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;SC_Interleaver&quot;)</td></tr>
@@ -135,17 +136,21 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a49515d52a31fd54f0b07601b58d0ceef inherit pub_methods_classInterleaver__i"><td class="memItemLeft" align="right" valign="top">mipp::vector&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInterleaver__i.html#a49515d52a31fd54f0b07601b58d0ceef">get_lookup_table_inverse</a> () const </td></tr>
 <tr class="memdesc:a49515d52a31fd54f0b07601b58d0ceef inherit pub_methods_classInterleaver__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the lookup table required for the deinterleaving process.  <a href="#a49515d52a31fd54f0b07601b58d0ceef">More...</a><br/></td></tr>
 <tr class="separator:a49515d52a31fd54f0b07601b58d0ceef inherit pub_methods_classInterleaver__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a577e8e46ab627e5b1772a250e11dde25 inherit pub_methods_classInterleaver__i"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
-<tr class="memitem:a577e8e46ab627e5b1772a250e11dde25 inherit pub_methods_classInterleaver__i"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classInterleaver__i.html#a577e8e46ab627e5b1772a250e11dde25">interleave</a> (const mipp::vector&lt; D &gt; &amp;natural_vec, mipp::vector&lt; D &gt; &amp;interleaved_vec, const bool frame_reordering=false) const </td></tr>
-<tr class="memdesc:a577e8e46ab627e5b1772a250e11dde25 inherit pub_methods_classInterleaver__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interleaves a vector.  <a href="#a577e8e46ab627e5b1772a250e11dde25">More...</a><br/></td></tr>
-<tr class="separator:a577e8e46ab627e5b1772a250e11dde25 inherit pub_methods_classInterleaver__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aace16a1a6f396cd813bc871dd76f167f inherit pub_methods_classInterleaver__i"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
-<tr class="memitem:aace16a1a6f396cd813bc871dd76f167f inherit pub_methods_classInterleaver__i"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classInterleaver__i.html#aace16a1a6f396cd813bc871dd76f167f">deinterleave</a> (const mipp::vector&lt; D &gt; &amp;interleaved_vec, mipp::vector&lt; D &gt; &amp;natural_vec, const bool frame_reordering=false) const </td></tr>
-<tr class="memdesc:aace16a1a6f396cd813bc871dd76f167f inherit pub_methods_classInterleaver__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinterleaves a vector.  <a href="#aace16a1a6f396cd813bc871dd76f167f">More...</a><br/></td></tr>
-<tr class="separator:aace16a1a6f396cd813bc871dd76f167f inherit pub_methods_classInterleaver__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba32d9ee770fdefaf2900ab6c7f65e5a inherit pub_methods_classInterleaver__i"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
+<tr class="memitem:aba32d9ee770fdefaf2900ab6c7f65e5a inherit pub_methods_classInterleaver__i"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classInterleaver__i.html#aba32d9ee770fdefaf2900ab6c7f65e5a">interleave</a> (const mipp::vector&lt; D &gt; &amp;natural_vec, mipp::vector&lt; D &gt; &amp;interleaved_vec, const bool frame_reordering=false, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=-1) const </td></tr>
+<tr class="memdesc:aba32d9ee770fdefaf2900ab6c7f65e5a inherit pub_methods_classInterleaver__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interleaves a vector.  <a href="#aba32d9ee770fdefaf2900ab6c7f65e5a">More...</a><br/></td></tr>
+<tr class="separator:aba32d9ee770fdefaf2900ab6c7f65e5a inherit pub_methods_classInterleaver__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af785794ccb025b66a0153736aecdb7d9 inherit pub_methods_classInterleaver__i"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
+<tr class="memitem:af785794ccb025b66a0153736aecdb7d9 inherit pub_methods_classInterleaver__i"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classInterleaver__i.html#af785794ccb025b66a0153736aecdb7d9">deinterleave</a> (const mipp::vector&lt; D &gt; &amp;interleaved_vec, mipp::vector&lt; D &gt; &amp;natural_vec, const bool frame_reordering=false, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=-1) const </td></tr>
+<tr class="memdesc:af785794ccb025b66a0153736aecdb7d9 inherit pub_methods_classInterleaver__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinterleaves a vector.  <a href="#af785794ccb025b66a0153736aecdb7d9">More...</a><br/></td></tr>
+<tr class="separator:af785794ccb025b66a0153736aecdb7d9 inherit pub_methods_classInterleaver__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a568da91dcce22236c8e98735463d2cce inherit pub_methods_classInterleaver__i"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInterleaver__i.html#a568da91dcce22236c8e98735463d2cce">operator==</a> (<a class="el" href="classInterleaver__i.html">Interleaver_i</a>&lt; T &gt; &amp;interleaver) const </td></tr>
 <tr class="memdesc:a568da91dcce22236c8e98735463d2cce inherit pub_methods_classInterleaver__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two interleavers: the comparison only considers the lookup tables.  <a href="#a568da91dcce22236c8e98735463d2cce">More...</a><br/></td></tr>
 <tr class="separator:a568da91dcce22236c8e98735463d2cce inherit pub_methods_classInterleaver__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada993ce631505f5a9142f909c6ead675 inherit pub_methods_classInterleaver__i"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada993ce631505f5a9142f909c6ead675"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInterleaver__i.html#ada993ce631505f5a9142f909c6ead675">regen_lookup_tables</a> ()</td></tr>
+<tr class="memdesc:ada993ce631505f5a9142f909c6ead675 inherit pub_methods_classInterleaver__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Regenerates the interleaving and deinterleaving lookup tables. Do nothing by default. <br/></td></tr>
+<tr class="separator:ada993ce631505f5a9142f909c6ead675 inherit pub_methods_classInterleaver__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classModule"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classModule')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classModule.html">Module</a></td></tr>
 <tr class="memitem:ac4851d2fec5f8dfab18fdd9ea4882fd7 inherit pub_methods_classModule"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModule.html#ac4851d2fec5f8dfab18fdd9ea4882fd7">Module</a> (const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Module&quot;)</td></tr>
 <tr class="memdesc:ac4851d2fec5f8dfab18fdd9ea4882fd7 inherit pub_methods_classModule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac4851d2fec5f8dfab18fdd9ea4882fd7">More...</a><br/></td></tr>
@@ -196,7 +201,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:21 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:44 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

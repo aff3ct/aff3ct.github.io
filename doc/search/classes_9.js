@@ -10,6 +10,7 @@ var searchData=
   ['modulator_5fpam',['Modulator_PAM',['../classModulator__PAM.html',1,'']]],
   ['modulator_5fpsk',['Modulator_PSK',['../classModulator__PSK.html',1,'']]],
   ['modulator_5fqam',['Modulator_QAM',['../classModulator__QAM.html',1,'']]],
+  ['modulator_5fuser',['Modulator_user',['../classModulator__user.html',1,'']]],
   ['module',['Module',['../classModule.html',1,'']]],
   ['monitor_5fi',['Monitor_i',['../classMonitor__i.html',1,'']]],
   ['monitor_5freduction',['Monitor_reduction',['../classMonitor__reduction.html',1,'']]],

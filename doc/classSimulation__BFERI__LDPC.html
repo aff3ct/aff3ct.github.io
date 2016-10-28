@@ -180,15 +180,9 @@ virtual <a class="el" href="classSC__Monitor.html">Monitor</a>&lt; B &gt; *&#160
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a70aa5718e3493a956f284769bf25b3c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70aa5718e3493a956f284769bf25b3c8"></a>
-std::vector&lt; unsigned char &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>n_variables_per_parity</b></td></tr>
-<tr class="separator:a70aa5718e3493a956f284769bf25b3c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bafe0c40cace7e09b7d13527b5a70db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2bafe0c40cace7e09b7d13527b5a70db"></a>
-std::vector&lt; unsigned char &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>n_parities_per_variable</b></td></tr>
-<tr class="separator:a2bafe0c40cace7e09b7d13527b5a70db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c780ab72f9a430a1d5f9f10449e9a6b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c780ab72f9a430a1d5f9f10449e9a6b"></a>
-std::vector&lt; unsigned int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>transpose</b></td></tr>
-<tr class="separator:a2c780ab72f9a430a1d5f9f10449e9a6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2136d026a2d386467c28aea3abff14e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2136d026a2d386467c28aea3abff14e1"></a>
+<a class="el" href="classAList__reader.html">AList_reader</a>&#160;</td><td class="memItemRight" valign="bottom"><b>alist_data</b></td></tr>
+<tr class="separator:a2136d026a2d386467c28aea3abff14e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10a305628e9919b960c3ec1b52c8c00f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10a305628e9919b960c3ec1b52c8c00f"></a>
 std::vector&lt; <a class="el" href="classDecoder__SISO.html">Decoder_SISO</a>&lt; B, <br class="typebreak"/>
 Q &gt; * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>decoder_siso</b></td></tr>
@@ -275,9 +269,9 @@ std::vector&lt; <a class="el" href="classSC__Monitor.html">SC_Monitor</a>&lt; B 
 <tr class="memitem:aeb657d98bff7186f2da1c0b5ec386959 inherit pro_attribs_classSimulation__BFERI"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb657d98bff7186f2da1c0b5ec386959"></a>
 <a class="el" href="classSC__Debug.html">SC_Debug</a>&lt; B &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>dbg_B</b> [6]</td></tr>
 <tr class="separator:aeb657d98bff7186f2da1c0b5ec386959 inherit pro_attribs_classSimulation__BFERI"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac87be3ed0b0c493a56fcc15e3f24d7aa inherit pro_attribs_classSimulation__BFERI"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac87be3ed0b0c493a56fcc15e3f24d7aa"></a>
-<a class="el" href="classSC__Debug.html">SC_Debug</a>&lt; R &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>dbg_R</b> [3]</td></tr>
-<tr class="separator:ac87be3ed0b0c493a56fcc15e3f24d7aa inherit pro_attribs_classSimulation__BFERI"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f933c29b5d1b4705e21fafb6471880f inherit pro_attribs_classSimulation__BFERI"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f933c29b5d1b4705e21fafb6471880f"></a>
+<a class="el" href="classSC__Debug.html">SC_Debug</a>&lt; R &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>dbg_R</b> [4]</td></tr>
+<tr class="separator:a0f933c29b5d1b4705e21fafb6471880f inherit pro_attribs_classSimulation__BFERI"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b4089174c3f1dd1b198cadf2d6160f3 inherit pro_attribs_classSimulation__BFERI"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b4089174c3f1dd1b198cadf2d6160f3"></a>
 <a class="el" href="classSC__Debug.html">SC_Debug</a>&lt; Q &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>dbg_Q</b> [7]</td></tr>
 <tr class="separator:a1b4089174c3f1dd1b198cadf2d6160f3 inherit pro_attribs_classSimulation__BFERI"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -314,7 +308,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:35 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:58 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

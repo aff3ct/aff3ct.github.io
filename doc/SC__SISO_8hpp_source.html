@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7a678c4f5ebb49c12cb98071857a26cf.html">Module</a></li><li class="navelem"><a class="el" href="dir_9999cbaad869c5734297768354031f0f.html">Decoder</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_0254ab4982fce5621fd6dac702f5707b.html">src</a></li><li class="navelem"><a class="el" href="dir_b04d6be4a19f9a18c2ac38b850dfb17a.html">Module</a></li><li class="navelem"><a class="el" href="dir_fb794367b5556dadef15d649258b4aff.html">Decoder</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -142,7 +142,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">const</span> R* buffer_in = (R*)trans.get_data_ptr();</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        std::copy(buffer_in, buffer_in + Y_N1.size(), Y_N1.begin());</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        siso.<a class="code" href="classSISO__i.html#acb456fa5e390f70f591f6e85a3d912f8">decode</a>(Y_N1, Y_N2);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        siso.<a class="code" href="classSISO__i.html#aefc89b1fbc9ff5ac17c1d94ba1070fb3">soft_decode</a>(Y_N1, Y_N2);</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        tlm::tlm_generic_payload payload;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        payload.set_data_ptr((<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*)Y_N2.data());</div>
@@ -162,36 +162,37 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <a class="code" href="classSC__SISO__module.html">SC_SISO_module&lt;R&gt;</a> *module_siso;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="classSC__SISO.html">SC_SISO</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> K, <span class="keyword">const</span> <span class="keywordtype">int</span> N, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_SISO&quot;</span>)</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    : <a class="code" href="classSISO__i.html">SISO_i</a>&lt;R&gt;(K, N, n_frames, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module_siso(nullptr) {}</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSC__SISO.html">SC_SISO</a>() { <span class="keywordflow">if</span> (module_siso != <span class="keyword">nullptr</span>) { <span class="keyword">delete</span> module_siso; module_siso = <span class="keyword">nullptr</span>; } }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">void</span> create_sc_module_siso()</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        this-&gt;module_siso = <span class="keyword">new</span> <a class="code" href="classSC__SISO__module.html">SC_SISO_module&lt;R&gt;</a>(*<span class="keyword">this</span>, this-&gt;<a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>.c_str());</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;};</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__SISO.html">SISO</a> = <a class="code" href="classSC__SISO.html">SC_SISO&lt;R&gt;</a>;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__SISO.html">SISO</a> = <a class="code" href="classSISO__i.html">SISO_i&lt;R&gt;</a>;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_SISO_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="classSC__SISO.html">SC_SISO</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> K, <span class="keyword">const</span> <span class="keywordtype">int</span> N, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> simd_inter_frame_level = 1,</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_SISO&quot;</span>)</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    : <a class="code" href="classSISO__i.html">SISO_i</a>&lt;R&gt;(K, N, n_frames, simd_inter_frame_level, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module_siso(nullptr) {}</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSC__SISO.html">SC_SISO</a>() { <span class="keywordflow">if</span> (module_siso != <span class="keyword">nullptr</span>) { <span class="keyword">delete</span> module_siso; module_siso = <span class="keyword">nullptr</span>; } }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">void</span> create_sc_module_siso()</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        this-&gt;module_siso = <span class="keyword">new</span> <a class="code" href="classSC__SISO__module.html">SC_SISO_module&lt;R&gt;</a>(*<span class="keyword">this</span>, this-&gt;<a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>.c_str());</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;};</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__SISO.html">SISO</a> = <a class="code" href="classSC__SISO.html">SC_SISO&lt;R&gt;</a>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__SISO.html">SISO</a> = <a class="code" href="classSISO__i.html">SISO_i&lt;R&gt;</a>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_SISO_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classSISO__i_html"><div class="ttname"><a href="classSISO__i.html">SISO_i</a></div><div class="ttdoc">A SISO (Soft Input Soft Output) is a type of decoder which takes a soft input and return a soft outpu...</div><div class="ttdef"><b>Definition:</b> SISO.hpp:27</div></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
-<div class="ttc" id="classSISO__i_html_acb456fa5e390f70f591f6e85a3d912f8"><div class="ttname"><a href="classSISO__i.html#acb456fa5e390f70f591f6e85a3d912f8">SISO_i::decode</a></div><div class="ttdeci">virtual void decode(const mipp::vector&lt; R &gt; &amp;sys, const mipp::vector&lt; R &gt; &amp;par, mipp::vector&lt; R &gt; &amp;ext)=0</div><div class="ttdoc">Decodes a given noisy codeword. This prototype supposes that the encoded frame is systematic...</div></div>
 <div class="ttc" id="classSC__SISO_html"><div class="ttname"><a href="classSC__SISO.html">SC_SISO</a></div><div class="ttdef"><b>Definition:</b> SC_SISO.hpp:16</div></div>
 <div class="ttc" id="classSC__SISO__module_html"><div class="ttname"><a href="classSC__SISO__module.html">SC_SISO_module</a></div><div class="ttdef"><b>Definition:</b> SC_SISO.hpp:19</div></div>
-<div class="ttc" id="classSISO__i_html_ad27d9993a188e03a4d48306d0716fed4"><div class="ttname"><a href="classSISO__i.html#ad27d9993a188e03a4d48306d0716fed4">SISO_i::N_siso</a></div><div class="ttdeci">const int N_siso</div><div class="ttdef"><b>Definition:</b> SISO.hpp:31</div></div>
+<div class="ttc" id="classSISO__i_html_ad27d9993a188e03a4d48306d0716fed4"><div class="ttname"><a href="classSISO__i.html#ad27d9993a188e03a4d48306d0716fed4">SISO_i::N_siso</a></div><div class="ttdeci">const int N_siso</div><div class="ttdef"><b>Definition:</b> SISO.hpp:38</div></div>
 <div class="ttc" id="classModule_html_a7e126daadf13414b91f1b9caa70db3e8"><div class="ttname"><a href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">Module::n_frames</a></div><div class="ttdeci">int n_frames</div><div class="ttdef"><b>Definition:</b> Module.hpp:22</div></div>
+<div class="ttc" id="classSISO__i_html_aefc89b1fbc9ff5ac17c1d94ba1070fb3"><div class="ttname"><a href="classSISO__i.html#aefc89b1fbc9ff5ac17c1d94ba1070fb3">SISO_i::soft_decode</a></div><div class="ttdeci">virtual void soft_decode(const mipp::vector&lt; R &gt; &amp;sys, const mipp::vector&lt; R &gt; &amp;par, mipp::vector&lt; R &gt; &amp;ext)=0</div><div class="ttdoc">Decodes a given noisy codeword. This prototype supposes that the encoded frame is systematic...</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:02 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:26 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

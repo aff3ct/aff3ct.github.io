@@ -134,6 +134,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a58acf2769cd34af99b385f8d342bfe5f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classSimulation.html">Simulation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher__EXIT__RSC.html#a58acf2769cd34af99b385f8d342bfe5f">build_simu</a> ()</td></tr>
 <tr class="memdesc:a58acf2769cd34af99b385f8d342bfe5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a specific simulation.  <a href="#a58acf2769cd34af99b385f8d342bfe5f">More...</a><br/></td></tr>
 <tr class="separator:a58acf2769cd34af99b385f8d342bfe5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae830e1ef3f56b55a9cb6bd34b6efb8a8"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair<br class="typebreak"/>
+&lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher__EXIT__RSC.html#ae830e1ef3f56b55a9cb6bd34b6efb8a8">header_encoder</a> ()</td></tr>
+<tr class="memdesc:ae830e1ef3f56b55a9cb6bd34b6efb8a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a vector of encoder parameters to display in the header of the simulation.  <a href="#ae830e1ef3f56b55a9cb6bd34b6efb8a8">More...</a><br/></td></tr>
+<tr class="separator:ae830e1ef3f56b55a9cb6bd34b6efb8a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59a500852c8cf8d8af8aa1675f1c6b45"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair<br class="typebreak"/>
 &lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher__EXIT__RSC.html#a59a500852c8cf8d8af8aa1675f1c6b45">header_decoder</a> ()</td></tr>
 <tr class="memdesc:a59a500852c8cf8d8af8aa1675f1c6b45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a vector of decoder parameters to display in the header of the simulation.  <a href="#a59a500852c8cf8d8af8aa1675f1c6b45">More...</a><br/></td></tr>
@@ -143,10 +147,6 @@ Protected Member Functions</h2></td></tr>
 &lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher__EXIT.html#a3e4eb9c131b8d9a807f1b3ade4bcb26c">header_simulation</a> ()</td></tr>
 <tr class="memdesc:a3e4eb9c131b8d9a807f1b3ade4bcb26c inherit pro_methods_classLauncher__EXIT"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a vector of simulation parameters to display in the header of the simulation.  <a href="#a3e4eb9c131b8d9a807f1b3ade4bcb26c">More...</a><br/></td></tr>
 <tr class="separator:a3e4eb9c131b8d9a807f1b3ade4bcb26c inherit pro_methods_classLauncher__EXIT"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a815ec9fa5186d6f50b801798270c966f inherit pro_methods_classLauncher__EXIT"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair<br class="typebreak"/>
-&lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher__EXIT.html#a815ec9fa5186d6f50b801798270c966f">header_encoder</a> ()</td></tr>
-<tr class="memdesc:a815ec9fa5186d6f50b801798270c966f inherit pro_methods_classLauncher__EXIT"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a vector of encoder parameters to display in the header of the simulation.  <a href="#a815ec9fa5186d6f50b801798270c966f">More...</a><br/></td></tr>
-<tr class="separator:a815ec9fa5186d6f50b801798270c966f inherit pro_methods_classLauncher__EXIT"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classLauncher"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classLauncher')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classLauncher.html">Launcher&lt; B, R, Q &gt;</a></td></tr>
 <tr class="memitem:af92f370289e5d294d08ae901bfb83aec inherit pro_methods_classLauncher"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair<br class="typebreak"/>
 &lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher.html#af92f370289e5d294d08ae901bfb83aec">header_code</a> ()</td></tr>
@@ -308,6 +308,37 @@ template&lt;typename B , typename R , typename Q , typename QD &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ae830e1ef3f56b55a9cb6bd34b6efb8a8"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename B , typename R , typename Q , typename QD &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::vector&lt;std::pair&lt;std::string,std::string&gt; &gt; <a class="el" href="classLauncher__EXIT__RSC.html">Launcher_EXIT_RSC</a>&lt; B, R, Q, QD &gt;::header_encoder </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a vector of encoder parameters to display in the header of the simulation. </p>
+<p>This method can be overloaded to be extended.</p>
+<dl class="section return"><dt>Returns</dt><dd>a vector of pair containing the parameters to display (pair.first = "Key", pair.second = "Value") </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classLauncher__EXIT.html#a815ec9fa5186d6f50b801798270c966f">Launcher_EXIT&lt; B, R, Q &gt;</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a5b7893037c9f1a50744c8f337013108f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -344,7 +375,7 @@ template&lt;typename B , typename R , typename Q , typename QD &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:23 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:46 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

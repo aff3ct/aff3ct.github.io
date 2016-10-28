@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7a678c4f5ebb49c12cb98071857a26cf.html">Module</a></li><li class="navelem"><a class="el" href="dir_8f4e470592618b0ce0640c3b2def4ef6.html">Interleaver</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_0254ab4982fce5621fd6dac702f5707b.html">src</a></li><li class="navelem"><a class="el" href="dir_b04d6be4a19f9a18c2ac38b850dfb17a.html">Module</a></li><li class="navelem"><a class="el" href="dir_2f8c1af93fe5f629607111aaf1249bda.html">Interleaver</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -179,7 +179,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keyword">const</span> D* buffer_in = (D*)trans.get_data_ptr();</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        std::copy(buffer_in, buffer_in + natural_vec.size(), natural_vec.begin());</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        interleaver.<a class="code" href="classInterleaver__i.html#a577e8e46ab627e5b1772a250e11dde25">interleave</a>(natural_vec, interleaved_vec);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        interleaver.<a class="code" href="classInterleaver__i.html#aba32d9ee770fdefaf2900ab6c7f65e5a">interleave</a>(natural_vec, interleaved_vec);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        tlm::tlm_generic_payload payload;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        payload.set_data_ptr((<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*)interleaved_vec.data());</div>
@@ -263,7 +263,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keyword">const</span> D* buffer_in = (D*)trans.get_data_ptr();</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        std::copy(buffer_in, buffer_in + interleaved_vec.size(), interleaved_vec.begin());</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        interleaver.<a class="code" href="classInterleaver__i.html#aace16a1a6f396cd813bc871dd76f167f">deinterleave</a>(interleaved_vec, natural_vec);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        interleaver.<a class="code" href="classInterleaver__i.html#af785794ccb025b66a0153736aecdb7d9">deinterleave</a>(interleaved_vec, natural_vec);</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        tlm::tlm_generic_payload payload;</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        payload.set_data_ptr((<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*)natural_vec.data());</div>
@@ -327,21 +327,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_INTERLEAVER_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classSC__Interleaver_html_a4998cb183d5109f1ba26df70aaeb72e5"><div class="ttname"><a href="classSC__Interleaver.html#a4998cb183d5109f1ba26df70aaeb72e5">SC_Interleaver::set_n_frames</a></div><div class="ttdeci">virtual void set_n_frames(const int n_frames)</div><div class="ttdoc">Set the number of frames. </div><div class="ttdef"><b>Definition:</b> SC_Interleaver.hpp:207</div></div>
+<div class="ttc" id="classInterleaver__i_html_af785794ccb025b66a0153736aecdb7d9"><div class="ttname"><a href="classInterleaver__i.html#af785794ccb025b66a0153736aecdb7d9">Interleaver_i::deinterleave</a></div><div class="ttdeci">void deinterleave(const mipp::vector&lt; D &gt; &amp;interleaved_vec, mipp::vector&lt; D &gt; &amp;natural_vec, const bool frame_reordering=false, const int n_frames=-1) const </div><div class="ttdoc">Deinterleaves a vector. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:116</div></div>
+<div class="ttc" id="classInterleaver__i_html_aba32d9ee770fdefaf2900ab6c7f65e5a"><div class="ttname"><a href="classInterleaver__i.html#aba32d9ee770fdefaf2900ab6c7f65e5a">Interleaver_i::interleave</a></div><div class="ttdeci">void interleave(const mipp::vector&lt; D &gt; &amp;natural_vec, mipp::vector&lt; D &gt; &amp;interleaved_vec, const bool frame_reordering=false, const int n_frames=-1) const </div><div class="ttdoc">Interleaves a vector. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:94</div></div>
 <div class="ttc" id="classModule_html_ace2db121879b2d61bf51920c715b132e"><div class="ttname"><a href="classModule.html#ace2db121879b2d61bf51920c715b132e">Module::set_n_frames</a></div><div class="ttdeci">virtual void set_n_frames(const int n_frames)</div><div class="ttdoc">Set the number of frames. </div><div class="ttdef"><b>Definition:</b> Module.hpp:45</div></div>
 <div class="ttc" id="classSC__Interleaver__module__deinterleaver_html"><div class="ttname"><a href="classSC__Interleaver__module__deinterleaver.html">SC_Interleaver_module_deinterleaver</a></div><div class="ttdef"><b>Definition:</b> SC_Interleaver.hpp:104</div></div>
 <div class="ttc" id="classSC__Interleaver__module__interleaver_html"><div class="ttname"><a href="classSC__Interleaver__module__interleaver.html">SC_Interleaver_module_interleaver</a></div><div class="ttdef"><b>Definition:</b> SC_Interleaver.hpp:19</div></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
 <div class="ttc" id="classInterleaver__i_html_aa97e6330e4603487d85bf0cd917ae504"><div class="ttname"><a href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">Interleaver_i::pi</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:31</div></div>
-<div class="ttc" id="classInterleaver__i_html_aace16a1a6f396cd813bc871dd76f167f"><div class="ttname"><a href="classInterleaver__i.html#aace16a1a6f396cd813bc871dd76f167f">Interleaver_i::deinterleave</a></div><div class="ttdeci">void deinterleave(const mipp::vector&lt; D &gt; &amp;interleaved_vec, mipp::vector&lt; D &gt; &amp;natural_vec, const bool frame_reordering=false) const </div><div class="ttdoc">Deinterleaves a vector. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:111</div></div>
 <div class="ttc" id="classSC__Interleaver_html"><div class="ttname"><a href="classSC__Interleaver.html">SC_Interleaver</a></div><div class="ttdef"><b>Definition:</b> SC_Interleaver.hpp:16</div></div>
-<div class="ttc" id="classInterleaver__i_html_a577e8e46ab627e5b1772a250e11dde25"><div class="ttname"><a href="classInterleaver__i.html#a577e8e46ab627e5b1772a250e11dde25">Interleaver_i::interleave</a></div><div class="ttdeci">void interleave(const mipp::vector&lt; D &gt; &amp;natural_vec, mipp::vector&lt; D &gt; &amp;interleaved_vec, const bool frame_reordering=false) const </div><div class="ttdoc">Interleaves a vector. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:92</div></div>
 <div class="ttc" id="classInterleaver__i_html"><div class="ttname"><a href="classInterleaver__i.html">Interleaver_i</a></div><div class="ttdoc">Interleaves or deinterleaves a vector. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:28</div></div>
 <div class="ttc" id="classSC__Interleaver_html_a639286938f83b3b4dc2cac4b29a7cb16"><div class="ttname"><a href="classSC__Interleaver.html#a639286938f83b3b4dc2cac4b29a7cb16">SC_Interleaver::gen_lookup_tables</a></div><div class="ttdeci">virtual void gen_lookup_tables()=0</div><div class="ttdoc">Generates the interleaving and deinterleaving lookup tables. This method defines the interleaver and ...</div></div>
 <div class="ttc" id="classModule_html_a7e126daadf13414b91f1b9caa70db3e8"><div class="ttname"><a href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">Module::n_frames</a></div><div class="ttdeci">int n_frames</div><div class="ttdef"><b>Definition:</b> Module.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:03 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:26 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

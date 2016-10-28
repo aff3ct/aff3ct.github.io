@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7a678c4f5ebb49c12cb98071857a26cf.html">Module</a></li><li class="navelem"><a class="el" href="dir_0966f6f524eae7eefac4578004c4dda2.html">Channel</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_0254ab4982fce5621fd6dac702f5707b.html">src</a></li><li class="navelem"><a class="el" href="dir_b04d6be4a19f9a18c2ac38b850dfb17a.html">Module</a></li><li class="navelem"><a class="el" href="dir_96c3966e05862c92fd1d84d8b7a11e8c.html">Channel</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -155,54 +155,127 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;};</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">class </span><a class="code" href="classSC__Channel.html">SC_Channel</a> : <span class="keyword">public</span> <a class="code" href="classChannel__i.html">Channel_i</a>&lt;R&gt;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classSC__Channel__module__wg.html">   68</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSC__Channel__module__wg.html">SC_Channel_module_wg</a> : <span class="keyword">public</span> sc_core::sc_module</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">friend</span> <a class="code" href="classSC__Channel__module.html">SC_Channel_module&lt;R&gt;</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    SC_HAS_PROCESS(<a class="code" href="classSC__Channel__module__wg.html">SC_Channel_module_wg</a>);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="classSC__Channel__module.html">SC_Channel_module&lt;R&gt;</a> *module;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="classSC__Channel.html">SC_Channel</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_Channel&quot;</span>)</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    : <a class="code" href="classChannel__i.html">Channel_i</a>&lt;R&gt;(N, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module(nullptr) {}</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSC__Channel.html">SC_Channel</a>() { <span class="keywordflow">if</span> (module != <span class="keyword">nullptr</span>) { <span class="keyword">delete</span> module; module = <span class="keyword">nullptr</span>; } };</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classSC__Channel.html#aeecaa34be338b13d05a3a34bbb6ac939">   81</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classSC__Channel.html#aeecaa34be338b13d05a3a34bbb6ac939">set_n_frames</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>)</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <a class="code" href="classModule.html#ace2db121879b2d61bf51920c715b132e">Channel_i&lt;R&gt;::set_n_frames</a>(n_frames);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">if</span> (module != <span class="keyword">nullptr</span>)</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            module-&gt;resize_buffers();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">void</span> create_sc_module()</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    {</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        this-&gt;module = <span class="keyword">new</span> <a class="code" href="classSC__Channel__module.html">SC_Channel_module&lt;R&gt;</a>(*<span class="keyword">this</span>, this-&gt;<a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>.c_str());</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;};</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    tlm_utils::simple_target_socket   &lt;SC_Channel_module_wg&gt; s_in;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    tlm_utils::simple_initiator_socket&lt;SC_Channel_module_wg&gt; s_out1;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    tlm_utils::simple_initiator_socket&lt;SC_Channel_module_wg&gt; s_out2;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="classSC__Channel.html">SC_Channel&lt;R&gt;</a> &amp;channel;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    mipp::vector&lt;R&gt; X_N;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    mipp::vector&lt;R&gt; Y_N;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    mipp::vector&lt;R&gt; H_N;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="classSC__Channel__module__wg.html">SC_Channel_module_wg</a>(<a class="code" href="classSC__Channel.html">SC_Channel&lt;R&gt;</a> &amp;channel,</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                         <span class="keyword">const</span> sc_core::sc_module_name name = <span class="stringliteral">&quot;SC_Channel_module_wg&quot;</span>)</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    : sc_module(name), s_in(<span class="stringliteral">&quot;s_in&quot;</span>), s_out1(<span class="stringliteral">&quot;s_out1&quot;</span>), s_out2(<span class="stringliteral">&quot;s_out2&quot;</span>),</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      channel(channel),</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      X_N(channel.<a class="code" href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">N</a> * channel.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>),</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      Y_N(channel.<a class="code" href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">N</a> * channel.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>),</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      H_N(channel.<a class="code" href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">N</a> * channel.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>)</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        s_in.register_b_transport(<span class="keyword">this</span>, &amp;SC_Channel_module_wg::b_transport);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    }</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Channel.html">Channel</a> = <a class="code" href="classSC__Channel.html">SC_Channel&lt;R&gt;</a>;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Channel.html">Channel</a> = <a class="code" href="classChannel__i.html">Channel_i&lt;R&gt;</a>;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_CHANNELS_HPP_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="classSC__Channel_html_aeecaa34be338b13d05a3a34bbb6ac939"><div class="ttname"><a href="classSC__Channel.html#aeecaa34be338b13d05a3a34bbb6ac939">SC_Channel::set_n_frames</a></div><div class="ttdeci">virtual void set_n_frames(const int n_frames)</div><div class="ttdoc">Set the number of frames. </div><div class="ttdef"><b>Definition:</b> SC_Channel.hpp:81</div></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> resize_buffers()</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>)X_N.size() != channel.<a class="code" href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">N</a> * channel.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>) X_N.resize(channel.<a class="code" href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">N</a> * channel.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>)Y_N.size() != channel.<a class="code" href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">N</a> * channel.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>) Y_N.resize(channel.<a class="code" href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">N</a> * channel.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>)H_N.size() != channel.<a class="code" href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">N</a> * channel.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>) H_N.resize(channel.<a class="code" href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">N</a> * channel.<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordtype">void</span> b_transport(tlm::tlm_generic_payload&amp; trans, sc_core::sc_time&amp; t)</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    {</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        assert((trans.get_data_length() / <span class="keyword">sizeof</span>(R)) == X_N.size());</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keyword">const</span> R* buffer_in = (R*)trans.get_data_ptr();</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        std::copy(buffer_in, buffer_in + X_N.size(), X_N.begin());</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        channel.<a class="code" href="classChannel__i.html#a9d050f0cc9e9660bc4b9e67fe5b12ffa">add_noise</a>(X_N, Y_N, H_N);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        tlm::tlm_generic_payload payload1;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        payload1.set_data_ptr((<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*)H_N.data());</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        payload1.set_data_length(H_N.size() * <span class="keyword">sizeof</span>(R));</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        sc_core::sc_time zero_time(sc_core::SC_ZERO_TIME);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        s_out1-&gt;b_transport(payload1, zero_time);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        tlm::tlm_generic_payload payload2;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        payload2.set_data_ptr((<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*)Y_N.data());</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        payload2.set_data_length(Y_N.size() * <span class="keyword">sizeof</span>(R));</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        s_out2-&gt;b_transport(payload2, zero_time);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    }</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;};</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="keyword">class </span><a class="code" href="classSC__Channel.html">SC_Channel</a> : <span class="keyword">public</span> <a class="code" href="classChannel__i.html">Channel_i</a>&lt;R&gt;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;{</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keyword">friend</span> <a class="code" href="classSC__Channel__module.html">SC_Channel_module   &lt;R&gt;</a>;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keyword">friend</span> <a class="code" href="classSC__Channel__module__wg.html">SC_Channel_module_wg&lt;R&gt;</a>;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <a class="code" href="classSC__Channel__module.html">SC_Channel_module   &lt;R&gt;</a> *module;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <a class="code" href="classSC__Channel__module__wg.html">SC_Channel_module_wg&lt;R&gt;</a> *module_wg;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <a class="code" href="classSC__Channel.html">SC_Channel</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SC_Channel&quot;</span>)</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    : <a class="code" href="classChannel__i.html">Channel_i</a>&lt;R&gt;(N, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), module(nullptr), module_wg(nullptr) {}</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSC__Channel.html">SC_Channel</a>()</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    {</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="keywordflow">if</span> (module    != <span class="keyword">nullptr</span>) { <span class="keyword">delete</span> module;    module    = <span class="keyword">nullptr</span>; }</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keywordflow">if</span> (module_wg != <span class="keyword">nullptr</span>) { <span class="keyword">delete</span> module_wg; module_wg = <span class="keyword">nullptr</span>; }</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    };</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classSC__Channel.html#aeecaa34be338b13d05a3a34bbb6ac939">  147</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classSC__Channel.html#aeecaa34be338b13d05a3a34bbb6ac939">set_n_frames</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>)</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    {</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <a class="code" href="classModule.html#ace2db121879b2d61bf51920c715b132e">Channel_i&lt;R&gt;::set_n_frames</a>(n_frames);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keywordflow">if</span> (module    != <span class="keyword">nullptr</span>) module   -&gt;resize_buffers();</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keywordflow">if</span> (module_wg != <span class="keyword">nullptr</span>) module_wg-&gt;resize_buffers();</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    }</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordtype">void</span> create_sc_module()</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    {</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        this-&gt;module = <span class="keyword">new</span> <a class="code" href="classSC__Channel__module.html">SC_Channel_module&lt;R&gt;</a>(*<span class="keyword">this</span>, this-&gt;<a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>.c_str());</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keywordtype">void</span> create_sc_module_wg()</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    {</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="keyword">const</span> std::string new_name = this-&gt;<a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> + <span class="stringliteral">&quot;_wg&quot;</span>;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        this-&gt;module_wg = <span class="keyword">new</span> <a class="code" href="classSC__Channel__module__wg.html">SC_Channel_module_wg&lt;R&gt;</a>(*<span class="keyword">this</span>, new_name.c_str());</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    }</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;};</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Channel.html">Channel</a> = <a class="code" href="classSC__Channel.html">SC_Channel&lt;R&gt;</a>;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Channel.html">Channel</a> = <a class="code" href="classChannel__i.html">Channel_i&lt;R&gt;</a>;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_CHANNELS_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="classSC__Channel_html_aeecaa34be338b13d05a3a34bbb6ac939"><div class="ttname"><a href="classSC__Channel.html#aeecaa34be338b13d05a3a34bbb6ac939">SC_Channel::set_n_frames</a></div><div class="ttdeci">virtual void set_n_frames(const int n_frames)</div><div class="ttdoc">Set the number of frames. </div><div class="ttdef"><b>Definition:</b> SC_Channel.hpp:147</div></div>
 <div class="ttc" id="classSC__Channel__module_html"><div class="ttname"><a href="classSC__Channel__module.html">SC_Channel_module</a></div><div class="ttdef"><b>Definition:</b> SC_Channel.hpp:19</div></div>
 <div class="ttc" id="classModule_html_ace2db121879b2d61bf51920c715b132e"><div class="ttname"><a href="classModule.html#ace2db121879b2d61bf51920c715b132e">Module::set_n_frames</a></div><div class="ttdeci">virtual void set_n_frames(const int n_frames)</div><div class="ttdoc">Set the number of frames. </div><div class="ttdef"><b>Definition:</b> Module.hpp:45</div></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
 <div class="ttc" id="classChannel__i_html_a9d050f0cc9e9660bc4b9e67fe5b12ffa"><div class="ttname"><a href="classChannel__i.html#a9d050f0cc9e9660bc4b9e67fe5b12ffa">Channel_i::add_noise</a></div><div class="ttdeci">virtual void add_noise(const mipp::vector&lt; R &gt; &amp;X_N, mipp::vector&lt; R &gt; &amp;Y_N)=0</div><div class="ttdoc">Adds the noise to a perfectly clear signal. </div></div>
-<div class="ttc" id="classChannel__i_html_ae897a6704bef948c156e8a8d4016fb77"><div class="ttname"><a href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">Channel_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Channel.hpp:30</div></div>
-<div class="ttc" id="classChannel__i_html"><div class="ttname"><a href="classChannel__i.html">Channel_i</a></div><div class="ttdoc">The Channel is the physical transmission medium. </div><div class="ttdef"><b>Definition:</b> Channel.hpp:27</div></div>
+<div class="ttc" id="classChannel__i_html_ae897a6704bef948c156e8a8d4016fb77"><div class="ttname"><a href="classChannel__i.html#ae897a6704bef948c156e8a8d4016fb77">Channel_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Channel.hpp:31</div></div>
+<div class="ttc" id="classChannel__i_html"><div class="ttname"><a href="classChannel__i.html">Channel_i</a></div><div class="ttdoc">The Channel is the physical transmission medium. </div><div class="ttdef"><b>Definition:</b> Channel.hpp:28</div></div>
+<div class="ttc" id="classSC__Channel__module__wg_html"><div class="ttname"><a href="classSC__Channel__module__wg.html">SC_Channel_module_wg</a></div><div class="ttdef"><b>Definition:</b> SC_Channel.hpp:68</div></div>
 <div class="ttc" id="classSC__Channel_html"><div class="ttname"><a href="classSC__Channel.html">SC_Channel</a></div><div class="ttdef"><b>Definition:</b> SC_Channel.hpp:16</div></div>
 <div class="ttc" id="classModule_html_a7e126daadf13414b91f1b9caa70db3e8"><div class="ttname"><a href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">Module::n_frames</a></div><div class="ttdeci">int n_frames</div><div class="ttdef"><b>Definition:</b> Module.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:02 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:26 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

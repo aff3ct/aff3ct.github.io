@@ -81,40 +81,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock"><p>This project use <code>cmake</code> in order to generate the Makefile.</p>
 <h2>Install cmake</h2>
-<blockquote class="doxtable">
-<p>$ sudo apt-get install cmake</p>
-<p></p>
-</blockquote>
-<h2>Generate the Makefile</h2>
-<blockquote class="doxtable">
-<p>$ mkdir build</p>
-<p></p>
-</blockquote>
-<blockquote class="doxtable">
-<p>$ cd build</p>
-<p></p>
-</blockquote>
-<blockquote class="doxtable">
-<p>$ cmake ..</p>
-<p></p>
-</blockquote>
-<h3>Facultative cmake options</h3>
+<pre class="fragment">$ sudo apt-get install cmake
+</pre><h2>Generate the Makefile</h2>
+<pre class="fragment">$ mkdir build
+$ cd build
+$ cmake ..
+</pre><h3>Facultative cmake options</h3>
 <p>Enabling the GNU Scientific Librairy (GSL) (used for the AWGN channel): </p>
-<blockquote class="doxtable">
-<p>$ cmake .. -DENABLE_GSL=ON</p>
-<p></p>
-</blockquote>
-<p>Enabling the Intel Math Kernel Librairy (MKL) (used for the AWGN channel): </p>
-<blockquote class="doxtable">
-<p>$ cmake .. -DENABLE_MKL=ON</p>
-<p></p>
-</blockquote>
-<p>Enabling the SystemC/TLM standard between the modules: </p>
-<blockquote class="doxtable">
-<p>$ cmake .. -DENABLE_SYSTEMC=ON</p>
-<p></p>
-</blockquote>
-<h3>Modifying the CMakeCache.txt</h3>
+<pre class="fragment">$ cmake .. -DENABLE_GSL=ON
+</pre><p>Enabling the Intel Math Kernel Librairy (MKL) (used for the AWGN channel): </p>
+<pre class="fragment">$ cmake .. -DENABLE_MKL=ON
+</pre><p>Enabling the SystemC/TLM standard between the modules: </p>
+<pre class="fragment">$ cmake .. -DENABLE_SYSTEMC=ON
+</pre><h3>Modifying the CMakeCache.txt</h3>
 <p>By default the configuration file will generate a debug binary. If we want to produce a release binary we have to modify the <code>CMAKE_BUILD_TYPE:STRING</code> variable like this: </p>
 <pre class="fragment">CMAKE_BUILD_TYPE:STRING=Release
 </pre><p>We can also add some flags in the <code>CMAKE_CXX_FLAGS:STRING</code> variable: </p>
@@ -141,19 +120,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Enable the colors and boldfaces in the shell with the <code>-DENABLE_COOL_BASH</code> flag: </p>
 <pre class="fragment">CMAKE_CXX_FLAGS:STRING=-Wall -march=native -funroll-loops -DENABLE_COOL_BASH
 </pre><h2>Compiling with make</h2>
-<blockquote class="doxtable">
-<p>$ make -j4</p>
-<p></p>
-</blockquote>
-<p>This command will use the generated Makefile.</p>
+<pre class="fragment">$ make -j4
+</pre><p>This command will use the generated Makefile.</p>
 <h2>Run the code</h2>
 <p>Here are some examples of runs. You can skip the computations of the current SNR point with the <code>ctrl+C</code> combination on the keyboard. If you use <code>ctrl+C</code> twice in a small time-step (500ms), the program will stop.</p>
 <h3>Decoding of the Polar codes with the Successive Cancellation decoder</h3>
-<blockquote class="doxtable">
-<p>$ ./bin/aff3ct &ndash;sim-type BFER &ndash;cde-type POLAR -K 1024 -N 2048 -m 1.5 -M 3.01 &ndash;cde-sigma 0.862 &ndash;dec-type SC &ndash;dec-implem FAST</p>
-<p></p>
-</blockquote>
-<p>Expected output: </p>
+<pre class="fragment">$ ./bin/aff3ct --sim-type BFER --cde-type POLAR -K 1024 -N 2048 -m 1.5 -M 3.01 --cde-sigma 0.862 --dec-type SC --dec-implem FAST
+</pre><p>Expected output: </p>
 <pre class="fragment"># -------------------------------------------------
 # ---- A FAST FORWARD ERROR CORRECTION TOOL &gt;&gt; ----
 # -------------------------------------------------
@@ -218,11 +191,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
    3.00 |   130491 |     8150 |      100 | 6.10e-05 | 7.66e-04 ||    93.19 |    46.60 |    21.98 ||    16.65 | 00h00'16 
 # End of the simulation.
 </pre><h3>Decoding of the Turbo codes with the LTE BCJR decoder (8 states trellis)</h3>
-<blockquote class="doxtable">
-<p>$ ./bin/aff3ct &ndash;sim-type BFER &ndash;cde-type TURBO -K 1024 -N 3072 -m 0.0 -M 1.01 &ndash;dec-type LTE &ndash;dec-implem FAST -i 6</p>
-<p></p>
-</blockquote>
-<p>Expected output: </p>
+<pre class="fragment">$ ./bin/aff3ct --sim-type BFER --cde-type TURBO -K 1024 -N 3072 -m 0.0 -M 1.01 --dec-type LTE --dec-implem FAST -i 6
+</pre><p>Expected output: </p>
 <pre class="fragment"># -------------------------------------------------
 # ---- A FAST FORWARD ERROR CORRECTION TOOL &gt;&gt; ----
 # -------------------------------------------------
@@ -294,7 +264,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:03 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:26 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

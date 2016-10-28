@@ -134,6 +134,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1afeb46277bd45a72ba9705c9bf0b318"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classSimulation.html">Simulation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher__BFERI__LDPC.html#a1afeb46277bd45a72ba9705c9bf0b318">build_simu</a> ()</td></tr>
 <tr class="memdesc:a1afeb46277bd45a72ba9705c9bf0b318"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a specific simulation.  <a href="#a1afeb46277bd45a72ba9705c9bf0b318">More...</a><br/></td></tr>
 <tr class="separator:a1afeb46277bd45a72ba9705c9bf0b318"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5832552e02a2e054b4c25d83f0f27534"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair<br class="typebreak"/>
+&lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher__BFERI__LDPC.html#a5832552e02a2e054b4c25d83f0f27534">header_code</a> ()</td></tr>
+<tr class="memdesc:a5832552e02a2e054b4c25d83f0f27534"><td class="mdescLeft">&#160;</td><td class="mdescRight">Code parameters to display in the header of the simulation.  <a href="#a5832552e02a2e054b4c25d83f0f27534">More...</a><br/></td></tr>
+<tr class="separator:a5832552e02a2e054b4c25d83f0f27534"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab068a307d864563dda112bb24a682373"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair<br class="typebreak"/>
 &lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher__BFERI__LDPC.html#ab068a307d864563dda112bb24a682373">header_decoder</a> ()</td></tr>
 <tr class="memdesc:ab068a307d864563dda112bb24a682373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a vector of decoder parameters to display in the header of the simulation.  <a href="#ab068a307d864563dda112bb24a682373">More...</a><br/></td></tr>
@@ -143,10 +147,6 @@ Protected Member Functions</h2></td></tr>
 &lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher__BFERI.html#a0ff11d485a78dedee19ed96613b3fff6">header_simulation</a> ()</td></tr>
 <tr class="memdesc:a0ff11d485a78dedee19ed96613b3fff6 inherit pro_methods_classLauncher__BFERI"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a vector of simulation parameters to display in the header of the simulation.  <a href="#a0ff11d485a78dedee19ed96613b3fff6">More...</a><br/></td></tr>
 <tr class="separator:a0ff11d485a78dedee19ed96613b3fff6 inherit pro_methods_classLauncher__BFERI"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa42388a522d70eec810fc73bc9dfc920 inherit pro_methods_classLauncher__BFERI"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair<br class="typebreak"/>
-&lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher__BFERI.html#aa42388a522d70eec810fc73bc9dfc920">header_code</a> ()</td></tr>
-<tr class="memdesc:aa42388a522d70eec810fc73bc9dfc920 inherit pro_methods_classLauncher__BFERI"><td class="mdescLeft">&#160;</td><td class="mdescRight">Code parameters to display in the header of the simulation.  <a href="#aa42388a522d70eec810fc73bc9dfc920">More...</a><br/></td></tr>
-<tr class="separator:aa42388a522d70eec810fc73bc9dfc920 inherit pro_methods_classLauncher__BFERI"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af717f5d2fed92723638195be7e957cb5 inherit pro_methods_classLauncher__BFERI"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair<br class="typebreak"/>
 &lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLauncher__BFERI.html#af717f5d2fed92723638195be7e957cb5">header_encoder</a> ()</td></tr>
 <tr class="memdesc:af717f5d2fed92723638195be7e957cb5 inherit pro_methods_classLauncher__BFERI"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a vector of encoder parameters to display in the header of the simulation.  <a href="#af717f5d2fed92723638195be7e957cb5">More...</a><br/></td></tr>
@@ -277,6 +277,37 @@ template&lt;typename B , typename R , typename Q &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a5832552e02a2e054b4c25d83f0f27534"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename B , typename R , typename Q &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::vector&lt;std::pair&lt;std::string,std::string&gt; &gt; <a class="el" href="classLauncher__BFERI__LDPC.html">Launcher_BFERI_LDPC</a>&lt; B, R, Q &gt;::header_code </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Code parameters to display in the header of the simulation. </p>
+<p>This method can be overloaded to be extended.</p>
+<dl class="section return"><dt>Returns</dt><dd>a vector of pair containing the parameters to display (pair.first = "Key", pair.second = "Value") </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classLauncher__BFERI.html#aa42388a522d70eec810fc73bc9dfc920">Launcher_BFERI&lt; B, R, Q &gt;</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ab068a307d864563dda112bb24a682373"></a>
 <div class="memitem">
 <div class="memproto">
@@ -344,7 +375,7 @@ template&lt;typename B , typename R , typename Q &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:23 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:46 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

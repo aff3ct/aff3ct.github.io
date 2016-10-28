@@ -2,6 +2,7 @@ var searchData=
 [
   ['sc_5fchannel',['SC_Channel',['../classSC__Channel.html',1,'']]],
   ['sc_5fchannel_5fmodule',['SC_Channel_module',['../classSC__Channel__module.html',1,'']]],
+  ['sc_5fchannel_5fmodule_5fwg',['SC_Channel_module_wg',['../classSC__Channel__module__wg.html',1,'']]],
   ['sc_5fcoset',['SC_Coset',['../classSC__Coset.html',1,'']]],
   ['sc_5fcoset_3c_20b_2c_20q_20_3e',['SC_Coset&lt; B, Q &gt;',['../classSC__Coset.html',1,'']]],
   ['sc_5fcoset_5fmodule',['SC_Coset_module',['../classSC__Coset__module.html',1,'']]],
@@ -31,12 +32,16 @@ var searchData=
   ['sc_5fmodulator_3c_20b_2c_20r_2c_20r_20_3e',['SC_Modulator&lt; B, R, R &gt;',['../classSC__Modulator.html',1,'']]],
   ['sc_5fmodulator_5fmodule_5fdemodulator',['SC_Modulator_module_demodulator',['../classSC__Modulator__module__demodulator.html',1,'']]],
   ['sc_5fmodulator_5fmodule_5fdemodulator_3c_20b_2c_20r_2c_20r_20_3e',['SC_Modulator_module_demodulator&lt; B, R, R &gt;',['../classSC__Modulator__module__demodulator.html',1,'']]],
+  ['sc_5fmodulator_5fmodule_5fdemodulator_5fwg',['SC_Modulator_module_demodulator_wg',['../classSC__Modulator__module__demodulator__wg.html',1,'']]],
+  ['sc_5fmodulator_5fmodule_5fdemodulator_5fwg_3c_20b_2c_20r_2c_20r_20_3e',['SC_Modulator_module_demodulator_wg&lt; B, R, R &gt;',['../classSC__Modulator__module__demodulator__wg.html',1,'']]],
   ['sc_5fmodulator_5fmodule_5ffilterer',['SC_Modulator_module_filterer',['../classSC__Modulator__module__filterer.html',1,'']]],
   ['sc_5fmodulator_5fmodule_5ffilterer_3c_20b_2c_20r_2c_20r_20_3e',['SC_Modulator_module_filterer&lt; B, R, R &gt;',['../classSC__Modulator__module__filterer.html',1,'']]],
   ['sc_5fmodulator_5fmodule_5fmodulator',['SC_Modulator_module_modulator',['../classSC__Modulator__module__modulator.html',1,'']]],
   ['sc_5fmodulator_5fmodule_5fmodulator_3c_20b_2c_20r_2c_20r_20_3e',['SC_Modulator_module_modulator&lt; B, R, R &gt;',['../classSC__Modulator__module__modulator.html',1,'']]],
   ['sc_5fmodulator_5fmodule_5ftdemodulator',['SC_Modulator_module_tdemodulator',['../classSC__Modulator__module__tdemodulator.html',1,'']]],
   ['sc_5fmodulator_5fmodule_5ftdemodulator_3c_20b_2c_20r_2c_20r_20_3e',['SC_Modulator_module_tdemodulator&lt; B, R, R &gt;',['../classSC__Modulator__module__tdemodulator.html',1,'']]],
+  ['sc_5fmodulator_5fmodule_5ftdemodulator_5fwg',['SC_Modulator_module_tdemodulator_wg',['../classSC__Modulator__module__tdemodulator__wg.html',1,'']]],
+  ['sc_5fmodulator_5fmodule_5ftdemodulator_5fwg_3c_20b_2c_20r_2c_20r_20_3e',['SC_Modulator_module_tdemodulator_wg&lt; B, R, R &gt;',['../classSC__Modulator__module__tdemodulator__wg.html',1,'']]],
   ['sc_5fmonitor',['SC_Monitor',['../classSC__Monitor.html',1,'']]],
   ['sc_5fmonitor_5fmodule',['SC_Monitor_module',['../classSC__Monitor__module.html',1,'']]],
   ['sc_5fpredicate',['SC_Predicate',['../classSC__Predicate.html',1,'']]],
@@ -75,8 +80,8 @@ var searchData=
   ['simulation_5fexit_5frsc',['Simulation_EXIT_RSC',['../classSimulation__EXIT__RSC.html',1,'']]],
   ['siso_5fi',['SISO_i',['../classSISO__i.html',1,'']]],
   ['source_5fazcw',['Source_AZCW',['../classSource__AZCW.html',1,'']]],
-  ['source_5ffixed',['Source_fixed',['../classSource__fixed.html',1,'']]],
   ['source_5fi',['Source_i',['../classSource__i.html',1,'']]],
   ['source_5frandom',['Source_random',['../classSource__random.html',1,'']]],
-  ['source_5frandom_5ffast',['Source_random_fast',['../classSource__random__fast.html',1,'']]]
+  ['source_5frandom_5ffast',['Source_random_fast',['../classSource__random__fast.html',1,'']]],
+  ['source_5fuser',['Source_user',['../classSource__user.html',1,'']]]
 ];

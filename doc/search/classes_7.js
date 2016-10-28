@@ -9,5 +9,6 @@ var searchData=
   ['interleaver_5flte',['Interleaver_LTE',['../classInterleaver__LTE.html',1,'']]],
   ['interleaver_5fno',['Interleaver_NO',['../classInterleaver__NO.html',1,'']]],
   ['interleaver_5frandom',['Interleaver_random',['../classInterleaver__random.html',1,'']]],
-  ['interleaver_5frandom_5fhard',['Interleaver_random_hard',['../classInterleaver__random__hard.html',1,'']]]
+  ['interleaver_5funiform',['Interleaver_uniform',['../classInterleaver__uniform.html',1,'']]],
+  ['interleaver_5fuser',['Interleaver_user',['../classInterleaver__user.html',1,'']]]
 ];

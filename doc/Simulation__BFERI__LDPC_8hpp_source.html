@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_c487c1b7f672be8b2885393524f3e6ab.html">Simulation</a></li><li class="navelem"><a class="el" href="dir_1745e00cd8d4a3acdf151a6bfcf96a76.html">BFERI</a></li><li class="navelem"><a class="el" href="dir_a2e2380678290f771d4ef39c84bbaf31.html">LDPC</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_0254ab4982fce5621fd6dac702f5707b.html">src</a></li><li class="navelem"><a class="el" href="dir_aada1ce6a507f825690dcae82f037c9b.html">Simulation</a></li><li class="navelem"><a class="el" href="dir_e3ee7fc527cc729500f8629d61820195.html">BFERI</a></li><li class="navelem"><a class="el" href="dir_57e20b4009823317d2c7331beaa2d3b9.html">LDPC</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -92,46 +92,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define SIMULATION_BFERI_LDPC_HPP_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;Tools/params.h&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Decoder__SISO_8hpp.html">Module/Decoder/Decoder_SISO.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;../Simulation_BFERI.hpp&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R, <span class="keyword">typename</span> Q&gt;</div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classSimulation__BFERI__LDPC.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSimulation__BFERI__LDPC.html">Simulation_BFERI_LDPC</a> : <span class="keyword">public</span> <a class="code" href="classSimulation__BFERI.html">Simulation_BFERI</a>&lt;B,R,Q&gt;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="comment">// LDPC bi-partite graph representation</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    std::vector&lt;unsigned char&gt; n_variables_per_parity;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    std::vector&lt;unsigned char&gt; n_parities_per_variable;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    std::vector&lt;unsigned int &gt; transpose;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;Tools/Code/LDPC/AList_reader/AList_reader.hpp&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Decoder__SISO_8hpp.html">Module/Decoder/Decoder_SISO.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;../Simulation_BFERI.hpp&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R, <span class="keyword">typename</span> Q&gt;</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classSimulation__BFERI__LDPC.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSimulation__BFERI__LDPC.html">Simulation_BFERI_LDPC</a> : <span class="keyword">public</span> <a class="code" href="classSimulation__BFERI.html">Simulation_BFERI</a>&lt;B,R,Q&gt;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="classAList__reader.html">AList_reader</a> alist_data;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    std::vector&lt;Decoder_SISO&lt;B,Q&gt;*&gt; decoder_siso;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    std::vector&lt;Decoder_SISO&lt;B,Q&gt;*&gt; decoder_siso;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="classSimulation__BFERI__LDPC.html">Simulation_BFERI_LDPC</a>(<span class="keyword">const</span> parameters&amp; params);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="classSimulation__BFERI__LDPC.html">Simulation_BFERI_LDPC</a>(<span class="keyword">const</span> parameters&amp; params);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSimulation__BFERI__LDPC.html">Simulation_BFERI_LDPC</a>();</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSimulation__BFERI__LDPC.html">Simulation_BFERI_LDPC</a>();</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">void</span>          launch_precompute();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">void</span>          snr_precompute   ();</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classSC__Encoder.html">Encoder&lt;B&gt;</a>*   build_encoder    (<span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="classSC__SISO.html">SISO&lt;Q&gt;</a>*      build_siso       (<span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="classSC__Decoder.html">Decoder&lt;B,Q&gt;</a>* build_decoder    (<span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SIMULATION_BFERI_LDPC_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">void</span>          launch_precompute();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">void</span>          snr_precompute   ();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="classSC__Encoder.html">Encoder&lt;B&gt;</a>*   build_encoder    (<span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="classSC__SISO.html">SISO&lt;Q&gt;</a>*      build_siso       (<span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classSC__Decoder.html">Decoder&lt;B,Q&gt;</a>* build_decoder    (<span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;};</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SIMULATION_BFERI_LDPC_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="classAList__reader_html"><div class="ttname"><a href="classAList__reader.html">AList_reader</a></div><div class="ttdef"><b>Definition:</b> AList_reader.hpp:7</div></div>
 <div class="ttc" id="classSC__Decoder_html"><div class="ttname"><a href="classSC__Decoder.html">SC_Decoder</a></div><div class="ttdef"><b>Definition:</b> SC_Decoder.hpp:16</div></div>
 <div class="ttc" id="classSC__Encoder_html"><div class="ttname"><a href="classSC__Encoder.html">SC_Encoder</a></div><div class="ttdef"><b>Definition:</b> SC_Encoder.hpp:16</div></div>
 <div class="ttc" id="classSimulation__BFERI_html"><div class="ttname"><a href="classSimulation__BFERI.html">Simulation_BFERI</a></div><div class="ttdef"><b>Definition:</b> SC_Simulation_BFERI.hpp:35</div></div>
 <div class="ttc" id="Decoder__SISO_8hpp_html"><div class="ttname"><a href="Decoder__SISO_8hpp.html">Decoder_SISO.hpp</a></div><div class="ttdoc">A Decoder_SISO is both a &quot;Soft Input Hard Output&quot; decoder and a &quot;Soft Input Soft Output&quot; decoder...</div></div>
 <div class="ttc" id="classSC__SISO_html"><div class="ttname"><a href="classSC__SISO.html">SC_SISO</a></div><div class="ttdef"><b>Definition:</b> SC_SISO.hpp:16</div></div>
-<div class="ttc" id="classSimulation__BFERI__LDPC_html"><div class="ttname"><a href="classSimulation__BFERI__LDPC.html">Simulation_BFERI_LDPC</a></div><div class="ttdef"><b>Definition:</b> Simulation_BFERI_LDPC.hpp:11</div></div>
+<div class="ttc" id="classSimulation__BFERI__LDPC_html"><div class="ttname"><a href="classSimulation__BFERI__LDPC.html">Simulation_BFERI_LDPC</a></div><div class="ttdef"><b>Definition:</b> Simulation_BFERI_LDPC.hpp:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:03 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:26 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

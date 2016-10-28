@@ -104,15 +104,24 @@ Inheritance diagram for Modulator_PSK&lt; B, R, Q, MAX &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a638b1ebbda6c8744dedd3a557335609e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a638b1ebbda6c8744dedd3a557335609e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Modulator_PSK</b> (const int <a class="el" href="classModulator__i.html#a4358d431f9c3cd799fbdc0defee88137">N</a>, const int bits_per_symbol=2, const R sigma=1.0, const bool disable_sig2=false, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Modulator_PSK&quot;)</td></tr>
-<tr class="separator:a638b1ebbda6c8744dedd3a557335609e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a578a3ee7548adcabf3fff22532dab6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__PSK.html#a7a578a3ee7548adcabf3fff22532dab6">modulate</a> (const mipp::vector&lt; B &gt; &amp;X_N1, mipp::vector&lt; R &gt; &amp;X_N2)</td></tr>
-<tr class="memdesc:a7a578a3ee7548adcabf3fff22532dab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modulates a vector of bits or symbols.  <a href="#a7a578a3ee7548adcabf3fff22532dab6">More...</a><br/></td></tr>
-<tr class="separator:a7a578a3ee7548adcabf3fff22532dab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa56186360d6249aaaa16efe39b3ecc96"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__PSK.html#aa56186360d6249aaaa16efe39b3ecc96">demodulate</a> (const mipp::vector&lt; Q &gt; &amp;Y_N1, mipp::vector&lt; Q &gt; &amp;Y_N2)</td></tr>
-<tr class="memdesc:aa56186360d6249aaaa16efe39b3ecc96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Demodulates a vector of noised and modulated bits/symbols (after the filtering process if required).  <a href="#aa56186360d6249aaaa16efe39b3ecc96">More...</a><br/></td></tr>
-<tr class="separator:aa56186360d6249aaaa16efe39b3ecc96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04e2967163550fd2d826520e2395be10"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04e2967163550fd2d826520e2395be10"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Modulator_PSK</b> (const int <a class="el" href="classModulator__i.html#a4358d431f9c3cd799fbdc0defee88137">N</a>, const R sigma, const int bits_per_symbol=2, const bool disable_sig2=false, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Modulator_PSK&quot;)</td></tr>
+<tr class="separator:a04e2967163550fd2d826520e2395be10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d6af338fe137d7985a3882578185eb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__PSK.html#a8d6af338fe137d7985a3882578185eb2">modulate</a> (const mipp::vector&lt; B &gt; &amp;X_N1, mipp::vector&lt; R &gt; &amp;X_N2)</td></tr>
+<tr class="memdesc:a8d6af338fe137d7985a3882578185eb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modulates a vector of bits or symbols.  <a href="#a8d6af338fe137d7985a3882578185eb2">More...</a><br/></td></tr>
+<tr class="separator:a8d6af338fe137d7985a3882578185eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb8ebec9da22fca71d987fa7f061b44e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__PSK.html#aeb8ebec9da22fca71d987fa7f061b44e">demodulate</a> (const mipp::vector&lt; Q &gt; &amp;Y_N1, mipp::vector&lt; Q &gt; &amp;Y_N2)</td></tr>
+<tr class="memdesc:aeb8ebec9da22fca71d987fa7f061b44e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Demodulates a vector of noised and modulated bits/symbols (after the filtering process if required).  <a href="#aeb8ebec9da22fca71d987fa7f061b44e">More...</a><br/></td></tr>
+<tr class="separator:aeb8ebec9da22fca71d987fa7f061b44e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a355b580038c1300269b8dcf3ee63bfdd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__PSK.html#a355b580038c1300269b8dcf3ee63bfdd">demodulate_with_gains</a> (const mipp::vector&lt; Q &gt; &amp;Y_N1, const mipp::vector&lt; R &gt; &amp;H_N, mipp::vector&lt; Q &gt; &amp;Y_N2)</td></tr>
+<tr class="memdesc:a355b580038c1300269b8dcf3ee63bfdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Demodulates a vector of noised and modulated bits/symbols (after the filtering process if required).  <a href="#a355b580038c1300269b8dcf3ee63bfdd">More...</a><br/></td></tr>
+<tr class="separator:a355b580038c1300269b8dcf3ee63bfdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc18f4f119460846d00a2fdba0124cab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__PSK.html#adc18f4f119460846d00a2fdba0124cab">demodulate</a> (const mipp::vector&lt; Q &gt; &amp;Y_N1, const mipp::vector&lt; Q &gt; &amp;Y_N2, mipp::vector&lt; Q &gt; &amp;Y_N3)</td></tr>
+<tr class="memdesc:adc18f4f119460846d00a2fdba0124cab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Demodulates a vector of noised and modulated bits/symbols (after the filtering process if required).  <a href="#adc18f4f119460846d00a2fdba0124cab">More...</a><br/></td></tr>
+<tr class="separator:adc18f4f119460846d00a2fdba0124cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4584676d079d2fc64e9102ff219286ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__PSK.html#a4584676d079d2fc64e9102ff219286ba">demodulate_with_gains</a> (const mipp::vector&lt; Q &gt; &amp;Y_N1, const mipp::vector&lt; R &gt; &amp;H_N, const mipp::vector&lt; Q &gt; &amp;Y_N2, mipp::vector&lt; Q &gt; &amp;Y_N3)</td></tr>
+<tr class="memdesc:a4584676d079d2fc64e9102ff219286ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Demodulates a vector of noised and modulated bits/symbols (after the filtering process if required).  <a href="#a4584676d079d2fc64e9102ff219286ba">More...</a><br/></td></tr>
+<tr class="separator:a4584676d079d2fc64e9102ff219286ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cce7291d6bc584e529c48790ed3f565"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__PSK.html#a8cce7291d6bc584e529c48790ed3f565">get_buffer_size_after_modulation</a> (const int <a class="el" href="classModulator__i.html#a4358d431f9c3cd799fbdc0defee88137">N</a>)</td></tr>
 <tr class="memdesc:a8cce7291d6bc584e529c48790ed3f565"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the vector size after the modulation (considering a given frame size).  <a href="#a8cce7291d6bc584e529c48790ed3f565">More...</a><br/></td></tr>
 <tr class="separator:a8cce7291d6bc584e529c48790ed3f565"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,15 +135,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a35e8411501f76e9780e911360f0c5650 inherit pub_methods_classSC__Modulator"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35e8411501f76e9780e911360f0c5650"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SC_Modulator</b> (const int <a class="el" href="classModulator__i.html#a4358d431f9c3cd799fbdc0defee88137">N</a>, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;SC_Modulator&quot;)</td></tr>
 <tr class="separator:a35e8411501f76e9780e911360f0c5650 inherit pub_methods_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e65442b9d613351031caffe1db32c8e inherit pub_methods_classSC__Modulator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSC__Modulator.html#a1e65442b9d613351031caffe1db32c8e">filter</a> (const mipp::vector&lt; R &gt; &amp;Y_N1, mipp::vector&lt; R &gt; &amp;Y_N2)</td></tr>
-<tr class="memdesc:a1e65442b9d613351031caffe1db32c8e inherit pub_methods_classSC__Modulator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters a vector of noised and modulated bits/symbols.  <a href="#a1e65442b9d613351031caffe1db32c8e">More...</a><br/></td></tr>
-<tr class="separator:a1e65442b9d613351031caffe1db32c8e inherit pub_methods_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a068961f99b6ccbcf3aca20b3d61da4c4 inherit pub_methods_classSC__Modulator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSC__Modulator.html#a068961f99b6ccbcf3aca20b3d61da4c4">demodulate</a> (const mipp::vector&lt; Q &gt; &amp;Y_N1, const mipp::vector&lt; Q &gt; &amp;Y_N2, mipp::vector&lt; Q &gt; &amp;Y_N3)</td></tr>
-<tr class="memdesc:a068961f99b6ccbcf3aca20b3d61da4c4 inherit pub_methods_classSC__Modulator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Demodulates a vector of noised and modulated bits/symbols (after the filtering process if required).  <a href="#a068961f99b6ccbcf3aca20b3d61da4c4">More...</a><br/></td></tr>
-<tr class="separator:a068961f99b6ccbcf3aca20b3d61da4c4 inherit pub_methods_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56fd8bb32c3a5db90b92a929d3d4c639 inherit pub_methods_classSC__Modulator"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSC__Modulator.html#a56fd8bb32c3a5db90b92a929d3d4c639">get_buffer_size_after_filtering</a> (const int <a class="el" href="classModulator__i.html#a4358d431f9c3cd799fbdc0defee88137">N</a>)</td></tr>
-<tr class="memdesc:a56fd8bb32c3a5db90b92a929d3d4c639 inherit pub_methods_classSC__Modulator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the vector size after the filtering process (considering a given frame size).  <a href="#a56fd8bb32c3a5db90b92a929d3d4c639">More...</a><br/></td></tr>
-<tr class="separator:a56fd8bb32c3a5db90b92a929d3d4c639 inherit pub_methods_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fa53edbfc8322f5de56425d692efb5f inherit pub_methods_classSC__Modulator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSC__Modulator.html#a9fa53edbfc8322f5de56425d692efb5f">set_n_frames</a> (const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>)</td></tr>
 <tr class="memdesc:a9fa53edbfc8322f5de56425d692efb5f inherit pub_methods_classSC__Modulator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number of frames.  <a href="#a9fa53edbfc8322f5de56425d692efb5f">More...</a><br/></td></tr>
 <tr class="separator:a9fa53edbfc8322f5de56425d692efb5f inherit pub_methods_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,9 +147,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>create_sc_module_filt
 <tr class="memitem:a45d6d3812e874626d725a85c0a834958 inherit pub_methods_classSC__Modulator"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45d6d3812e874626d725a85c0a834958"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>create_sc_module_demodulator</b> ()</td></tr>
 <tr class="separator:a45d6d3812e874626d725a85c0a834958 inherit pub_methods_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0b1b9c92ed45acf7c38fe3a1931b85b inherit pub_methods_classSC__Modulator"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0b1b9c92ed45acf7c38fe3a1931b85b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>create_sc_module_demodulator_wg</b> ()</td></tr>
+<tr class="separator:ae0b1b9c92ed45acf7c38fe3a1931b85b inherit pub_methods_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5713a6c6210a897e93636eb39365dc22 inherit pub_methods_classSC__Modulator"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5713a6c6210a897e93636eb39365dc22"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>create_sc_module_tdemodulator</b> ()</td></tr>
 <tr class="separator:a5713a6c6210a897e93636eb39365dc22 inherit pub_methods_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68f180346135bc21ecbf1672cc46c5ce inherit pub_methods_classSC__Modulator"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68f180346135bc21ecbf1672cc46c5ce"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>create_sc_module_tdemodulator_wg</b> ()</td></tr>
+<tr class="separator:a68f180346135bc21ecbf1672cc46c5ce inherit pub_methods_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classModulator__i"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classModulator__i')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classModulator__i.html">Modulator_i&lt; B, R, Q &gt;</a></td></tr>
 <tr class="memitem:a34ea565aac285848a9bca1b561692460 inherit pub_methods_classModulator__i"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__i.html#a34ea565aac285848a9bca1b561692460">Modulator_i</a> (const int <a class="el" href="classModulator__i.html#a4358d431f9c3cd799fbdc0defee88137">N</a>, const int <a class="el" href="classModulator__i.html#afe24a0a302ad2854fd813d5129488c32">N_mod</a>, const int <a class="el" href="classModulator__i.html#a2721b0ea47db8d45055a56198e98f60d">N_fil</a>, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Modulator_i&quot;)</td></tr>
 <tr class="memdesc:a34ea565aac285848a9bca1b561692460 inherit pub_methods_classModulator__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a34ea565aac285848a9bca1b561692460">More...</a><br/></td></tr>
@@ -164,6 +170,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>create_sc_module_tdem
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__i.html#a0d8e28dea210d02ad7f2bb5fc3c411fa">~Modulator_i</a> ()</td></tr>
 <tr class="memdesc:a0d8e28dea210d02ad7f2bb5fc3c411fa inherit pub_methods_classModulator__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr class="separator:a0d8e28dea210d02ad7f2bb5fc3c411fa inherit pub_methods_classModulator__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a672002b628a431f8833e9db3736c93d9 inherit pub_methods_classModulator__i"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__i.html#a672002b628a431f8833e9db3736c93d9">filter</a> (const mipp::vector&lt; R &gt; &amp;Y_N1, mipp::vector&lt; R &gt; &amp;Y_N2)</td></tr>
+<tr class="memdesc:a672002b628a431f8833e9db3736c93d9 inherit pub_methods_classModulator__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters a vector of noised and modulated bits/symbols.  <a href="#a672002b628a431f8833e9db3736c93d9">More...</a><br/></td></tr>
+<tr class="separator:a672002b628a431f8833e9db3736c93d9 inherit pub_methods_classModulator__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af239c19aa666fc3db76897aadb8c3d2e inherit pub_methods_classModulator__i"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__i.html#af239c19aa666fc3db76897aadb8c3d2e">get_buffer_size_after_filtering</a> (const int <a class="el" href="classModulator__i.html#a4358d431f9c3cd799fbdc0defee88137">N</a>)</td></tr>
+<tr class="memdesc:af239c19aa666fc3db76897aadb8c3d2e inherit pub_methods_classModulator__i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the vector size after the filtering process (considering a given frame size).  <a href="#af239c19aa666fc3db76897aadb8c3d2e">More...</a><br/></td></tr>
+<tr class="separator:af239c19aa666fc3db76897aadb8c3d2e inherit pub_methods_classModulator__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classModule"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classModule')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classModule.html">Module</a></td></tr>
 <tr class="memitem:ac4851d2fec5f8dfab18fdd9ea4882fd7 inherit pub_methods_classModule"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModule.html#ac4851d2fec5f8dfab18fdd9ea4882fd7">Module</a> (const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;Module&quot;)</td></tr>
 <tr class="memdesc:ac4851d2fec5f8dfab18fdd9ea4882fd7 inherit pub_methods_classModule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac4851d2fec5f8dfab18fdd9ea4882fd7">More...</a><br/></td></tr>
@@ -194,10 +206,18 @@ Additional Inherited Members</h2></td></tr>
 <a class="el" href="classSC__Modulator__module__demodulator.html">SC_Modulator_module_demodulator</a><br class="typebreak"/>
 &lt; B, R, Q &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>module_demod</b></td></tr>
 <tr class="separator:a2c3e8ccccf6373226c5c65ba641bc38d inherit pub_attribs_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc17db49f4d82eaa506b4fb035a2f3fb inherit pub_attribs_classSC__Modulator"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc17db49f4d82eaa506b4fb035a2f3fb"></a>
+<a class="el" href="classSC__Modulator__module__demodulator__wg.html">SC_Modulator_module_demodulator_wg</a><br class="typebreak"/>
+&lt; B, R, Q &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>module_demod_wg</b></td></tr>
+<tr class="separator:abc17db49f4d82eaa506b4fb035a2f3fb inherit pub_attribs_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af095b14ca1f005353876c04396390d5f inherit pub_attribs_classSC__Modulator"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af095b14ca1f005353876c04396390d5f"></a>
 <a class="el" href="classSC__Modulator__module__tdemodulator.html">SC_Modulator_module_tdemodulator</a><br class="typebreak"/>
 &lt; B, R, Q &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>module_tdemod</b></td></tr>
 <tr class="separator:af095b14ca1f005353876c04396390d5f inherit pub_attribs_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80a1edef555a181f24dfd4ddbbdc86f6 inherit pub_attribs_classSC__Modulator"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80a1edef555a181f24dfd4ddbbdc86f6"></a>
+<a class="el" href="classSC__Modulator__module__tdemodulator__wg.html">SC_Modulator_module_tdemodulator_wg</a><br class="typebreak"/>
+&lt; B, R, Q &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>module_tdemod_wg</b></td></tr>
+<tr class="separator:a80a1edef555a181f24dfd4ddbbdc86f6 inherit pub_attribs_classSC__Modulator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classModulator__i"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classModulator__i')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classModulator__i.html">Modulator_i&lt; B, R, Q &gt;</a></td></tr>
 <tr class="memitem:a4358d431f9c3cd799fbdc0defee88137 inherit pro_attribs_classModulator__i"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModulator__i.html#a4358d431f9c3cd799fbdc0defee88137">N</a></td></tr>
 <tr class="separator:a4358d431f9c3cd799fbdc0defee88137 inherit pro_attribs_classModulator__i"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,7 +232,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a794fbb44972c7c73cc197159093e66d1 inherit pro_attribs_classModule"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="aa56186360d6249aaaa16efe39b3ecc96"></a>
+<a class="anchor" id="aeb8ebec9da22fca71d987fa7f061b44e"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -222,7 +242,7 @@ template&lt;typename B , typename R , typename Q , proto_max&lt; Q &gt; MAX&gt; 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classModulator__PSK.html">Modulator_PSK</a>&lt; B, R, Q, MAX &gt;::demodulate </td>
+          <td class="memname">void <a class="el" href="classModulator__PSK.html">Modulator_PSK</a>&lt; B, R, Q, MAX &gt;::demodulate </td>
           <td>(</td>
           <td class="paramtype">const mipp::vector&lt; Q &gt; &amp;&#160;</td>
           <td class="paramname"><em>Y_N1</em>, </td>
@@ -255,7 +275,178 @@ template&lt;typename B , typename R , typename Q , proto_max&lt; Q &gt; MAX&gt; 
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classSC__Modulator.html#af1f678f4ac2983c1bea6ba7beeb4f2bb">SC_Modulator&lt; B, R, Q &gt;</a>.</p>
+<p>Implements <a class="el" href="classModulator__i.html#a6c255a02bf49129788df8a6756195df7">Modulator_i&lt; B, R, Q &gt;</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adc18f4f119460846d00a2fdba0124cab"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename B , typename R , typename Q , proto_max&lt; Q &gt; MAX&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classModulator__PSK.html">Modulator_PSK</a>&lt; B, R, Q, MAX &gt;::demodulate </td>
+          <td>(</td>
+          <td class="paramtype">const mipp::vector&lt; Q &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Y_N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const mipp::vector&lt; Q &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Y_N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">mipp::vector&lt; Q &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Y_N3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Demodulates a vector of noised and modulated bits/symbols (after the filtering process if required). </p>
+<p>Used for the iterative turbo demodulation technique, this type of demodulation takes the decoder information into account.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Y_N1</td><td>a vector of noised and modulated bits/symbols. </td></tr>
+    <tr><td class="paramname">Y_N2</td><td>a vector of extrinsic information coming from a SISO decoder (used in the iterative turbo demodulation technique). </td></tr>
+    <tr><td class="paramname">Y_N3</td><td>a demodulated vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classModulator__i.html#a279477fb1af284f309e383647a80e73e">Modulator_i&lt; B, R, Q &gt;</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a355b580038c1300269b8dcf3ee63bfdd"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename B , typename R , typename Q , proto_max&lt; Q &gt; MAX&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classModulator__PSK.html">Modulator_PSK</a>&lt; B, R, Q, MAX &gt;::demodulate_with_gains </td>
+          <td>(</td>
+          <td class="paramtype">const mipp::vector&lt; Q &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Y_N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const mipp::vector&lt; R &gt; &amp;&#160;</td>
+          <td class="paramname"><em>H_N</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">mipp::vector&lt; Q &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Y_N2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Demodulates a vector of noised and modulated bits/symbols (after the filtering process if required). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Y_N1</td><td>a vector of noised and modulated bits/symbols. </td></tr>
+    <tr><td class="paramname">H_N</td><td>channel gains. </td></tr>
+    <tr><td class="paramname">Y_N2</td><td>a demodulated vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classModulator__i.html#a5a34be9f3e1719e81814206be7a9bc17">Modulator_i&lt; B, R, Q &gt;</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4584676d079d2fc64e9102ff219286ba"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename B , typename R , typename Q , proto_max&lt; Q &gt; MAX&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classModulator__PSK.html">Modulator_PSK</a>&lt; B, R, Q, MAX &gt;::demodulate_with_gains </td>
+          <td>(</td>
+          <td class="paramtype">const mipp::vector&lt; Q &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Y_N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const mipp::vector&lt; R &gt; &amp;&#160;</td>
+          <td class="paramname"><em>H_N</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const mipp::vector&lt; Q &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Y_N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">mipp::vector&lt; Q &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Y_N3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Demodulates a vector of noised and modulated bits/symbols (after the filtering process if required). </p>
+<p>Used for the iterative turbo demodulation technique, this type of demodulation takes the decoder information into account.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Y_N1</td><td>a vector of noised and modulated bits/symbols. </td></tr>
+    <tr><td class="paramname">H_N</td><td>channel gains. </td></tr>
+    <tr><td class="paramname">Y_N2</td><td>a vector of extrinsic information coming from a SISO decoder (used in the iterative turbo demodulation technique). </td></tr>
+    <tr><td class="paramname">Y_N3</td><td>a demodulated vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classModulator__i.html#ad02ba26c8a7d6c994d9fd0268327d39c">Modulator_i&lt; B, R, Q &gt;</a>.</p>
 
 </div>
 </div>
@@ -292,11 +483,11 @@ template&lt;typename B , typename R , typename Q , proto_max&lt; Q &gt; MAX&gt; 
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the vector size after the modulation. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classSC__Modulator.html#a732e20614457f9e3010d1dc09feb1f78">SC_Modulator&lt; B, R, Q &gt;</a>.</p>
+<p>Reimplemented from <a class="el" href="classModulator__i.html#a1352ec85ac7f2bd6b99451e736495e43">Modulator_i&lt; B, R, Q &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7a578a3ee7548adcabf3fff22532dab6"></a>
+<a class="anchor" id="a8d6af338fe137d7985a3882578185eb2"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -306,7 +497,7 @@ template&lt;typename B , typename R , typename Q , proto_max&lt; Q &gt; MAX&gt; 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classModulator__PSK.html">Modulator_PSK</a>&lt; B, R, Q, MAX &gt;::modulate </td>
+          <td class="memname">void <a class="el" href="classModulator__PSK.html">Modulator_PSK</a>&lt; B, R, Q, MAX &gt;::modulate </td>
           <td>(</td>
           <td class="paramtype">const mipp::vector&lt; B &gt; &amp;&#160;</td>
           <td class="paramname"><em>X_N1</em>, </td>
@@ -339,7 +530,7 @@ template&lt;typename B , typename R , typename Q , proto_max&lt; Q &gt; MAX&gt; 
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classSC__Modulator.html#af447384492b78b04256d82e8626e919a">SC_Modulator&lt; B, R, Q &gt;</a>.</p>
+<p>Implements <a class="el" href="classModulator__i.html#afbb0cde18c3ffea281b27c59b6b12884">Modulator_i&lt; B, R, Q &gt;</a>.</p>
 
 </div>
 </div>
@@ -349,7 +540,7 @@ template&lt;typename B , typename R , typename Q , proto_max&lt; Q &gt; MAX&gt; 
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 10 2016 10:11:25 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 28 2016 11:21:48 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
