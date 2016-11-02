@@ -48,5 +48,6 @@ var searchData=
   ['decoder_5fturbo_5ffast',['Decoder_turbo_fast',['../classDecoder__turbo__fast.html',1,'']]],
   ['decoder_5fturbo_5ffast_5fca',['Decoder_turbo_fast_CA',['../classDecoder__turbo__fast__CA.html',1,'']]],
   ['decoder_5fturbo_5fnaive',['Decoder_turbo_naive',['../classDecoder__turbo__naive.html',1,'']]],
-  ['decoder_5fturbo_5fnaive_5fca',['Decoder_turbo_naive_CA',['../classDecoder__turbo__naive__CA.html',1,'']]]
+  ['decoder_5fturbo_5fnaive_5fca',['Decoder_turbo_naive_CA',['../classDecoder__turbo__naive__CA.html',1,'']]],
+  ['decoder_5fturbo_5fnaive_5fca_5fself_5fcorrected',['Decoder_turbo_naive_CA_self_corrected',['../classDecoder__turbo__naive__CA__self__corrected.html',1,'']]]
 ];

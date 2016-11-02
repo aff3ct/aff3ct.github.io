@@ -117,10 +117,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classSISO__i.html#a903b6a3e186f3f8308e0a096b81ca254">   51</a></span>&#160;    <a class="code" href="classSISO__i.html#a903b6a3e186f3f8308e0a096b81ca254">SISO_i</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> K, <span class="keyword">const</span> <span class="keywordtype">int</span> N, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1, <span class="keyword">const</span> <span class="keywordtype">int</span> simd_inter_frame_level = 1,</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;           std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;SISO_i&quot;</span>)</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    : <a class="code" href="classModule.html">Module</a>(<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>),</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      n_dec_waves_siso(std::ceil((float)this-&gt;<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> / (float)simd_inter_frame_level)),</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      n_dec_waves_siso((int)std::ceil((float)this-&gt;<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> / (float)simd_inter_frame_level)),</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      n_inter_frame_rest_siso(this-&gt;<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> % simd_inter_frame_level),</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      Y_N1(n_dec_waves_siso, mipp::vector&lt;R&gt;(simd_inter_frame_level * N + mipp::nElReg&lt;R&gt;(), 0)),</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      Y_N2(n_dec_waves_siso, mipp::vector&lt;R&gt;(simd_inter_frame_level * N + mipp::nElReg&lt;R&gt;(), 0)),</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      Y_N1(n_dec_waves_siso, mipp::vector&lt;R&gt;(simd_inter_frame_level * N + mipp::nElReg&lt;R&gt;(), (R)0)),</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      Y_N2(n_dec_waves_siso, mipp::vector&lt;R&gt;(simd_inter_frame_level * N + mipp::nElReg&lt;R&gt;(), (R)0)),</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <a class="code" href="classSISO__i.html#a8ba32d1792e29c29f4cf7b6cfda28d62">K_siso</a>(K), <a class="code" href="classSISO__i.html#ad27d9993a188e03a4d48306d0716fed4">N_siso</a>(N), simd_inter_frame_level_siso(simd_inter_frame_level)</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    {</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
@@ -191,7 +191,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 28 2016 11:21:26 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 31 2016 11:33:09 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

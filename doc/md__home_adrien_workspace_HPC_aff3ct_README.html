@@ -125,7 +125,7 @@ $ cmake ..
 <h2>Run the code</h2>
 <p>Here are some examples of runs. You can skip the computations of the current SNR point with the <code>ctrl+C</code> combination on the keyboard. If you use <code>ctrl+C</code> twice in a small time-step (500ms), the program will stop.</p>
 <h3>Decoding of the Polar codes with the Successive Cancellation decoder</h3>
-<pre class="fragment">$ ./bin/aff3ct --sim-type BFER --cde-type POLAR -K 1024 -N 2048 -m 1.5 -M 3.01 --cde-sigma 0.862 --dec-type SC --dec-implem FAST
+<pre class="fragment">$ ./bin/aff3ct --sim-type BFER --cde-type POLAR -K 1024 -N 2048 -m 1.5 -M 3.01 --cde-fb-gen-method GA --cde-sigma 0.862 --dec-type SC --dec-implem FAST
 </pre><p>Expected output: </p>
 <pre class="fragment"># -------------------------------------------------
 # ---- A FAST FORWARD ERROR CORRECTION TOOL &gt;&gt; ----
@@ -264,7 +264,7 @@ $ cmake ..
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 28 2016 11:21:26 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 31 2016 11:33:10 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
