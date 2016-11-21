@@ -155,7 +155,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        monitor.<a class="code" href="classMonitor__i.html#a9fd81ec278d0d06ae1ba389bdc91760e">check_errors</a>(U_K, V_K);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">if</span> (monitor.<a class="code" href="classMonitor__i.html#ab2ed734e81a69810f100076016cc918c">fe_limit_achieved</a>())</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">if</span> (monitor.<a class="code" href="classMonitor__i.html#a32713645ec6541f14a3a65e67f3c0e3e">fe_limit_achieved</a>())</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            sc_core::sc_stop();</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;};</div>
@@ -191,17 +191,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Monitor.html">Monitor</a> = <a class="code" href="classSC__Monitor.html">SC_Monitor&lt;B&gt;</a>;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Monitor.html">Monitor</a> = <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;</a>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_MONITOR_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;SPU_Monitor.hpp&quot;</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_MONITOR_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classModule_html_ace2db121879b2d61bf51920c715b132e"><div class="ttname"><a href="classModule.html#ace2db121879b2d61bf51920c715b132e">Module::set_n_frames</a></div><div class="ttdeci">virtual void set_n_frames(const int n_frames)</div><div class="ttdoc">Set the number of frames. </div><div class="ttdef"><b>Definition:</b> Module.hpp:45</div></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
+<div class="ttc" id="classMonitor__i_html_a32713645ec6541f14a3a65e67f3c0e3e"><div class="ttname"><a href="classMonitor__i.html#a32713645ec6541f14a3a65e67f3c0e3e">Monitor_i::fe_limit_achieved</a></div><div class="ttdeci">virtual bool fe_limit_achieved()=0</div><div class="ttdoc">Tells if the frame errors limit is achieved (in this case the current computations should stop)...</div></div>
 <div class="ttc" id="classMonitor__i_html_a8304abe6a3c0bcd842ea6b8e00802077"><div class="ttname"><a href="classMonitor__i.html#a8304abe6a3c0bcd842ea6b8e00802077">Monitor_i::K</a></div><div class="ttdeci">const int K</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:37</div></div>
 <div class="ttc" id="classSC__Monitor_html"><div class="ttname"><a href="classSC__Monitor.html">SC_Monitor</a></div><div class="ttdef"><b>Definition:</b> SC_Monitor.hpp:16</div></div>
 <div class="ttc" id="classMonitor__i_html"><div class="ttname"><a href="classMonitor__i.html">Monitor_i</a></div><div class="ttdoc">Monitors the simulated frames, tells if there is a frame errors and counts the number of bit errors...</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:28</div></div>
-<div class="ttc" id="classMonitor__i_html_ab2ed734e81a69810f100076016cc918c"><div class="ttname"><a href="classMonitor__i.html#ab2ed734e81a69810f100076016cc918c">Monitor_i::fe_limit_achieved</a></div><div class="ttdeci">virtual bool fe_limit_achieved() const =0</div><div class="ttdoc">Tells if the frame errors limit is achieved (in this case the current computations should stop)...</div></div>
 <div class="ttc" id="classSC__Monitor_html_a3f3e4541cb6fd630630fe59d27a33469"><div class="ttname"><a href="classSC__Monitor.html#a3f3e4541cb6fd630630fe59d27a33469">SC_Monitor::set_n_frames</a></div><div class="ttdeci">virtual void set_n_frames(const int n_frames)</div><div class="ttdoc">Set the number of frames. </div><div class="ttdef"><b>Definition:</b> SC_Monitor.hpp:87</div></div>
 <div class="ttc" id="classSC__Monitor__module_html"><div class="ttname"><a href="classSC__Monitor__module.html">SC_Monitor_module</a></div><div class="ttdef"><b>Definition:</b> SC_Monitor.hpp:19</div></div>
 <div class="ttc" id="classMonitor__i_html_ac9446b7076f640cbc1a0fac613ffe714"><div class="ttname"><a href="classMonitor__i.html#ac9446b7076f640cbc1a0fac613ffe714">Monitor_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:38</div></div>
@@ -210,7 +209,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:09 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:05 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -144,9 +144,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a586ab4780e42d8d68d498ba9d45164cc"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitor__i.html#a586ab4780e42d8d68d498ba9d45164cc">get_fe_limit</a> () const =0</td></tr>
 <tr class="memdesc:a586ab4780e42d8d68d498ba9d45164cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the frame errors limit (maximal number of frame errors to simulate).  <a href="#a586ab4780e42d8d68d498ba9d45164cc">More...</a><br/></td></tr>
 <tr class="separator:a586ab4780e42d8d68d498ba9d45164cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2ed734e81a69810f100076016cc918c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitor__i.html#ab2ed734e81a69810f100076016cc918c">fe_limit_achieved</a> () const =0</td></tr>
-<tr class="memdesc:ab2ed734e81a69810f100076016cc918c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells if the frame errors limit is achieved (in this case the current computations should stop).  <a href="#ab2ed734e81a69810f100076016cc918c">More...</a><br/></td></tr>
-<tr class="separator:ab2ed734e81a69810f100076016cc918c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32713645ec6541f14a3a65e67f3c0e3e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitor__i.html#a32713645ec6541f14a3a65e67f3c0e3e">fe_limit_achieved</a> ()=0</td></tr>
+<tr class="memdesc:a32713645ec6541f14a3a65e67f3c0e3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells if the frame errors limit is achieved (in this case the current computations should stop).  <a href="#a32713645ec6541f14a3a65e67f3c0e3e">More...</a><br/></td></tr>
+<tr class="separator:a32713645ec6541f14a3a65e67f3c0e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fd81ec278d0d06ae1ba389bdc91760e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMonitor__i.html#a9fd81ec278d0d06ae1ba389bdc91760e">check_errors</a> (const mipp::vector&lt; B &gt; &amp;U, const mipp::vector&lt; B &gt; &amp;V)=0</td></tr>
 <tr class="memdesc:a9fd81ec278d0d06ae1ba389bdc91760e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two messages and counts the number of frame errors and bit errors.  <a href="#a9fd81ec278d0d06ae1ba389bdc91760e">More...</a><br/></td></tr>
 <tr class="separator:a9fd81ec278d0d06ae1ba389bdc91760e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -326,7 +326,7 @@ template&lt;typename B &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ab2ed734e81a69810f100076016cc918c"></a>
+<a class="anchor" id="a32713645ec6541f14a3a65e67f3c0e3e"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -339,7 +339,7 @@ template&lt;typename B &gt; </div>
           <td class="memname">virtual bool <a class="el" href="classMonitor__i.html">Monitor_i</a>&lt; B &gt;::fe_limit_achieved </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -352,7 +352,7 @@ template&lt;typename B &gt; </div>
 <p>Tells if the frame errors limit is achieved (in this case the current computations should stop). </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the frame errors limit is achieved. </dd></dl>
 
-<p>Implemented in <a class="el" href="classMonitor__std.html#a5cfa5d358474834bddaa76293b1635d4">Monitor_std&lt; B &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMonitor__std.html#a5f550f73e38b10f7d1b70d66b639f0b5">Monitor_std&lt; B &gt;</a>.</p>
 
 </div>
 </div>
@@ -528,7 +528,7 @@ template&lt;typename B &gt; </div>
 <p>Gets the number of analyzed frames (analyzed in the <a class="el" href="classMonitor__i.html#a9fd81ec278d0d06ae1ba389bdc91760e" title="Compares two messages and counts the number of frame errors and bit errors. ">Monitor_i::check_errors</a> method). </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of analyzed frames. </dd></dl>
 
-<p>Implemented in <a class="el" href="classMonitor__std.html#ac06e44d99c7144d6050c79199ad5de22">Monitor_std&lt; B &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMonitor__std.html#a46496459eb58c7622500478573a276d3">Monitor_std&lt; B &gt;</a>, and <a class="el" href="classMonitor__reduction.html#ad84db50dfa8fac48dbc0a427ad060fd9">Monitor_reduction&lt; B &gt;</a>.</p>
 
 </div>
 </div>
@@ -558,7 +558,7 @@ template&lt;typename B &gt; </div>
 <p>Gets the number of bit errors. </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of bit errors. </dd></dl>
 
-<p>Implemented in <a class="el" href="classMonitor__std.html#aa0babb930b052dcdbea9981a6ec6ef2a">Monitor_std&lt; B &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMonitor__std.html#a46ce1aba85622a6beee94ae239bb8d97">Monitor_std&lt; B &gt;</a>, and <a class="el" href="classMonitor__reduction.html#a0caec33e419339978ec76b653c50aac9">Monitor_reduction&lt; B &gt;</a>.</p>
 
 </div>
 </div>
@@ -588,7 +588,7 @@ template&lt;typename B &gt; </div>
 <p>Gets the number of frame errors. </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of frame errors. </dd></dl>
 
-<p>Implemented in <a class="el" href="classMonitor__std.html#a09d14cfbe8263f6825be8f96c7824b31">Monitor_std&lt; B &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMonitor__std.html#a7b5b790180d9347a1f057e69df597387">Monitor_std&lt; B &gt;</a>, and <a class="el" href="classMonitor__reduction.html#a0ef66ddd2b334f2fd04d12484559146b">Monitor_reduction&lt; B &gt;</a>.</p>
 
 </div>
 </div>
@@ -816,7 +816,7 @@ template&lt;typename B &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:48 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:27 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

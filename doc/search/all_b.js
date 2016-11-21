@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['launch',['launch',['../classLauncher.html#a3149ed2d2c2ece4f2def34a4422bc10d',1,'Launcher::launch()'],['../classSimulation__BFER.html#a5be9443aaed1b2b0d1196c15d18413ed',1,'Simulation_BFER::launch()'],['../classSimulation__BFERI.html#a5247e8a9559f25bc6b1d192e0825dacc',1,'Simulation_BFERI::launch()'],['../classSimulation__EXIT.html#a1ecf112d8352476b44f36e2e4203a206',1,'Simulation_EXIT::launch()'],['../classGeneration__polar.html#ada5aa727c19653a5dd04a9472101f951',1,'Generation_polar::launch()'],['../classSimulation.html#ac5554a298c7b18de17705e15f732bf5e',1,'Simulation::launch()']]],
+  ['launch',['launch',['../classLauncher.html#a3149ed2d2c2ece4f2def34a4422bc10d',1,'Launcher::launch()'],['../classSimulation__BFER__i.html#a5cb8f8a7584edc88604c42142d856fee',1,'Simulation_BFER_i::launch()'],['../classSimulation__BFERI__i.html#a3b3470aafb91b48eebe80fd2a9d88cc6',1,'Simulation_BFERI_i::launch()'],['../classSimulation__EXIT.html#a1ecf112d8352476b44f36e2e4203a206',1,'Simulation_EXIT::launch()'],['../classGeneration__polar.html#ada5aa727c19653a5dd04a9472101f951',1,'Generation_polar::launch()'],['../classSimulation.html#ac5554a298c7b18de17705e15f732bf5e',1,'Simulation::launch()']]],
   ['launcher',['Launcher',['../classLauncher.html',1,'Launcher&lt; B, R, Q &gt;'],['../classLauncher.html#a4d81821ff5dd3fe0e563b8b1a6f8ecd0',1,'Launcher::Launcher()']]],
   ['launcher_2ehpp',['Launcher.hpp',['../Launcher_8hpp.html',1,'']]],
   ['launcher_5fbfer',['Launcher_BFER',['../classLauncher__BFER.html',1,'']]],

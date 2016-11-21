@@ -91,8 +91,12 @@ $ cmake ..
 <pre class="fragment">$ cmake .. -DENABLE_GSL=ON
 </pre><p>Enabling the Intel Math Kernel Librairy (MKL) (used for the AWGN channel): </p>
 <pre class="fragment">$ cmake .. -DENABLE_MKL=ON
-</pre><p>Enabling the SystemC/TLM standard between the modules: </p>
+</pre><p>Enabling the SystemC/TLM standard between the modules (be careful, you have to disable StarPU with <code>-DENABLE_STARPU=OFF</code> when you want to use SystemC): </p>
 <pre class="fragment">$ cmake .. -DENABLE_SYSTEMC=ON
+</pre><p>Enabling <a href="http://starpu.gforge.inria.fr/">StarPU</a> for the BFER simulations (be careful, you have to disable SystemC with <code>-DENABLE_SYSTEMC=OFF</code> when you want to use StarPU): </p>
+<pre class="fragment">$ cmake .. -DENABLE_STARPU=ON
+</pre><p>Enabling MPI (simulations over multiple nodes/computers) for the BFER and BFERI simulations (MPI is not compatible with StarPU and SystemC, be sure to have <code>-DENABLE_SYSTEMC=OFF</code> and <code>-DENABLE_STARPU=OFF</code>): </p>
+<pre class="fragment">$ cmake .. -DENABLE_MPI=ON
 </pre><h3>Modifying the CMakeCache.txt</h3>
 <p>By default the configuration file will generate a debug binary. If we want to produce a release binary we have to modify the <code>CMAKE_BUILD_TYPE:STRING</code> variable like this: </p>
 <pre class="fragment">CMAKE_BUILD_TYPE:STRING=Release
@@ -264,7 +268,7 @@ $ cmake ..
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:10 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:06 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

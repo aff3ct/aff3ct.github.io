@@ -177,11 +177,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__SISO.html">SISO</a> = <a class="code" href="classSC__SISO.html">SC_SISO&lt;R&gt;</a>;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__SISO.html">SISO</a> = <a class="code" href="classSISO__i.html">SISO_i&lt;R&gt;</a>;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_SISO_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;SPU_SISO.hpp&quot;</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_SISO_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classSISO__i_html"><div class="ttname"><a href="classSISO__i.html">SISO_i</a></div><div class="ttdoc">A SISO (Soft Input Soft Output) is a type of decoder which takes a soft input and return a soft outpu...</div><div class="ttdef"><b>Definition:</b> SISO.hpp:27</div></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
 <div class="ttc" id="classSC__SISO_html"><div class="ttname"><a href="classSC__SISO.html">SC_SISO</a></div><div class="ttdef"><b>Definition:</b> SC_SISO.hpp:16</div></div>
@@ -192,7 +191,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:09 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:05 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

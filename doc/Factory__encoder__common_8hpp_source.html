@@ -91,25 +91,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef FACTORY_ENCODER_COMMON_HPP</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define FACTORY_ENCODER_COMMON_HPP</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;Tools/params.h&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Encoder_8hpp.html">Module/Encoder/Encoder.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Factory_8hpp.html">Factory.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;Tools/params.h&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="structFactory__encoder__common.html">    9</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structFactory__encoder__common.html">Factory_encoder_common</a> : <span class="keyword">public</span> <a class="code" href="structFactory.html">Factory</a></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">static</span> <a class="code" href="classSC__Encoder.html">Encoder&lt;B&gt;</a>* build(<span class="keyword">const</span> parameters &amp;params, <span class="keyword">const</span> <span class="keywordtype">int</span> seed = 0, <span class="keyword">const</span> <span class="keywordtype">int</span> n_frames = 1);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;};</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* FACTORY_ENCODER_COMMON_HPP */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="structFactory__encoder__common_html"><div class="ttname"><a href="structFactory__encoder__common.html">Factory_encoder_common</a></div><div class="ttdef"><b>Definition:</b> Factory_encoder_common.hpp:9</div></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Factory_8hpp.html">Factory.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="structFactory__encoder__common.html">   11</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structFactory__encoder__common.html">Factory_encoder_common</a> : <span class="keyword">public</span> <a class="code" href="structFactory.html">Factory</a></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">static</span> <a class="code" href="classSC__Encoder.html">Encoder&lt;B&gt;</a>* build(<span class="keyword">const</span> parameters &amp;params, <span class="keyword">const</span> <span class="keywordtype">int</span> seed = 0, <span class="keyword">const</span> <span class="keywordtype">int</span> n_frames = 1);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;};</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* FACTORY_ENCODER_COMMON_HPP */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="structFactory__encoder__common_html"><div class="ttname"><a href="structFactory__encoder__common.html">Factory_encoder_common</a></div><div class="ttdef"><b>Definition:</b> Factory_encoder_common.hpp:11</div></div>
+<div class="ttc" id="Encoder_8hpp_html"><div class="ttname"><a href="Encoder_8hpp.html">Encoder.hpp</a></div><div class="ttdoc">Encodes a vector of information bits (a message) and adds some redundancy (parity bits)...</div></div>
 <div class="ttc" id="classSC__Encoder_html"><div class="ttname"><a href="classSC__Encoder.html">SC_Encoder</a></div><div class="ttdef"><b>Definition:</b> SC_Encoder.hpp:16</div></div>
 <div class="ttc" id="Factory_8hpp_html"><div class="ttname"><a href="Factory_8hpp.html">Factory.hpp</a></div><div class="ttdoc">Class builder. </div></div>
 <div class="ttc" id="structFactory_html"><div class="ttname"><a href="structFactory.html">Factory</a></div><div class="ttdoc">Class builder. </div><div class="ttdef"><b>Definition:</b> Factory.hpp:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:10 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:05 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

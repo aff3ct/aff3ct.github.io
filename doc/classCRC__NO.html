@@ -113,9 +113,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8cbbfe175d9dd195dc44d59072566793"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCRC__NO.html#a8cbbfe175d9dd195dc44d59072566793">build</a> (mipp::vector&lt; B &gt; &amp;U_K)</td></tr>
 <tr class="memdesc:a8cbbfe175d9dd195dc44d59072566793"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes and adds the CRC in the vector of information bits (the CRC bits are often put at the end of the vector).  <a href="#a8cbbfe175d9dd195dc44d59072566793">More...</a><br/></td></tr>
 <tr class="separator:a8cbbfe175d9dd195dc44d59072566793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb3965d2134dd018f8361cddd2da5da2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCRC__NO.html#acb3965d2134dd018f8361cddd2da5da2">check</a> (const mipp::vector&lt; B &gt; &amp;V_K)</td></tr>
-<tr class="memdesc:acb3965d2134dd018f8361cddd2da5da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the CRC is verified or not.  <a href="#acb3965d2134dd018f8361cddd2da5da2">More...</a><br/></td></tr>
-<tr class="separator:acb3965d2134dd018f8361cddd2da5da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a667cd02402be7ea9a36b8a3565467393"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCRC__NO.html#a667cd02402be7ea9a36b8a3565467393">check</a> (const mipp::vector&lt; B &gt; &amp;V_K, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=-1)</td></tr>
+<tr class="memdesc:a667cd02402be7ea9a36b8a3565467393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the CRC is verified or not.  <a href="#a667cd02402be7ea9a36b8a3565467393">More...</a><br/></td></tr>
+<tr class="separator:a667cd02402be7ea9a36b8a3565467393"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classSC__CRC"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classSC__CRC')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classSC__CRC.html">SC_CRC&lt; B &gt;</a></td></tr>
 <tr class="memitem:af22d939740117e44edab7446a2e4a2fe inherit pub_methods_classSC__CRC"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af22d939740117e44edab7446a2e4a2fe"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SC_CRC</b> (const int <a class="el" href="classCRC__i.html#a32005141fa5d5a773a15c5297a6ace3b">K</a>, const int <a class="el" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>=1, const std::string <a class="el" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>=&quot;SC_CRC&quot;)</td></tr>
@@ -201,7 +201,7 @@ template&lt;typename B &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="acb3965d2134dd018f8361cddd2da5da2"></a>
+<a class="anchor" id="a667cd02402be7ea9a36b8a3565467393"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -214,8 +214,18 @@ template&lt;typename B &gt; </div>
           <td class="memname">bool <a class="el" href="classCRC__NO.html">CRC_NO</a>&lt; B &gt;::check </td>
           <td>(</td>
           <td class="paramtype">const mipp::vector&lt; B &gt; &amp;&#160;</td>
-          <td class="paramname"><em>V_K</em></td><td>)</td>
+          <td class="paramname"><em>V_K</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>n_frames</em> = <code>-1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -228,13 +238,14 @@ template&lt;typename B &gt; </div>
 <p>Checks if the CRC is verified or not. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">V_K</td><td>a vector containing information bits plus the CRC bits.</td></tr>
+    <tr><td class="paramname">V_K</td><td>a vector containing information bits plus the CRC bits. </td></tr>
+    <tr><td class="paramname">n_frames</td><td>you should not use this parameter unless you know what you are doing, this parameter redefine the number of frames to check specifically in this method.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the CRC is verified, false otherwise. </dd></dl>
 
-<p>Implements <a class="el" href="classCRC__i.html#a34fee566f75d1c613c4d55582ea04739">CRC_i&lt; B &gt;</a>.</p>
+<p>Implements <a class="el" href="classCRC__i.html#a6fb5f763d74b3c991a084356cc66a22b">CRC_i&lt; B &gt;</a>.</p>
 
 </div>
 </div>
@@ -274,7 +285,7 @@ template&lt;typename B &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:13 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:09 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

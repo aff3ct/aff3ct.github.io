@@ -86,21 +86,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Compile <b>AFF3CT</b> in release mode (<code>-Ofast -funroll-loops</code>) and with the <em>SSE4.1</em> or <em>AVX2</em> instructions. Do not forget to enable the <code>-DMULTI_PREC</code> macro.</p>
 <h3>Figure 2</h3>
 <p>Go into the <code>build</code> folder. </p>
-<pre class="fragment">$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type TURBO -m 0.0 -M 2.01 -K 6144 -N 18432 --src-type RAND_FAST --mod-type BPSK_FAST --chn-type AWGN_FAST                                         --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX -t 4
-$ ./bin/aff3ct -p 16 --sim-type BFER --cde-type TURBO -m 0.0 -M 2.01 -K 6144 -N 18432 --src-type RAND_FAST --mod-type BPSK_FAST --chn-type AWGN_FAST --dmod-no-sig2 --qnt-bits 6 --qnt-dec 3 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX -t 4
-$ ./bin/aff3ct -p  8 --sim-type BFER --cde-type TURBO -m 0.0 -M 2.01 -K 6144 -N 18432 --src-type RAND_FAST --mod-type BPSK_FAST --chn-type AWGN_FAST --dmod-no-sig2 --qnt-bits 6 --qnt-dec 2 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX -t 4
+<pre class="fragment">$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type TURBO -m 0.0 -M 2.01 -K 6144 -N 18432 --src-type RAND_FAST --mod-type BPSK_FAST --chn-type AWGN_FAST                                         --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX
+$ ./bin/aff3ct -p 16 --sim-type BFER --cde-type TURBO -m 0.0 -M 2.01 -K 6144 -N 18432 --src-type RAND_FAST --mod-type BPSK_FAST --chn-type AWGN_FAST --dmod-no-sig2 --qnt-bits 6 --qnt-dec 3 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX
+$ ./bin/aff3ct -p  8 --sim-type BFER --cde-type TURBO -m 0.0 -M 2.01 -K 6144 -N 18432 --src-type RAND_FAST --mod-type BPSK_FAST --chn-type AWGN_FAST --dmod-no-sig2 --qnt-bits 6 --qnt-dec 2 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX
 </pre><h3>Figure 3</h3>
-<p>Notice that for this figure <b>AFF3CT</b> has been compiled twice: 1) with the SSE4.1 instructions, 2) with the AVX2 instructions. The number of threads may vary with the <code>-t</code> argument from the command line.</p>
+<p>Notice that for this figure <b>AFF3CT</b> has been compiled twice: 1) with the SSE4.1 instructions, 2) with the AVX2 instructions. The number of threads can vary with the <code>-t</code> argument from the command line.</p>
 <p>Go into the <code>build</code> folder. </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type TURBO -m 1.0 -M 1.0 -K 1024 -N  3072 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX --sim-benchs 1000 -t 4
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type TURBO -m 1.0 -M 1.0 -K 2048 -N  6144 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX --sim-benchs 1000 -t 4
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type TURBO -m 1.0 -M 1.0 -K 1024 -N  3072 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX --sim-benchs 1000
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type TURBO -m 1.0 -M 1.0 -K 2048 -N  6144 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX --sim-benchs 1000
 $ ...
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type TURBO -m 1.0 -M 1.0 -K 6144 -N 18432 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX --sim-benchs  500 -t 4
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type TURBO -m 1.0 -M 1.0 -K 6144 -N 18432 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX --sim-benchs  500
 </pre><h3>Table 2</h3>
-<p>Notice that for this figure <b>AFF3CT</b> has been compiled with the SSE4.1 instructions. The number of threads may vary with the <code>-t</code> argument from the command line.</p>
+<p>Notice that for this figure <b>AFF3CT</b> has been compiled with the SSE4.1 instructions. The number of threads can vary with the <code>-t</code> argument from the command line.</p>
 <p>Go into the <code>build</code> folder. </p>
-<pre class="fragment">$ ./bin/aff3ct -p 16 --sim-type BFER --cde-type TURBO -m 0.7 -M 0.7 -K 6144 -N 18432 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX --sim-benchs 100 -t 4
-$ ./bin/aff3ct -p  8 --sim-type BFER --cde-type TURBO -m 0.7 -M 0.7 -K 6144 -N 18432 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX --sim-benchs 200 -t 4
+<pre class="fragment">$ ./bin/aff3ct -p 16 --sim-type BFER --cde-type TURBO -m 0.7 -M 0.7 -K 6144 -N 18432 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX --sim-benchs 100
+$ ./bin/aff3ct -p  8 --sim-type BFER --cde-type TURBO -m 0.7 -M 0.7 -K 6144 -N 18432 --dec-type LTE --dec-implem VERY_FAST --dec-simd INTER -i 6 --itl-type LTE --dec-sf LTE_VEC --dec-max MAX --sim-benchs 200
 </pre><hr/>
 <h2><a href="http://www.eurasip.org/Proceedings/Eusipco/Eusipco2016/papers/1570252182.pdf">Energy consumption analysis of software Polar Decoders on low power processors</a></h2>
 <p><em>Adrien Cassagne, Olivier Aumage, Camille Leroux, Denis Barthou and Bertrand Le Gal</em></p>
@@ -154,67 +154,67 @@ $ ./bin/aff3ct -p  8 --sim-type BFER --cde-type TURBO -m 0.7 -M 0.7 -K 6144 -N 1
 // #define ENABLE_DECODER_SC_FAST_N524288_K436907_SNR40
 // #define ENABLE_DECODER_SC_FAST_N1048576_K873813_SNR40
 ...
-</pre><p>The dynamic SC decoder requires an accurate frozen bits generation method which is not included in <b>AFF3CT</b> for now. In this paper we used an external solution to construct the frozen bits following the Tal &amp; Vardy method (<a href="https://arxiv.org/pdf/1105.6164.pdf">How to Construct Polar Codes</a>). To reproduce the results you have <a href="http://aff3ct.github.io/ressources/awgn_polar_codes.zip">to download the pre-generated frozen bits</a> and put them at the root of your repository.</p>
-<p>Now you can recompile <b>AFF3CT</b> in release mode (<code>-Ofast -funroll-loops</code>) and with the <em>SSE4.1</em> or <em>NEON</em> instructions. Do not forget to enable the <code>-DPREC_8_BIT</code> and <code>-DENABLE_POLAR_BOUNDS</code> macros. Notice that the compilation can take a very long time (~30 min)...</p>
+</pre><p>The dynamic SC decoder requires an accurate frozen bits generation method which is not included in <b>AFF3CT</b> for now. In this paper we used an external solution to construct the frozen bits following the Tal &amp; Vardy method (<a href="https://arxiv.org/pdf/1105.6164.pdf">How to Construct Polar Codes</a>). To reproduce the results you have to unzip the <code>conf/cde/awgn_polar_codes.zip</code> in the same folder (<code>conf/cde/</code>).</p>
+<p>Now you can recompile <b>AFF3CT</b> in release mode (<code>-Ofast -funroll-loops</code>) and with the <em>SSE4.1</em> or <em>NEON</em> instructions. Do not forget to enable the <code>-DPREC_8_BIT</code> macro. Notice that the compilation can take a very long time (~30 min)...</p>
 <h3>Figure 2</h3>
 <p>Go into the <code>build</code> folder.</p>
 <p><b>BER/FER for the dynamic version of the SC decoder</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 1.0 -M 3.21 -s 0.2 -N  4096 -K  2048 --cde-fb-gen-method TV --src-type AZCW --chn-type AWGN_FAST --dec-algo SC --dec-implem FAST --dec-simd INTER -t 4
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.6 -M 4.01 -s 0.2 -N 32768 -K 27307 --cde-fb-gen-method TV --src-type AZCW --chn-type AWGN_FAST --dec-algo SC --dec-implem FAST --dec-simd INTER -t 4
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 1.0 -M 3.21 -s 0.2 -N  4096 -K  2048 --cde-fb-gen-method TV --src-type AZCW --chn-type AWGN_FAST --dec-algo SC --dec-implem FAST --dec-simd INTER
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.6 -M 4.01 -s 0.2 -N 32768 -K 27307 --cde-fb-gen-method TV --src-type AZCW --chn-type AWGN_FAST --dec-algo SC --dec-implem FAST --dec-simd INTER
 </pre><p><b>BER/FER for the generated version of the SC decoder</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 1.0 -M 3.21 -s 0.2 -N  4096 -K  2048 --src-type AZCW --chn-type AWGN_FAST --dec-algo SC --dec-implem N4096_K2048_SNR33   --dec-simd INTER -t 4
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.6 -M 4.01 -s 0.2 -N 32768 -K 27307 --src-type AZCW --chn-type AWGN_FAST --dec-algo SC --dec-implem N32768_K27307_SNR40 --dec-simd INTER -t 4
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 1.0 -M 3.21 -s 0.2 -N  4096 -K  2048 --src-type AZCW --chn-type AWGN_FAST --dec-algo SC --dec-implem N4096_K2048_SNR33   --dec-simd INTER
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.6 -M 4.01 -s 0.2 -N 32768 -K 27307 --src-type AZCW --chn-type AWGN_FAST --dec-algo SC --dec-implem N32768_K27307_SNR40 --dec-simd INTER
 </pre><h3>Table 2</h3>
 <p>Go into the <code>build</code> folder.</p>
 <p><b>Dynamic and sequential version of the SC decoder</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 3.20 -M 3.20 -N  4096 -K  2048 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --sim-benchs 40000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 3.20 -M 3.20 -N  4096 -K  2048 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --sim-benchs 40000 -t 1
 </pre><p><b>Dynamic and intra-frame SIMD version of the SC decoder</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 3.20 -M 3.20 -N  4096 -K  2048 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 40000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 3.20 -M 3.20 -N  4096 -K  2048 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 40000 -t 1
 </pre><p><b>Dynamic and inter-frame SIMD version of the SC decoder</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 3.20 -M 3.20 -N  4096 -K  2048 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 40000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 3.20 -M 3.20 -N  4096 -K  2048 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 40000 -t 1
 </pre><h3>Table 3</h3>
 <p>Go into the <code>build</code> folder. </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 4.00 -M 4.00 -N 32768 -K 27307 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 20000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 4.00 -M 4.00 -N 32768 -K 27307 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 20000 -t 1
 </pre><h3>Figure 3</h3>
 <p>Go into the <code>build</code> folder.</p>
 <p><b>Dynamic and intra-frame SIMD</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     256 -K    128 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 800000
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     512 -K    256 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 800000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     256 -K    128 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 800000 -t 1
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     512 -K    256 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 800000 -t 1
 $ ...
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 1048576 -K 524288 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 1000
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 1048576 -K 524288 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 1000   -t 1
 </pre><p><b>Dynamic and inter-frame SIMD</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     256 -K    128 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 800000
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     512 -K    256 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 800000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     256 -K    128 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 800000 -t 1
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     512 -K    256 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 800000 -t 1
 $ ...
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 1048576 -K 524288 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 50
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 1048576 -K 524288 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 50     -t 1
 </pre><p><b>Generated and intra-frame SIMD</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     256 -K    128 --dec-algo SC --dec-implem N256_K128_SNR25        --dec-simd INTRA --sim-benchs 800000
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     512 -K    256 --dec-algo SC --dec-implem N512_K256_SNR25        --dec-simd INTRA --sim-benchs 800000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     256 -K    128 --dec-algo SC --dec-implem N256_K128_SNR25        --dec-simd INTRA --sim-benchs 800000 -t 1
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     512 -K    256 --dec-algo SC --dec-implem N512_K256_SNR25        --dec-simd INTRA --sim-benchs 800000 -t 1
 $ ...
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 1048576 -K 524288 --dec-algo SC --dec-implem N1048576_K524288_SNR25 --dec-simd INTRA --sim-benchs 1000
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 1048576 -K 524288 --dec-algo SC --dec-implem N1048576_K524288_SNR25 --dec-simd INTRA --sim-benchs 1000   -t 1
 </pre><p><b>Generated and inter-frame SIMD</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     256 -K    128 --dec-algo SC --dec-implem N256_K128_SNR25        --dec-simd INTER --sim-benchs 800000
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     512 -K    256 --dec-algo SC --dec-implem N512_K256_SNR25        --dec-simd INTER --sim-benchs 800000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     256 -K    128 --dec-algo SC --dec-implem N256_K128_SNR25        --dec-simd INTER --sim-benchs 800000 -t 1
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N     512 -K    256 --dec-algo SC --dec-implem N512_K256_SNR25        --dec-simd INTER --sim-benchs 800000 -t 1
 $ ...
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 1048576 -K 524288 --dec-algo SC --dec-implem N1048576_K524288_SNR25 --dec-simd INTER --sim-benchs 50
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 1048576 -K 524288 --dec-algo SC --dec-implem N1048576_K524288_SNR25 --dec-simd INTER --sim-benchs 50     -t 1
 </pre><h3>Figure 4</h3>
 <p>Go into the <code>build</code> folder.</p>
 <p><b>Dynamic and intra-frame SIMD version of the SC decoder</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 3.20 -M 3.20 -N  4096 -K  2048 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 40000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 3.20 -M 3.20 -N  4096 -K  2048 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 40000 -t 1
 </pre><p><b>Dynamic and inter-frame SIMD version of the SC decoder</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 3.20 -M 3.20 -N  4096 -K  2048 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 40000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 3.20 -M 3.20 -N  4096 -K  2048 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 40000 -t 1
 </pre><h3>Figure 5</h3>
 <p>Go into the <code>build</code> folder.</p>
 <p><b>Dynamic and intra-frame SIMD version of the SC decoder</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K  3277 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 40000
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K  6554 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 40000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K  3277 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 40000 -t 1
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K  6554 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 40000 -t 1
 $ ...
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K 29491 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 40000
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K 29491 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTRA --sim-benchs 40000 -t 1
 </pre><p><b>Dynamic and inter-frame SIMD version of the SC decoder</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K  3277 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 6000
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K  6554 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 6000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K  3277 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 6000 -t 1
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K  6554 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 6000 -t 1
 $ ...
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K 29491 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 6000
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K 29491 --cde-fb-gen-method TV --dec-algo SC --dec-implem FAST --dec-simd INTER --sim-benchs 6000 -t 1
 </pre><hr/>
 <h2><a href="https://hal.inria.fr/hal-01203105/document">An efficient, portable and generic library for Successive Cancellation decoding of Polar Codes</a></h2>
 <p><em>Adrien Cassagne, Bertrand Le Gal, Camille Leroux, Olivier Aumage and Denis Barthou</em></p>
@@ -280,35 +280,35 @@ $ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.50 -M 2.50 -N 32768 -K
 <h3>Figure 6</h3>
 <p>Go into the <code>build</code> folder.</p>
 <p><b>Code rate R = 1/2</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K    32 -N    64 --dec-type SC --dec-implem N64_K32_SNR25       --dec-simd INTRA --sim-benchs 2000000
-$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K    64 -N   128 --dec-type SC --dec-implem N128_K64_SNR25      --dec-simd INTRA --sim-benchs 2000000
+<pre class="fragment">$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K    32 -N    64 --dec-type SC --dec-implem N64_K32_SNR25       --dec-simd INTRA --sim-benchs 2000000 -t 1
+$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K    64 -N   128 --dec-type SC --dec-implem N128_K64_SNR25      --dec-simd INTRA --sim-benchs 2000000 -t 1
 $ ...
-$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K 32768 -N 65536 --dec-type SC --dec-implem N65536_K32768_SNR25 --dec-simd INTRA --sim-benchs 2000
+$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K 32768 -N 65536 --dec-type SC --dec-implem N65536_K32768_SNR25 --dec-simd INTRA --sim-benchs 2000    -t 1
 </pre><p><b>Code rate R = 5/6</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K    53 -N    64 --dec-type SC --dec-implem N64_K53_SNR40       --dec-simd INTRA --sim-benchs 2000000
-$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K   107 -N   128 --dec-type SC --dec-implem N107_K128_SNR40     --dec-simd INTRA --sim-benchs 2000000
+<pre class="fragment">$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K    53 -N    64 --dec-type SC --dec-implem N64_K53_SNR40       --dec-simd INTRA --sim-benchs 2000000 -t 1
+$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K   107 -N   128 --dec-type SC --dec-implem N107_K128_SNR40     --dec-simd INTRA --sim-benchs 2000000 -t 1
 $ ...
-$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K 54613 -N 65536 --dec-type SC --dec-implem N65536_K54613_SNR40 --dec-simd INTRA --sim-benchs 2000
+$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K 54613 -N 65536 --dec-type SC --dec-implem N65536_K54613_SNR40 --dec-simd INTRA --sim-benchs 2000    -t 1
 </pre><h3>Table 2</h3>
 <p>Go into the <code>build</code> folder. </p>
-<pre class="fragment">$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K 14746 -N 16384 --dec-type SC --dec-implem N16384_K14746_SNR40 --dec-simd INTRA --sim-benchs 8000
-$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K 27568 -N 32768 --dec-type SC --dec-implem N32768_K27568_SNR40 --dec-simd INTRA --sim-benchs 8000
-$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K 29492 -N 32768 --dec-type SC --dec-implem N32768_K29492_SNR40 --dec-simd INTRA --sim-benchs 8000
+<pre class="fragment">$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K 14746 -N 16384 --dec-type SC --dec-implem N16384_K14746_SNR40 --dec-simd INTRA --sim-benchs 8000 -t 1
+$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K 27568 -N 32768 --dec-type SC --dec-implem N32768_K27568_SNR40 --dec-simd INTRA --sim-benchs 8000 -t 1
+$ ./bin/aff3ct -p 32 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K 29492 -N 32768 --dec-type SC --dec-implem N32768_K29492_SNR40 --dec-simd INTRA --sim-benchs 8000 -t 1
 </pre><h3>Figure 7</h3>
 <p>Go into the <code>build</code> folder.</p>
 <p><b>Code rate R = 1/2</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K   128 -N   256 --dec-type SC --dec-implem N256_K128_SNR25     --dec-simd INTER --sim-benchs 200000
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K   256 -N   512 --dec-type SC --dec-implem N512_K256_SNR25     --dec-simd INTER --sim-benchs 200000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K   128 -N   256 --dec-type SC --dec-implem N256_K128_SNR25     --dec-simd INTER --sim-benchs 200000 -t 1
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K   256 -N   512 --dec-type SC --dec-implem N512_K256_SNR25     --dec-simd INTER --sim-benchs 200000 -t 1
 $ ...
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K 32768 -N 65536 --dec-type SC --dec-implem N65536_K32768_SNR25 --dec-simd INTER --sim-benchs 800
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 -K 32768 -N 65536 --dec-type SC --dec-implem N65536_K32768_SNR25 --dec-simd INTER --sim-benchs 800    -t 1
 </pre><p><b>Code rate R = 5/6</b>: </p>
-<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K   213 -N   256 --dec-type SC --dec-implem N256_K213_SNR40     --dec-simd INTER --sim-benchs 200000
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K   427 -N   512 --dec-type SC --dec-implem N512_K427_SNR40     --dec-simd INTER --sim-benchs 200000
+<pre class="fragment">$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K   213 -N   256 --dec-type SC --dec-implem N256_K213_SNR40     --dec-simd INTER --sim-benchs 200000 -t 1
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K   427 -N   512 --dec-type SC --dec-implem N512_K427_SNR40     --dec-simd INTER --sim-benchs 200000 -t 1
 $ ...
-$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K 54613 -N 65536 --dec-type SC --dec-implem N65536_K54613_SNR40 --dec-simd INTER --sim-benchs 800</pre> </div></div><!-- contents -->
+$ ./bin/aff3ct -p 8 --sim-type BFER --cde-type POLAR -m 4.0 -M 4.0 -K 54613 -N 65536 --dec-type SC --dec-implem N65536_K54613_SNR40 --dec-simd INTER --sim-benchs 800    -t 1</pre> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:10 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:06 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>AFF3CT: /home/adrien/workspace/HPC/aff3ct/src/Simulation/BFER/SC_Simulation_BFER.hpp Source File</title>
+<title>AFF3CT: /home/adrien/workspace/HPC/aff3ct/src/Simulation/BFER/SystemC/SC_Simulation_BFER.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_0254ab4982fce5621fd6dac702f5707b.html">src</a></li><li class="navelem"><a class="el" href="dir_aada1ce6a507f825690dcae82f037c9b.html">Simulation</a></li><li class="navelem"><a class="el" href="dir_adb40427b7c97eae0b8eff1d26523b98.html">BFER</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_0254ab4982fce5621fd6dac702f5707b.html">src</a></li><li class="navelem"><a class="el" href="dir_aada1ce6a507f825690dcae82f037c9b.html">Simulation</a></li><li class="navelem"><a class="el" href="dir_adb40427b7c97eae0b8eff1d26523b98.html">BFER</a></li><li class="navelem"><a class="el" href="dir_f58d7e9e59ba709b84eb8c0c53f58b6a.html">SystemC</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -93,143 +93,72 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#ifndef SC_SIMULATION_BFER_HPP_</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define SC_SIMULATION_BFER_HPP_</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;Tools/Perf/MIPP/mipp.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Tools/params.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Barrier_8hpp.html">Tools/Threads/Barrier.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;Tools/SystemC/SC_Debug.hpp&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;Tools/SystemC/SC_Duplicator.hpp&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Source_8hpp.html">Module/Source/Source.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="CRC_8hpp.html">Module/CRC/CRC.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Encoder_8hpp.html">Module/Encoder/Encoder.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Puncturer_8hpp.html">Module/Puncturer/Puncturer.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Modulator_8hpp.html">Module/Modulator/Modulator.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Channel_8hpp.html">Module/Channel/Channel.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Quantizer_8hpp.html">Module/Quantizer/Quantizer.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Coset_8hpp.html">Module/Coset/Coset.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Decoder_8hpp.html">Module/Decoder/Decoder.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Monitor_8hpp.html">Module/Monitor/Monitor.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;condition_variable&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;mutex&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;Tools/Perf/MIPP/mipp.h&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;Tools/params.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;Tools/SystemC/SC_Debug.hpp&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;Tools/SystemC/SC_Duplicator.hpp&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Terminal_8hpp.html">Tools/Display/Terminal/Terminal.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;../Simulation_BFER.hpp&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R, <span class="keyword">typename</span> Q&gt;</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classSimulation__BFER.html">   21</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSimulation__BFER.html">Simulation_BFER</a> : <span class="keyword">public</span> <a class="code" href="classSimulation__BFER__i.html">Simulation_BFER_i</a>&lt;B,R,Q&gt;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    std::mutex mutex_terminal;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    std::condition_variable cond_terminal;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Terminal_8hpp.html">Tools/Display/Terminal/Terminal.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;../Simulation.hpp&quot;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R, <span class="keyword">typename</span> Q&gt;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classSimulation__BFER.html">   32</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSimulation__BFER.html">Simulation_BFER</a> : <span class="keyword">public</span> <a class="code" href="classSimulation.html">Simulation</a></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">const</span> parameters &amp;params; <span class="comment">// simulation parameters</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classBarrier.html">Barrier</a> barrier; <span class="comment">// a barrier to synchronize the threads</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">int</span> n_frames;    <span class="comment">// number of simulated frames per thread</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="classTerminal.html">Terminal</a> *terminal;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="classSC__Duplicator.html">SC_Duplicator</a> *duplicator[3];</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="classSC__Debug.html">SC_Debug&lt;B&gt;</a>   *dbg_B     [6];</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="classSC__Debug.html">SC_Debug&lt;R&gt;</a>   *dbg_R     [5];</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="classSC__Debug.html">SC_Debug&lt;Q&gt;</a>   *dbg_Q     [3];</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="comment">// time points and durations</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    std::chrono::time_point&lt;std::chrono::steady_clock, std::chrono::nanoseconds&gt; t_simu;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    std::chrono::nanoseconds d_snr;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    std::chrono::nanoseconds d_simu;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="comment">// code specifications</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">float</span> snr;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">float</span> code_rate;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">float</span> sigma;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="comment">// communication chain</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    std::vector&lt;SC_Source&lt;B&gt;*&gt;         source;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    std::vector&lt;SC_CRC&lt;B&gt;*&gt;            crc;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    std::vector&lt;SC_Encoder&lt;B&gt;*&gt;        encoder;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    std::vector&lt;SC_Puncturer&lt;B,Q&gt;*&gt;    puncturer;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    std::vector&lt;SC_Modulator&lt;B,R,R&gt;*&gt;  modulator;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    std::vector&lt;SC_Channel&lt;R&gt;*&gt;        channel;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    std::vector&lt;SC_Quantizer&lt;R,Q&gt;*&gt;    quantizer;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    std::vector&lt;Coset&lt;B,Q&gt;*&gt;           coset_real;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    std::vector&lt;SC_Decoder&lt;B,Q&gt;*&gt;      decoder;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    std::vector&lt;Coset&lt;B,B&gt;*&gt;           coset_bit;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    std::vector&lt;SC_Monitor&lt;B&gt;*&gt;        monitor;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="classTerminal.html">Terminal</a>                          *terminal;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="classSimulation__BFER.html">Simulation_BFER</a>(<span class="keyword">const</span> parameters&amp; params);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSimulation__BFER.html">Simulation_BFER</a>();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordtype">void</span> _launch        ();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> release_objects();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> build_communication_chain();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> launch_simulation        ();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> bind_sockets             ();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">void</span> bind_sockets_debug       ();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="classTerminal.html">Terminal</a>* build_terminal();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> terminal_temp_report(<a class="code" href="classSimulation__BFER.html">Simulation_BFER&lt;B,R,Q&gt;</a> *simu);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;};</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="classSC__Duplicator.html">SC_Duplicator</a> *duplicator[3];</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="classSC__Debug.html">SC_Debug&lt;B&gt;</a> *dbg_B[6];</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="classSC__Debug.html">SC_Debug&lt;R&gt;</a> *dbg_R[5];</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="classSC__Debug.html">SC_Debug&lt;Q&gt;</a> *dbg_Q[3];</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="comment">// time points and durations</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    std::chrono::time_point&lt;std::chrono::steady_clock, std::chrono::nanoseconds&gt; t_snr;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    std::chrono::time_point&lt;std::chrono::steady_clock, std::chrono::nanoseconds&gt; t_simu;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    std::chrono::nanoseconds d_snr;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    std::chrono::nanoseconds d_simu;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    std::chrono::nanoseconds d_decod_total_fake;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="classSimulation__BFER.html">Simulation_BFER</a>(<span class="keyword">const</span> parameters&amp; params);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classSimulation__BFER.html">Simulation_BFER</a>();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classSimulation__BFER.html#a5be9443aaed1b2b0d1196c15d18413ed">launch</a>();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">void</span> launch_simulation        ();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">void</span> build_communication_chain();</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">void</span> bind_sockets             ();</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">void</span> bind_sockets_debug       ();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> terminal_temp_report(<a class="code" href="classSimulation__BFER.html">Simulation_BFER&lt;B,R,Q&gt;</a> *simu);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span>              release_objects  ();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span>              launch_precompute();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span>              snr_precompute   ();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classSC__Source.html">Source&lt;B&gt;</a>*        build_source     (                <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classSC__CRC.html">CRC&lt;B&gt;</a>*           build_crc        (                <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classSC__Encoder.html">Encoder&lt;B&gt;</a>*       build_encoder    (                <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classSC__Puncturer.html">Puncturer&lt;B,Q&gt;</a>*   build_puncturer  (                <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classSC__Modulator.html">Modulator&lt;B,R,R&gt;</a>* build_modulator  (                <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classSC__Channel.html">Channel&lt;R&gt;</a>*       build_channel    (<span class="keyword">const</span> <span class="keywordtype">int</span> size, <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classSC__Quantizer.html">Quantizer&lt;R,Q&gt;</a>*   build_quantizer  (<span class="keyword">const</span> <span class="keywordtype">int</span> size, <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classSC__Coset.html">Coset&lt;B,Q&gt;</a>*       build_coset_real (                <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classSC__Decoder.html">Decoder&lt;B,Q&gt;</a>*     build_decoder    (                <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0) = 0;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classSC__Coset.html">Coset&lt;B,B&gt;</a>*       build_coset_bit  (                <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classSC__Monitor.html">Monitor&lt;B&gt;</a>*       build_monitor    (                <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <a class="code" href="classTerminal.html">Terminal</a>*         build_terminal   (                <span class="keyword">const</span> <span class="keywordtype">int</span> tid = 0);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;};</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#include &quot;SC_Simulation_BFER.hxx&quot;</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SIMULATION_SC_BFER_HPP_ */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SYSTEMC */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="classSC__Modulator_html"><div class="ttname"><a href="classSC__Modulator.html">SC_Modulator</a></div><div class="ttdef"><b>Definition:</b> SC_Modulator.hpp:16</div></div>
-<div class="ttc" id="classSimulation__BFER_html_a5be9443aaed1b2b0d1196c15d18413ed"><div class="ttname"><a href="classSimulation__BFER.html#a5be9443aaed1b2b0d1196c15d18413ed">Simulation_BFER::launch</a></div><div class="ttdeci">void launch()</div><div class="ttdoc">This method has to be overloaded, this is the start point of the Simulation. </div></div>
-<div class="ttc" id="Encoder_8hpp_html"><div class="ttname"><a href="Encoder_8hpp.html">Encoder.hpp</a></div><div class="ttdoc">Encodes a vector of information bits (a message) and adds some redundancy (parity bits)...</div></div>
-<div class="ttc" id="classSC__CRC_html"><div class="ttname"><a href="classSC__CRC.html">SC_CRC</a></div><div class="ttdef"><b>Definition:</b> SC_CRC.hpp:16</div></div>
-<div class="ttc" id="classSimulation_html"><div class="ttname"><a href="classSimulation.html">Simulation</a></div><div class="ttdef"><b>Definition:</b> Simulation.hpp:18</div></div>
-<div class="ttc" id="Monitor_8hpp_html"><div class="ttname"><a href="Monitor_8hpp.html">Monitor.hpp</a></div><div class="ttdoc">Monitors the simulated frames, tells if there is a frame errors and counts the number of bit errors...</div></div>
-<div class="ttc" id="classSC__Decoder_html"><div class="ttname"><a href="classSC__Decoder.html">SC_Decoder</a></div><div class="ttdef"><b>Definition:</b> SC_Decoder.hpp:16</div></div>
-<div class="ttc" id="classSC__Quantizer_html"><div class="ttname"><a href="classSC__Quantizer.html">SC_Quantizer</a></div><div class="ttdef"><b>Definition:</b> SC_Quantizer.hpp:16</div></div>
-<div class="ttc" id="classSC__Encoder_html"><div class="ttname"><a href="classSC__Encoder.html">SC_Encoder</a></div><div class="ttdef"><b>Definition:</b> SC_Encoder.hpp:16</div></div>
-<div class="ttc" id="classSC__Coset_html"><div class="ttname"><a href="classSC__Coset.html">SC_Coset</a></div><div class="ttdef"><b>Definition:</b> SC_Coset.hpp:16</div></div>
-<div class="ttc" id="classSC__Source_html"><div class="ttname"><a href="classSC__Source.html">SC_Source</a></div><div class="ttdef"><b>Definition:</b> SC_Source.hpp:15</div></div>
-<div class="ttc" id="CRC_8hpp_html"><div class="ttname"><a href="CRC_8hpp.html">CRC.hpp</a></div><div class="ttdoc">Adds/builds and checks a Cyclic Redundancy Check (CRC) for a set of information bits. </div></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SIMULATION_SC_BFER_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SYSTEMC */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="classSimulation__BFER__i_html"><div class="ttname"><a href="classSimulation__BFER__i.html">Simulation_BFER_i</a></div><div class="ttdef"><b>Definition:</b> Simulation_BFER.hpp:24</div></div>
 <div class="ttc" id="Terminal_8hpp_html"><div class="ttname"><a href="Terminal_8hpp.html">Terminal.hpp</a></div><div class="ttdoc">The terminal display. </div></div>
-<div class="ttc" id="classSC__Monitor_html"><div class="ttname"><a href="classSC__Monitor.html">SC_Monitor</a></div><div class="ttdef"><b>Definition:</b> SC_Monitor.hpp:16</div></div>
 <div class="ttc" id="classTerminal_html"><div class="ttname"><a href="classTerminal.html">Terminal</a></div><div class="ttdoc">The terminal display. </div><div class="ttdef"><b>Definition:</b> Terminal.hpp:16</div></div>
-<div class="ttc" id="classBarrier_html"><div class="ttname"><a href="classBarrier.html">Barrier</a></div><div class="ttdoc">Waits until all threads reach the barrier. </div><div class="ttdef"><b>Definition:</b> Barrier.hpp:20</div></div>
-<div class="ttc" id="Quantizer_8hpp_html"><div class="ttname"><a href="Quantizer_8hpp.html">Quantizer.hpp</a></div><div class="ttdoc">Quantizes floating-point data to fixed-point representation. </div></div>
-<div class="ttc" id="Source_8hpp_html"><div class="ttname"><a href="Source_8hpp.html">Source.hpp</a></div><div class="ttdoc">Generates a message. </div></div>
-<div class="ttc" id="Barrier_8hpp_html"><div class="ttname"><a href="Barrier_8hpp.html">Barrier.hpp</a></div><div class="ttdoc">Waits until all threads reach the barrier. </div></div>
 <div class="ttc" id="classSC__Duplicator_html"><div class="ttname"><a href="classSC__Duplicator.html">SC_Duplicator</a></div><div class="ttdef"><b>Definition:</b> SC_Duplicator.hpp:13</div></div>
-<div class="ttc" id="classSimulation__BFER_html"><div class="ttname"><a href="classSimulation__BFER.html">Simulation_BFER</a></div><div class="ttdef"><b>Definition:</b> SC_Simulation_BFER.hpp:32</div></div>
-<div class="ttc" id="Coset_8hpp_html"><div class="ttname"><a href="Coset_8hpp.html">Coset.hpp</a></div><div class="ttdoc">Performs the coset approach (flips the bits or the signs depending on the initial codeword)...</div></div>
-<div class="ttc" id="classSC__Puncturer_html"><div class="ttname"><a href="classSC__Puncturer.html">SC_Puncturer</a></div><div class="ttdef"><b>Definition:</b> SC_Puncturer.hpp:16</div></div>
-<div class="ttc" id="Modulator_8hpp_html"><div class="ttname"><a href="Modulator_8hpp.html">Modulator.hpp</a></div><div class="ttdoc">Modulates, filters and/or demodulates a signal. </div></div>
+<div class="ttc" id="classSimulation__BFER_html"><div class="ttname"><a href="classSimulation__BFER.html">Simulation_BFER</a></div><div class="ttdef"><b>Definition:</b> SC_Simulation_BFER.hpp:21</div></div>
 <div class="ttc" id="classSC__Debug_html"><div class="ttname"><a href="classSC__Debug.html">SC_Debug&lt; B &gt;</a></div></div>
-<div class="ttc" id="classSC__Channel_html"><div class="ttname"><a href="classSC__Channel.html">SC_Channel</a></div><div class="ttdef"><b>Definition:</b> SC_Channel.hpp:16</div></div>
-<div class="ttc" id="Puncturer_8hpp_html"><div class="ttname"><a href="Puncturer_8hpp.html">Puncturer.hpp</a></div><div class="ttdoc">Punctures a codeword to match a frame size. </div></div>
-<div class="ttc" id="Channel_8hpp_html"><div class="ttname"><a href="Channel_8hpp.html">Channel.hpp</a></div><div class="ttdoc">The Channel is the physical transmission medium. </div></div>
-<div class="ttc" id="Decoder_8hpp_html"><div class="ttname"><a href="Decoder_8hpp.html">Decoder.hpp</a></div><div class="ttdoc">A Decoder is an algorithm dedicated to find the initial sequence of information bits (before the nois...</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:10 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:05 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

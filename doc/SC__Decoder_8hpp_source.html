@@ -178,11 +178,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R&gt;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Decoder.html">Decoder</a> = <a class="code" href="classSC__Decoder.html">SC_Decoder&lt;B,R&gt;</a>;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Decoder.html">Decoder</a> = <a class="code" href="classDecoder__i.html">Decoder_i&lt;B,R&gt;</a>;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DECODER_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;SPU_Decoder.hpp&quot;</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DECODER_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
 <div class="ttc" id="classSC__Decoder_html"><div class="ttname"><a href="classSC__Decoder.html">SC_Decoder</a></div><div class="ttdef"><b>Definition:</b> SC_Decoder.hpp:16</div></div>
 <div class="ttc" id="classDecoder__i_html_adc1c24439963350b052e255debb028b7"><div class="ttname"><a href="classDecoder__i.html#adc1c24439963350b052e255debb028b7">Decoder_i::hard_decode</a></div><div class="ttdeci">void hard_decode(const mipp::vector&lt; R &gt; &amp;Y_N, mipp::vector&lt; B &gt; &amp;V_K, const bool load=true, const bool store=true, const bool store_fast=false, const bool unpack=false)</div><div class="ttdoc">Decodes the noisy frame. </div><div class="ttdef"><b>Definition:</b> Decoder.hpp:87</div></div>
@@ -195,7 +194,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:09 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:05 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

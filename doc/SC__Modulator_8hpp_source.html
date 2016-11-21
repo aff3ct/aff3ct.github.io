@@ -569,11 +569,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R, <span class="keyword">typename</span> Q&gt;</div>
 <div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Modulator.html">Modulator</a> = <a class="code" href="classSC__Modulator.html">SC_Modulator&lt;B,R,Q&gt;</a>;</div>
 <div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;<span class="preprocessor"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, <span class="keyword">typename</span> R, <span class="keyword">typename</span> Q&gt;</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;<span class="keyword">using</span> <a class="code" href="classSC__Modulator.html">Modulator</a> = <a class="code" href="classModulator__i.html">Modulator_i&lt;B,R,Q&gt;</a>;</div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_MODULATOR_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;SPU_Modulator.hpp&quot;</span></div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SC_MODULATOR_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classSC__Modulator__module__tdemodulator_html"><div class="ttname"><a href="classSC__Modulator__module__tdemodulator.html">SC_Modulator_module_tdemodulator</a></div><div class="ttdef"><b>Definition:</b> SC_Modulator.hpp:229</div></div>
 <div class="ttc" id="classModule_html_ace2db121879b2d61bf51920c715b132e"><div class="ttname"><a href="classModule.html#ace2db121879b2d61bf51920c715b132e">Module::set_n_frames</a></div><div class="ttdeci">virtual void set_n_frames(const int n_frames)</div><div class="ttdoc">Set the number of frames. </div><div class="ttdef"><b>Definition:</b> Module.hpp:45</div></div>
 <div class="ttc" id="classSC__Modulator_html"><div class="ttname"><a href="classSC__Modulator.html">SC_Modulator</a></div><div class="ttdef"><b>Definition:</b> SC_Modulator.hpp:16</div></div>
@@ -596,7 +595,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:09 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:05 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -118,115 +118,117 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::interrupt</a> = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::d_delta_interrupt</a> = std::chrono::nanoseconds(0);</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="comment">// Install a signal handler</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        std::signal(SIGINT, <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::signal_interrupt_handler</a>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classMonitor__i.html#a32abe93e50d607b3637ad1e9ccfaf458">   65</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classMonitor__i.html#a32abe93e50d607b3637ad1e9ccfaf458">~Monitor_i</a>()</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classMonitor__i.html#a3dcf864d84bf852bac7b67058d3e944f">   74</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#a3dcf864d84bf852bac7b67058d3e944f">get_N</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classMonitor__i.html#ac9446b7076f640cbc1a0fac613ffe714">N</a>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classMonitor__i.html#adc6eb7820bada61e5e939847d46b5fc2">   84</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#adc6eb7820bada61e5e939847d46b5fc2">get_K</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classMonitor__i.html#a8304abe6a3c0bcd842ea6b8e00802077">K</a>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#a56116d436f4292304b8d4c68bd7181b9">get_n_be</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#a7e0dfbd5aeacb230ea41cd4950603ea8">get_n_fe</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">float</span> <a class="code" href="classMonitor__i.html#a0c6dc41ec4a294aaffbe9cffb480c1ce">get_ber</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">float</span> <a class="code" href="classMonitor__i.html#ad6075d8113a86b5c1cc4b2003cd231de">get_fer</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="classMonitor__i.html#a70d23196471afeb49bd89b8aa3822492">get_n_analyzed_fra</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#a586ab4780e42d8d68d498ba9d45164cc">get_fe_limit</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html#ab2ed734e81a69810f100076016cc918c">fe_limit_achieved</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classMonitor__i.html#a9fd81ec278d0d06ae1ba389bdc91760e">check_errors</a>(<span class="keyword">const</span> mipp::vector&lt;B&gt;&amp; U, <span class="keyword">const</span> mipp::vector&lt;B&gt;&amp; V) = 0;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
-<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="classMonitor__i.html#a23047bd08daa53eb78363b08363e4ba3">  153</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html#a23047bd08daa53eb78363b08363e4ba3">is_interrupt</a>()</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::interrupt</a>;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    }</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
-<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="classMonitor__i.html#a2f1b492d052f1309c50a22d9acadadb6">  163</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html#a2f1b492d052f1309c50a22d9acadadb6">is_over</a>()</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    {</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::over</a>;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    }</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> signal_interrupt_handler(<span class="keywordtype">int</span> signal)</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    {</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        <span class="keyword">auto</span> t_now = std::chrono::steady_clock::now();</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <span class="keywordflow">if</span> (!<a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::first_interrupt</a>)</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::d_delta_interrupt</a> = t_now - <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::t_last_interrupt</a>;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::d_delta_interrupt</a> &lt; std::chrono::milliseconds(500))</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::over</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        }</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        Monitor_i&lt;B&gt;::t_last_interrupt  = t_now;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::first_interrupt</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::interrupt</a>       = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    }</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;};</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::interrupt</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::first_interrupt</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::over</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;std::chrono::time_point&lt;std::chrono::steady_clock, std::chrono::nanoseconds&gt; <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::t_last_interrupt</a>;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;std::chrono::nanoseconds <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::d_delta_interrupt</a> = std::chrono::nanoseconds(0);</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor">#include &quot;SC_Monitor.hpp&quot;</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#ifndef ENABLE_MPI</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor"></span>        <span class="comment">// Install a signal handler</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        std::signal(SIGINT, <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::signal_interrupt_handler</a>);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor"></span>    }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classMonitor__i.html#a32abe93e50d607b3637ad1e9ccfaf458">   67</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classMonitor__i.html#a32abe93e50d607b3637ad1e9ccfaf458">~Monitor_i</a>()</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classMonitor__i.html#a3dcf864d84bf852bac7b67058d3e944f">   76</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#a3dcf864d84bf852bac7b67058d3e944f">get_N</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classMonitor__i.html#ac9446b7076f640cbc1a0fac613ffe714">N</a>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classMonitor__i.html#adc6eb7820bada61e5e939847d46b5fc2">   86</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#adc6eb7820bada61e5e939847d46b5fc2">get_K</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classMonitor__i.html#a8304abe6a3c0bcd842ea6b8e00802077">K</a>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#a56116d436f4292304b8d4c68bd7181b9">get_n_be</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#a7e0dfbd5aeacb230ea41cd4950603ea8">get_n_fe</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">float</span> <a class="code" href="classMonitor__i.html#a0c6dc41ec4a294aaffbe9cffb480c1ce">get_ber</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">float</span> <a class="code" href="classMonitor__i.html#ad6075d8113a86b5c1cc4b2003cd231de">get_fer</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="classMonitor__i.html#a70d23196471afeb49bd89b8aa3822492">get_n_analyzed_fra</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classMonitor__i.html#a586ab4780e42d8d68d498ba9d45164cc">get_fe_limit</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html#a32713645ec6541f14a3a65e67f3c0e3e">fe_limit_achieved</a>() = 0;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classMonitor__i.html#a9fd81ec278d0d06ae1ba389bdc91760e">check_errors</a>(<span class="keyword">const</span> mipp::vector&lt;B&gt;&amp; U, <span class="keyword">const</span> mipp::vector&lt;B&gt;&amp; V) = 0;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
+<div class="line"><a name="l00155"></a><span class="lineno"><a class="line" href="classMonitor__i.html#a23047bd08daa53eb78363b08363e4ba3">  155</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html#a23047bd08daa53eb78363b08363e4ba3">is_interrupt</a>()</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    {</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::interrupt</a>;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno"><a class="line" href="classMonitor__i.html#a2f1b492d052f1309c50a22d9acadadb6">  165</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html#a2f1b492d052f1309c50a22d9acadadb6">is_over</a>()</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    {</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::over</a>;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    }</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> signal_interrupt_handler(<span class="keywordtype">int</span> signal)</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    {</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keyword">auto</span> t_now = std::chrono::steady_clock::now();</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="keywordflow">if</span> (!<a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::first_interrupt</a>)</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        {</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::d_delta_interrupt</a> = t_now - <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::t_last_interrupt</a>;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::d_delta_interrupt</a> &lt; std::chrono::milliseconds(500))</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::over</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        }</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        Monitor_i&lt;B&gt;::t_last_interrupt  = t_now;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::first_interrupt</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::interrupt</a>       = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    }</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;};</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::interrupt</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::first_interrupt</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::over</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;std::chrono::time_point&lt;std::chrono::steady_clock, std::chrono::nanoseconds&gt; <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::t_last_interrupt</a>;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;std::chrono::nanoseconds <a class="code" href="classMonitor__i.html">Monitor_i&lt;B&gt;::d_delta_interrupt</a> = std::chrono::nanoseconds(0);</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MONITOR_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor">#include &quot;SC_Monitor.hpp&quot;</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MONITOR_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="Module_8hpp_html"><div class="ttname"><a href="Module_8hpp.html">Module.hpp</a></div><div class="ttdoc">A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...</div></div>
 <div class="ttc" id="classMonitor__i_html_a5bed4d4ec25201e2ded36b215bb6d6b1"><div class="ttname"><a href="classMonitor__i.html#a5bed4d4ec25201e2ded36b215bb6d6b1">Monitor_i::Monitor_i</a></div><div class="ttdeci">Monitor_i(const int &amp;K, const int &amp;N, const int &amp;n_frames=1, const std::string name=&quot;Monitor_i&quot;)</div><div class="ttdoc">Constructor. </div><div class="ttdef"><b>Definition:</b> Monitor.hpp:51</div></div>
 <div class="ttc" id="classMonitor__i_html_a73c0516af1ffb687cbfd56357ccb4e6f"><div class="ttname"><a href="classMonitor__i.html#a73c0516af1ffb687cbfd56357ccb4e6f">Monitor_i::t_last_interrupt</a></div><div class="ttdeci">static std::chrono::time_point&lt; std::chrono::steady_clock, std::chrono::nanoseconds &gt; t_last_interrupt</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:34</div></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
+<div class="ttc" id="classMonitor__i_html_a32713645ec6541f14a3a65e67f3c0e3e"><div class="ttname"><a href="classMonitor__i.html#a32713645ec6541f14a3a65e67f3c0e3e">Monitor_i::fe_limit_achieved</a></div><div class="ttdeci">virtual bool fe_limit_achieved()=0</div><div class="ttdoc">Tells if the frame errors limit is achieved (in this case the current computations should stop)...</div></div>
 <div class="ttc" id="classMonitor__i_html_a70d23196471afeb49bd89b8aa3822492"><div class="ttname"><a href="classMonitor__i.html#a70d23196471afeb49bd89b8aa3822492">Monitor_i::get_n_analyzed_fra</a></div><div class="ttdeci">virtual unsigned long long get_n_analyzed_fra() const =0</div><div class="ttdoc">Gets the number of analyzed frames (analyzed in the Monitor_i::check_errors method). </div></div>
-<div class="ttc" id="classMonitor__i_html_a3dcf864d84bf852bac7b67058d3e944f"><div class="ttname"><a href="classMonitor__i.html#a3dcf864d84bf852bac7b67058d3e944f">Monitor_i::get_N</a></div><div class="ttdeci">int get_N() const </div><div class="ttdoc">Gets the frame size. </div><div class="ttdef"><b>Definition:</b> Monitor.hpp:74</div></div>
+<div class="ttc" id="classMonitor__i_html_a3dcf864d84bf852bac7b67058d3e944f"><div class="ttname"><a href="classMonitor__i.html#a3dcf864d84bf852bac7b67058d3e944f">Monitor_i::get_N</a></div><div class="ttdeci">int get_N() const </div><div class="ttdoc">Gets the frame size. </div><div class="ttdef"><b>Definition:</b> Monitor.hpp:76</div></div>
 <div class="ttc" id="classMonitor__i_html_a8d91c1d600fc40ef4fea12b80bd6a83c"><div class="ttname"><a href="classMonitor__i.html#a8d91c1d600fc40ef4fea12b80bd6a83c">Monitor_i::interrupt</a></div><div class="ttdeci">static bool interrupt</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:31</div></div>
 <div class="ttc" id="classMonitor__i_html_a0c6dc41ec4a294aaffbe9cffb480c1ce"><div class="ttname"><a href="classMonitor__i.html#a0c6dc41ec4a294aaffbe9cffb480c1ce">Monitor_i::get_ber</a></div><div class="ttdeci">virtual float get_ber() const =0</div><div class="ttdoc">Gets the bit error rate. </div></div>
 <div class="ttc" id="classMonitor__i_html_a8304abe6a3c0bcd842ea6b8e00802077"><div class="ttname"><a href="classMonitor__i.html#a8304abe6a3c0bcd842ea6b8e00802077">Monitor_i::K</a></div><div class="ttdeci">const int K</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:37</div></div>
-<div class="ttc" id="classMonitor__i_html_adc6eb7820bada61e5e939847d46b5fc2"><div class="ttname"><a href="classMonitor__i.html#adc6eb7820bada61e5e939847d46b5fc2">Monitor_i::get_K</a></div><div class="ttdeci">int get_K() const </div><div class="ttdoc">Gets the number of information bits in a frame. </div><div class="ttdef"><b>Definition:</b> Monitor.hpp:84</div></div>
-<div class="ttc" id="classMonitor__i_html_a2f1b492d052f1309c50a22d9acadadb6"><div class="ttname"><a href="classMonitor__i.html#a2f1b492d052f1309c50a22d9acadadb6">Monitor_i::is_over</a></div><div class="ttdeci">static bool is_over()</div><div class="ttdoc">Tells if the user asked for stopping the whole simulation. </div><div class="ttdef"><b>Definition:</b> Monitor.hpp:163</div></div>
+<div class="ttc" id="classMonitor__i_html_adc6eb7820bada61e5e939847d46b5fc2"><div class="ttname"><a href="classMonitor__i.html#adc6eb7820bada61e5e939847d46b5fc2">Monitor_i::get_K</a></div><div class="ttdeci">int get_K() const </div><div class="ttdoc">Gets the number of information bits in a frame. </div><div class="ttdef"><b>Definition:</b> Monitor.hpp:86</div></div>
+<div class="ttc" id="classMonitor__i_html_a2f1b492d052f1309c50a22d9acadadb6"><div class="ttname"><a href="classMonitor__i.html#a2f1b492d052f1309c50a22d9acadadb6">Monitor_i::is_over</a></div><div class="ttdeci">static bool is_over()</div><div class="ttdoc">Tells if the user asked for stopping the whole simulation. </div><div class="ttdef"><b>Definition:</b> Monitor.hpp:165</div></div>
 <div class="ttc" id="classMonitor__i_html_a7e0dfbd5aeacb230ea41cd4950603ea8"><div class="ttname"><a href="classMonitor__i.html#a7e0dfbd5aeacb230ea41cd4950603ea8">Monitor_i::get_n_fe</a></div><div class="ttdeci">virtual int get_n_fe() const =0</div><div class="ttdoc">Gets the number of frame errors. </div></div>
 <div class="ttc" id="classModule_html"><div class="ttname"><a href="classModule.html">Module</a></div><div class="ttdoc">A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...</div><div class="ttdef"><b>Definition:</b> Module.hpp:19</div></div>
 <div class="ttc" id="classMonitor__i_html_a56116d436f4292304b8d4c68bd7181b9"><div class="ttname"><a href="classMonitor__i.html#a56116d436f4292304b8d4c68bd7181b9">Monitor_i::get_n_be</a></div><div class="ttdeci">virtual int get_n_be() const =0</div><div class="ttdoc">Gets the number of bit errors. </div></div>
 <div class="ttc" id="classMonitor__i_html"><div class="ttname"><a href="classMonitor__i.html">Monitor_i</a></div><div class="ttdoc">Monitors the simulated frames, tells if there is a frame errors and counts the number of bit errors...</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:28</div></div>
-<div class="ttc" id="classMonitor__i_html_ab2ed734e81a69810f100076016cc918c"><div class="ttname"><a href="classMonitor__i.html#ab2ed734e81a69810f100076016cc918c">Monitor_i::fe_limit_achieved</a></div><div class="ttdeci">virtual bool fe_limit_achieved() const =0</div><div class="ttdoc">Tells if the frame errors limit is achieved (in this case the current computations should stop)...</div></div>
 <div class="ttc" id="classMonitor__i_html_ad223cda7fdf46c6ae0d76c7f0d14805a"><div class="ttname"><a href="classMonitor__i.html#ad223cda7fdf46c6ae0d76c7f0d14805a">Monitor_i::d_delta_interrupt</a></div><div class="ttdeci">static std::chrono::nanoseconds d_delta_interrupt</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:35</div></div>
 <div class="ttc" id="classMonitor__i_html_a586ab4780e42d8d68d498ba9d45164cc"><div class="ttname"><a href="classMonitor__i.html#a586ab4780e42d8d68d498ba9d45164cc">Monitor_i::get_fe_limit</a></div><div class="ttdeci">virtual int get_fe_limit() const =0</div><div class="ttdoc">Gets the frame errors limit (maximal number of frame errors to simulate). </div></div>
 <div class="ttc" id="classMonitor__i_html_ad6075d8113a86b5c1cc4b2003cd231de"><div class="ttname"><a href="classMonitor__i.html#ad6075d8113a86b5c1cc4b2003cd231de">Monitor_i::get_fer</a></div><div class="ttdeci">virtual float get_fer() const =0</div><div class="ttdoc">Gets the frame error rate. </div></div>
 <div class="ttc" id="classMonitor__i_html_acd44d4fe4957c4e4dcfdaa0fffc2ed24"><div class="ttname"><a href="classMonitor__i.html#acd44d4fe4957c4e4dcfdaa0fffc2ed24">Monitor_i::first_interrupt</a></div><div class="ttdeci">static bool first_interrupt</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:32</div></div>
-<div class="ttc" id="classMonitor__i_html_a32abe93e50d607b3637ad1e9ccfaf458"><div class="ttname"><a href="classMonitor__i.html#a32abe93e50d607b3637ad1e9ccfaf458">Monitor_i::~Monitor_i</a></div><div class="ttdeci">virtual ~Monitor_i()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> Monitor.hpp:65</div></div>
+<div class="ttc" id="classMonitor__i_html_a32abe93e50d607b3637ad1e9ccfaf458"><div class="ttname"><a href="classMonitor__i.html#a32abe93e50d607b3637ad1e9ccfaf458">Monitor_i::~Monitor_i</a></div><div class="ttdeci">virtual ~Monitor_i()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> Monitor.hpp:67</div></div>
 <div class="ttc" id="classMonitor__i_html_ac9446b7076f640cbc1a0fac613ffe714"><div class="ttname"><a href="classMonitor__i.html#ac9446b7076f640cbc1a0fac613ffe714">Monitor_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:38</div></div>
 <div class="ttc" id="classMonitor__i_html_a3361dc849eb074af40762508b6d2b9cf"><div class="ttname"><a href="classMonitor__i.html#a3361dc849eb074af40762508b6d2b9cf">Monitor_i::over</a></div><div class="ttdeci">static bool over</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:33</div></div>
 <div class="ttc" id="classModule_html_a7e126daadf13414b91f1b9caa70db3e8"><div class="ttname"><a href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">Module::n_frames</a></div><div class="ttdeci">int n_frames</div><div class="ttdef"><b>Definition:</b> Module.hpp:22</div></div>
-<div class="ttc" id="classMonitor__i_html_a23047bd08daa53eb78363b08363e4ba3"><div class="ttname"><a href="classMonitor__i.html#a23047bd08daa53eb78363b08363e4ba3">Monitor_i::is_interrupt</a></div><div class="ttdeci">static bool is_interrupt()</div><div class="ttdoc">Tells if the user asked for stopping the current computations. </div><div class="ttdef"><b>Definition:</b> Monitor.hpp:153</div></div>
+<div class="ttc" id="classMonitor__i_html_a23047bd08daa53eb78363b08363e4ba3"><div class="ttname"><a href="classMonitor__i.html#a23047bd08daa53eb78363b08363e4ba3">Monitor_i::is_interrupt</a></div><div class="ttdeci">static bool is_interrupt()</div><div class="ttdoc">Tells if the user asked for stopping the current computations. </div><div class="ttdef"><b>Definition:</b> Monitor.hpp:155</div></div>
 <div class="ttc" id="classMonitor__i_html_a9fd81ec278d0d06ae1ba389bdc91760e"><div class="ttname"><a href="classMonitor__i.html#a9fd81ec278d0d06ae1ba389bdc91760e">Monitor_i::check_errors</a></div><div class="ttdeci">virtual void check_errors(const mipp::vector&lt; B &gt; &amp;U, const mipp::vector&lt; B &gt; &amp;V)=0</div><div class="ttdoc">Compares two messages and counts the number of frame errors and bit errors. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:09 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:05 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

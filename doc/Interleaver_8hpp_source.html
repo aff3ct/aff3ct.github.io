@@ -92,178 +92,179 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef INTERLEAVER_HPP_</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define INTERLEAVER_HPP_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;cassert&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;Tools/Perf/MIPP/mipp.h&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Module_8hpp.html">Module/Module.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classInterleaver__i.html">   28</a></span>&#160;<span class="keyword">class </span><a class="code" href="classInterleaver__i.html">Interleaver_i</a> : <span class="keyword">public</span> <a class="code" href="classModule.html">Module</a></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">   31</a></span>&#160;    mipp::vector&lt;T&gt; <a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>;     </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">   32</a></span>&#160;    mipp::vector&lt;T&gt; <a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classInterleaver__i.html#ac63bdf12026df9fec6be6a46719e85d1">gen_lookup_tables</a>() = 0; <span class="comment">// to implement</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#ae0d27a3caadb3b6c11bfbdf4f1eb31b9">   48</a></span>&#160;    <a class="code" href="classInterleaver__i.html#ae0d27a3caadb3b6c11bfbdf4f1eb31b9">Interleaver_i</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> size, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;Interleaver_i&quot;</span>)</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    : <a class="code" href="classModule.html">Module</a>(<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), <a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>(size), <a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>(size)</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#abfed716eefb8b200a2f7a0a82fa599c6">   56</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classInterleaver__i.html#abfed716eefb8b200a2f7a0a82fa599c6">~Interleaver_i</a>()</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#ac2fe38dccacc8d481ebaaaeaffb5e030">   65</a></span>&#160;    mipp::vector&lt;T&gt; <a class="code" href="classInterleaver__i.html#ac2fe38dccacc8d481ebaaaeaffb5e030">get_lookup_table</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#a49515d52a31fd54f0b07601b58d0ceef">   75</a></span>&#160;    mipp::vector&lt;T&gt; <a class="code" href="classInterleaver__i.html#a49515d52a31fd54f0b07601b58d0ceef">get_lookup_table_inverse</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> D&gt;</div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#aba32d9ee770fdefaf2900ab6c7f65e5a">   94</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classInterleaver__i.html#aba32d9ee770fdefaf2900ab6c7f65e5a">interleave</a>(<span class="keyword">const</span> mipp::vector&lt;D&gt; &amp;natural_vec, </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                                 mipp::vector&lt;D&gt; &amp;interleaved_vec, </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                           <span class="keyword">const</span> <span class="keywordtype">bool</span>             frame_reordering = <span class="keyword">false</span>,</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                           <span class="keyword">const</span> <span class="keywordtype">int</span>              <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = -1)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        this-&gt;_interleave(natural_vec, interleaved_vec, <a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>, frame_reordering, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> D&gt;</div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#af785794ccb025b66a0153736aecdb7d9">  116</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classInterleaver__i.html#af785794ccb025b66a0153736aecdb7d9">deinterleave</a>(<span class="keyword">const</span> mipp::vector&lt;D&gt; &amp;interleaved_vec, </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                                   mipp::vector&lt;D&gt; &amp;natural_vec, </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                             <span class="keyword">const</span> <span class="keywordtype">bool</span>             frame_reordering = <span class="keyword">false</span>,</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                             <span class="keyword">const</span> <span class="keywordtype">int</span>              <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = -1)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">    </span>{ </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        this-&gt;_interleave(interleaved_vec, natural_vec, <a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>, frame_reordering, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#a568da91dcce22236c8e98735463d2cce">  131</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classInterleaver__i.html#a568da91dcce22236c8e98735463d2cce">operator==</a>(<a class="code" href="classInterleaver__i.html">Interleaver_i&lt;T&gt;</a> &amp;interleaver)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <span class="keywordflow">if</span> (interleaver.<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>.size() != this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>.size())</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordflow">if</span> (interleaver.<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>.size() != this-&gt;<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>.size())</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; (int)this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>.size(); i++)</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            <span class="keywordflow">if</span> (this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>[i] != interleaver.<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>[i])</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; (int)this-&gt;<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>.size(); i++)</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;            <span class="keywordflow">if</span> (this-&gt;<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>[i] != interleaver.<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>[i])</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    }</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
-<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#ada993ce631505f5a9142f909c6ead675">  153</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classInterleaver__i.html#ada993ce631505f5a9142f909c6ead675">regen_lookup_tables</a>()</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    }</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> D&gt;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> _interleave(<span class="keyword">const</span> mipp::vector&lt;D&gt; &amp;in_vec, </div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                                  mipp::vector&lt;D&gt; &amp;out_vec,</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                            <span class="keyword">const</span> mipp::vector&lt;T&gt; &amp;lookup_table,</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">bool</span>             frame_reordering = <span class="keyword">false</span>,</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">int</span>              <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = -1)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        assert(<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> == -1 || <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> &gt; 0);</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> real_n_frames = (<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> != -1) ? <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> : this-&gt;<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        assert(in_vec.size() == out_vec.size());</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        assert(in_vec.size() &gt;= lookup_table.size() * real_n_frames);</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> frame_size = (int)lookup_table.size();</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <span class="keywordflow">if</span> (frame_reordering)</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            <span class="comment">// vectorized interleaving</span></div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            <span class="keywordflow">if</span> (real_n_frames == mipp::nElReg&lt;D&gt;())</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            {</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; frame_size; i++)</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                    mipp::store&lt;D&gt;(&amp;out_vec[i * mipp::nElReg&lt;D&gt;()], </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                                   mipp::load&lt;D&gt;(&amp;in_vec[lookup_table[i] * mipp::nElReg&lt;D&gt;()]));</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            }</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            {</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                <span class="keywordflow">if</span> ((real_n_frames == 4 &amp;&amp; <span class="keyword">typeid</span>(D) == <span class="keyword">typeid</span>(<span class="keywordtype">signed</span> <span class="keywordtype">char</span>)) &amp;&amp; <span class="comment">// partially vectorized interleaving</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                    (in_vec.size() &gt;= (unsigned)(frame_size * real_n_frames + mipp::nElReg&lt;D&gt;())))</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                {</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                    <span class="keyword">const</span> <span class="keywordtype">signed</span> <span class="keywordtype">char</span> mask[32] = { 0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                                                  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                    <span class="keyword">const</span> <span class="keyword">auto</span> r_mask = mipp::set&lt;signed char&gt;(mask);</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;                    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; frame_size; i++)</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                    {</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;                        <span class="keyword">const</span> <span class="keyword">auto</span> off1 =              i  * real_n_frames;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;                        <span class="keyword">const</span> <span class="keyword">auto</span> off2 = lookup_table[i] * real_n_frames;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                        <span class="keyword">auto</span> r_ld = mipp::loadu&lt;D&gt;(&amp;in_vec[off2]);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;                        <span class="keyword">auto</span> r_st = mipp::loadu&lt;D&gt;(&amp;in_vec[off1]);</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                        r_ld = mipp::andnb&lt;D&gt;(r_mask, r_ld);</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                        r_st = mipp::andb &lt;D&gt;(r_mask, r_st);</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                        r_st = mipp::xorb &lt;D&gt;(r_ld,   r_st);</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                        mipp::storeu&lt;D&gt;(&amp;out_vec[off1], r_st);</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;                    }</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;                }</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;                <span class="keywordflow">else</span> <span class="comment">// sequential interleaving</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;                {</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; frame_size; i++)</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                    {</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                        <span class="keyword">const</span> <span class="keyword">auto</span> off1 =              i  * real_n_frames;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;                        <span class="keyword">const</span> <span class="keyword">auto</span> off2 = lookup_table[i] * real_n_frames;</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                        <span class="keywordflow">for</span> (<span class="keyword">auto</span> f = 0; f &lt; real_n_frames; f++)</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                            out_vec[off1 +f] = in_vec[off2 +f];</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;                    }</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;                }</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;            }</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        }</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        <span class="keywordflow">else</span> <span class="comment">// sequential interleaving</span></div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        {</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            <span class="comment">// TODO: vectorize this code with the new AVX gather instruction</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">auto</span> f = 0; f &lt; real_n_frames; f++)</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            {</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;                <span class="keyword">const</span> <span class="keyword">auto</span> off = f * frame_size;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; frame_size; i++)</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                    out_vec[off + i] = in_vec[off + lookup_table[i]];</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            }</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        }</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    }</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;};</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="preprocessor">#include &quot;SC_Interleaver.hpp&quot;</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* INTERLEAVER_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;typeinfo&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;Tools/Perf/MIPP/mipp.h&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Module_8hpp.html">Module/Module.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classInterleaver__i.html">   29</a></span>&#160;<span class="keyword">class </span><a class="code" href="classInterleaver__i.html">Interleaver_i</a> : <span class="keyword">public</span> <a class="code" href="classModule.html">Module</a></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">   32</a></span>&#160;    mipp::vector&lt;T&gt; <a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>;     </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">   33</a></span>&#160;    mipp::vector&lt;T&gt; <a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classInterleaver__i.html#ac63bdf12026df9fec6be6a46719e85d1">gen_lookup_tables</a>() = 0; <span class="comment">// to implement</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#ae0d27a3caadb3b6c11bfbdf4f1eb31b9">   49</a></span>&#160;    <a class="code" href="classInterleaver__i.html#ae0d27a3caadb3b6c11bfbdf4f1eb31b9">Interleaver_i</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> size, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1, <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;Interleaver_i&quot;</span>)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    : <a class="code" href="classModule.html">Module</a>(<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>, <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a>), <a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>(size), <a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>(size)</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#abfed716eefb8b200a2f7a0a82fa599c6">   57</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classInterleaver__i.html#abfed716eefb8b200a2f7a0a82fa599c6">~Interleaver_i</a>()</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#ac2fe38dccacc8d481ebaaaeaffb5e030">   66</a></span>&#160;    mipp::vector&lt;T&gt; <a class="code" href="classInterleaver__i.html#ac2fe38dccacc8d481ebaaaeaffb5e030">get_lookup_table</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#a49515d52a31fd54f0b07601b58d0ceef">   76</a></span>&#160;    mipp::vector&lt;T&gt; <a class="code" href="classInterleaver__i.html#a49515d52a31fd54f0b07601b58d0ceef">get_lookup_table_inverse</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> D&gt;</div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#aba32d9ee770fdefaf2900ab6c7f65e5a">   95</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classInterleaver__i.html#aba32d9ee770fdefaf2900ab6c7f65e5a">interleave</a>(<span class="keyword">const</span> mipp::vector&lt;D&gt; &amp;natural_vec, </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                                 mipp::vector&lt;D&gt; &amp;interleaved_vec, </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                           <span class="keyword">const</span> <span class="keywordtype">bool</span>             frame_reordering = <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                           <span class="keyword">const</span> <span class="keywordtype">int</span>              <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = -1)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        this-&gt;_interleave(natural_vec, interleaved_vec, <a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>, frame_reordering, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> D&gt;</div>
+<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#af785794ccb025b66a0153736aecdb7d9">  117</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classInterleaver__i.html#af785794ccb025b66a0153736aecdb7d9">deinterleave</a>(<span class="keyword">const</span> mipp::vector&lt;D&gt; &amp;interleaved_vec, </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                                   mipp::vector&lt;D&gt; &amp;natural_vec, </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                             <span class="keyword">const</span> <span class="keywordtype">bool</span>             frame_reordering = <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                             <span class="keyword">const</span> <span class="keywordtype">int</span>              <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = -1)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keyword">    </span>{ </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        this-&gt;_interleave(interleaved_vec, natural_vec, <a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>, frame_reordering, <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    }</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#a568da91dcce22236c8e98735463d2cce">  132</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classInterleaver__i.html#a568da91dcce22236c8e98735463d2cce">operator==</a>(<a class="code" href="classInterleaver__i.html">Interleaver_i&lt;T&gt;</a> &amp;interleaver)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keywordflow">if</span> (interleaver.<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>.size() != this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>.size())</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        <span class="keywordflow">if</span> (interleaver.<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>.size() != this-&gt;<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>.size())</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; (int)this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>.size(); i++)</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            <span class="keywordflow">if</span> (this-&gt;<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>[i] != interleaver.<a class="code" href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">pi</a>[i])</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; (int)this-&gt;<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>.size(); i++)</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            <span class="keywordflow">if</span> (this-&gt;<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>[i] != interleaver.<a class="code" href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">pi_inv</a>[i])</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    }</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00154"></a><span class="lineno"><a class="line" href="classInterleaver__i.html#ada993ce631505f5a9142f909c6ead675">  154</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classInterleaver__i.html#ada993ce631505f5a9142f909c6ead675">regen_lookup_tables</a>()</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    {</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    }</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> D&gt;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> _interleave(<span class="keyword">const</span> mipp::vector&lt;D&gt; &amp;in_vec, </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                                  mipp::vector&lt;D&gt; &amp;out_vec,</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                            <span class="keyword">const</span> mipp::vector&lt;T&gt; &amp;lookup_table,</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">bool</span>             frame_reordering = <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">int</span>              <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = -1)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        assert(<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> == -1 || <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> &gt; 0);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> real_n_frames = (<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> != -1) ? <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> : this-&gt;<a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        assert(in_vec.size() == out_vec.size());</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        assert(in_vec.size() &gt;= lookup_table.size() * real_n_frames);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> frame_size = (int)lookup_table.size();</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keywordflow">if</span> (frame_reordering)</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        {</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            <span class="comment">// vectorized interleaving</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            <span class="keywordflow">if</span> (real_n_frames == mipp::nElReg&lt;D&gt;())</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            {</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; frame_size; i++)</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                    mipp::store&lt;D&gt;(&amp;out_vec[i * mipp::nElReg&lt;D&gt;()], </div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;                                   mipp::load&lt;D&gt;(&amp;in_vec[lookup_table[i] * mipp::nElReg&lt;D&gt;()]));</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            }</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            {</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                <span class="keywordflow">if</span> ((real_n_frames == 4 &amp;&amp; <span class="keyword">typeid</span>(D) == <span class="keyword">typeid</span>(<span class="keywordtype">signed</span> <span class="keywordtype">char</span>)) &amp;&amp; <span class="comment">// partially vectorized interleaving</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                    (in_vec.size() &gt;= (unsigned)(frame_size * real_n_frames + mipp::nElReg&lt;D&gt;())))</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                {</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                    <span class="keyword">const</span> <span class="keywordtype">signed</span> <span class="keywordtype">char</span> mask[32] = { 0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                                                  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;                    <span class="keyword">const</span> <span class="keyword">auto</span> r_mask = mipp::set&lt;signed char&gt;(mask);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; frame_size; i++)</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;                    {</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;                        <span class="keyword">const</span> <span class="keyword">auto</span> off1 =              i  * real_n_frames;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                        <span class="keyword">const</span> <span class="keyword">auto</span> off2 = lookup_table[i] * real_n_frames;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;                        <span class="keyword">auto</span> r_ld = mipp::loadu&lt;D&gt;(&amp;in_vec[off2]);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                        <span class="keyword">auto</span> r_st = mipp::loadu&lt;D&gt;(&amp;in_vec[off1]);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                        r_ld = mipp::andnb&lt;D&gt;(r_mask, r_ld);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                        r_st = mipp::andb &lt;D&gt;(r_mask, r_st);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                        r_st = mipp::xorb &lt;D&gt;(r_ld,   r_st);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;                        mipp::storeu&lt;D&gt;(&amp;out_vec[off1], r_st);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;                    }</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;                }</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;                <span class="keywordflow">else</span> <span class="comment">// sequential interleaving</span></div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                {</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; frame_size; i++)</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                    {</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;                        <span class="keyword">const</span> <span class="keyword">auto</span> off1 =              i  * real_n_frames;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                        <span class="keyword">const</span> <span class="keyword">auto</span> off2 = lookup_table[i] * real_n_frames;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                        <span class="keywordflow">for</span> (<span class="keyword">auto</span> f = 0; f &lt; real_n_frames; f++)</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;                            out_vec[off1 +f] = in_vec[off2 +f];</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;                    }</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;                }</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;            }</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        }</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <span class="keywordflow">else</span> <span class="comment">// sequential interleaving</span></div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        {</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <span class="comment">// TODO: vectorize this code with the new AVX gather instruction</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">auto</span> f = 0; f &lt; real_n_frames; f++)</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;            {</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;                <span class="keyword">const</span> <span class="keyword">auto</span> off = f * frame_size;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; frame_size; i++)</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;                    out_vec[off + i] = in_vec[off + lookup_table[i]];</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            }</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        }</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    }</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;};</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="preprocessor">#include &quot;SC_Interleaver.hpp&quot;</span></div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* INTERLEAVER_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="Module_8hpp_html"><div class="ttname"><a href="Module_8hpp.html">Module.hpp</a></div><div class="ttdoc">A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...</div></div>
-<div class="ttc" id="classInterleaver__i_html_af785794ccb025b66a0153736aecdb7d9"><div class="ttname"><a href="classInterleaver__i.html#af785794ccb025b66a0153736aecdb7d9">Interleaver_i::deinterleave</a></div><div class="ttdeci">void deinterleave(const mipp::vector&lt; D &gt; &amp;interleaved_vec, mipp::vector&lt; D &gt; &amp;natural_vec, const bool frame_reordering=false, const int n_frames=-1) const </div><div class="ttdoc">Deinterleaves a vector. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:116</div></div>
-<div class="ttc" id="classInterleaver__i_html_aba32d9ee770fdefaf2900ab6c7f65e5a"><div class="ttname"><a href="classInterleaver__i.html#aba32d9ee770fdefaf2900ab6c7f65e5a">Interleaver_i::interleave</a></div><div class="ttdeci">void interleave(const mipp::vector&lt; D &gt; &amp;natural_vec, mipp::vector&lt; D &gt; &amp;interleaved_vec, const bool frame_reordering=false, const int n_frames=-1) const </div><div class="ttdoc">Interleaves a vector. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:94</div></div>
-<div class="ttc" id="classInterleaver__i_html_ac2fe38dccacc8d481ebaaaeaffb5e030"><div class="ttname"><a href="classInterleaver__i.html#ac2fe38dccacc8d481ebaaaeaffb5e030">Interleaver_i::get_lookup_table</a></div><div class="ttdeci">mipp::vector&lt; T &gt; get_lookup_table() const </div><div class="ttdoc">Gets the lookup table required for the interleaving process. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:65</div></div>
-<div class="ttc" id="classInterleaver__i_html_abfed716eefb8b200a2f7a0a82fa599c6"><div class="ttname"><a href="classInterleaver__i.html#abfed716eefb8b200a2f7a0a82fa599c6">Interleaver_i::~Interleaver_i</a></div><div class="ttdeci">virtual ~Interleaver_i()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:56</div></div>
+<div class="ttc" id="classInterleaver__i_html_af785794ccb025b66a0153736aecdb7d9"><div class="ttname"><a href="classInterleaver__i.html#af785794ccb025b66a0153736aecdb7d9">Interleaver_i::deinterleave</a></div><div class="ttdeci">void deinterleave(const mipp::vector&lt; D &gt; &amp;interleaved_vec, mipp::vector&lt; D &gt; &amp;natural_vec, const bool frame_reordering=false, const int n_frames=-1) const </div><div class="ttdoc">Deinterleaves a vector. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:117</div></div>
+<div class="ttc" id="classInterleaver__i_html_aba32d9ee770fdefaf2900ab6c7f65e5a"><div class="ttname"><a href="classInterleaver__i.html#aba32d9ee770fdefaf2900ab6c7f65e5a">Interleaver_i::interleave</a></div><div class="ttdeci">void interleave(const mipp::vector&lt; D &gt; &amp;natural_vec, mipp::vector&lt; D &gt; &amp;interleaved_vec, const bool frame_reordering=false, const int n_frames=-1) const </div><div class="ttdoc">Interleaves a vector. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:95</div></div>
+<div class="ttc" id="classInterleaver__i_html_ac2fe38dccacc8d481ebaaaeaffb5e030"><div class="ttname"><a href="classInterleaver__i.html#ac2fe38dccacc8d481ebaaaeaffb5e030">Interleaver_i::get_lookup_table</a></div><div class="ttdeci">mipp::vector&lt; T &gt; get_lookup_table() const </div><div class="ttdoc">Gets the lookup table required for the interleaving process. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:66</div></div>
+<div class="ttc" id="classInterleaver__i_html_abfed716eefb8b200a2f7a0a82fa599c6"><div class="ttname"><a href="classInterleaver__i.html#abfed716eefb8b200a2f7a0a82fa599c6">Interleaver_i::~Interleaver_i</a></div><div class="ttdeci">virtual ~Interleaver_i()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:57</div></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
-<div class="ttc" id="classInterleaver__i_html_a8aaaee552090231e962bb72d70c4d471"><div class="ttname"><a href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">Interleaver_i::pi_inv</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi_inv</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:32</div></div>
-<div class="ttc" id="classInterleaver__i_html_ada993ce631505f5a9142f909c6ead675"><div class="ttname"><a href="classInterleaver__i.html#ada993ce631505f5a9142f909c6ead675">Interleaver_i::regen_lookup_tables</a></div><div class="ttdeci">virtual void regen_lookup_tables()</div><div class="ttdoc">Regenerates the interleaving and deinterleaving lookup tables. Do nothing by default. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:153</div></div>
-<div class="ttc" id="classInterleaver__i_html_a568da91dcce22236c8e98735463d2cce"><div class="ttname"><a href="classInterleaver__i.html#a568da91dcce22236c8e98735463d2cce">Interleaver_i::operator==</a></div><div class="ttdeci">bool operator==(Interleaver_i&lt; T &gt; &amp;interleaver) const </div><div class="ttdoc">Compares two interleavers: the comparison only considers the lookup tables. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:131</div></div>
-<div class="ttc" id="classInterleaver__i_html_a49515d52a31fd54f0b07601b58d0ceef"><div class="ttname"><a href="classInterleaver__i.html#a49515d52a31fd54f0b07601b58d0ceef">Interleaver_i::get_lookup_table_inverse</a></div><div class="ttdeci">mipp::vector&lt; T &gt; get_lookup_table_inverse() const </div><div class="ttdoc">Gets the lookup table required for the deinterleaving process. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:75</div></div>
-<div class="ttc" id="classInterleaver__i_html_aa97e6330e4603487d85bf0cd917ae504"><div class="ttname"><a href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">Interleaver_i::pi</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:31</div></div>
-<div class="ttc" id="classInterleaver__i_html_ae0d27a3caadb3b6c11bfbdf4f1eb31b9"><div class="ttname"><a href="classInterleaver__i.html#ae0d27a3caadb3b6c11bfbdf4f1eb31b9">Interleaver_i::Interleaver_i</a></div><div class="ttdeci">Interleaver_i(const int size, const int n_frames=1, const std::string name=&quot;Interleaver_i&quot;)</div><div class="ttdoc">Constructor. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:48</div></div>
+<div class="ttc" id="classInterleaver__i_html_a8aaaee552090231e962bb72d70c4d471"><div class="ttname"><a href="classInterleaver__i.html#a8aaaee552090231e962bb72d70c4d471">Interleaver_i::pi_inv</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi_inv</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:33</div></div>
+<div class="ttc" id="classInterleaver__i_html_ada993ce631505f5a9142f909c6ead675"><div class="ttname"><a href="classInterleaver__i.html#ada993ce631505f5a9142f909c6ead675">Interleaver_i::regen_lookup_tables</a></div><div class="ttdeci">virtual void regen_lookup_tables()</div><div class="ttdoc">Regenerates the interleaving and deinterleaving lookup tables. Do nothing by default. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:154</div></div>
+<div class="ttc" id="classInterleaver__i_html_a568da91dcce22236c8e98735463d2cce"><div class="ttname"><a href="classInterleaver__i.html#a568da91dcce22236c8e98735463d2cce">Interleaver_i::operator==</a></div><div class="ttdeci">bool operator==(Interleaver_i&lt; T &gt; &amp;interleaver) const </div><div class="ttdoc">Compares two interleavers: the comparison only considers the lookup tables. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:132</div></div>
+<div class="ttc" id="classInterleaver__i_html_a49515d52a31fd54f0b07601b58d0ceef"><div class="ttname"><a href="classInterleaver__i.html#a49515d52a31fd54f0b07601b58d0ceef">Interleaver_i::get_lookup_table_inverse</a></div><div class="ttdeci">mipp::vector&lt; T &gt; get_lookup_table_inverse() const </div><div class="ttdoc">Gets the lookup table required for the deinterleaving process. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:76</div></div>
+<div class="ttc" id="classInterleaver__i_html_aa97e6330e4603487d85bf0cd917ae504"><div class="ttname"><a href="classInterleaver__i.html#aa97e6330e4603487d85bf0cd917ae504">Interleaver_i::pi</a></div><div class="ttdeci">mipp::vector&lt; T &gt; pi</div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:32</div></div>
+<div class="ttc" id="classInterleaver__i_html_ae0d27a3caadb3b6c11bfbdf4f1eb31b9"><div class="ttname"><a href="classInterleaver__i.html#ae0d27a3caadb3b6c11bfbdf4f1eb31b9">Interleaver_i::Interleaver_i</a></div><div class="ttdeci">Interleaver_i(const int size, const int n_frames=1, const std::string name=&quot;Interleaver_i&quot;)</div><div class="ttdoc">Constructor. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:49</div></div>
 <div class="ttc" id="classModule_html"><div class="ttname"><a href="classModule.html">Module</a></div><div class="ttdoc">A Module is an abstract concept. Basically, all the objects used in a Simulation are a Module...</div><div class="ttdef"><b>Definition:</b> Module.hpp:19</div></div>
 <div class="ttc" id="classInterleaver__i_html_ac63bdf12026df9fec6be6a46719e85d1"><div class="ttname"><a href="classInterleaver__i.html#ac63bdf12026df9fec6be6a46719e85d1">Interleaver_i::gen_lookup_tables</a></div><div class="ttdeci">virtual void gen_lookup_tables()=0</div><div class="ttdoc">Generates the interleaving and deinterleaving lookup tables. This method defines the interleaver and ...</div></div>
-<div class="ttc" id="classInterleaver__i_html"><div class="ttname"><a href="classInterleaver__i.html">Interleaver_i</a></div><div class="ttdoc">Interleaves or deinterleaves a vector. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:28</div></div>
+<div class="ttc" id="classInterleaver__i_html"><div class="ttname"><a href="classInterleaver__i.html">Interleaver_i</a></div><div class="ttdoc">Interleaves or deinterleaves a vector. </div><div class="ttdef"><b>Definition:</b> Interleaver.hpp:29</div></div>
 <div class="ttc" id="classModule_html_a7e126daadf13414b91f1b9caa70db3e8"><div class="ttname"><a href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">Module::n_frames</a></div><div class="ttdeci">int n_frames</div><div class="ttdef"><b>Definition:</b> Module.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:09 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:05 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

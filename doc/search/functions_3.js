@@ -1,7 +1,7 @@
 var searchData=
 [
   ['channel_5fi',['Channel_i',['../classChannel__i.html#a9165e082eaa2184e64c57de6aa75e3f7',1,'Channel_i']]],
-  ['check',['check',['../classCRC__i.html#a34fee566f75d1c613c4d55582ea04739',1,'CRC_i::check()'],['../classCRC__NO.html#acb3965d2134dd018f8361cddd2da5da2',1,'CRC_NO::check()'],['../classCRC__polynomial.html#a2c7cad235f41645abf88ed40a1f5cba9',1,'CRC_polynomial::check()'],['../classCRC__polynomial__inter.html#afc228056c7efb15972c56f9ec93bd800',1,'CRC_polynomial_inter::check()']]],
+  ['check',['check',['../classCRC__i.html#a6fb5f763d74b3c991a084356cc66a22b',1,'CRC_i::check()'],['../classCRC__NO.html#a667cd02402be7ea9a36b8a3565467393',1,'CRC_NO::check()'],['../classCRC__polynomial.html#ac1bcaca0111bd6d88b78bf23ea8c7275',1,'CRC_polynomial::check()'],['../classCRC__polynomial__inter.html#ac771c2b5102426d29992f53c436cfb18',1,'CRC_polynomial_inter::check()']]],
   ['check_5farguments',['check_arguments',['../classArguments__reader.html#a2e096f8f11045770eb7ae179c0c6b740',1,'Arguments_reader']]],
   ['check_5ferrors',['check_errors',['../classMonitor__i.html#a9fd81ec278d0d06ae1ba389bdc91760e',1,'Monitor_i::check_errors()'],['../classMonitor__std.html#a42a344c0d9d40b56534961eb1afafa6b',1,'Monitor_std::check_errors()'],['../classSimulation.html#a2b30927aa59e88ce9621a6d7dd788fc5',1,'Simulation::check_errors()']]],
   ['coset_5fi',['Coset_i',['../classCoset__i.html#affe2327ee0899b44e4678a32fbcbce22',1,'Coset_i']]],

@@ -92,43 +92,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MONITOR_REDUCTION_HPP_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;mutex&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;Monitor_std.hpp&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classMonitor__reduction.html">   10</a></span>&#160;<span class="keyword">class </span><a class="code" href="classMonitor__reduction.html">Monitor_reduction</a> : <span class="keyword">public</span> <a class="code" href="classMonitor__std.html">Monitor_std</a>&lt;B&gt;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    std::vector&lt;Monitor&lt;B&gt;*&gt;&amp; error_analyzers;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    std::vector&lt;int&gt; prev_n_be;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    std::vector&lt;int&gt; prev_n_fe;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    std::vector&lt;unsigned long long&gt; prev_n_analyzed_frames;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    std::mutex mutex_total_frame_errors;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;Monitor_std.hpp&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classMonitor__reduction.html">    9</a></span>&#160;<span class="keyword">class </span><a class="code" href="classMonitor__reduction.html">Monitor_reduction</a> : <span class="keyword">public</span> <a class="code" href="classMonitor__std.html">Monitor_std</a>&lt;B&gt;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    std::vector&lt;Monitor&lt;B&gt;*&gt;&amp; error_analyzers;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="classMonitor__reduction.html">Monitor_reduction</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; <a class="code" href="classMonitor__i.html#a8304abe6a3c0bcd842ea6b8e00802077">K</a>, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; <a class="code" href="classMonitor__i.html#ac9446b7076f640cbc1a0fac613ffe714">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; max_fe,</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                      std::vector&lt;<a class="code" href="classSC__Monitor.html">Monitor&lt;B&gt;</a>*&gt;&amp; error_analyzers, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1,</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                      <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;Monitor_reduction&quot;</span>);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classMonitor__reduction.html">Monitor_reduction</a>();</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="classMonitor__reduction.html">Monitor_reduction</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; <a class="code" href="classMonitor__i.html#a8304abe6a3c0bcd842ea6b8e00802077">K</a>, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; <a class="code" href="classMonitor__i.html#ac9446b7076f640cbc1a0fac613ffe714">N</a>, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; max_fe,</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                      std::vector&lt;<a class="code" href="classSC__Monitor.html">Monitor&lt;B&gt;</a>*&gt;&amp; error_analyzers, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a> = 1,</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                      <span class="keyword">const</span> std::string <a class="code" href="classModule.html#a794fbb44972c7c73cc197159093e66d1">name</a> = <span class="stringliteral">&quot;Monitor_reduction&quot;</span>);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classMonitor__reduction.html">Monitor_reduction</a>();</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">void</span> reduce();</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">void</span> increment_frame_errors(<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">n_frames</a>);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;};</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MONITOR_REDUCTION_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="classMonitor__reduction.html#ad84db50dfa8fac48dbc0a427ad060fd9">get_n_analyzed_fra</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classMonitor__reduction.html#a0ef66ddd2b334f2fd04d12484559146b">get_n_fe</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classMonitor__reduction.html#a0caec33e419339978ec76b653c50aac9">get_n_be</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;};</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MONITOR_REDUCTION_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classModule_html_a794fbb44972c7c73cc197159093e66d1"><div class="ttname"><a href="classModule.html#a794fbb44972c7c73cc197159093e66d1">Module::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition:</b> Module.hpp:23</div></div>
+<div class="ttc" id="classMonitor__reduction_html_ad84db50dfa8fac48dbc0a427ad060fd9"><div class="ttname"><a href="classMonitor__reduction.html#ad84db50dfa8fac48dbc0a427ad060fd9">Monitor_reduction::get_n_analyzed_fra</a></div><div class="ttdeci">unsigned long long get_n_analyzed_fra() const </div><div class="ttdoc">Gets the number of analyzed frames (analyzed in the Monitor_i::check_errors method). </div></div>
 <div class="ttc" id="classMonitor__i_html_a8304abe6a3c0bcd842ea6b8e00802077"><div class="ttname"><a href="classMonitor__i.html#a8304abe6a3c0bcd842ea6b8e00802077">Monitor_i::K</a></div><div class="ttdeci">const int K</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:37</div></div>
 <div class="ttc" id="classSC__Monitor_html"><div class="ttname"><a href="classSC__Monitor.html">SC_Monitor</a></div><div class="ttdef"><b>Definition:</b> SC_Monitor.hpp:16</div></div>
+<div class="ttc" id="classMonitor__reduction_html_a0caec33e419339978ec76b653c50aac9"><div class="ttname"><a href="classMonitor__reduction.html#a0caec33e419339978ec76b653c50aac9">Monitor_reduction::get_n_be</a></div><div class="ttdeci">int get_n_be() const </div><div class="ttdoc">Gets the number of bit errors. </div></div>
 <div class="ttc" id="classMonitor__i_html_ac9446b7076f640cbc1a0fac613ffe714"><div class="ttname"><a href="classMonitor__i.html#ac9446b7076f640cbc1a0fac613ffe714">Monitor_i::N</a></div><div class="ttdeci">const int N</div><div class="ttdef"><b>Definition:</b> Monitor.hpp:38</div></div>
 <div class="ttc" id="classMonitor__std_html"><div class="ttname"><a href="classMonitor__std.html">Monitor_std</a></div><div class="ttdef"><b>Definition:</b> Monitor_std.hpp:12</div></div>
-<div class="ttc" id="classMonitor__reduction_html"><div class="ttname"><a href="classMonitor__reduction.html">Monitor_reduction</a></div><div class="ttdef"><b>Definition:</b> Monitor_reduction.hpp:10</div></div>
+<div class="ttc" id="classMonitor__reduction_html"><div class="ttname"><a href="classMonitor__reduction.html">Monitor_reduction</a></div><div class="ttdef"><b>Definition:</b> Monitor_reduction.hpp:9</div></div>
 <div class="ttc" id="classModule_html_a7e126daadf13414b91f1b9caa70db3e8"><div class="ttname"><a href="classModule.html#a7e126daadf13414b91f1b9caa70db3e8">Module::n_frames</a></div><div class="ttdeci">int n_frames</div><div class="ttdef"><b>Definition:</b> Module.hpp:22</div></div>
+<div class="ttc" id="classMonitor__reduction_html_a0ef66ddd2b334f2fd04d12484559146b"><div class="ttname"><a href="classMonitor__reduction.html#a0ef66ddd2b334f2fd04d12484559146b">Monitor_reduction::get_n_fe</a></div><div class="ttdeci">int get_n_fe() const </div><div class="ttdoc">Gets the number of frame errors. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 31 2016 11:33:09 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 21 2016 14:52:05 for AFF3CT by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
