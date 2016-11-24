@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="A Fast Forward Error Correction Tool (AFF3CT)">
+    <meta name="author" content="Adrien CASSAGNE">
+
+    <title>AFF3CT - A Fast Forward Error Correction Tool</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="js/sorttable.js"></script>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-78973823-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <style>
+      .vl
+      {
+        border-left: solid 1px #ddd;
+      }
+
+      table.sortable tbody {
+        counter-reset: sortabletablescope;
+      }
+      table.sortable thead tr::before {
+        content: "";
+        display: table-cell;
+      }
+      table.sortable tbody tr::before {
+        content: counter(sortabletablescope);
+        counter-increment: sortabletablescope;
+        display: table-cell;
+
+        padding: 8px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+        font-weight: bold;
+      }
+
+      .tt
+      {
+        border-bottom: 1px dotted #888;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+  
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">AFF3CT</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="download.html">Download</a></li>
+            <!--<li><a href="getting_started.html">Getting started</a></li>-->
+            <li><a href="doc/index.html">Doc</a></li>
+            <!--<li><a href="news.html">News</a></li>-->
+            <li><a href="community.html">Community</a></li>
+            <li class="active"><a href="top_decoders.html">State-of-the-Art</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container marketing">
+      <h1>State-of-the-Art Channel Coding Software Decoders</h1>
+      
+      <p>This page is dedicated to the State-of-the-Art Channel Coding Software Decoders. It allows to easily compare and see what it has been done and what you can expect from today software decoders. For now three big code families are considered : the Turbo codes (3G, 4G, CCSDS, etc.), the Low-Density Parity-Check (LDPC) codes (WiFi, WiMAX, CCSDS, WRAN, DVB-S2, etc.) and the new Polar codes.</p>
+
+      <ul class="nav nav-tabs">
+        <li role="turbo-codes"><a href="top_turbo.html">Turbo codes</a></li>
+        <li role="ldpc-codes" class="active"><a href="top_ldpc.html">LDPC codes</a></li>
+        <li role="polar-code"><a href="top_polar.html">Polar codes</a></li>
+      </ul>
+      <br />
+     
+      <div id="ldpc-codes" class=codes>
+        <div class="bs-example" data-example-id="panel-without-body-with-table">
+          <div class="panel panel-default">
+            <div class="panel-heading">Belief Propagation (BP)</div> 
+            <table class="table sortable"> 
+              <thead> 
+                <tr>
+                  <th class="vl">Work</th> 
+                  <th>Year</th>
+                  <th class="vl">Platform</th>
+                  <th>Implem.</th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Precision in bits">Pre.</span></th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Inter frame level: number of frames computed in parallel">Inter</span></th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of information bits in the frame"><math><mi>K</mi></math></span></th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Code rate:
+                      <math>
+                        <mi>R</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mi>K</mi>
+                          <mi>N</mi>
+                        </mfrac>
+                      </math>">
+                      <math><mi>R</mi></math>
+                    </span>
+                    </div>
+                  </th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of iteration in the Turbo decoding process"><math><mi>i</mi></math></span></th>
+                  <th class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Latency in micro seconds: time to decode one frame"><math><mi>Lat.</mi></math></span></th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Information throughput in Mbps:<br/>
+                      <math>
+                        <mi>Thr.</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mi>K</mi>
+                            <mo>&times;</mo>
+                            <mi>Inter</mi>
+                          </mrow>
+                          <mi>Lat.</mi>
+                        </mfrac>
+                      </math>">
+                      <math><mi>Thr.</mi></math>
+                    </span>
+                  </th>
+                  <th class="vl" id="nthr1">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalized throughput in Mbps:<br/>
+                      <math>
+                        <mi>NThr.</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mrow><mi>Thr.</mi></mrow>
+                            <mo>&times;</mo>
+                            <mrow><mi>i</mi></mrow>
+                          </mrow>
+                          <mrow>
+                            <mrow><mi>Freq.</mi></mrow>
+                            <mo>&times;</mo>
+                            <mrow><mi>Cores</mi></mrow>
+                          </mrow>
+                        </mfrac>
+                      </math>">
+                      <math><mi>NThr.</mi></math>
+                    </span> 
+                  </th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Throughput under Normalized Decoding Cost:<br/>
+                       <math>
+                          <mi>TNDC</mi>
+                          <mo>=</mo>
+                          <mfrac>
+                            <mrow>
+                              <mrow><mi>Thr.</mi></mrow>
+                              <mo>&times;</mo>
+                              <mrow><mi>i</mi></mrow>
+                            </mrow>
+                            <mrow>
+                              <mrow><mi>Cores</mi></mrow>
+                              <mo>&times;</mo>
+                              <mrow><mi>Freq.</mi></mrow>
+                              <mo>&times;</mo>
+                              <mrow><mi>SIMD</mi></mrow>
+                            </mrow>
+                          </mfrac>
+                        </math>">
+                      <math><mi>TNDC</mi></math>
+                    </span>
+                  </th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Decoding energy per iteration: <br />
+                      <math>
+                        <mrow><msub><mi>E</mi><mi>d</mi></msub></mrow>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mi>TDP</mi>
+                          </mrow>
+                          <mrow>
+                            <mi>Thr.</mi>
+                            <mo>&times;</mo>
+                            <mi>i</mi>
+                          </mrow>
+                        </mfrac>
+                        <mo>&times;</mo>
+                        <msup>
+                          <mn>10</mn>
+                          <mn>3</mn>
+                        </msup>
+                      </math>">
+                      <math><msub><mi>E</mi><mi>d</mi></msub></math>
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody> 
+                <tr>
+                  <td class="vl"><a href="#">-</a></td>
+                  <td>-</td>
+                  <td class="vl">-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td class="vl">-</td>
+                  <td>-</td>
+                  <td class="vl">-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr> 
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bs-example" data-example-id="panel-without-body-with-table">
+          <div class="panel panel-default">
+            <div class="panel-heading">Linear Programming (LP)</div> 
+            <table class="table sortable"> 
+              <thead> 
+                <tr>
+                  <th class="vl">Work</th> 
+                  <th>Year</th>
+                  <th class="vl">Platform</th>
+                  <th>Implem.</th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Precision in bits">Pre.</span></th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Inter frame level: number of frames computed in parallel">Inter</span></th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of information bits in the frame"><math><mi>K</mi></math></span></th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Code rate:
+                      <math>
+                        <mi>R</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mi>K</mi>
+                          <mi>N</mi>
+                        </mfrac>
+                      </math>">
+                      <math><mi>R</mi></math>
+                    </span>
+                    </div>
+                  </th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of iteration in the Turbo decoding process"><math><mi>i</mi></math></span></th>
+                  <th class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Latency in micro seconds: time to decode one frame"><math><mi>Lat.</mi></math></span></th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Information throughput in Mbps:<br/>
+                      <math>
+                        <mi>Thr.</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mi>K</mi>
+                            <mo>&times;</mo>
+                            <mi>Inter</mi>
+                          </mrow>
+                          <mi>Lat.</mi>
+                        </mfrac>
+                      </math>">
+                      <math><mi>Thr.</mi></math>
+                    </span>
+                  </th>
+                  <th class="vl" id="nthr1">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalized throughput in Mbps:<br/>
+                      <math>
+                        <mi>NThr.</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mrow><mi>Thr.</mi></mrow>
+                            <mo>&times;</mo>
+                            <mrow><mi>i</mi></mrow>
+                          </mrow>
+                          <mrow>
+                            <mrow><mi>Freq.</mi></mrow>
+                            <mo>&times;</mo>
+                            <mrow><mi>Cores</mi></mrow>
+                          </mrow>
+                        </mfrac>
+                      </math>">
+                      <math><mi>NThr.</mi></math>
+                    </span> 
+                  </th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Throughput under Normalized Decoding Cost:<br/>
+                       <math>
+                          <mi>TNDC</mi>
+                          <mo>=</mo>
+                          <mfrac>
+                            <mrow>
+                              <mrow><mi>Thr.</mi></mrow>
+                              <mo>&times;</mo>
+                              <mrow><mi>i</mi></mrow>
+                            </mrow>
+                            <mrow>
+                              <mrow><mi>Cores</mi></mrow>
+                              <mo>&times;</mo>
+                              <mrow><mi>Freq.</mi></mrow>
+                              <mo>&times;</mo>
+                              <mrow><mi>SIMD</mi></mrow>
+                            </mrow>
+                          </mfrac>
+                        </math>">
+                      <math><mi>TNDC</mi></math>
+                    </span>
+                  </th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Decoding energy per iteration: <br />
+                      <math>
+                        <mrow><msub><mi>E</mi><mi>d</mi></msub></mrow>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mi>TDP</mi>
+                          </mrow>
+                          <mrow>
+                            <mi>Thr.</mi>
+                            <mo>&times;</mo>
+                            <mi>i</mi>
+                          </mrow>
+                        </mfrac>
+                        <mo>&times;</mo>
+                        <msup>
+                          <mn>10</mn>
+                          <mn>3</mn>
+                        </msup>
+                      </math>">
+                      <math><msub><mi>E</mi><mi>d</mi></msub></math>
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody> 
+                <tr>
+                  <td class="vl"><a href="#">-</a></td>
+                  <td>-</td>
+                  <td class="vl">-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td class="vl">-</td>
+                  <td>-</td>
+                  <td class="vl">-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr> 
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <h2>References</h2>
+
+      <hr>
+
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank">CPU LabEx (Bordeaux)</a> (ANR-
+10-IDEX-03-02).</p>
+      </footer>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <script src="http://fred-wang.github.io/mathml.css/mspace.js"></script>
+    <!--<script src="http://fred-wang.github.io/mathjax.js/mpadded-min.js"></script>-->
+
+    <script type="text/javascript">
+      $( document ).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+        //sorttable.innerSortFunction.apply(document.getElementById('nthr1'), []);
+      });
+    </script>
+  </body>
+</html>
