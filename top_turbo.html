@@ -90,7 +90,7 @@
     <div class="container marketing">
       <h1>State-of-the-Art Channel Coding Software Decoders</h1>
       
-      <p>This page is dedicated to the State-of-the-Art Channel Coding Software Decoders. It allows to easily compare and see what it has been done and what you can expect from today software decoders. For now three big code families are considered : the Turbo codes (3G, 4G, CCSDS, etc.), the Low-Density Parity-Check (LDPC) codes (WiFi, WiMAX, CCSDS, WRAN, DVB-S2, etc.) and the new Polar codes.</p>
+      <p>This page is dedicated to the State-of-the-Art Channel Coding Software Decoders. It allows to easily compare and see what has been done and what can be expected from today software decoders. For now three big code families are considered : the Turbo codes (LTE, LTE-Advanced, CCSDS, etc.), the Low-Density Parity-Check (LDPC) codes (Wi-Fi, WiMAX, CCSDS, WRAN, DVB-S2, etc.) and the new Polar codes.</p>
 
       <ul class="nav nav-tabs">
         <li role="turbo-codes" class="active"><a href="top_turbo.html">Turbo codes</a></li>
@@ -99,7 +99,6 @@
       </ul>
       <br />
       <div id="turbo-codes" class="codes">
-        <!--<h2>Turbo codes (based on convolutional code)</h2>-->
 
         <div class="bs-example" data-example-id="panel-without-body-with-table">
           <div class="panel panel-default">
@@ -128,7 +127,7 @@
                     </span>
                     </div>
                   </th>
-                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of iteration in the Turbo decoding process"><math><mi>i</mi></math></span></th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of iteration in the decoding process"><math><mi>i</mi></math></span></th>
                   <th class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Latency in micro seconds: time to decode one frame"><math><mi>Lat.</mi></math></span></th>
                   <th>
                     <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Information throughput in Mbps:<br/>
@@ -192,7 +191,7 @@
                     </span>
                   </th>
                   <th>
-                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Decoding energy per iteration: <br />
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules) and per iteration: <br />
                       <math>
                         <mrow><msub><mi>E</mi><mi>d</mi></msub></mrow>
                         <mo>=</mo>
@@ -410,7 +409,7 @@ CPU/GPU data transfer times have been taken into account.">72</span></td>
                       GTX 480
                     </span>
                   </td>
-                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Enhanced MAX-LOG-MAP algorithm (based on the BCJR)">ML-MAP</span></td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Enhanced MAX-LOG-MAP algorithm (based on the BCJR)">EML-MAP</span></td>
                   <td>32</td>
                   <td>1</td>
                   <td>6144</td>
@@ -440,7 +439,7 @@ CPU/GPU data transfer times have been taken into account.">50</span></td>
                       GTX 680
                     </span>
                   </td>
-                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Enhanced MAX-LOG-MAP algorithm (based on the BCJR)">ML-MAP</span></td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Enhanced MAX-LOG-MAP algorithm (based on the BCJR)">EML-MAP</span></td>
                   <td>32</td>
                   <td>16</td>
                   <td>6144</td>
@@ -660,25 +659,25 @@ CPU/GPU data transfer times have been taken into account.">192</span></td>
             </table>
           </div>
         </div>
+
+        <h2>References</h2>
+
+        <ol>
+          <li id="ref1">M. Wu, Y. Sun, and J. R. Cavallaro, “Implementation of a 3GPP LTE turbo decoder accelerator on GPU,” in <i>IEEE SiPS</i>, 2010.</li>
+          <li id="ref2">M. Wu, Y. Sun, G. Wang, and J. R. Cavallaro, “Implementation of a high throughput 3GPP turbo decoder on GPU,” <i>Springer JSPS</i>, vol. 65, no. 2, pp. 171–183, 2011.</li>
+          <li id="ref3">S. Chinnici and P. Spallaccini, “Fast simulation of turbo codes on GPUs,” in <i>IEEE ISTC</i>, 2012, pp. 61–65.</li>
+          <li id="ref4">D. Yoge and N. Chandrachoodan, “GPU implementation of a programmable turbo decoder for software defined radio applications,” in <i>IEEE VLSID</i>, 2012.</li>
+          <li id="ref5">C. Liu, Z. Bie, C. Chen, and X. Jiao, “A parallel LTE turbo decoder on GPU,” in <i>IEEE ICCT</i>, 2013.</li>
+          <li id="ref6">X. Chen, J. Zhu, Z. Wen, Y. Wang, and H. Yang, “BER guaranteed optimization and implementation of parallel turbo decoding on GPU,” in <i>IEEE ICST</i>, 2013.</li>
+          <li id="ref7">J. Xianjun, C. Canfeng, P. Jaaskelainen, V. Guzma, and H. Berg, “A 122mb/s turbo decoder using a mid-range GPU,” in <i>IEEE IWCMC</i>, 2013.</li>
+          <li id="ref8">M. Wu, G. Wang, B. Yin, C. Studer, and J. R. Cavallaro, “HSPA+/LTE-A turbo decoder on GPU and multicore CPU,” in <i>IEEE ACSSC</i>, 2013.</li>
+          <li id="ref9">Y. Zhang et al., “The acceleration of turbo decoder on the newest GPGPU of kepler architecture,” in <i>IEEE ISCIT</i>, 2014.</li>
+          <li id="ref10">R. Li, Y. Dou, J. Xu, X. Niu, and S. Ni, “An efficient parallel SOVAbased turbo decoder for software defined radio on GPU,” <i>IEICE Trans. Fundamentals</i>, vol. 97, no. 5, pp. 1027–1036, 2014.</li>
+          <li id="ref11">L. Huang et al., “A high speed turbo decoder implementation for CPUbased SDR system,” in <i>IEEE IET ICCTA</i>, 2011.</li>
+          <li id="ref12">S. Zhang, R. Qian, T. Peng, R. Duan, and K. Chen, “High throughput turbo decoder design for GPP platform,” in <i>IEEE ICST</i>, 2012.</li>
+          <li id="ref13">A. Cassagne, T. Tonnellier, C. Leroux, B. Le Gal, and D. Barthou, “Beyond Gbps Turbo decoder on multi-core CPUs,” in <i>IEEE ISTC</i>, 2016.</li>
+        </ol>
       </div>
-
-      <h2>References</h2>
-
-      <ol>
-        <li id="ref1">M. Wu, Y. Sun, and J. R. Cavallaro, “Implementation of a 3GPP LTE turbo decoder accelerator on GPU,” in <i>IEEE SiPS</i>, 2010.</li>
-        <li id="ref2">M. Wu, Y. Sun, G. Wang, and J. R. Cavallaro, “Implementation of a high throughput 3GPP turbo decoder on GPU,” <i>Springer JSPS</i>, vol. 65, no. 2, pp. 171–183, 2011.</li>
-        <li id="ref3">S. Chinnici and P. Spallaccini, “Fast simulation of turbo codes on GPUs,” in <i>IEEE ISTC</i>, 2012, pp. 61–65.</li>
-        <li id="ref4">D. Yoge and N. Chandrachoodan, “GPU implementation of a programmable turbo decoder for software defined radio applications,” in <i>IEEE VLSID</i>, 2012.</li>
-        <li id="ref5">C. Liu, Z. Bie, C. Chen, and X. Jiao, “A parallel LTE turbo decoder on GPU,” in <i>IEEE ICCT</i>, 2013.</li>
-        <li id="ref6">X. Chen, J. Zhu, Z. Wen, Y. Wang, and H. Yang, “BER guaranteed optimization and implementation of parallel turbo decoding on GPU,” in <i>IEEE ICST</i>, 2013.</li>
-        <li id="ref7">J. Xianjun, C. Canfeng, P. Jaaskelainen, V. Guzma, and H. Berg, “A 122mb/s turbo decoder using a mid-range GPU,” in <i>IEEE IWCMC</i>, 2013.</li>
-        <li id="ref8">M. Wu, G. Wang, B. Yin, C. Studer, and J. R. Cavallaro, “HSPA+/LTE-A turbo decoder on GPU and multicore CPU,” in <i>IEEE ACSSC</i>, 2013.</li>
-        <li id="ref9">Y. Zhang et al., “The acceleration of turbo decoder on the newest GPGPU of kepler architecture,” in <i>IEEE ISCIT</i>, 2014.</li>
-        <li id="ref10">R. Li, Y. Dou, J. Xu, X. Niu, and S. Ni, “An efficient parallel SOVAbased turbo decoder for software defined radio on GPU,” <i>IEICE Trans. Fundamentals</i>, vol. 97, no. 5, pp. 1027–1036, 2014.</li>
-        <li id="ref11">L. Huang et al., “A high speed turbo decoder implementation for CPUbased SDR system,” in <i>IEEE IET ICCTA</i>, 2011.</li>
-        <li id="ref12">S. Zhang, R. Qian, T. Peng, R. Duan, and K. Chen, “High throughput turbo decoder design for GPP platform,” in <i>IEEE ICST</i>, 2012.</li>
-        <li id="ref13">A. Cassagne, T. Tonnellier, C. Leroux, B. Le Gal, and D. Barthou, “Beyond Gbps Turbo decoder on multi-core CPUs,” in <i>IEEE ISTC</i>, 2016.</li>
-      </ol>
 
       <hr>
 
