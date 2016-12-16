@@ -34,7 +34,7 @@
       {
         border-left: solid 1px #ddd;
       }
-
+      /*
       table.sortable tbody {
         counter-reset: sortabletablescope;
       }
@@ -53,7 +53,7 @@
         border-top: 1px solid #ddd;
         font-weight: bold;
       }
-
+      */
       .tt
       {
         border-bottom: 1px dotted #888;
@@ -602,6 +602,7 @@
                       <u>TDP</u>: 47 Watts">
                       i7-4960HQ
                     </span>
+                  </td>
                   <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="SCAN algorithm + tree pruning optimizations (Rate 0, Rate 1)">Fast-SCAN</span></td>
                   <td>8</td>
                   <td>1</td>
@@ -763,7 +764,7 @@
                   <td class="vl"><a class="tt" href="#ref8" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Sarkis, P. Giard, A. Vardy, C. Thibeault, and W. Gross, “Increasing the speed of polar list decoders,” <i>in Proceedings of the IEEE Workshop on Signal Processing Systems (SiPS)</i>, pp. 1-6, October 2014">[8]</a></td>
                   <td>2014</td>
                   <td class="vl">
-                  <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
                       <u>Device type</u>: CPU<br />
                       <u>Full name</u>: Core i7-2600 <br />
                       <u>Vendor</u>: Intel <br />
@@ -858,9 +859,9 @@
     <script type="text/javascript">
       $( document ).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();       
-        sorttable.innerSortFunction.apply(document.getElementById('nthr3'), []);
-        sorttable.innerSortFunction.apply(document.getElementById('nthr2'), []);
-        sorttable.innerSortFunction.apply(document.getElementById('nthr1'), []);
+        //sorttable.innerSortFunction.apply(document.getElementById('nthr3'), []);
+        //sorttable.innerSortFunction.apply(document.getElementById('nthr2'), []);
+        //sorttable.innerSortFunction.apply(document.getElementById('nthr1'), []);
       });
     </script>
   </body>
