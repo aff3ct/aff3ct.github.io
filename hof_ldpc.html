@@ -17,7 +17,7 @@
     <link href="css/style.css" rel="stylesheet">
 
     <!-- Fontawesome CSS -->
-    <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <link href="font-awesome-4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
 
     <script src="js/sorttable.js"></script>
 
@@ -103,7 +103,13 @@
     <div class="container marketing">
       <h1>State-of-the-Art Channel Coding Software Decoders</h1>
       
-      <p>This page is dedicated to the State-of-the-Art Channel Coding Software Decoders. It allows to easily compare and see what has been done and what can be expected from today software decoders. For now three big code families are considered : the Turbo codes (LTE, LTE-Advanced, CCSDS, etc.), the Low-Density Parity-Check (LDPC) codes (Wi-Fi, WiMAX, CCSDS, WRAN, DVB-S2, etc.) and the new Polar codes.</p>
+      <p>This page presents <b>a Channel Coding Software Decoders "Hall of Fame"</b>. It allows to see at a glance what has been achieved, what can be expected from today software decoders, and easily compare there respective characteristics. For now, three wide code families are considered: <b>the Turbo codes (LTE, LTE-Advanced, CCSDS, etc.), the Low-Density Parity-Check (LDPC) codes (Wi-Fi, WiMAX, CCSDS, WRAN, DVB-S2, etc.), and the recently introduced Polar codes (candidates for 5G)</b>.</p>
+
+      <p>All the presented results, collected from the state-of-the-art research papers published in the field, consider a <b>BPSK (Bit Phase-Shift Keying) modulation/demodulation</b> and an <b>AWGN (Additive White Gaussian Noise) channel</b>.</p>
+
+      <p><b>This Hall of Fame strive to present results as fairly as possible</b>: for example, early termination criteria are not taken into consideration while computing throughput, in order to compare raw performances using a consistent method. It remains possible, however, for typos/glitches/mistakes to have inadvertantly made it to the scoreboard. In that eventuality, do not hesitate to contact us. If you would like to have your decoder listed as well in the Hall of Fame: <b>please send us the corresponding research paper references, and we will be delighted to add them</b>.</p>
+
+      <p><i>Last update: 12-16-2016.</i></p>
 
       <ul class="nav nav-tabs">
         <li><a href="hof_turbo.html">Turbo codes</a></li>
@@ -120,7 +126,7 @@
               <thead> 
                 <tr>
                   <th class="vl">Work</th> 
-                  <th>Year</th>
+                  <th id="year1">Year</th>
                   <th class="vl">Platform</th>
                   <th>Implem.</th>
                   <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Precision in bits">Pre.</span></th>
@@ -1162,7 +1168,7 @@ Approach,” <i>J. of Computer Science And Technology</i>, vol. 24, pp. 913-924,
               <thead> 
                 <tr>
                   <th class="vl">Work</th> 
-                  <th>Year</th>
+                  <th id="year2">Year</th>
                   <th class="vl">Platform</th>
                   <th>Implem.</th>
                   <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Precision in bits">Pre.</span></th>
@@ -1192,7 +1198,7 @@ Approach,” <i>J. of Computer Science And Technology</i>, vol. 24, pp. 913-924,
                       <math><mi>Thr.</mi></math>
                     </span>
                   </th>
-                  <th class="vl" id="nthr1">
+                  <th class="vl" id="nthr2">
                     <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalized throughput in Mbps:<br/>
                       <math>
                         <mi>NThr.</mi>
@@ -1324,7 +1330,8 @@ Approach,” <i>J. of Computer Science And Technology</i>, vol. 24, pp. 913-924,
     <script type="text/javascript">
       $( document ).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
-        //sorttable.innerSortFunction.apply(document.getElementById('nthr1'), []);
+        sorttable.innerSortFunction.apply(document.getElementById('year2'), []);
+        sorttable.innerSortFunction.apply(document.getElementById('year1'), []);
       });
     </script>
   </body>
