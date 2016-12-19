@@ -149,26 +149,7 @@
                         <math><mi>Thr.</mi></math>
                       </span>
                     </th>
-                    <th class="vl" id="nthr1">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalized throughput in Mbps:<br/>
-                        <math>
-                          <mi>NThr.</mi>
-                          <mo>=</mo>
-                          <mfrac>
-                            <mrow>
-                              <mrow><mi>Thr.</mi></mrow>
-                            </mrow>
-                            <mrow>
-                              <mrow><mi>Freq.</mi></mrow>
-                              <mo>&times;</mo>
-                              <mrow><mi>Cores</mi></mrow>
-                            </mrow>
-                          </mfrac>
-                        </math>">
-                        <math><mi>NThr.</mi></math>
-                      </span> 
-                    </th>
-                    <th>
+                    <th class="vl">
                       <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Throughput under Normalized Decoding Cost:<br/>
                          <math>
                             <mi>TNDC</mi>
@@ -190,7 +171,7 @@
                       </span>
                     </th>
                     <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules) and per iteration: <br />
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules): <br />
                         <math>
                           <mrow><msub><mi>E</mi><mi>d</mi></msub></mrow>
                           <mo>=</mo>
@@ -238,8 +219,7 @@
                     <td>0.84</td>
                     <td class="vl">223</td>
                     <td>123.7</td>
-                    <td class="vl">36.4</td>
-                    <td>4.548</td>
+                    <td class="vl">4.548</td>
                     <td>768</td>
                   </tr>
                   <tr>
@@ -266,8 +246,7 @@
                     <td>0.84</td>
                     <td class="vl">135</td>
                     <td>203.6</td>
-                    <td class="vl">59.9</td>
-                    <td>3.743</td>
+                    <td class="vl">3.743</td>
                     <td>467</td>
                   </tr>
                   <tr>
@@ -294,8 +273,7 @@
                     <td>0.84</td>
                     <td class="vl">125</td>
                     <td>219.8</td>
-                    <td class="vl">64.6</td>
-                    <td>8.081</td>
+                    <td class="vl">8.081</td>
                     <td>432</td>
                   </tr>
                   <tr>
@@ -322,8 +300,7 @@
                     <td>0.90</td>
                     <td class="vl">16852</td>
                     <td>28.0</td>
-                    <td class="vl">21.5</td>
-                    <td>1.346</td>
+                    <td class="vl">1.346</td>
                     <td>107</td>
                   </tr>
                   <tr class="info">
@@ -350,8 +327,7 @@
                     <td>0.90</td>
                     <td class="vl">337</td>
                     <td>1400.0</td>
-                    <td class="vl">388.9</td>
-                    <td>24.306</td>
+                    <td class="vl">24.306</td>
                     <td>34</td>
                   </tr>
                   <tr class="info">
@@ -378,8 +354,7 @@
                     <td>0.84</td>
                     <td class="vl">114</td>
                     <td>241.0</td>
-                    <td class="vl">77.7</td>
-                    <td>9.718</td>
+                    <td class="vl">9.718</td>
                     <td>394</td>
                   </tr>
                   <tr class="info">
@@ -406,8 +381,7 @@
                     <td>0.83</td>
                     <td class="vl">370</td>
                     <td>1180.0</td>
-                    <td class="vl">380.6</td>
-                    <td>23.790</td>
+                    <td class="vl">23.790</td>
                     <td>81</td>
                   </tr>
                   <tr class="info">
@@ -434,8 +408,7 @@
                     <td>0.83</td>
                     <td class="vl">47</td>
                     <td>580.0</td>
-                    <td class="vl">161.1</td>
-                    <td>10.069</td>
+                    <td class="vl">10.069</td>
                     <td>81</td>
                   </tr>
                   <tr class="info">
@@ -462,8 +435,7 @@
                     <td>0.83</td>
                     <td class="vl">374</td>
                     <td>73.0</td>
-                    <td class="vl">66.4</td>
-                    <td>4.148</td>
+                    <td class="vl">4.148</td>
                     <td>27</td>
                   </tr>
                 </tbody>
@@ -532,9 +504,7 @@
                               <mrow><mi>i</mi></mrow>
                             </mrow>
                             <mrow>
-                              <mrow><mi>Freq.</mi></mrow>
-                              <mo>&times;</mo>
-                              <mrow><mi>Cores</mi></mrow>
+                              <mi>4</mi>
                             </mrow>
                           </mfrac>
                         </math>">
@@ -548,9 +518,7 @@
                             <mo>=</mo>
                             <mfrac>
                               <mrow>
-                                <mrow><mi>Thr.</mi></mrow>
-                                <mo>&times;</mo>
-                                <mrow><mi>i</mi></mrow>
+                                <mi>NThr.</mi>
                               </mrow>
                               <mrow>
                                 <mrow><mi>Cores</mi></mrow>
@@ -565,19 +533,13 @@
                       </span>
                     </th>
                     <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules) and per iteration: <br />
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules): <br />
                         <math>
                           <mrow><msub><mi>E</mi><mi>d</mi></msub></mrow>
                           <mo>=</mo>
                           <mfrac>
-                            <mrow>
-                              <mi>TDP</mi>
-                            </mrow>
-                            <mrow>
-                              <mi>Thr.</mi>
-                              <mo>&times;</mo>
-                              <mi>i</mi>
-                            </mrow>
+                            <mi>TDP</mi>
+                            <mi>NThr.</mi>
                           </mfrac>
                           <mo>&times;</mo>
                           <msup>
@@ -616,9 +578,9 @@
                     <td>1</td>
                     <td class="vl">56</td>
                     <td>490.0</td>
-                    <td class="vl">136.1</td>
-                    <td>4.253</td>
-                    <td>96</td>
+                    <td class="vl">122.5</td>
+                    <td>1.06</td>
+                    <td>384</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref7" data-toggle="tooltip" data-placement="top" data-html="true" title="B. Le Gal, C. Leroux and C. Jego, “High-performance software implementation of SCAN decoders for Polar codes,” <i>in Springer - Annals of Telecommunications</i>, submitted in June 2016.">[7]</a></td>
@@ -644,9 +606,9 @@
                     <td>1</td>
                     <td class="vl">1601</td>
                     <td>550.0</td>
-                    <td class="vl">161.8</td>
-                    <td>5.1</td>
-                    <td>86</td>
+                    <td class="vl">137.5</td>
+                    <td>1.19</td>
+                    <td>342</td>
                   </tr>
                 </tbody>
               </table>
@@ -709,12 +671,12 @@
                           <mo>=</mo>
                           <mfrac>
                             <mrow>
-                              <mrow><mi>Thr.</mi></mrow>
+                              <mi>Thr.</mi>
+                              <mo>&times;</mo>
+                              <mi>L</mi>
                             </mrow>
                             <mrow>
-                              <mrow><mi>Freq.</mi></mrow>
-                              <mo>&times;</mo>
-                              <mrow><mi>Cores</mi></mrow>
+                              <mi>8</mi>
                             </mrow>
                           </mfrac>
                         </math>">
@@ -728,7 +690,7 @@
                             <mo>=</mo>
                             <mfrac>
                               <mrow>
-                                <mrow><mi>Thr.</mi></mrow>
+                                <mi>NThr.</mi>
                               </mrow>
                               <mrow>
                                 <mrow><mi>Cores</mi></mrow>
@@ -743,7 +705,7 @@
                       </span>
                     </th>
                     <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules) and per iteration: <br />
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules): <br />
                         <math>
                           <mrow><msub><mi>E</mi><mi>d</mi></msub></mrow>
                           <mo>=</mo>
@@ -752,7 +714,7 @@
                               <mi>TDP</mi>
                             </mrow>
                             <mrow>
-                              <mi>Thr.</mi>
+                              <mi>NThr.</mi>
                             </mrow>
                           </mfrac>
                           <mo>&times;</mo>
@@ -792,9 +754,9 @@
                     <td>32</td>
                     <td class="vl">3300</td>
                     <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="This is the worst case. Using a CRC allows this decoder to reach up to <b>54.0 Mbps at 4.5 dB</b>.">0.52</span></td>
-                    <td class="vl">0.153</td>
-                    <td>0.019</td>
-                    <td>182692</td>
+                    <td class="vl">2.08</td>
+                    <td>0.076</td>
+                    <td>45673</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref9" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Sarkis, P. Giard, A. Vardy, C. Thibeault, and W. J. Gross, “Fast List Decoders for Polar Codes,” <i>IEEE Journal on Selected Areas in Communications - Special Issue on Recent Advances In Capacity Approaching Codes</i>, vol. 34, no. 2, pp. 318-328, February 2016.">[9]</a></td>
@@ -821,9 +783,9 @@
                     <td>32</td>
                     <td class="vl">433</td>
                     <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="This is the worst case. Using a CRC allows this decoder to reach up to <b>196.0 Mbps at 4.5 dB</b>.">4.00</span></td>
-                    <td class="vl">1.176</td>
-                    <td>0.147</td>
-                    <td>23750</td>
+                    <td class="vl">16.0</td>
+                    <td>0.588</td>
+                    <td>5938</td>
                   </tr> 
                 </tbody>
               </table>
