@@ -92,7 +92,7 @@
 
       <p class="bg-info">In blue, the results simulated or reproducible with <a href="index.html">AFF3CT</a>: our Open-source communication chain dedicated to the Forward Error Correction (FEC) simulations.</p>
 
-      <p><i>Last update: 12-16-2016.</i></p>
+      <p><i>Last update: 12-19-2016.</i></p>
 
       <ul class="nav nav-tabs">
         <li><a href="hof_turbo.html">Turbo</a></li>
@@ -1140,6 +1140,41 @@
                     <td>0.500</td>
                     <td>217</td>
                   </tr>
+                  <tr>
+                    <td class="vl"><a class="tt" href="#ref22" data-toggle="tooltip" data-placement="top" data-html="true" title="B. C. Lai, C. Y. Lee, T. H. Chiu, H. K. Kuo and C. K. Chang, “Unified Designs for High Performance LDPC Decoding on GPGPU,” <i>IEEE Transactions on Computers</i>, vol.PP, no.99, pp.1-1, 2016.">[22]</a></td>
+                    <td>2016</td>
+                    <td class="vl">
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                        <u>Device type</u>: GPU<br />
+                        <u>Full name</u>: GeForce GTX 470<br />
+                        <u>Vendor</u>: Nvidia <br />
+                        <u>Architecture</u>: Fermi<br />
+                        <u>Frequency</u>: 1.22 GHz<br />
+                        <u>SMX/Cores</u>: 14<br />
+                        <u>SIMD type</u>: SIMT<br />
+                        <u>SIMD length</u>: 32<br />
+                        <u>TDP</u> : 215 Watts">
+                        GTX 470
+                      </span>
+                    </td>
+                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (parallel layered, TPMP)">PL-MS</span></td>
+                    <td>32</td>
+                    <td>256</td>
+                    <td>
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Type</u>: Irr. & Quasi-C. <br />
+                      <u>Edges</u>: 6804 <br />
+                      <u>Standard</u>: Wi-Fi (802.11n) <br />">
+                        (1944, 972)
+                      </span>
+                    </td>
+                    <td>10</td>
+                    <td class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Not including the memory data transfers time between CPU and GPU">9739</span></td>
+                    <td>51.1</td>
+                    <td class="vl">10.2</td>
+                    <td>0.019</td>
+                    <td>21078</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -1250,20 +1285,79 @@
                 </thead>
                 <tbody> 
                   <tr>
-                    <td class="vl">-</td>
-                    <td>-</td>
-                    <td class="vl">-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td class="vl">-</td>
-                    <td>-</td>
-                    <td class="vl">-</td>
-                    <td>-</td>
-                    <td>-</td>
-                  </tr> 
+                    <td class="vl"><a class="tt" href="#ref23" data-toggle="tooltip" data-placement="top" data-html="true" title="I. Debbabi, N. Khouja, F. Tlili, B. Le Gal, C. Jego, “Multicore Implementation of LDPC Decoders based on ADMM Algorithm,” <i>in Proceedings of the 41st IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP’16)</i>, pages 971-975, Shangai, China, 20-25 March 2016.">[23]</a></td>
+                    <td>2016</td>
+                    <td class="vl">
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                        <u>Device type</u>: CPU<br />
+                        <u>Full name</u>: Core i7-4960HQ<br />
+                        <u>Vendor</u>: Intel <br />
+                        <u>Architecture</u>: Haswell <br />
+                        <u>Frequency</u>: 3.40 GHz <br />
+                        <u>SMX/Cores</u>: 4 <br />
+                        <u>SIMD type</u>: AVX2 (256-bit) <br />
+                        <u>SIMD length</u>: 8 (32-bit/elmt) <br />
+                        <u>TDP</u>: 47 Watts">
+                        i7-4960HQ
+                      </span>
+                    </td>
+                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Alternate Direction Method of Multipliers (flooding)">F-ADMM</span></td>
+                    <td>32</td>
+                    <td>4</td>
+                    <td>
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Type</u>: Irr. & Quasi-C. <br />
+                      <u>Standard</u>: WiMAX (802.16e) <br />
+                      <u>Edges</u>: 7296<br />
+                      <u>Edges/Row</u>: 6~7 <br />
+                      <u>Edges/Col</u>: 2~6 <br />">
+                        (2304, 1152)
+                      </span>
+                    </td>
+                    <td>8</td>
+                    <td class="vl">1511</td>
+                    <td>6.1</td>
+                    <td class="vl">0.98</td>
+                    <td>0.009</td>
+                    <td>47959</td>
+                  </tr>
+                  <tr>
+                    <td class="vl"><a class="tt" href="#ref24" data-toggle="tooltip" data-placement="top" data-html="true" title="I. Debbabi, B. Le Gal, N. Khouja, F. Tlili, and C. Jego, “Real time LP decoding of LDPC codes for applications requiring high correction performances,” <i>IEEE Wireless Communications Letters</i>, vol. 5, no. 6, pp. 676-679, 2016.">[24]</a></td>
+                    <td>2016</td>
+                    <td class="vl">
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                        <u>Device type</u>: CPU<br />
+                        <u>Full name</u>: Core i7-4960HQ<br />
+                        <u>Vendor</u>: Intel <br />
+                        <u>Architecture</u>: Haswell <br />
+                        <u>Frequency</u>: 3.40 GHz <br />
+                        <u>SMX/Cores</u>: 4 <br />
+                        <u>SIMD type</u>: AVX2 (256-bit) <br />
+                        <u>SIMD length</u>: 8 (32-bit/elmt) <br />
+                        <u>TDP</u>: 47 Watts">
+                        i7-4960HQ
+                      </span>
+                    </td>
+                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Alternate Direction Method of Multipliers (horizontal layered)">HL-ADMM</span></td>
+                    <td>32</td>
+                    <td>32</td>
+                    <td>
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Type</u>: Irr. & Quasi-C. <br />
+                      <u>Standard</u>: WiMAX (802.16e) <br />
+                      <u>Edges</u>: 7296<br />
+                      <u>Edges/Row</u>: 6~7 <br />
+                      <u>Edges/Col</u>: 2~6 <br />">
+                        (2304, 1152)
+                      </span>
+                    </td>
+                    <td>100</td>
+                    <td class="vl">13755</td>
+                    <td>5.4</td>
+                    <td class="vl">10.8</td>
+                    <td>0.099</td>
+                    <td>4352</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -1293,6 +1387,9 @@ Approach,” <i>J. of Computer Science And Technology</i>, vol. 24, pp. 913-924,
           <li id="ref19">Y. Lin and W. Niu, “High throughput LDPC decoder on GPU,” <i>IEEE Communications Letters</i>, vol. 18, no. 2, pp. 344-347, 2014.</li>
           <li id="ref20">B. Le Gal, C. Jego, and J. Crenne, “A high throughput efficient approach for decoding LDPC codes onto GPU devices,” <i>IEEE Embedded Systems Letters</i>, vol. 6, no. 2, pp. 29-32, 2014.</li>
           <li id="ref21">B. Le Gal and C. Jego, “High-Throughput Multi-Core LDPC Decoders Based on x86 Processor,” <i>IEEE Transactions on Parallel and Distributed Systems</i>, vol. 27, no. 5, pp. 1373-1386, 2016.</li>
+          <li id="ref22">B. C. Lai, C. Y. Lee, T. H. Chiu, H. K. Kuo and C. K. Chang, “Unified Designs for High Performance LDPC Decoding on GPGPU,” <i>IEEE Transactions on Computers</i>, vol.PP, no.99, pp.1-1, 2016.</li>
+          <li id="ref23">I. Debbabi, N. Khouja, F. Tlili, B. Le Gal, C. Jego, “Multicore Implementation of LDPC Decoders based on ADMM Algorithm,” <i>in Proceedings of the 41st IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP’16)</i>, pages 971-975, Shangai, China, 20-25 March 2016.</li>
+          <li id="ref24">I. Debbabi, B. Le Gal, N. Khouja, F. Tlili, and C. Jego, “Real time LP decoding of LDPC codes for applications requiring high correction performances,” <i>IEEE Wireless Communications Letters</i>, vol. 5, no. 6, pp. 676-679, 2016.</li>
         </ol>
       </div>
 
