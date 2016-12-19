@@ -160,9 +160,7 @@
                               <mrow><mi>i</mi></mrow>
                             </mrow>
                             <mrow>
-                              <mrow><mi>Freq.</mi></mrow>
-                              <mo>&times;</mo>
-                              <mrow><mi>Cores</mi></mrow>
+                              <mi>6</mi>
                             </mrow>
                           </mfrac>
                         </math>">
@@ -175,11 +173,7 @@
                             <mi>TNDC</mi>
                             <mo>=</mo>
                             <mfrac>
-                              <mrow>
-                                <mrow><mi>Thr.</mi></mrow>
-                                <mo>&times;</mo>
-                                <mrow><mi>i</mi></mrow>
-                              </mrow>
+                              <mrow><mi>NThr.</mi></mrow>
                               <mrow>
                                 <mrow><mi>Cores</mi></mrow>
                                 <mo>&times;</mo>
@@ -193,7 +187,7 @@
                       </span>
                     </th>
                     <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules) and per iteration: <br />
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules): <br />
                         <math>
                           <mrow><msub><mi>E</mi><mi>d</mi></msub></mrow>
                           <mo>=</mo>
@@ -202,9 +196,7 @@
                               <mi>TDP</mi>
                             </mrow>
                             <mrow>
-                              <mi>Thr.</mi>
-                              <mo>&times;</mo>
-                              <mi>i</mi>
+                              <mi>NThr.</mi>
                             </mrow>
                           </mfrac>
                           <mo>&times;</mo>
@@ -244,9 +236,9 @@
                     <td>5</td>
                     <td class="vl">76800</td>
                     <td>8.0</td>
-                    <td class="vl">2.1</td>
-                    <td>0.135</td>
-                    <td>5000</td>
+                    <td class="vl">6.7</td>
+                    <td>0.021</td>
+                    <td>29851</td>
                   </tr> 
                   <tr>
                     <td class="vl"><a class="tt" href="#ref2" data-toggle="tooltip" data-placement="top" data-html="true" title="M. Wu, Y. Sun, G. Wang, and J. R. Cavallaro, “Implementation of a high throughput 3GPP turbo decoder on GPU,” <i>Springer JSPS</i>, vol. 65, no. 2, pp. 171-183, 2011.">[2]</a></td>
@@ -273,9 +265,9 @@
                     <td>5</td>
                     <td class="vl">20827</td>
                     <td>29.5</td>
-                    <td class="vl">8.6</td>
-                    <td>0.270</td>
-                    <td>1458</td>
+                    <td class="vl">24.6</td>
+                    <td>0.045</td>
+                    <td>8740</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref3" data-toggle="tooltip" data-placement="top" data-html="true" title="L. Huang et al., “A high speed turbo decoder implementation for CPUbased SDR system,” in <i>IEEE IET ICCTA</i>, 2011.">[3]</a></td>
@@ -302,9 +294,9 @@
                     <td>8</td>
                     <td class="vl">138</td>
                     <td>7.3</td>
-                    <td class="vl">18.3</td>
-                    <td>2.280</td>
-                    <td>2226</td>
+                    <td class="vl">9.7</td>
+                    <td>0.380</td>
+                    <td>13402</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref4" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Chinnici and P. Spallaccini, “Fast simulation of turbo codes on GPUs,” in <i>IEEE ISTC</i>, 2012, pp. 61-65.">[4]</a></td>
@@ -331,9 +323,9 @@
                     <td>5</td>
                     <td class="vl">108965</td>
                     <td>3.5</td>
-                    <td class="vl">1.1</td>
-                    <td>0.035</td>
-                    <td>14114</td>
+                    <td class="vl">2.9</td>
+                    <td>0.0057</td>
+                    <td>85172</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref5" data-toggle="tooltip" data-placement="top" data-html="true" title="D. Yoge and N. Chandrachoodan, “GPU implementation of a programmable turbo decoder for software defined radio applications,” in <i>IEEE VLSID</i>, 2012.">[5]</a></td>
@@ -360,9 +352,9 @@
                     <td>5</td>
                     <td class="vl">3072</td>
                     <td>2.0</td>
-                    <td class="vl">0.4</td>
-                    <td>0.025</td>
-                    <td>19700</td>
+                    <td class="vl">1.7</td>
+                    <td>0.0043</td>
+                    <td>115882</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref6" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Zhang, R. Qian, T. Peng, R. Duan, and K. Chen, “High throughput turbo decoder design for GPP platform,” in <i>IEEE ICST</i>, 2012.">[6]</a></td>
@@ -389,9 +381,9 @@
                     <td>3</td>
                     <td class="vl">157</td>
                     <td>222.6</td>
-                    <td class="vl">38.0</td>
-                    <td>2.373</td>
-                    <td>142</td>
+                    <td class="vl">111.3</td>
+                    <td>0.396</td>
+                    <td>854</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref7" data-toggle="tooltip" data-placement="top" data-html="true" title="C. Liu, Z. Bie, C. Chen, and X. Jiao, “A parallel LTE turbo decoder on GPU,” in <i>IEEE ICCT</i>, 2013.">[7]</a></td>
@@ -419,9 +411,9 @@
                     <td class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="It is unclear if the
   CPU/GPU data transfer times have been taken into account.">72</span></td>
                     <td>85.3</td>
-                    <td class="vl">47.4</td>
-                    <td>1.482</td>
-                    <td>227</td>
+                    <td class="vl">85.3</td>
+                    <td>0.247</td>
+                    <td>1360</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref8" data-toggle="tooltip" data-placement="top" data-html="true" title="X. Chen, J. Zhu, Z. Wen, Y. Wang, and H. Yang, “BER guaranteed optimization and implementation of parallel turbo decoding on GPU,” in <i>IEEE ICST</i>, 2013.">[8]</a></td>
@@ -448,9 +440,9 @@
                     <td>6</td>
                     <td class="vl">1660</td>
                     <td>3.7</td>
-                    <td class="vl">0.9</td>
-                    <td>0.030</td>
-                    <td>10090</td>
+                    <td class="vl">3.7</td>
+                    <td>0.0047</td>
+                    <td>63946</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref9" data-toggle="tooltip" data-placement="top" data-html="true" title="J. Xianjun, C. Canfeng, P. Jaaskelainen, V. Guzma, and H. Berg, “A 122mb/s turbo decoder using a mid-range GPU,” in <i>IEEE IWCMC</i>, 2013.">[9]</a></td>
@@ -478,9 +470,9 @@
                     <td class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="It is unclear if the
   CPU/GPU data transfer times have been taken into account.">50</span></td>
                     <td>122.8</td>
-                    <td class="vl">35.1</td>
-                    <td>1.098</td>
-                    <td>339</td>
+                    <td class="vl">122.8</td>
+                    <td>0.183</td>
+                    <td>2036</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref10" data-toggle="tooltip" data-placement="top" data-html="true" title="M. Wu, G. Wang, B. Yin, C. Studer, and J. R. Cavallaro, “HSPA+/LTE-A turbo decoder on GPU and multicore CPU,” in <i>IEEE ACSSC</i>, 2013.">[10]</a></td>
@@ -507,9 +499,9 @@
                     <td>6</td>
                     <td class="vl">2657</td>
                     <td>37.0</td>
-                    <td class="vl">27.5</td>
-                    <td>0.144</td>
-                    <td>878</td>
+                    <td class="vl">37.0</td>
+                    <td>0.024</td>
+                    <td>5270</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref10" data-toggle="tooltip" data-placement="top" data-html="true" title="M. Wu, G. Wang, B. Yin, C. Studer, and J. R. Cavallaro, “HSPA+/LTE-A turbo decoder on GPU and multicore CPU,” in <i>IEEE ACSSC</i>, 2013.">[10]</a></td>
@@ -536,9 +528,9 @@
                     <td>6</td>
                     <td class="vl">323</td>
                     <td>76.2</td>
-                    <td class="vl">32.7</td>
-                    <td>4.08</td>
-                    <td>168</td>
+                    <td class="vl">76.2</td>
+                    <td>0.680</td>
+                    <td>1011</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref11" data-toggle="tooltip" data-placement="top" data-html="true" title="Y. Zhang et al., “The acceleration of turbo decoder on the newest GPGPU of kepler architecture,” in <i>IEEE ISCIT</i>, 2014.">[11]</a></td>
@@ -565,9 +557,9 @@
                     <td>5</td>
                     <td class="vl">1097</td>
                     <td>5.6</td>
-                    <td class="vl">3.0</td>
-                    <td>0.015</td>
-                    <td>8036</td>
+                    <td class="vl">4.7</td>
+                    <td>0.0026</td>
+                    <td>47872</td>
                   </tr>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref12" data-toggle="tooltip" data-placement="top" data-html="true" title="R. Li, Y. Dou, J. Xu, X. Niu, and S. Ni, “An efficient parallel SOVAbased turbo decoder for software defined radio on GPU,” <i>IEICE Trans. Fundamentals</i>, vol. 97, no. 5, pp. 1027-1036, 2014.">[12]</a></td>
@@ -594,9 +586,9 @@
                     <td>5</td>
                     <td class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="It is unclear if the CPU/GPU data transfer times have been taken into account.">192</span></td>
                     <td>127.8</td>
-                    <td class="vl">25.9</td>
-                    <td>0.810</td>
-                    <td>382</td>
+                    <td class="vl">106.5</td>
+                    <td>0.135</td>
+                    <td>2291</td>
                   </tr>
                   <tr class="info">
                     <td class="vl"><a class="tt" href="#ref13" data-toggle="tooltip" data-placement="top" data-html="true" title="A. Cassagne, T. Tonnellier, C. Leroux, B. Le Gal, and D. Barthou, “Beyond Gbps Turbo decoder on multi-core CPUs,” in <i>IEEE ISTC</i>, 2016.">[13]</a></td>
@@ -623,9 +615,9 @@
                     <td>6</td>
                     <td class="vl">2657</td>
                     <td>443.7</td>
-                    <td class="vl">44.4</td>
-                    <td>5.544</td>
-                    <td>90</td>
+                    <td class="vl">443.7</td>
+                    <td>0.924</td>
+                    <td>541</td>
                   </tr>
                   <tr class="info">
                     <td class="vl"><a class="tt" href="#ref13" data-toggle="tooltip" data-placement="top" data-html="true" title="A. Cassagne, T. Tonnellier, C. Leroux, B. Le Gal, and D. Barthou, “Beyond Gbps Turbo decoder on multi-core CPUs,” in <i>IEEE ISTC</i>, 2016.">[13]</a></td>
@@ -652,9 +644,9 @@
                     <td>6</td>
                     <td class="vl">3293</td>
                     <td>716.4</td>
-                    <td class="vl">71.6</td>
-                    <td>4.476</td>
-                    <td>56</td>
+                    <td class="vl">716.4</td>
+                    <td>0.746</td>
+                    <td>335</td>
                   </tr>
                 </tbody>
               </table>
