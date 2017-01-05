@@ -92,7 +92,7 @@
 
       <p class="bg-info">In blue, the results simulated or reproducible with <a href="index.html">AFF3CT</a>: our Open-source communication chain dedicated to the Forward Error Correction (FEC) simulations.</p>
 
-      <p><i>Last update: 12-19-2016.</i></p>
+      <p><i>Last update: 01-05-2017.</i></p>
 
       <ul class="nav nav-tabs">
         <li><a href="hof_turbo.html">Turbo</a></li>
@@ -194,7 +194,7 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody> 
+                <tbody>
                   <tr>
                     <td class="vl"><a class="tt" href="#ref1" data-toggle="tooltip" data-placement="top" data-html="true" title="P. Giard, G. Sarkis, C. Thibeault, and W. Gross, “Fast software polar decoders,” <i>in Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</i>, pp. 7555-7559, May 2014.">[1]</a></td>
                     <td>2014</td>
@@ -437,6 +437,87 @@
                     <td>73.0</td>
                     <td class="vl">4.148</td>
                     <td>27</td>
+                  </tr>
+                  <tr>
+                    <td class="vl"><a class="tt" href="#ref10" data-toggle="tooltip" data-placement="top" data-html="true" title="P. Giard, G. Sarkis, C. Leroux, C. Thibeault, and W. J. Gross, “Low-Latency Software Polar Decoders,” <i>Journal of Signal Processing Systems, Springer</i>, vol. PP, 2016.">[10]</a></td>
+                    <td>2016</td>
+                    <td class="vl">
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                        <u>Device type</u>: CPU<br />
+                        <u>Full name</u>: Core i7-4770S<br />
+                        <u>Vendor</u>: Intel <br />
+                        <u>Architecture</u>: Haswell <br />
+                        <u>Frequency</u>: 3.10 GHz <br />
+                        <u>SMX/Cores</u>: 4 (only 1 used)<br />
+                        <u>SIMD type</u>: AVX2 (256-bit) <br />
+                        <u>SIMD length</u>: 32 (8-bit/elmt) <br />
+                        <u>TDP</u>: 65 Watts">
+                        i7-4770S
+                      </span>
+                    </td>
+                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Systematic SC algorithm + tree pruning optimizations (Rate 0, Rate 1, Rep, SPC) + code source autogeneration">Fast-SSC</span></td>
+                    <td>8</td>
+                    <td>1</td>
+                    <td>32768</td>
+                    <td>0.84</td>
+                    <td class="vl">31</td>
+                    <td>886.0</td>
+                    <td class="vl">8.931</td>
+                    <td>73</td>
+                  </tr>
+                  <tr>
+                    <td class="vl"><a class="tt" href="#ref10" data-toggle="tooltip" data-placement="top" data-html="true" title="P. Giard, G. Sarkis, C. Leroux, C. Thibeault, and W. J. Gross, “Low-Latency Software Polar Decoders,” <i>Journal of Signal Processing Systems, Springer</i>, vol. PP, 2016.">[10]</a></td>
+                    <td>2016</td>
+                    <td class="vl">
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                        <u>Device type</u>: CPU <br />
+                        <u>Full name</u>: Exynos 4412 <br />
+                        <u>Vendor</u>: ARM/Samsung <br />
+                        <u>Architecture</u>: Cortex-A9 MPCore <br />
+                        <u>Frequency</u>: 1.70 GHz <br />
+                        <u>SMX/Cores</u>: 4 (only 1 used)<br />
+                        <u>SIMD type</u>: NEON (128-bit) <br />
+                        <u>SIMD length</u>: 16 (8-bit/elmt) <br />
+                        <u>TDP</u>: ~3 Watts">
+                        Cortex-A9
+                      </span>
+                    </td>
+                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Systematic SC algorithm + tree pruning optimizations (Rate 0, Rate 1, Rep, SPC) + code source autogeneration">Fast-SSC</span></td>
+                    <td>8</td>
+                    <td>1</td>
+                    <td>32768</td>
+                    <td>0.90</td>
+                    <td class="vl">361</td>
+                    <td>81.7</td>
+                    <td class="vl">3.003</td>
+                    <td>37</td>
+                  </tr>
+                  <tr>
+                    <td class="vl"><a class="tt" href="#ref10" data-toggle="tooltip" data-placement="top" data-html="true" title="P. Giard, G. Sarkis, C. Leroux, C. Thibeault, and W. J. Gross, “Low-Latency Software Polar Decoders,” <i>Journal of Signal Processing Systems, Springer</i>, vol. PP, 2016.">[10]</a></td>
+                    <td>2016</td>
+                    <td class="vl">
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                        <u>Device type</u>: GPU<br />
+                        <u>Full name</u>: Tesla K20c<br />
+                        <u>Vendor</u>: Nvidia <br />
+                        <u>Architecture</u>: Kepler<br />
+                        <u>Frequency</u>: 0.71 GHz<br />
+                        <u>SMX/Cores</u>: 13<br />
+                        <u>SIMD type</u>: SIMT<br />
+                        <u>SIMD length</u>: 192<br />
+                        <u>TDP</u> : 225 Watts">
+                        Tesla K20c
+                      </span>
+                    </td>
+                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Systematic SC algorithm + tree pruning optimizations (Rate 0, Rate 1, Rep, SPC) + code source autogeneration">Fast-SSC</span></td>
+                    <td>32</td>
+                    <td>832</td>
+                    <td>4096</td>
+                    <td>0.90</td>
+                    <td class="vl">9400</td>
+                    <td>1043.0</td>
+                    <td class="vl">0.589</td>
+                    <td>216</td>
                   </tr>
                 </tbody>
               </table>
@@ -804,6 +885,7 @@
           <li id="ref7">B. Le Gal, C. Leroux and C. Jego, “High-performance software implementation of SCAN decoders for Polar codes,” <i>in Springer - Annals of Telecommunications</i>, submitted in June 2016.</li>
           <li id="ref8">G. Sarkis, P. Giard, A. Vardy, C. Thibeault, and W. Gross, “Increasing the speed of polar list decoders,” <i>in Proceedings of the IEEE Workshop on Signal Processing Systems (SiPS)</i>, pp. 1-6, October 2014</li>
           <li id="ref9">G. Sarkis, P. Giard, A. Vardy, C. Thibeault, and W. J. Gross, “Fast List Decoders for Polar Codes,” <i>IEEE Journal on Selected Areas in Communications - Special Issue on Recent Advances In Capacity Approaching Codes</i>, vol. 34, no. 2, pp. 318-328, February 2016.</li>
+          <li id="ref10">P. Giard, G. Sarkis, C. Leroux, C. Thibeault, and W. J. Gross, “Low-Latency Software Polar Decoders,” <i>Journal of Signal Processing Systems, Springer</i>, vol. PP, 2016.</li>
         </ol>
 
       </div>
