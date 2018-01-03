@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="A Fast Forward Error Correction Tool (AFF3CT)">
+    <meta name="author" content="Adrien CASSAGNE">
+
+    <title>AFF3CT - A Fast Forward Error Correction Tool</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Fontawesome CSS -->
+    <link href="font-awesome-4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-78973823-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+  
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">AFF3CT</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <!--<li><a href="download.html"><i class="fa fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>-->
+            <!--<li><a href="getting_started.html">Getting started</a></li>-->
+            <!--<li><a href="doc/index.html"><i class="fa fa-life-ring" aria-hidden="true">&nbsp;</i>Documentation</a></li>-->
+            <!--<li><a href="news.html">News</a></li>-->
+            <li class="active"><a href="publications.html"><i class="fa fa-newspaper-o" aria-hidden="true">&nbsp;</i>Publications</a></li>
+            <li><a href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
+            <li><a href="https://github.com/aff3ct/aff3ct" target="_blank"><i class="fa fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list">&nbsp;</i>Software Decoders Hall of Fame<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-header">Synoptic tables</li>
+                <li><a href="hof_turbo.html">Turbo Codes (Convolutional based)</a></li>
+                <li><a href="hof_ldpc.html">LDPC (Low-Density Parity-Check) Codes</a></li>
+                <li><a href="hof_polar.html">Polar Codes</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container marketing">
+      <h1>Related publications</h1>
+      <p>Notice that <strong>AFF3CT</strong> has been renamed, previously it was <strong>P-EDGE</strong>.</p>
+      <h2>Journal articles</h2>
+      <p>
+        <ol>
+          <li>
+            Mathieu Léonardon, Adrien Cassagne, Camille Leroux, Christophe Jégo, Louis-Philippe Hamelin and Yvon Savaria<br />
+            <strong>Fast and Flexible Software Polar List Decoders</strong> <br />
+            <i>Submitted to Springer Journal of Signal Processing Systems (JSPS), October 2017.</i><br />
+            <a title="Web link" href="https://arxiv.org/abs/1710.08314" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a>&nbsp;
+            <a title="Article"  href="https://arxiv.org/pdf/1710.08314.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            Bertrand Le Gal, Camille Leroux and Christophe Jégo <br />
+            <strong>Multi-Gb/s Software Decoding of Polar Codes</strong> <br />
+            <i>IEEE Transactions on Signal Processing (Volume: 63, Issue: 2), January 2015.</i><br />
+            <a title="Web link" href="http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=6960078" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a>&nbsp;
+            <a title="Article"  href="https://www.researchgate.net/profile/Bertrand_Le_Gal/publication/273397923_Multi-Gbs_Software_Decoding_of_Polar_Codes/links/550da8800cf2ac2905a92b9f/Multi-Gb-s-Software-Decoding-of-Polar-Codes.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+          </li>
+        </ol>
+      </p>
+
+      <h2>Conference articles</h2>
+      <p>
+        <ol>
+          <li>
+            Adrien Cassagne, Olivier Aumage, Denis Barthou, Camille Leroux and Christophe Jégo<br />
+            <strong>MIPP: a Portable C++ SIMD Wrapper and its use for Error Correction Coding in 5G Standard</strong> <br />
+            <i>The 5th International Workshop on Programming Models for SIMD/Vector Processing (WPMVP 2018), February 2018 (to appear).</i><br />
+            <!--<a title="Web link" href="" target="_blank">--><i class="fa fa-globe" aria-hidden="true"></i><!--</a>-->&nbsp;
+            <!--<a title="Article"  href="" target="_blank">--><i class="fa fa-file-pdf-o" aria-hidden="true"></i><!--</a>-->
+          </li>
+          <li>
+            Alireza Ghaffari, Mathieu Léonardon, Yvon Savaria, Christophe Jégo and Camille Leroux<br />
+            <strong>Improving Performance of SCMA MPA Decoders Using Estimation of Conditional Probabilities</strong> <br />
+            <i>The 15th IEEE International NEWCAS Conference (NEWCAS 2017), June 2017.</i><br />
+            <a title="Web link" href="http://ieeexplore.ieee.org/document/8010095/" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a>&nbsp;
+            <a title="Article"  href="https://www.researchgate.net/profile/Seyed_Ghaffari4/publication/319043564_Improving_Performance_of_SCMA_MPA_Decoders_Using_Estimation_of_Conditional_Probabilities/links/59a04a78a6fdcc1a3148254e/Improving-Performance-of-SCMA-MPA-Decoders-Using-Estimation-of-Conditional-Probabilities.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            Thibaud Tonnellier, Camille Leroux, Bertrand Le Gal, Christophe Jégo, Benjamin Gadat and Van Wambeke <br />
+            <strong>Lowering the Error Floor of Double-Binary Turbo Codes: the Flip and Check Algorithm</strong> <br />
+            <i>The 10th International Symposium on Turbo Codes and Iterative Information Processing (ISTC 2016), September 2016.</i><br />
+            <a title="Web link" href="http://ieeexplore.ieee.org/document/7593096/" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a>&nbsp;
+            <a title="Article"  href="https://www.researchgate.net/profile/Thibaud_Tonnellier/publication/309342129_Lowering_the_error_floor_of_double-binary_turbo_codes_The_flip_and_check_algorithm/links/59ba5f5da6fdcc687235327d/Lowering-the-error-floor-of-double-binary-turbo-codes-The-flip-and-check-algorithm.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            Adrien Cassagne, Thibaud Tonnellier, Camille Leroux, Bertrand Le Gal, Olivier Aumage and Denis Barthou <br />
+            <strong>Beyond Gbps Turbo Decoder on Multi-Core CPUs</strong> <br />
+            <i>The 10th International Symposium on Turbo Codes and Iterative Information Processing (ISTC 2016), September 2016.</i><br />
+            <a title="Web link" href="http://ieeexplore.ieee.org/document/7593092/" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a>&nbsp;
+            <a title="Article"  href="https://hal.inria.fr/hal-01363980/document" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>&nbsp;
+            <a title="Poster"   href="publications/Cassagne2016a - Beyond Gbps Turbo Decoder on Multi-Core CPUs [poster].pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            Adrien Cassagne, Olivier Aumage, Camille Leroux, Denis Barthou and Bertrand Le Gal <br />
+            <strong>Energy Consumption Analysis of Software Polar Decoders on Low Power Processors</strong> <br />
+            <i>The 24nd European Signal Processing Conference (EUSIPCO 2016), September 2016.</i><br />
+            <a title="Web link" href="http://ieeexplore.ieee.org/document/7760327/" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a>&nbsp;
+            <a title="Article"  href="http://www.eurasip.org/Proceedings/Eusipco/Eusipco2016/papers/1570252182.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>&nbsp;
+            <a title="Poster"   href="publications/Cassagne2016b - Energy Consumption Analysis of Software Polar Decoders on Low Power Processors [poster].pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            Thibaud Tonnellier, Camille Leroux, Bertrand Le Gal, Benjamin Gadat, Christophe Jégo and Nicolas Van Wambeke <br />
+            <strong>Lowering the Error Floor of Turbo Codes With CRC Verification</strong> <br />
+            <i>IEEE Wireless Communications Letters (Volume: 5, Issue: 4), August 2016.</i><br />
+            <a title="Web link" href="http://ieeexplore.ieee.org/document/7475891/" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a>&nbsp;
+            <a title="Article"  href="https://www.researchgate.net/profile/Thibaud_Tonnellier/publication/303426710_Lowering_the_Error_Floor_of_Turbo_Codes_with_CRC_Verification/links/593127390f7e9beee76b0fcf/Lowering-the-Error-Floor-of-Turbo-Codes-with-CRC-Verification.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            Adrien Cassagne, Bertrand Le Gal, Camille Leroux, Olivier Aumage and Denis Barthou <br />
+            <strong>An Efficient, Portable and Generic Library for Successive Cancellation Decoding of Polar Codes</strong> <br />
+            <i>The 28th International Workshop on Languages and Compilers for Parallel Computing (LCPC 2015), September 2015.</i><br />
+            <a title="Web link" href="https://hal.inria.fr/hal-01203105" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a>&nbsp;
+            <a title="Article"  href="https://hal.inria.fr/hal-01203105/document" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>&nbsp;
+            <a title="Slides"   href="publications/Cassagne2015c - An Efficient, Portable and Generic Library for Successive Cancellation Decoding of Polar Codes [slides].pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>&nbsp;
+            <a title="Poster"   href="publications/Cassagne2015c - An Efficient, Portable and Generic Library for Successive Cancellation Decoding of Polar Codes [poster].pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+          </li>
+        </ol>
+      </p>
+
+      <h2>Other articles</h2>
+      <p>
+        <ol>
+          <li>
+            Adrien Cassagne, Olivier Hartmann, Mathieu Léonardon, Thibaud Tonnellier, Guillaume Delbergue, Camille Leroux, Romain Tajan, Bertrand Le Gal, Christophe Jégo, Olivier Aumage and Denis Barthou<br />
+            <strong>Fast Simulation and Prototyping with AFF3CT</strong> <br />
+            <i>The 20th International Workshop on Signal Processing Systems (SiPS 2017), October 2017 (demo night).</i><br />
+            <a title="Abstract" href="https://sips2017.sciencesconf.org/data/demo_9.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>&nbsp;
+            <a title="Poster"   href="publications/Cassagne2017a - Fast Simulation and Prototyping with AFF3CT [poster].pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            Adrien Cassagne, Mathieu Léonardon, Olivier Hartmann, Thibaud Tonnellier, Guillaume Delbergue, Valentin Giraud, Camille Leroux, Romain Tajan, Bertrand Le Gal, Christophe Jégo, Olivier Aumage and Denis Barthou<br />
+            <strong>AFF3CT : Un environnement de simulation pour le codage de canal</strong> <br />
+            <i>GdR SoC², June 2017 (in French).</i><br />
+            <a title="Abstract" href="publications/Cassagne2017 - AFF3CT : Un environnement de simulation pour le codage de canal.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>&nbsp;
+            <a title="Poster"   href="publications/Cassagne2017 - AFF3CT : Un environnement de simulation pour le codage de canal [poster].pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+          </li>
+        </ol>
+      </p>
+
+      <hr>
+
+      <footer>
+        <p class="pull-right"><a href="#"><i class="fa fa-level-up" aria-hidden="true">&nbsp;</i>Back to top</a></p>
+        <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
+      </footer>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </body>
+</html>

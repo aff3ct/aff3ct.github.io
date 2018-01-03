@@ -45,11 +45,13 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="download.html"><i class="fa fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>
+            <!--<li><a href="download.html"><i class="fa fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>-->
             <!--<li><a href="getting_started.html">Getting started</a></li>-->
-            <li><a href="doc/index.html"><i class="fa fa-life-ring" aria-hidden="true">&nbsp;</i>Documentation</a></li>
+            <!--<li><a href="doc/index.html"><i class="fa fa-life-ring" aria-hidden="true">&nbsp;</i>Documentation</a></li>-->
             <!--<li><a href="news.html">News</a></li>-->
-            <li><a href="community.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Community</a></li>
+            <li><a href="publications.html"><i class="fa fa-newspaper-o" aria-hidden="true">&nbsp;</i>Publications</a></li>
+            <li><a href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
+            <li><a href="https://github.com/aff3ct/aff3ct" target="_blank"><i class="fa fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -71,8 +73,8 @@
         <h1>A Fast Forward Error Correction Tool!</h1>
         <p><strong>AFF3CT</strong> is an <strong>Open-source</strong> software (MIT license) dedicated to the <strong>Forward Error Correction</strong> (FEC or channel coding) simulations. It is written in <strong>C++11</strong> and it supports a large range of codes: from the well-spread <strong>Turbo codes</strong> to the very new <strong>Polar codes</strong> including the <strong>Low-Density Parity-Check (LDPC)</strong> codes. A particular emphasis is given to <strong>the simulation throughput performance</strong> (hundreds of Mb/s on today's CPUs) and the portability of the code.</p>
         <p>
-          <a class="btn btn-primary btn-lg" href="download.html" role="button"><i class="fa fa-download fa-lg" aria-hidden="true">&nbsp;</i>Download &raquo;</a>
-          <a class="btn btn-primary btn-lg" href="https://github.com/aff3ct/aff3ct" role="button" target="_blank"><i class="fa fa-github fa-lg" aria-hidden="true">&nbsp;</i>GitHub &raquo;</a>
+          <!--<a class="btn btn-primary btn-lg" href="download.html" role="button"><i class="fa fa-download fa-lg" aria-hidden="true">&nbsp;</i>Download &raquo;</a>-->
+          <a class="btn btn-primary btn-lg" href="https://github.com/aff3ct/aff3ct" role="button" target="_blank"><i class="fa fa-github fa-lg" aria-hidden="true">&nbsp;</i>Get the source code on GitHub &raquo;</a>
         </p>
       </div>
     </div>
@@ -86,7 +88,7 @@
           <p class="lead">Choose between <strong>Polar</strong>, <strong>Turbo</strong>, <strong>LDPC</strong>, <strong>RSC</strong> (Recursive Systematic Convolutional), <strong>Repetition</strong> and <strong>RA</strong> (Repeat and Accumulate) codes. Play with a set of decoders with different complexities and characteristics.</p>
         </div>
         <div class="col-md-6">
-          <img class="featurette-image img-responsive center-block" src="images/aff3ct.png" alt="AFF3CT window run">
+          <img class="featurette-image img-responsive center-block" src="images/aff3ct2.png" alt="AFF3CT window run">
         </div>
       </div>
 
@@ -107,7 +109,7 @@
       <div class="row featurette">
         <div class="col-md-10">
           <h2 class="featurette-heading">A Cross-platform <span class="text-muted">and Open-source software.</span></h2>
-          <p class="lead">AFF3CT runs on <strong>Linux&nbsp;<i class="fa fa-linux" aria-hidden="true"></i></strong>, <strong>Mac OS X&nbsp;<i class="fa fa-apple" aria-hidden="true"></i></strong> and <strong>Windows&nbsp;<i class="fa fa-windows" aria-hidden="true"></i></strong>. It has been optimized for <strong>x86</strong> targets (with the <strong>SSE</strong> and <strong>AVX</strong> set of instructions) and for <strong>ARM</strong> devices (with the <strong>NEON</strong> set of instructions). The code SIMDization rest upon the <a href="http://mipp.gforge.inria.fr" target="_blank">MIPP wrapper</a>. AFF3CT is Open-source and it is currently developed, the code is written in <strong>C++11</strong> style where it intensively uses <strong>the template metaprogramming technique</strong>.</p>
+          <p class="lead">AFF3CT runs on <strong>Linux&nbsp;<i class="fa fa-linux" aria-hidden="true"></i></strong>, <strong>Mac OS X&nbsp;<i class="fa fa-apple" aria-hidden="true"></i></strong> and <strong>Windows&nbsp;<i class="fa fa-windows" aria-hidden="true"></i></strong>. It has been optimized for <strong>x86</strong> targets (with the <strong>SSE</strong> and <strong>AVX</strong> set of instructions) and for <strong>ARM</strong> devices (with the <strong>NEON</strong> set of instructions). The code SIMDization rest upon the <a href="https://github.com/aff3ct/MIPP" target="_blank">MIPP wrapper</a>. AFF3CT is Open-source and it is currently developed, the code is written in <strong>C++11</strong> style where it intensively uses <strong>the template metaprogramming technique</strong>.</p>
         </div>
         <div class="col-md-2">
           <img class="featurette-image img-responsive center-block" src="images/cross_platform.png" alt="Generic placeholder image">
