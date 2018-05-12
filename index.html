@@ -1,135 +1,98 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="A Fast Forward Error Correction Toolbox (AFF3CT)">
     <meta name="author" content="Adrien CASSAGNE">
-
     <title>AFF3CT - A Fast Forward Error Correction Toolbox</title>
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-    <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
-
-    <!-- Fontawesome CSS -->
-    <link href="font-awesome-4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
-
-    <!-- Google Analytics -->
-    <script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="css/bootstrap_carousel.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <script> /* Google Analytics */
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
       ga('create', 'UA-78973823-1', 'auto');
       ga('send', 'pageview');
     </script>
   </head>
   <body>
-
-   <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">AFF3CT</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <!--<li><a href="download.html"><i class="fa fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>-->
-            <!--<li><a href="getting_started.html">Getting started</a></li>-->
-            <!--<li><a href="doc/index.html"><i class="fa fa-life-ring" aria-hidden="true">&nbsp;</i>Documentation</a></li>-->
-            <!--<li><a href="news.html">News</a></li>-->
-            <li><a href="publications.html"><i class="fa fa-newspaper-o" aria-hidden="true">&nbsp;</i>Publications</a></li>
-            <li><a href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
-            <li><a href="https://github.com/aff3ct/aff3ct" target="_blank"><i class="fa fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list" aria-hidden="true">&nbsp;</i>Software Decoders Hall of Fame<b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li class="dropdown-header">Synoptic tables</li>
-                <li><a href="hof_turbo.html">Turbo Codes (Convolutional based)</a></li>
-                <li><a href="hof_ldpc.html">LDPC (Low-Density Parity-Check) Codes</a></li>
-                <li><a href="hof_polar.html">Polar Codes</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="index.html">AFF3CT</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbarCollapse" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active"><a class="nav-link" href="index.html"><i class="fas fa-home" aria-hidden="true">&nbsp;</i>Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="publications.html"><i class="fa fa-newspaper" aria-hidden="true">&nbsp;</i>Publications</a></li>
+          <li class="nav-item"><a class="nav-link" href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/aff3ct/aff3ct" target="_blank"><i class="fab fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown_hof" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list" aria-hidden="true">&nbsp;</i>Software Decoders Hall of Fame</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown_hof">
+              <a class="dropdown-item" href="hof_turbo.html">Turbo Codes</a>
+              <a class="dropdown-item" href="hof_ldpc.html">LDPC Codes</a>
+              <a class="dropdown-item" href="hof_polar.html">Polar Codes</a>
+            </div>
+          </li>
+        </ul>
       </div>
     </nav>
-
     <div class="jumbotron">
       <div class="container marketing">
-        <h1>A Fast Forward Error Correction Toolbox</h1>
-        <p><strong>AFF3CT</strong> is an <strong>Open-source</strong> software (MIT license) dedicated to the <strong>Forward Error Correction</strong> (FEC or channel coding) simulations. It is written in <strong>C++11</strong> and it supports a large range of codes: from the well-spread <strong>Turbo codes</strong> to the very new <strong>Polar codes</strong> including the <strong>Low-Density Parity-Check (LDPC)</strong> codes. A particular emphasis is given to <strong>the simulation throughput performance</strong> (hundreds of Mb/s on today's CPUs) and the portability of the code.</p>
-        <p>
-          <!--<a class="btn btn-primary btn-lg" href="download.html" role="button"><i class="fa fa-download fa-lg" aria-hidden="true">&nbsp;</i>Download &raquo;</a>-->
-          <a class="btn btn-primary btn-lg" href="https://github.com/aff3ct/aff3ct" role="button" target="_blank"><i class="fa fa-github fa-lg" aria-hidden="true">&nbsp;</i>Get the source code on GitHub &raquo;</a>
-        </p>
+        <h1 class="display-4">A Fast Forward Error Correction Toolbox!</h1>
+        <p class="lead"><strong>AFF3CT</strong> is an <strong>Open-source</strong> software (MIT license) dedicated to the <strong>Forward Error Correction</strong> (FEC or channel coding) simulations. It is written in <strong>C++11</strong> and it supports a large range of codes: from the well-spread <strong>Turbo codes</strong> to the very new <strong>Polar codes</strong> including the <strong>Low-Density Parity-Check (LDPC)</strong> codes. A particular emphasis is given to <strong>the simulation throughput performance</strong> (hundreds of Mb/s on today's CPUs) and the portability of the code.</p>
+        <p><a class="btn btn-primary btn-lg" href="https://github.com/aff3ct/aff3ct" role="button" target="_blank"><i class="fab fa-github fa-lg" aria-hidden="true">&nbsp;</i>Get the source code on GitHub &raquo;</a></p>
       </div>
     </div>
-   </div>
-
-   <div class="container marketing">
-
+    <div class="container marketing">
       <div class="row featurette">
         <div class="col-md-6">
           <h2 class="featurette-heading">Run simulations on your computer. <span class="text-muted">Experiment various configurations.</span></h2>
           <p class="lead">Choose between <strong>Polar</strong>, <strong>Turbo</strong>, <strong>LDPC</strong>, <strong>RSC</strong> (Recursive Systematic Convolutional), <strong>Repetition</strong> and <strong>RA</strong> (Repeat and Accumulate) codes. Play with a set of decoders with different complexities and characteristics.</p>
         </div>
         <div class="col-md-6">
-          <img class="featurette-image img-responsive center-block" src="images/aff3ct2.png" alt="AFF3CT window run">
+          <img class="featurette-image img-fluid d-block mx-auto" src="images/aff3ct2.png" alt="AFF3CT run">
         </div>
       </div>
-
       <hr class="featurette-divider">
-
       <div class="row featurette">
-        <div class="col-md-7 col-md-push-5">
+        <div class="col-md-7 order-md-5">
           <h2 class="featurette-heading">Unleash the power of your CPU <span class="text-muted">with fixed-point arithmetic.</span></h2>
           <p class="lead">AFF3CT takes advantage of the <strong>8-bit</strong> and <strong>16-bit</strong> built-in fixed-point and saturated arithmetic of your CPU. This enables <strong>high performance</strong> on General Purpose Processors while it gives you the opportunity <strong>to estimate the decoding performance on real hardware</strong>.</p>
         </div>
-        <div class="col-md-5 col-md-pull-7">
-          <img class="featurette-image img-responsive center-block" src="images/bfer/bfer_6144.svg" alt="Generic placeholder image">
+        <div class="col-md-5 order-md-1">
+          <img class="featurette-image img-fluid d-block mx-auto" src="images/bfer/bfer_6144.svg" alt="FER curves">
         </div>
       </div>
-
       <hr class="featurette-divider">
-
       <div class="row featurette">
         <div class="col-md-10">
           <h2 class="featurette-heading">A Cross-platform <span class="text-muted">and Open-source software.</span></h2>
-          <p class="lead">AFF3CT runs on <strong>Linux&nbsp;<i class="fa fa-linux" aria-hidden="true"></i></strong>, <strong>Mac OS X&nbsp;<i class="fa fa-apple" aria-hidden="true"></i></strong> and <strong>Windows&nbsp;<i class="fa fa-windows" aria-hidden="true"></i></strong>. It has been optimized for <strong>x86</strong> targets (with the <strong>SSE</strong> and <strong>AVX</strong> set of instructions) and for <strong>ARM</strong> devices (with the <strong>NEON</strong> set of instructions). The code SIMDization rest upon the <a href="https://github.com/aff3ct/MIPP" target="_blank">MIPP wrapper</a>. AFF3CT is Open-source and it is currently developed, the code is written in <strong>C++11</strong> style where it intensively uses <strong>the template metaprogramming technique</strong>.</p>
+          <p class="lead">AFF3CT runs on <strong>Linux&nbsp;<i class="fab fa-linux" aria-hidden="true"></i></strong>, <strong>Mac OS X&nbsp;<i class="fab fa-apple" aria-hidden="true"></i></strong> and <strong>Windows&nbsp;<i class="fab fa-windows" aria-hidden="true"></i></strong>. It has been optimized for <strong>x86</strong> targets (with the <strong>SSE</strong> and <strong>AVX</strong> set of instructions) and for <strong>ARM</strong> devices (with the <strong>NEON</strong> set of instructions). The code SIMDization rest upon the <a href="https://github.com/aff3ct/MIPP" target="_blank">MIPP wrapper</a>. AFF3CT is Open-source and it is currently developed, the code is written in <strong>C++11</strong> style where it intensively uses <strong>the template metaprogramming technique</strong>.</p>
         </div>
         <div class="col-md-2">
-          <img class="featurette-image img-responsive center-block" src="images/cross_platform.png" alt="Generic placeholder image">
+          <img class="featurette-image img-fluid d-block mx-auto" src="images/cross_platform.png" alt="Cross-platform">
         </div>
       </div>
-
+      <div class="mb-4"></div>
       <hr>
-
-      <footer>
-        <p class="pull-right"><a href="#"><i class="fa fa-level-up" aria-hidden="true">&nbsp;</i>Back to top</a></p>
-        <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank">CPU LabEx (Bordeaux)</a> (ANR-
-10-IDEX-03-02).</p>
+      <footer class="container">
+        <p class="float-right"><a href="#"><i class="fa fa-level-up-alt" aria-hidden="true">&nbsp;</i>Back to top</a></p>
+        <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
       </footer>
     </div>
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     </script>
   </body>
 </html>

@@ -1,1403 +1,1362 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="A Fast Forward Error Correction Toolbox (AFF3CT)">
     <meta name="author" content="Adrien CASSAGNE">
-
     <title>AFF3CT - A Fast Forward Error Correction Toolbox</title>
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-    <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
-
-    <!-- Fontawesome CSS -->
-    <link href="font-awesome-4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="css/bootstrap_carousel.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <script src="js/sorttable.js"></script>
-
-    <!-- Google Analytics -->
-    <script>
+    <script> /* Google Analytics */
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
       ga('create', 'UA-78973823-1', 'auto');
       ga('send', 'pageview');
     </script>
-
     <style>
-      .vl
-      {
-        border-left: solid 1px #ddd;
-      }
-
-      .tt
-      {
-        border-bottom: 1px dotted #888;
-        display: inline-block;
-      }
+      .vl { border-left: solid 1px #ddd; }
+      .tt { border-bottom: 1px dotted #888; display: inline-block; }
     </style>
   </head>
   <body>
-
-   <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">AFF3CT</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <!--<li><a href="download.html"><i class="fa fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>-->
-            <!--<li><a href="getting_started.html">Getting started</a></li>-->
-            <!--<li><a href="doc/index.html"><i class="fa fa-life-ring" aria-hidden="true">&nbsp;</i>Documentation</a></li>-->
-            <!--<li><a href="news.html">News</a></li>-->
-            <li><a href="publications.html"><i class="fa fa-newspaper-o" aria-hidden="true">&nbsp;</i>Publications</a></li>
-            <li><a href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
-            <li><a href="https://github.com/aff3ct/aff3ct" target="_blank"><i class="fa fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown active">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list">&nbsp;</i>Software Decoders Hall of Fame<b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li class="dropdown-header">Synoptic tables</li>
-                <li><a href="hof_turbo.html">Turbo Codes (Convolutional based)</a></li>
-                <li class="active"><a href="hof_ldpc.html">LDPC (Low-Density Parity-Check) Codes</a></li>
-                <li><a href="hof_polar.html">Polar Codes</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="index.html">AFF3CT</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbarCollapse" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home" aria-hidden="true">&nbsp;</i>Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="publications.html"><i class="fa fa-newspaper" aria-hidden="true">&nbsp;</i>Publications</a></li>
+          <li class="nav-item"><a class="nav-link" href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/aff3ct/aff3ct" target="_blank"><i class="fab fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown_hof" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list" aria-hidden="true">&nbsp;</i>Software Decoders Hall of Fame</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown_hof">
+              <a class="dropdown-item" href="hof_turbo.html">Turbo Codes</a>
+              <a class="dropdown-item active" href="hof_ldpc.html">LDPC Codes</a>
+              <a class="dropdown-item" href="hof_polar.html">Polar Codes</a>
+            </div>
+          </li>
+        </ul>
       </div>
     </nav>
-
+    <div class="jumbotron">
+      <div class="container marketing">
+        <h1 class="display-4">FEC Software Decoders Hall of Fame</h1>
+        <p class="lead">This page presents <b>a Channel Coding Software Decoders "Hall of Fame"</b>. It allows to see at a glance what has been achieved, what can be expected from today software decoders, and easily compare their respective characteristics. For now, three wide code families are considered: <b>the Turbo codes (LTE, LTE-Advanced, CCSDS, etc.), the Low-Density Parity-Check (LDPC) codes (Wi-Fi, WiMAX, CCSDS, WRAN, DVB-S2, etc.), and the recently introduced Polar codes (candidates for 5G)</b>.</p>
+        <p class="lead">All the presented results, collected from the state-of-the-art research papers published in the field, consider a <b>BPSK (Bit Phase-Shift Keying) modulation/demodulation</b> and an <b>AWGN (Additive White Gaussian Noise) channel</b>.</p>
+        <p class="lead"><b>This Hall of Fame strives to present results as fairly as possible</b>: for example, early termination criteria are not taken into consideration while computing throughput, in order to compare raw performances using a consistent method. It remains possible, however, for typos/glitches/mistakes to have inadvertantly made it to the scoreboard. In that eventuality, do not hesitate to contact us (<a href="mailto:aff3ct@googlegroups.com">aff3ct@googlegroups.com</a>). If you would like to have your decoder listed as well in the Hall of Fame: <b>please send us the corresponding research paper references, and we will be delighted to add them</b>.</p>
+        <p class="lead">In <span class="text-info">blue</span>, the results simulated or reproducible with <a href="index.html">AFF3CT</a>: our Open-source communication chain dedicated to the Forward Error Correction (FEC) simulations.</p>
+        <p class="lead"><i>Last update: 2018-01-03.</i></p>
+      </div>
+    </div>
     <div class="container marketing">
-      <h1>Channel Coding Software Decoders Hall of Fame</h1>
-
-      <p>This page presents <b>a Channel Coding Software Decoders "Hall of Fame"</b>. It allows to see at a glance what has been achieved, what can be expected from today software decoders, and easily compare their respective characteristics. For now, three wide code families are considered: <b>the Turbo codes (LTE, LTE-Advanced, CCSDS, etc.), the Low-Density Parity-Check (LDPC) codes (Wi-Fi, WiMAX, CCSDS, WRAN, DVB-S2, etc.), and the recently introduced Polar codes (candidates for 5G)</b>.</p>
-
-      <p>All the presented results, collected from the state-of-the-art research papers published in the field, consider a <b>BPSK (Bit Phase-Shift Keying) modulation/demodulation</b> and an <b>AWGN (Additive White Gaussian Noise) channel</b>.</p>
-
-      <p><b>This Hall of Fame strives to present results as fairly as possible</b>: for example, early termination criteria are not taken into consideration while computing throughput, in order to compare raw performances using a consistent method. It remains possible, however, for typos/glitches/mistakes to have inadvertantly made it to the scoreboard. In that eventuality, do not hesitate to contact us (<a href="mailto:aff3ct@googlegroups.com">aff3ct@googlegroups.com</a>). If you would like to have your decoder listed as well in the Hall of Fame: <b>please send us the corresponding research paper references, and we will be delighted to add them</b>.</p>
-
-      <p class="bg-info">In blue, the results simulated or reproducible with <a href="index.html">AFF3CT</a>: our Open-source communication chain dedicated to the Forward Error Correction (FEC) simulations.</p>
-
-      <p><i>Last update: 2018-01-03.</i></p>
-
       <ul class="nav nav-tabs">
-        <li><a href="hof_turbo.html">Turbo</a></li>
-        <li class="active"><a href="hof_ldpc.html">LDPC</a></li>
-        <li><a href="hof_polar.html">Polar</a></li>
+        <li class="nav-item"><a class="nav-link" href="hof_turbo.html">Turbo</a></li>
+        <li class="nav-item"><a class="nav-link active" href="hof_ldpc.html">LDPC</a></li>
+        <li class="nav-item"><a class="nav-link" href="hof_polar.html">Polar</a></li>
       </ul>
-      <br />
-
+      <div class="mb-4"></div>
       <div id="ldpc-codes" class=codes>
         <div class="bs-example" data-example-id="panel-without-body-with-table">
-          <div class="panel panel-default">
-            <div class="panel-heading">Belief Propagation (BP)</div>
-            <div class="table-responsive">
-              <table class="table sortable table-hover table-striped">
-                <thead>
-                  <tr>
-                    <th class="vl">Work</th>
-                    <th id="year1">Year</th>
-                    <th class="vl">Platform</th>
-                    <th>Implem.</th>
-                    <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Precision in bits">Pre.</span></th>
-                    <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Inter frame level: number of frames computed in parallel">Inter</span></th>
-                    <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      LDPC code specifications: <math><mo>(</mo><mi>N</mi><mo>,</mo><mi>K</mi><mo>)</mo></math>">
-                      Code
-                      </span>
-                    </th>
-                    <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of iteration in the decoding process"><math><mi>i</mi></math></span></th>
-                    <th class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Latency in micro seconds: time to decode one frame"><math><mi>Lat.</mi></math></span></th>
-                    <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Coded throughput in Mbps:<br/>
-                        <math>
-                          <mi>Thr.</mi>
+          <p class="lead"><strong>Belief Propagation (BP)</strong></p>
+          <div class="table-responsive">
+            <table class="table sortable table-hover table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Work</th>
+                  <th scope="col" id="year1">Year</th>
+                  <th scope="col" class="vl">Platform</th>
+                  <th scope="col">Implem.</th>
+                  <th scope="col"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Precision in bits">Pre.</span></th>
+                  <th scope="col"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Inter frame level: number of frames computed in parallel">Inter</span></th>
+                  <th scope="col">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    LDPC code specifications: <math><mo>(</mo><mi>N</mi><mo>,</mo><mi>K</mi><mo>)</mo></math>">
+                    Code
+                    </span>
+                  </th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of iteration in the decoding process"><math><mi>i</mi></math></span></th>
+                  <th class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Latency in micro seconds: time to decode one frame"><math><mi>Lat.</mi></math></span></th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Coded throughput in Mbps:<br/>
+                      <math>
+                        <mi>Thr.</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mi>N</mi>
+                            <mo>&times;</mo>
+                            <mi>Inter</mi>
+                          </mrow>
+                          <mi>Lat.</mi>
+                        </mfrac>
+                      </math>">
+                      <math><mi>Thr.</mi></math>
+                    </span>
+                  </th>
+                  <th class="vl" id="nthr1">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalized throughput in Mbps:<br/>
+                      <math>
+                        <mi>NThr.</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mrow><mi>Thr.</mi></mrow>
+                            <mo>&times;</mo>
+                            <mrow><mi>i</mi></mrow>
+                          </mrow>
+                          <mrow>
+                            <mi>50</mi>
+                          </mrow>
+                        </mfrac>
+                      </math>">
+                      <math><mi>NThr.</mi></math>
+                    </span>
+                  </th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Throughput under Normalized Decoding Cost:<br/>
+                       <math>
+                          <mi>TNDC</mi>
                           <mo>=</mo>
                           <mfrac>
                             <mrow>
-                              <mi>N</mi>
+                              <mrow><mi>NThr.</mi></mrow>
+                            </mrow>
+                            <mrow>
+                              <mrow><mi>Cores</mi></mrow>
                               <mo>&times;</mo>
-                              <mi>Inter</mi>
-                            </mrow>
-                            <mi>Lat.</mi>
-                          </mfrac>
-                        </math>">
-                        <math><mi>Thr.</mi></math>
-                      </span>
-                    </th>
-                    <th class="vl" id="nthr1">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalized throughput in Mbps:<br/>
-                        <math>
-                          <mi>NThr.</mi>
-                          <mo>=</mo>
-                          <mfrac>
-                            <mrow>
-                              <mrow><mi>Thr.</mi></mrow>
+                              <mrow><mi>Freq.</mi></mrow>
                               <mo>&times;</mo>
-                              <mrow><mi>i</mi></mrow>
-                            </mrow>
-                            <mrow>
-                              <mi>50</mi>
+                              <mrow><mi>SIMD</mi></mrow>
                             </mrow>
                           </mfrac>
                         </math>">
-                        <math><mi>NThr.</mi></math>
-                      </span>
-                    </th>
-                    <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Throughput under Normalized Decoding Cost:<br/>
-                         <math>
-                            <mi>TNDC</mi>
-                            <mo>=</mo>
-                            <mfrac>
-                              <mrow>
-                                <mrow><mi>NThr.</mi></mrow>
-                              </mrow>
-                              <mrow>
-                                <mrow><mi>Cores</mi></mrow>
-                                <mo>&times;</mo>
-                                <mrow><mi>Freq.</mi></mrow>
-                                <mo>&times;</mo>
-                                <mrow><mi>SIMD</mi></mrow>
-                              </mrow>
-                            </mfrac>
-                          </math>">
-                        <math><mi>TNDC</mi></math>
-                      </span>
-                    </th>
-                    <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules): <br />
-                        <math>
-                          <mrow><msub><mi>E</mi><mi>d</mi></msub></mrow>
-                          <mo>=</mo>
-                          <mfrac>
-                            <mrow>
-                              <mi>TDP</mi>
-                            </mrow>
-                            <mrow>
-                              <mi>NThr.</mi>
-                            </mrow>
-                          </mfrac>
-                          <mo>&times;</mo>
-                          <msup>
-                            <mn>10</mn>
-                            <mn>3</mn>
-                          </msup>
-                        </math>">
-                        <math><msub><mi>E</mi><mi>d</mi></msub></math>
-                      </span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref1" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, V. Silva, L. Sousa, and J. Marinho, <b>High Coded Data Rate and Multicodeword WiMAX LDPC Decoding on the Cell/BE</b>, <i>IET Electronics Letters</i>,                                                                                            November  2008.">[1]</a></td>
-                    <td>2008</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: SPU<br />
-                        <u>Full name</u>: CELL/BE (PS3)<br />
-                        <u>Vendor</u>: IBM <br />
-                        <u>Architecture</u>: CELL<br />
-                        <u>Frequency</u>: 3.30 GHz<br />
-                        <u>SMX/Cores/SPE</u>: 6<br />
-                        <u>SIMD type</u>: SPE (128-bit)<br />
-                        <u>SIMD length</u>: 16 (8-bit/elmt)<br />
-                        <u>TDP</u>: ~200 Watts (90 nm)">
-                        CELL
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
-                    <td>8</td>
-                    <td>96</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: WiMAX (802.16e) <br />">
-                        (1248, 624)
-                      </span>
-                    </td>
-                    <td>25</td>
-                    <td class="vl">3653</td>
-                    <td>32.8</td>
-                    <td class="vl">16.4</td>
-                    <td>0.052</td>
-                    <td>6098</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref2" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Wang, S. Cheng, and Q. Wu, <b>A Parallel Decoding Algorithm of LDPC Codes using CUDA</b>, <i>in Proceedings of the IEEE Asilomar Conference on Signals, Systems, and Computers (ACSSC)</i>, October 2008.">[2]</a></td>
-                    <td>2008</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GeForce 8800 GT<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Tesla<br />
-                        <u>Frequency</u>: 1.50 GHz<br />
-                        <u>SMX/Cores</u>: 7<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 16<br />
-                        <u>TDP</u> : 105 Watts">
-                        8800 GT
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm + Early termination capable (flooding)">F-SPA+</span></td>
-                    <td>32</td>
-                    <td>1</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Reg. & Unstr. <br />
-                      <u>Edges</u>: 6144 <br />
-                      <u>Edges/Row</u>: 3 <br />">
-                        (4096, 2048)
-                      </span>
-                    </td>
-                    <td>6</td>
-                    <td class="vl">467000</td>
-                    <td>0.01</td>
-                    <td class="vl">0.001</td>
-                    <td>0.000006</td>
-                    <td>105000000</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref3" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, S. Yamagiwa, V. Silva, and L. Sousa, <b>Parallel LDPC Decoding on GPUs Using a Stream-Based Computing Approach</b>, <i>Springer Journal of Computer Science and Technology (JCST)</i>, September 2009.">[3]</a></td>
-                    <td>2009</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GeForce 8800 GTX<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Tesla<br />
-                        <u>Frequency</u>: 1.35 GHz<br />
-                        <u>SMX/Cores</u>: 8<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 16<br />
-                        <u>TDP</u> : 176 Watts">
-                        8800 GTX
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm (flooding scheduling)">F-SPA</span></td>
-                    <td>32</td>
-                    <td>-</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Reg. & Unstr. <br />
-                      <u>Edges</u>: 7632 <br />
-                      <u>Edges/Row</u>: 36">
-                        (1908, 1696)
-                      </span>
-                    </td>
-                    <td>50</td>
-                    <td class="vl">-</td>
-                    <td>0.08</td>
-                    <td class="vl">0.08</td>
-                    <td>0.0005</td>
-                    <td>2200000</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref4" data-toggle="tooltip" data-placement="top" data-html="true" title="J. Zhao, M. Zhao, H. Yang, J. Chen, X. Chen, and J. Wang, <b>High Performance LDPC Decoder on CELL BE for WiMAX System</b>, <i>in Proceedings of the IEEE International Conference on Communications and Mobile Computing (CMC)</i>, April 2011.">[4]</a></td>
-                    <td>2011</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: SPU<br />
-                        <u>Full name</u>: CELL/BE<br />
-                        <u>Vendor</u>: IBM <br />
-                        <u>Architecture</u>: CELL<br />
-                        <u>Frequency</u>: 3.20 GHz<br />
-                        <u>SMX/Cores/SPE</u>: 8<br />
-                        <u>SIMD type</u>: SPE (128-bit)<br />
-                        <u>SIMD length</u>: 16 (8-bit/elmt)<br />
-                        <u>TDP</u>: ~200 Watts (90 nm)">
-                        CELL
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Offset Min-Sum algorithm (flooding)">F-OMS</span></td>
-                    <td>8</td>
-                    <td>1</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: WiMAX (802.16e) <br />">
-                        (960, 480)
-                      </span>
-                    </td>
-                    <td>15</td>
-                    <td class="vl">74</td>
-                    <td>13.0</td>
-                    <td class="vl">3.9</td>
-                    <td>0.0095</td>
-                    <td>51282</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref5" data-toggle="tooltip" data-placement="top" data-html="true" title="C-C. Chang, Y-L. Chang, M-Y. Huang and B. Huang, <b>Accelerating Regular LDPC Code Decoders on GPUs</b>, <i>IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing (J-STARS)</i>, September 2011.">[5]</a></td>
-                    <td>2011</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: Tesla C1060<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Tesla<br />
-                        <u>Frequency</u>: 1.30 GHz<br />
-                        <u>SMX/Cores</u>: 15<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 16<br />
-                        <u>TDP</u> : 200 Watts">
-                        Tesla C1060
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Logarithmic Sum-Product Algorithm (flooding)">F-LSPA</span></td>
-                    <td>32</td>
-                    <td>1</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Reg. & Unstr. <br />
-                      <u>Edges</u>: 32000 <br />
-                      <u>Edges/Row</u>: 8">
-                        (8000, 4000)
-                      </span>
-                    </td>
-                    <td>50</td>
-                    <td class="vl">8638</td>
-                    <td>0.92</td>
-                    <td class="vl">0.92</td>
-                    <td>0.0029</td>
-                    <td>217391</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref6" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, J. Andrade, V. Silva, and L. Sousa, <b>GPU-Based DVBS2 LDPC Decoder with High Throughput and Fast Error Floor Detection</b>, <i>IET Electronics Letters</i>, April 2011.">[6]</a></td>
-                    <td>2011</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: Tesla C2050<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Fermi<br />
-                        <u>Frequency</u>: 1.15 GHz<br />
-                        <u>SMX/Cores</u>: 14<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 32<br />
-                        <u>TDP</u> : 247 Watts">
-                        Tesla C2050
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
-                    <td>8</td>
-                    <td>16</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: DVB-S2 B2 <br />
-                      <u>Edges</u>: 216000">
-                        (64800, 21600)
-                      </span>
-                    </td>
-                    <td>30</td>
-                    <td class="vl">13275</td>
-                    <td>78.1</td>
-                    <td class="vl">46.86</td>
-                    <td>0.091</td>
-                    <td>5271</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref7" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, L. Sousa, and V. Silva, <b>Massively LDPC Decoding on Multicore Architectures</b>, <i>IEEE Transactions on Parallel and Distributed Systems (TPDS)</i>, February 2011.">[7]</a></td>
-                    <td>2011</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GeForce 8800 GTX<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Tesla<br />
-                        <u>Frequency</u>: 1.35 GHz<br />
-                        <u>SMX/Cores</u>: 8<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 16<br />
-                        <u>TDP</u> : 176 Watts">
-                        8800 GTX
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm (flooding)">F-SPA</span></td>
-                    <td>8</td>
-                    <td>-</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Reg. & Unstr. <br />
-                      <u>Edges</u>: 24000 <br />
-                      <u>Edges/Row</u>: 6 <br />
-                      <u>Edges/Col</u>: 3 <br />">
-                        (8000, 4000)
-                      </span>
-                    </td>
-                    <td>50</td>
-                    <td class="vl">-</td>
-                    <td>10.1</td>
-                    <td class="vl">10.1</td>
-                    <td>0.058</td>
-                    <td>17426</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref7" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, L. Sousa, and V. Silva, <b>Massively LDPC Decoding on Multicore Architectures</b>, <i>IEEE Transactions on Parallel and Distributed Systems (TPDS)</i>, February 2011.">[7]</a></td>
-                    <td>2011</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: SPU<br />
-                        <u>Full name</u>: CELL/BE (PS3)<br />
-                        <u>Vendor</u>: IBM <br />
-                        <u>Architecture</u>: CELL<br />
-                        <u>Frequency</u>: 3.30 GHz<br />
-                        <u>SMX/Cores/SPE</u>: 6<br />
-                        <u>SIMD type</u>: SPE (128-bit)<br />
-                        <u>SIMD length</u>: 4 (32-bit/elmt)<br />
-                        <u>TDP</u> : ~200 Watts (90 nm)">
-                        CELL
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm (flooding)">F-SPA</span></td>
-                    <td>32</td>
-                    <td>24</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Reg. & Unstr. <br />
-                      <u>Edges</u>: 3072 <br />
-                      <u>Edges/Row</u>: 6 <br />
-                      <u>Edges/Col</u>: 3 <br />">
-                        (1024, 512)
-                      </span>
-                    </td>
-                    <td>50</td>
-                    <td class="vl">1719</td>
-                    <td>14.3</td>
-                    <td class="vl">14.3</td>
-                    <td>0.181</td>
-                    <td>13986</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref7" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, L. Sousa, and V. Silva, <b>Massively LDPC Decoding on Multicore Architectures</b>, <i>IEEE Transactions on Parallel and Distributed Systems (TPDS)</i>, February 2011.">[7]</a></td>
-                    <td>2011</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: CPU<br />
-                        <u>Full name</u>: 2 x Xeon E5530<br />
-                        <u>Vendor</u>: Intel<br />
-                        <u>Architecture</u>: Nehalem<br />
-                        <u>Frequency</u>: 2.40 GHz<br />
-                        <u>SMX/Cores</u>: 8<br />
-                        <u>SIMD type</u>: SSE4.2 (128-bit)<br />
-                        <u>SIMD length</u>: 4 (32-bit/elmt)<br />
-                        <u>TDP</u> : 160 Watts">
-                        2xE5530
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm (flooding)">F-SPA</span></td>
-                    <td>32</td>
-                    <td>1</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Reg. & Unstr. <br />
-                      <u>Edges</u>: 24000 <br />
-                      <u>Edges/Row</u>: 6 <br />
-                      <u>Edges/Col</u>: 3 <br />">
-                        (8000, 4000)
-                      </span>
-                    </td>
-                    <td>50</td>
-                    <td class="vl">13115</td>
-                    <td>0.61</td>
-                    <td class="vl">0.61</td>
-                    <td>0.0079</td>
-                    <td>262295</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref8" data-toggle="tooltip" data-placement="top" data-html="true" title="H. Ji, J. Cho, and W. Sung, <b>Memory Access Optimized Implementation of Cyclic and Quasi-Cyclic LDPC Codes on a GPGPU</b>, <i>Springer Journal of Signal Processing Systems (JSPS)</i>, July 2011.">[8]</a></td>
-                    <td>2011</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GeForce GTX 285<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Tesla<br />
-                        <u>Frequency</u>: 1.48 GHz<br />
-                        <u>SMX/Cores</u>: 15<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 16<br />
-                        <u>TDP</u> : 204 Watts">
-                        GTX 285
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm + Early termination capable (flooding)">F-SPA+</span></td>
-                    <td>32</td>
-                    <td>1</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: WiMAX (802.16e) <br />
-                      <u>Edges</u>: 7296<br />
-                      <u>Edges/Row</u>: 6~7 <br />
-                      <u>Edges/Col</u>: 2~6 <br />">
-                        (2304, 1152)
-                      </span>
-                    </td>
-                    <td>15</td>
-                    <td class="vl">1097</td>
-                    <td>2.1</td>
-                    <td class="vl">0.63</td>
-                    <td>0.0018</td>
-                    <td>323810</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref9" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Wang, M. Wu, Y. Sun, and J. R. Cavallaro, <b>A Massively Parallel Implementation of QC-LDPC Decoder on GPU</b>, <i>in Proceedings of the IEEE Symposium on Application Specific Processors (SASP)</i>, June 2011.">[9]</a></td>
-                    <td>2011</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GeForce GTX 470<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Fermi<br />
-                        <u>Frequency</u>: 1.22 GHz<br />
-                        <u>SMX/Cores</u>: 14<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 32<br />
-                        <u>TDP</u> : 215 Watts">
-                        GTX 470
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Logarithmic Sum-Product Algorithm or Normalized Min-Sum algorithm + Early termination capable (flooding)">F-LSPA+</span></td>
-                    <td>32</td>
-                    <td>300</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Edges</u>: 6804 <br />
-                      <u>Standard</u>: Wi-Fi (802.11n) <br />">
-                        (1944, 972)
-                      </span>
-                    </td>
-                    <td>50</td>
-                    <td class="vl">57743</td>
-                    <td>10.1</td>
-                    <td class="vl">10.1</td>
-                    <td>0.018</td>
-                    <td>21287</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref10" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Wang, M. Wu, Y. Sun, and J. R. Cavallaro, <b>GPU Accelerated Scalable Parallel Decoding of LDPC Codes</b>, <i>in Proceedings of the IEEE Asilomar Conference on Signals, Systems, and Computers (ACSSC)</i>, November 2011.">[10]</a></td>
-                    <td>2011</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GeForce GTX 470<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Fermi<br />
-                        <u>Frequency</u>: 1.22 GHz<br />
-                        <u>SMX/Cores</u>: 14<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 32<br />
-                        <u>TDP</u> : 215 Watts">
-                        GTX 470
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Logarithmic Sum-Product Algorithm (flooding)">F-LSPA</span></td>
-                    <td>32</td>
-                    <td>224</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: WiMAX (802.16e) <br />
-                      <u>Edges</u>: 7296<br />
-                      <u>Edges/Row</u>: 6~7 <br />
-                      <u>Edges/Col</u>: 2~6 <br />">
-                        (2304, 1152)
-                      </span>
-                    </td>
-                    <td>10</td>
-                    <td class="vl">10533</td>
-                    <td>49.0</td>
-                    <td class="vl">9.8</td>
-                    <td>0.018</td>
-                    <td>21939</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref11" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, V. Silva, L. Sousa, and J. Andrade, <b>Portable LDPC Decoding on Multicores using OpenCL</b>, <i>IEEE Signal Processing Magazine</i>, July 2012.">[11]</a></td>
-                    <td>2012</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: Radeon HD 5870<br />
-                        <u>Vendor</u>: ATI <br />
-                        <u>Architecture</u>: Cypress<br />
-                        <u>Frequency</u>: 1.20 GHz<br />
-                        <u>SMX/Cores</u>: 20<br />
-                        <u>SIMD type</u>: Cypress SIMD<br />
-                        <u>SIMD length</u>: 20<br />
-                        <u>TDP</u> : 188 Watts">
-                        HD 5870
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
-                    <td>8</td>
-                    <td>500</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Reg.<br />
-                      <u>Edges/Row</u>: 6 <br />
-                      <u>Edges/Col</u>: 6 <br />">
-                        (8000, 4000)
-                      </span>
-                    </td>
-                    <td>10</td>
-                    <td class="vl">22222</td>
-                    <td>180.0</td>
-                    <td class="vl">36.0</td>
-                    <td>0.075</td>
-                    <td>5222</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref11" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, V. Silva, L. Sousa, and J. Andrade, <b>Portable LDPC Decoding on Multicores using OpenCL</b>, <i>IEEE Signal Processing Magazine</i>, July 2012.">[11]</a></td>
-                    <td>2012</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: Tesla C2050<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Fermi<br />
-                        <u>Frequency</u>: 1.15 GHz<br />
-                        <u>SMX/Cores</u>: 14<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 32<br />
-                        <u>TDP</u> : 247 Watts">
-                        Tesla C2050
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
-                    <td>8</td>
-                    <td>500</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Reg.<br />
-                      <u>Edges/Row</u>: 6 <br />
-                      <u>Edges/Col</u>: 6 <br />">
-                        (8000, 4000)
-                      </span>
-                    </td>
-                    <td>10</td>
-                    <td class="vl">20000</td>
-                    <td>200.0</td>
-                    <td class="vl">40.0</td>
-                    <td>0.078</td>
-                    <td>6175</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref12" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Kang and J. Moon, <b>Parallel LDPC Decoder Implementation on GPU Based on Unbalanced Memory Coalescing</b>, <i>in Proceedings of the IEEE International Conference on Communications (ICC)</i>, June 2012.">[12]</a></td>
-                    <td>2012</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GeForce GTX 480<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Fermi<br />
-                        <u>Frequency</u>: 1.40 GHz<br />
-                        <u>SMX/Cores</u>: 15<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 32<br />
-                        <u>TDP</u> : 250 Watts">
-                        GTX 480
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm + Early termination capable (flooding)">F-SPA+</span></td>
-                    <td>32</td>
-                    <td>1</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Reg. & Quasi-C.<br />
-                      <u>Standard</u>: 10GBASE-T (802.3an) <br />
-                      <u>Check nodes (k)</u>: 384 <br />
-                      <u>Edges</u>: 12288 <br />
-                      <u>Edges/Row</u>: 6 <br />
-                      <u>Edges/Col</u>: 32 <br />">
-                        (2048, 1723)
-                      </span>
-                    </td>
-                    <td>50</td>
-                    <td class="vl">426</td>
-                    <td>4.8</td>
-                    <td class="vl">4.8</td>
-                    <td>0.0071</td>
-                    <td>52083</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref13" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Gronroos, K. Nybom, and J. Bjorkqvist, <b>Efficient GPU and CPU-Based LDPC Decoders for Long Codewords</b>, <i>Springer Journal of Analog Integrated Circuits and Signal Processing (AICSP)</i>, November 2012.">[13]</a></td>
-                    <td>2012</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: Tesla C2050<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Fermi<br />
-                        <u>Frequency</u>: 1.15 GHz<br />
-                        <u>SMX/Cores</u>: 14<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 32<br />
-                        <u>TDP</u> : 247 Watts">
-                        Tesla C2050
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
-                    <td>8</td>
-                    <td>128</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C.<br />
-                      <u>Standard</u>: DVB-T2 <br />
-                      <u>Check nodes (k)</u>: 7200 <br />
-                      <u>Edges</u>: 48599 <br />
-                      <u>Edges/Row</u>: ~5.4 (avg) <br />
-                      <u>Edges/Col</u>: ~3.0 (avg) <br />">
-                        (16200, 8100)
-                      </span>
-                    </td>
-                    <td>50</td>
-                    <td class="vl">26083</td>
-                    <td>79.5</td>
-                    <td class="vl">79.5</td>
-                    <td>0.154</td>
-                    <td>3107</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref13" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Gronroos, K. Nybom, and J. Bjorkqvist, <b>Efficient GPU and CPU-Based LDPC Decoders for Long Codewords</b>, <i>Springer Journal of Analog Integrated Circuits and Signal Processing (AICSP)</i>, November 2012.">[13]</a></td>
-                    <td>2012</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: CPU<br />
-                        <u>Full name</u>: Core i7-950 <br />
-                        <u>Vendor</u>: Intel <br />
-                        <u>Architecture</u>: Nehalem<br />
-                        <u>Frequency</u>: 3.06 GHz <br />
-                        <u>SMX/Cores</u>: 4 <br />
-                        <u>SIMD type</u>: SSE4.2 (128-bit) <br />
-                        <u>SIMD length</u>: 16 (8-bit/elmt) <br />
-                        <u>TDP</u>: 130 Watts">
-                        i7-950
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
-                    <td>8</td>
-                    <td>128</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C.<br />
-                      <u>Standard</u>: DVB-T2 <br />
-                      <u>Check nodes (k)</u>: 7200 <br />
-                      <u>Edges</u>: 48599 <br />
-                      <u>Edges/Row</u>: ~5.4 (avg) <br />
-                      <u>Edges/Col</u>: ~3.0 (avg) <br />">
-                        (16200, 8100)
-                      </span>
-                    </td>
-                    <td>50</td>
-                    <td class="vl">113934</td>
-                    <td>18.2</td>
-                    <td class="vl">18.2</td>
-                    <td>0.093</td>
-                    <td>7143</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref14" data-toggle="tooltip" data-placement="top" data-html="true" title="X. Pan, X. fan Lu, M. qi Li, and R. fang Song, <b>A High Throughput LDPC Decoder in CMMB Based on Virtual Radio</b>, <i>in Proceedings of the IEEE Wireless Communications and Networking Conference Workshops (WCNCW)</i>, April 2013.">[14]</a></td>
-                    <td>2013</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: CPU<br />
-                        <u>Full name</u>: Core i7-3960X<br />
-                        <u>Vendor</u>: Intel<br />
-                        <u>Architecture</u>: Sandy Bridge E<br />
-                        <u>Frequency</u>: 3.30 GHz<br />
-                        <u>SMX/Cores</u>: 6<br />
-                        <u>SIMD type</u>: SSE4.2 (128-bit)<br />
-                        <u>SIMD length</u>: 16 (8-bit/elmt)<br />
-                        <u>TDP</u>: 130 Watts">
-                        i7-3960X
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalize Min-Sum algorithm + Early termination capable (flooding)">F-NMS+</span></td>
-                    <td>8</td>
-                    <td>12</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Reg. & Quasi-C. <br />
-                      <u>Standard</u>: CMMB <br />">
-                        (9216, 4608)
-                      </span>
-                    </td>
-                    <td>10</td>
-                    <td class="vl">1202</td>
-                    <td>92.0</td>
-                    <td class="vl">18.4</td>
-                    <td>0.058</td>
-                    <td>7065</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref15" data-toggle="tooltip" data-placement="top" data-html="true" title="X. Han, K. Niu, and Z. He, <b>Implementation of IEEE 802.11n LDPC Codes Based on General Purpose Processors</b>, <i>in Proceedings of the IEEE International Conference on Communication Technology (ICCT)</i>, November 2013.">[15]</a></td>
-                    <td>2013</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: CPU<br />
-                        <u>Full name</u>: Core i7-2600K <br />
-                        <u>Vendor</u>: Intel <br />
-                        <u>Architecture</u>: Sandy Bridge<br />
-                        <u>Frequency</u>: 3.40 GHz <br />
-                        <u>SMX/Cores</u>: 4 (only 1 used) <br />
-                        <u>SIMD type</u>: SSE4.2 (128-bit) <br />
-                        <u>SIMD length</u>: 16 (8-bit/elmt) <br />
-                        <u>TDP</u>: 95 Watts">
-                        i7-2600K
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Offset Min-Sum algorithm (layered)">L-OMS</span></td>
-                    <td>8</td>
-                    <td>1</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: Wi-Fi (802.11n) <br />">
-                        (524280, 262140)
-                      </span>
-                    </td>
-                    <td>5</td>
-                    <td class="vl">17420</td>
-                    <td>30.1</td>
-                    <td class="vl">3.0</td>
-                    <td>0.055</td>
-                    <td>31667</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref16" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Gronroos and J. Bjorkqvist, <b>Performance Evaluation of LDPC Decoding on a General Purpose Mobile CPU</b>, <i>in Proceedings of the IEEE Global Conference on Signal and Information Processing (GlobalSIP)</i>, December 2013.">[16]</a></td>
-                    <td>2013</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: CPU<br />
-                        <u>Full name</u>: Exynos 4412<br />
-                        <u>Vendor</u>: ARM/Samsung <br />
-                        <u>Architecture</u>: Cortex-A9 MPCore <br />
-                        <u>Frequency</u>: 1.60 GHz <br />
-                        <u>SMX/Cores</u>: 4 <br />
-                        <u>SIMD type</u>: NEON (128-bit) <br />
-                        <u>SIMD length</u>: 16 (8-bit/elmt) <br />
-                        <u>TDP</u>: ~4 Watts">
-                        Cortex-A9
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
-                    <td>8</td>
-                    <td>128</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C.<br />
-                      <u>Standard</u>: DVB-T2 <br />
-                      <u>Check nodes (k)</u>: 7200 <br />
-                      <u>Edges</u>: 48599 <br />
-                      <u>Edges/Row</u>: ~5.4 (avg) <br />
-                      <u>Edges/Col</u>: ~3.0 (avg) <br />">
-                        (16200, 8100)
-                      </span>
-                    </td>
-                    <td>20</td>
-                    <td class="vl">592457</td>
-                    <td>3.5</td>
-                    <td class="vl">1.4</td>
-                    <td>0.014</td>
-                    <td>2857</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref17" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Wang, M. Wu, B. Yin, and J. R. Cavallaro, <b>High Throughput Low Latency LDPC Decoding on GPU for SDR Systems</b>, <i>in Proceedings of the IEEE Global Conference on Signal and Information Processing (GlobalSIP)</i>, December 2013.">[17]</a></td>
-                    <td>2013</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GTX TITAN <br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Kepler<br />
-                        <u>Frequency</u>: 0.84 GHz <br />
-                        <u>SMX/Cores</u>: 14 <br />
-                        <u>SIMD type</u>: SIMT <br />
-                        <u>SIMD length</u>: 192 <br />
-                        <u>TDP</u>: 250 Watts">
-                        GTX TITAN
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalize Min-Sum algorithm + Early termination capable (flooding)">F-NMS+</span></td>
-                    <td>32</td>
-                    <td>50</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: WiMAX (802.16e) <br />
-                      <u>Edges</u>: 7296<br />
-                      <u>Edges/Row</u>: 6~7 <br />
-                      <u>Edges/Col</u>: 2~6 <br />">
-                        (2304, 1152)
-                      </span>
-                    </td>
-                    <td>10</td>
-                    <td class="vl">1266</td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Following the formula, the throughput should be lower but the authors performed a specific data transfers overlapping with CUDA streams allowing to reach higher throughput.">304.2</span></td>
-                    <td class="vl">60.8</td>
-                    <td>0.027</td>
-                    <td>4112</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref17" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Wang, M. Wu, B. Yin, and J. R. Cavallaro, <b>High Throughput Low Latency LDPC Decoding on GPU for SDR Systems</b>, <i>in Proceedings of the IEEE Global Conference on Signal and Information Processing (GlobalSIP)</i>, December 2013.">[17]</a></td>
-                    <td>2013</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GTX TITAN <br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Kepler<br />
-                        <u>Frequency</u>: 0.84 GHz <br />
-                        <u>SMX/Cores</u>: 14 <br />
-                        <u>SIMD type</u>: SIMT <br />
-                        <u>SIMD length</u>: 192 <br />
-                        <u>TDP</u>: 250 Watts">
-                        GTX TITAN
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalize Min-Sum algorithm + Early termination capable (flooding)">F-NMS+</span></td>
-                    <td>32</td>
-                    <td>6</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: WiMAX (802.16e) <br />
-                      <u>Edges</u>: 7296<br />
-                      <u>Edges/Row</u>: 6~7 <br />
-                      <u>Edges/Col</u>: 2~6 <br />">
-                        (2304, 1152)
-                      </span>
-                    </td>
-                    <td>10</td>
-                    <td class="vl">207</td>
-                    <td>66.8</td>
-                    <td class="vl">13.4</td>
-                    <td>0.006</td>
-                    <td>18657</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref18" data-toggle="tooltip" data-placement="top" data-html="true" title="R. Li, J. Zhou, Y. Dou, S. Guo, D. Zou and S. Wang, <b>A Multi-Standard Efficient Column-Layered LDPC Decoder for Software Defined Radio on GPUs</b>, <i>in Proceedings of the IEEE International Workshop on Signal Processing Advances in Wireless Communications (SPAWC)</i>, June 2013.">[18]</a></td>
-                    <td>2013</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GeForce GTX 580<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Fermi<br />
-                        <u>Frequency</u>: 1.54 GHz<br />
-                        <u>SMX/Cores</u>: 16<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 32<br />
-                        <u>TDP</u>: 244 Watts">
-                        GTX 580
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (column layered)">CL-MS</span></td>
-                    <td>8</td>
-                    <td>1024</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: WiMAX (802.16e) <br />
-                      <u>Edges</u>: 7296<br />
-                      <u>Edges/Row</u>: 6~7 <br />
-                      <u>Edges/Col</u>: 2~6 <br />">
-                        (2304, 1152)
-                      </span>
-                    </td>
-                    <td>5</td>
-                    <td class="vl">3322</td>
-                    <td>710.2</td>
-                    <td class="vl">142.0</td>
-                    <td>0.180</td>
-                    <td>1718</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref19" data-toggle="tooltip" data-placement="top" data-html="true" title="Y. Lin and W. Niu, <b>High Throughput LDPC Decoder on GPU</b>, <i>IEEE Communications Letters (COMML)</i>, February  2014.">[19]</a></td>
-                    <td>2014</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GeForce GTX 660 Ti<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Kepler<br />
-                        <u>Frequency</u>: 0.92 GHz<br />
-                        <u>SMX/Cores</u>: 7<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 192<br />
-                        <u>TDP</u>: 150 Watts">
-                        GTX 660 Ti
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm (flooding)">F-SPA</span></td>
-                    <td>8</td>
-                    <td>12544</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <math><mi>TNDC</mi></math>
+                    </span>
+                  </th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules): <br />
+                      <math>
+                        <mrow><msub><mi>E</mi><mi>d</mi></msub></mrow>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mi>TDP</mi>
+                          </mrow>
+                          <mrow>
+                            <mi>NThr.</mi>
+                          </mrow>
+                        </mfrac>
+                        <mo>&times;</mo>
+                        <msup>
+                          <mn>10</mn>
+                          <mn>3</mn>
+                        </msup>
+                      </math>">
+                      <math><msub><mi>E</mi><mi>d</mi></msub></math>
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a class="tt" href="#ref1" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, V. Silva, L. Sousa, and J. Marinho, <b>High Coded Data Rate and Multicodeword WiMAX LDPC Decoding on the Cell/BE</b>, <i>IET Electronics Letters</i>,                                                                                            November  2008.">[1]</a></td>
+                  <td>2008</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: SPU<br />
+                      <u>Full name</u>: CELL/BE (PS3)<br />
+                      <u>Vendor</u>: IBM <br />
+                      <u>Architecture</u>: CELL<br />
+                      <u>Frequency</u>: 3.30 GHz<br />
+                      <u>SMX/Cores/SPE</u>: 6<br />
+                      <u>SIMD type</u>: SPE (128-bit)<br />
+                      <u>SIMD length</u>: 16 (8-bit/elmt)<br />
+                      <u>TDP</u>: ~200 Watts (90 nm)">
+                      CELL
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
+                  <td>8</td>
+                  <td>96</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: WiMAX (802.16e) <br />">
+                      (1248, 624)
+                    </span>
+                  </td>
+                  <td>25</td>
+                  <td class="vl">3653</td>
+                  <td>32.8</td>
+                  <td class="vl">16.4</td>
+                  <td>0.052</td>
+                  <td>6098</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref2" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Wang, S. Cheng, and Q. Wu, <b>A Parallel Decoding Algorithm of LDPC Codes using CUDA</b>, <i>in Proceedings of the IEEE Asilomar Conference on Signals, Systems, and Computers (ACSSC)</i>, October 2008.">[2]</a></td>
+                  <td>2008</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GeForce 8800 GT<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Tesla<br />
+                      <u>Frequency</u>: 1.50 GHz<br />
+                      <u>SMX/Cores</u>: 7<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 16<br />
+                      <u>TDP</u> : 105 Watts">
+                      8800 GT
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm + Early termination capable (flooding)">F-SPA+</span></td>
+                  <td>32</td>
+                  <td>1</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Reg. & Unstr. <br />
+                    <u>Edges</u>: 6144 <br />
+                    <u>Edges/Row</u>: 3 <br />">
+                      (4096, 2048)
+                    </span>
+                  </td>
+                  <td>6</td>
+                  <td class="vl">467000</td>
+                  <td>0.01</td>
+                  <td class="vl">0.001</td>
+                  <td>0.000006</td>
+                  <td>105000000</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref3" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, S. Yamagiwa, V. Silva, and L. Sousa, <b>Parallel LDPC Decoding on GPUs Using a Stream-Based Computing Approach</b>, <i>Springer Journal of Computer Science and Technology (JCST)</i>, September 2009.">[3]</a></td>
+                  <td>2009</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GeForce 8800 GTX<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Tesla<br />
+                      <u>Frequency</u>: 1.35 GHz<br />
+                      <u>SMX/Cores</u>: 8<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 16<br />
+                      <u>TDP</u> : 176 Watts">
+                      8800 GTX
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm (flooding scheduling)">F-SPA</span></td>
+                  <td>32</td>
+                  <td>-</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Reg. & Unstr. <br />
+                    <u>Edges</u>: 7632 <br />
+                    <u>Edges/Row</u>: 36">
+                      (1908, 1696)
+                    </span>
+                  </td>
+                  <td>50</td>
+                  <td class="vl">-</td>
+                  <td>0.08</td>
+                  <td class="vl">0.08</td>
+                  <td>0.0005</td>
+                  <td>2200000</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref4" data-toggle="tooltip" data-placement="top" data-html="true" title="J. Zhao, M. Zhao, H. Yang, J. Chen, X. Chen, and J. Wang, <b>High Performance LDPC Decoder on CELL BE for WiMAX System</b>, <i>in Proceedings of the IEEE International Conference on Communications and Mobile Computing (CMC)</i>, April 2011.">[4]</a></td>
+                  <td>2011</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: SPU<br />
+                      <u>Full name</u>: CELL/BE<br />
+                      <u>Vendor</u>: IBM <br />
+                      <u>Architecture</u>: CELL<br />
+                      <u>Frequency</u>: 3.20 GHz<br />
+                      <u>SMX/Cores/SPE</u>: 8<br />
+                      <u>SIMD type</u>: SPE (128-bit)<br />
+                      <u>SIMD length</u>: 16 (8-bit/elmt)<br />
+                      <u>TDP</u>: ~200 Watts (90 nm)">
+                      CELL
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Offset Min-Sum algorithm (flooding)">F-OMS</span></td>
+                  <td>8</td>
+                  <td>1</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: WiMAX (802.16e) <br />">
+                      (960, 480)
+                    </span>
+                  </td>
+                  <td>15</td>
+                  <td class="vl">74</td>
+                  <td>13.0</td>
+                  <td class="vl">3.9</td>
+                  <td>0.0095</td>
+                  <td>51282</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref5" data-toggle="tooltip" data-placement="top" data-html="true" title="C-C. Chang, Y-L. Chang, M-Y. Huang and B. Huang, <b>Accelerating Regular LDPC Code Decoders on GPUs</b>, <i>IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing (J-STARS)</i>, September 2011.">[5]</a></td>
+                  <td>2011</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: Tesla C1060<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Tesla<br />
+                      <u>Frequency</u>: 1.30 GHz<br />
+                      <u>SMX/Cores</u>: 15<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 16<br />
+                      <u>TDP</u> : 200 Watts">
+                      Tesla C1060
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Logarithmic Sum-Product Algorithm (flooding)">F-LSPA</span></td>
+                  <td>32</td>
+                  <td>1</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Reg. & Unstr. <br />
+                    <u>Edges</u>: 32000 <br />
+                    <u>Edges/Row</u>: 8">
+                      (8000, 4000)
+                    </span>
+                  </td>
+                  <td>50</td>
+                  <td class="vl">8638</td>
+                  <td>0.92</td>
+                  <td class="vl">0.92</td>
+                  <td>0.0029</td>
+                  <td>217391</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref6" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, J. Andrade, V. Silva, and L. Sousa, <b>GPU-Based DVBS2 LDPC Decoder with High Throughput and Fast Error Floor Detection</b>, <i>IET Electronics Letters</i>, April 2011.">[6]</a></td>
+                  <td>2011</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: Tesla C2050<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Fermi<br />
+                      <u>Frequency</u>: 1.15 GHz<br />
+                      <u>SMX/Cores</u>: 14<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 32<br />
+                      <u>TDP</u> : 247 Watts">
+                      Tesla C2050
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
+                  <td>8</td>
+                  <td>16</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: DVB-S2 B2 <br />
+                    <u>Edges</u>: 216000">
+                      (64800, 21600)
+                    </span>
+                  </td>
+                  <td>30</td>
+                  <td class="vl">13275</td>
+                  <td>78.1</td>
+                  <td class="vl">46.86</td>
+                  <td>0.091</td>
+                  <td>5271</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref7" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, L. Sousa, and V. Silva, <b>Massively LDPC Decoding on Multicore Architectures</b>, <i>IEEE Transactions on Parallel and Distributed Systems (TPDS)</i>, February 2011.">[7]</a></td>
+                  <td>2011</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GeForce 8800 GTX<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Tesla<br />
+                      <u>Frequency</u>: 1.35 GHz<br />
+                      <u>SMX/Cores</u>: 8<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 16<br />
+                      <u>TDP</u> : 176 Watts">
+                      8800 GTX
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm (flooding)">F-SPA</span></td>
+                  <td>8</td>
+                  <td>-</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Reg. & Unstr. <br />
+                    <u>Edges</u>: 24000 <br />
+                    <u>Edges/Row</u>: 6 <br />
+                    <u>Edges/Col</u>: 3 <br />">
+                      (8000, 4000)
+                    </span>
+                  </td>
+                  <td>50</td>
+                  <td class="vl">-</td>
+                  <td>10.1</td>
+                  <td class="vl">10.1</td>
+                  <td>0.058</td>
+                  <td>17426</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref7" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, L. Sousa, and V. Silva, <b>Massively LDPC Decoding on Multicore Architectures</b>, <i>IEEE Transactions on Parallel and Distributed Systems (TPDS)</i>, February 2011.">[7]</a></td>
+                  <td>2011</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: SPU<br />
+                      <u>Full name</u>: CELL/BE (PS3)<br />
+                      <u>Vendor</u>: IBM <br />
+                      <u>Architecture</u>: CELL<br />
+                      <u>Frequency</u>: 3.30 GHz<br />
+                      <u>SMX/Cores/SPE</u>: 6<br />
+                      <u>SIMD type</u>: SPE (128-bit)<br />
+                      <u>SIMD length</u>: 4 (32-bit/elmt)<br />
+                      <u>TDP</u> : ~200 Watts (90 nm)">
+                      CELL
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm (flooding)">F-SPA</span></td>
+                  <td>32</td>
+                  <td>24</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Reg. & Unstr. <br />
+                    <u>Edges</u>: 3072 <br />
+                    <u>Edges/Row</u>: 6 <br />
+                    <u>Edges/Col</u>: 3 <br />">
+                      (1024, 512)
+                    </span>
+                  </td>
+                  <td>50</td>
+                  <td class="vl">1719</td>
+                  <td>14.3</td>
+                  <td class="vl">14.3</td>
+                  <td>0.181</td>
+                  <td>13986</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref7" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, L. Sousa, and V. Silva, <b>Massively LDPC Decoding on Multicore Architectures</b>, <i>IEEE Transactions on Parallel and Distributed Systems (TPDS)</i>, February 2011.">[7]</a></td>
+                  <td>2011</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: CPU<br />
+                      <u>Full name</u>: 2 x Xeon E5530<br />
+                      <u>Vendor</u>: Intel<br />
+                      <u>Architecture</u>: Nehalem<br />
+                      <u>Frequency</u>: 2.40 GHz<br />
+                      <u>SMX/Cores</u>: 8<br />
+                      <u>SIMD type</u>: SSE4.2 (128-bit)<br />
+                      <u>SIMD length</u>: 4 (32-bit/elmt)<br />
+                      <u>TDP</u> : 160 Watts">
+                      2xE5530
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm (flooding)">F-SPA</span></td>
+                  <td>32</td>
+                  <td>1</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Reg. & Unstr. <br />
+                    <u>Edges</u>: 24000 <br />
+                    <u>Edges/Row</u>: 6 <br />
+                    <u>Edges/Col</u>: 3 <br />">
+                      (8000, 4000)
+                    </span>
+                  </td>
+                  <td>50</td>
+                  <td class="vl">13115</td>
+                  <td>0.61</td>
+                  <td class="vl">0.61</td>
+                  <td>0.0079</td>
+                  <td>262295</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref8" data-toggle="tooltip" data-placement="top" data-html="true" title="H. Ji, J. Cho, and W. Sung, <b>Memory Access Optimized Implementation of Cyclic and Quasi-Cyclic LDPC Codes on a GPGPU</b>, <i>Springer Journal of Signal Processing Systems (JSPS)</i>, July 2011.">[8]</a></td>
+                  <td>2011</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GeForce GTX 285<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Tesla<br />
+                      <u>Frequency</u>: 1.48 GHz<br />
+                      <u>SMX/Cores</u>: 15<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 16<br />
+                      <u>TDP</u> : 204 Watts">
+                      GTX 285
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm + Early termination capable (flooding)">F-SPA+</span></td>
+                  <td>32</td>
+                  <td>1</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: WiMAX (802.16e) <br />
+                    <u>Edges</u>: 7296<br />
+                    <u>Edges/Row</u>: 6~7 <br />
+                    <u>Edges/Col</u>: 2~6 <br />">
+                      (2304, 1152)
+                    </span>
+                  </td>
+                  <td>15</td>
+                  <td class="vl">1097</td>
+                  <td>2.1</td>
+                  <td class="vl">0.63</td>
+                  <td>0.0018</td>
+                  <td>323810</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref9" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Wang, M. Wu, Y. Sun, and J. R. Cavallaro, <b>A Massively Parallel Implementation of QC-LDPC Decoder on GPU</b>, <i>in Proceedings of the IEEE Symposium on Application Specific Processors (SASP)</i>, June 2011.">[9]</a></td>
+                  <td>2011</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GeForce GTX 470<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Fermi<br />
+                      <u>Frequency</u>: 1.22 GHz<br />
+                      <u>SMX/Cores</u>: 14<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 32<br />
+                      <u>TDP</u> : 215 Watts">
+                      GTX 470
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Logarithmic Sum-Product Algorithm or Normalized Min-Sum algorithm + Early termination capable (flooding)">F-LSPA+</span></td>
+                  <td>32</td>
+                  <td>300</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Edges</u>: 6804 <br />
+                    <u>Standard</u>: Wi-Fi (802.11n) <br />">
+                      (1944, 972)
+                    </span>
+                  </td>
+                  <td>50</td>
+                  <td class="vl">57743</td>
+                  <td>10.1</td>
+                  <td class="vl">10.1</td>
+                  <td>0.018</td>
+                  <td>21287</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref10" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Wang, M. Wu, Y. Sun, and J. R. Cavallaro, <b>GPU Accelerated Scalable Parallel Decoding of LDPC Codes</b>, <i>in Proceedings of the IEEE Asilomar Conference on Signals, Systems, and Computers (ACSSC)</i>, November 2011.">[10]</a></td>
+                  <td>2011</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GeForce GTX 470<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Fermi<br />
+                      <u>Frequency</u>: 1.22 GHz<br />
+                      <u>SMX/Cores</u>: 14<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 32<br />
+                      <u>TDP</u> : 215 Watts">
+                      GTX 470
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Logarithmic Sum-Product Algorithm (flooding)">F-LSPA</span></td>
+                  <td>32</td>
+                  <td>224</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: WiMAX (802.16e) <br />
+                    <u>Edges</u>: 7296<br />
+                    <u>Edges/Row</u>: 6~7 <br />
+                    <u>Edges/Col</u>: 2~6 <br />">
+                      (2304, 1152)
+                    </span>
+                  </td>
+                  <td>10</td>
+                  <td class="vl">10533</td>
+                  <td>49.0</td>
+                  <td class="vl">9.8</td>
+                  <td>0.018</td>
+                  <td>21939</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref11" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, V. Silva, L. Sousa, and J. Andrade, <b>Portable LDPC Decoding on Multicores using OpenCL</b>, <i>IEEE Signal Processing Magazine</i>, July 2012.">[11]</a></td>
+                  <td>2012</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: Radeon HD 5870<br />
+                      <u>Vendor</u>: ATI <br />
+                      <u>Architecture</u>: Cypress<br />
+                      <u>Frequency</u>: 1.20 GHz<br />
+                      <u>SMX/Cores</u>: 20<br />
+                      <u>SIMD type</u>: Cypress SIMD<br />
+                      <u>SIMD length</u>: 20<br />
+                      <u>TDP</u> : 188 Watts">
+                      HD 5870
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
+                  <td>8</td>
+                  <td>500</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Reg.<br />
+                    <u>Edges/Row</u>: 6 <br />
+                    <u>Edges/Col</u>: 6 <br />">
+                      (8000, 4000)
+                    </span>
+                  </td>
+                  <td>10</td>
+                  <td class="vl">22222</td>
+                  <td>180.0</td>
+                  <td class="vl">36.0</td>
+                  <td>0.075</td>
+                  <td>5222</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref11" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Falcao, V. Silva, L. Sousa, and J. Andrade, <b>Portable LDPC Decoding on Multicores using OpenCL</b>, <i>IEEE Signal Processing Magazine</i>, July 2012.">[11]</a></td>
+                  <td>2012</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: Tesla C2050<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Fermi<br />
+                      <u>Frequency</u>: 1.15 GHz<br />
+                      <u>SMX/Cores</u>: 14<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 32<br />
+                      <u>TDP</u> : 247 Watts">
+                      Tesla C2050
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
+                  <td>8</td>
+                  <td>500</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Reg.<br />
+                    <u>Edges/Row</u>: 6 <br />
+                    <u>Edges/Col</u>: 6 <br />">
+                      (8000, 4000)
+                    </span>
+                  </td>
+                  <td>10</td>
+                  <td class="vl">20000</td>
+                  <td>200.0</td>
+                  <td class="vl">40.0</td>
+                  <td>0.078</td>
+                  <td>6175</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref12" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Kang and J. Moon, <b>Parallel LDPC Decoder Implementation on GPU Based on Unbalanced Memory Coalescing</b>, <i>in Proceedings of the IEEE International Conference on Communications (ICC)</i>, June 2012.">[12]</a></td>
+                  <td>2012</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GeForce GTX 480<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Fermi<br />
+                      <u>Frequency</u>: 1.40 GHz<br />
+                      <u>SMX/Cores</u>: 15<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 32<br />
+                      <u>TDP</u> : 250 Watts">
+                      GTX 480
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm + Early termination capable (flooding)">F-SPA+</span></td>
+                  <td>32</td>
+                  <td>1</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Reg. & Quasi-C.<br />
+                    <u>Standard</u>: 10GBASE-T (802.3an) <br />
+                    <u>Check nodes (k)</u>: 384 <br />
+                    <u>Edges</u>: 12288 <br />
+                    <u>Edges/Row</u>: 6 <br />
+                    <u>Edges/Col</u>: 32 <br />">
+                      (2048, 1723)
+                    </span>
+                  </td>
+                  <td>50</td>
+                  <td class="vl">426</td>
+                  <td>4.8</td>
+                  <td class="vl">4.8</td>
+                  <td>0.0071</td>
+                  <td>52083</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref13" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Gronroos, K. Nybom, and J. Bjorkqvist, <b>Efficient GPU and CPU-Based LDPC Decoders for Long Codewords</b>, <i>Springer Journal of Analog Integrated Circuits and Signal Processing (AICSP)</i>, November 2012.">[13]</a></td>
+                  <td>2012</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: Tesla C2050<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Fermi<br />
+                      <u>Frequency</u>: 1.15 GHz<br />
+                      <u>SMX/Cores</u>: 14<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 32<br />
+                      <u>TDP</u> : 247 Watts">
+                      Tesla C2050
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
+                  <td>8</td>
+                  <td>128</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C.<br />
+                    <u>Standard</u>: DVB-T2 <br />
+                    <u>Check nodes (k)</u>: 7200 <br />
+                    <u>Edges</u>: 48599 <br />
+                    <u>Edges/Row</u>: ~5.4 (avg) <br />
+                    <u>Edges/Col</u>: ~3.0 (avg) <br />">
+                      (16200, 8100)
+                    </span>
+                  </td>
+                  <td>50</td>
+                  <td class="vl">26083</td>
+                  <td>79.5</td>
+                  <td class="vl">79.5</td>
+                  <td>0.154</td>
+                  <td>3107</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref13" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Gronroos, K. Nybom, and J. Bjorkqvist, <b>Efficient GPU and CPU-Based LDPC Decoders for Long Codewords</b>, <i>Springer Journal of Analog Integrated Circuits and Signal Processing (AICSP)</i>, November 2012.">[13]</a></td>
+                  <td>2012</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: CPU<br />
+                      <u>Full name</u>: Core i7-950 <br />
+                      <u>Vendor</u>: Intel <br />
+                      <u>Architecture</u>: Nehalem<br />
+                      <u>Frequency</u>: 3.06 GHz <br />
+                      <u>SMX/Cores</u>: 4 <br />
+                      <u>SIMD type</u>: SSE4.2 (128-bit) <br />
+                      <u>SIMD length</u>: 16 (8-bit/elmt) <br />
+                      <u>TDP</u>: 130 Watts">
+                      i7-950
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
+                  <td>8</td>
+                  <td>128</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C.<br />
+                    <u>Standard</u>: DVB-T2 <br />
+                    <u>Check nodes (k)</u>: 7200 <br />
+                    <u>Edges</u>: 48599 <br />
+                    <u>Edges/Row</u>: ~5.4 (avg) <br />
+                    <u>Edges/Col</u>: ~3.0 (avg) <br />">
+                      (16200, 8100)
+                    </span>
+                  </td>
+                  <td>50</td>
+                  <td class="vl">113934</td>
+                  <td>18.2</td>
+                  <td class="vl">18.2</td>
+                  <td>0.093</td>
+                  <td>7143</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref14" data-toggle="tooltip" data-placement="top" data-html="true" title="X. Pan, X. fan Lu, M. qi Li, and R. fang Song, <b>A High Throughput LDPC Decoder in CMMB Based on Virtual Radio</b>, <i>in Proceedings of the IEEE Wireless Communications and Networking Conference Workshops (WCNCW)</i>, April 2013.">[14]</a></td>
+                  <td>2013</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: CPU<br />
+                      <u>Full name</u>: Core i7-3960X<br />
+                      <u>Vendor</u>: Intel<br />
+                      <u>Architecture</u>: Sandy Bridge E<br />
+                      <u>Frequency</u>: 3.30 GHz<br />
+                      <u>SMX/Cores</u>: 6<br />
+                      <u>SIMD type</u>: SSE4.2 (128-bit)<br />
+                      <u>SIMD length</u>: 16 (8-bit/elmt)<br />
+                      <u>TDP</u>: 130 Watts">
+                      i7-3960X
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalize Min-Sum algorithm + Early termination capable (flooding)">F-NMS+</span></td>
+                  <td>8</td>
+                  <td>12</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Reg. & Quasi-C. <br />
+                    <u>Standard</u>: CMMB <br />">
+                      (9216, 4608)
+                    </span>
+                  </td>
+                  <td>10</td>
+                  <td class="vl">1202</td>
+                  <td>92.0</td>
+                  <td class="vl">18.4</td>
+                  <td>0.058</td>
+                  <td>7065</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref15" data-toggle="tooltip" data-placement="top" data-html="true" title="X. Han, K. Niu, and Z. He, <b>Implementation of IEEE 802.11n LDPC Codes Based on General Purpose Processors</b>, <i>in Proceedings of the IEEE International Conference on Communication Technology (ICCT)</i>, November 2013.">[15]</a></td>
+                  <td>2013</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: CPU<br />
+                      <u>Full name</u>: Core i7-2600K <br />
+                      <u>Vendor</u>: Intel <br />
+                      <u>Architecture</u>: Sandy Bridge<br />
+                      <u>Frequency</u>: 3.40 GHz <br />
+                      <u>SMX/Cores</u>: 4 (only 1 used) <br />
+                      <u>SIMD type</u>: SSE4.2 (128-bit) <br />
+                      <u>SIMD length</u>: 16 (8-bit/elmt) <br />
+                      <u>TDP</u>: 95 Watts">
+                      i7-2600K
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Offset Min-Sum algorithm (layered)">L-OMS</span></td>
+                  <td>8</td>
+                  <td>1</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: Wi-Fi (802.11n) <br />">
+                      (524280, 262140)
+                    </span>
+                  </td>
+                  <td>5</td>
+                  <td class="vl">17420</td>
+                  <td>30.1</td>
+                  <td class="vl">3.0</td>
+                  <td>0.055</td>
+                  <td>31667</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref16" data-toggle="tooltip" data-placement="top" data-html="true" title="S. Gronroos and J. Bjorkqvist, <b>Performance Evaluation of LDPC Decoding on a General Purpose Mobile CPU</b>, <i>in Proceedings of the IEEE Global Conference on Signal and Information Processing (GlobalSIP)</i>, December 2013.">[16]</a></td>
+                  <td>2013</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: CPU<br />
+                      <u>Full name</u>: Exynos 4412<br />
+                      <u>Vendor</u>: ARM/Samsung <br />
+                      <u>Architecture</u>: Cortex-A9 MPCore <br />
+                      <u>Frequency</u>: 1.60 GHz <br />
+                      <u>SMX/Cores</u>: 4 <br />
+                      <u>SIMD type</u>: NEON (128-bit) <br />
+                      <u>SIMD length</u>: 16 (8-bit/elmt) <br />
+                      <u>TDP</u>: ~4 Watts">
+                      Cortex-A9
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (flooding)">F-MS</span></td>
+                  <td>8</td>
+                  <td>128</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C.<br />
+                    <u>Standard</u>: DVB-T2 <br />
+                    <u>Check nodes (k)</u>: 7200 <br />
+                    <u>Edges</u>: 48599 <br />
+                    <u>Edges/Row</u>: ~5.4 (avg) <br />
+                    <u>Edges/Col</u>: ~3.0 (avg) <br />">
+                      (16200, 8100)
+                    </span>
+                  </td>
+                  <td>20</td>
+                  <td class="vl">592457</td>
+                  <td>3.5</td>
+                  <td class="vl">1.4</td>
+                  <td>0.014</td>
+                  <td>2857</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref17" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Wang, M. Wu, B. Yin, and J. R. Cavallaro, <b>High Throughput Low Latency LDPC Decoding on GPU for SDR Systems</b>, <i>in Proceedings of the IEEE Global Conference on Signal and Information Processing (GlobalSIP)</i>, December 2013.">[17]</a></td>
+                  <td>2013</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GTX TITAN <br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Kepler<br />
+                      <u>Frequency</u>: 0.84 GHz <br />
+                      <u>SMX/Cores</u>: 14 <br />
+                      <u>SIMD type</u>: SIMT <br />
+                      <u>SIMD length</u>: 192 <br />
+                      <u>TDP</u>: 250 Watts">
+                      GTX TITAN
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalize Min-Sum algorithm + Early termination capable (flooding)">F-NMS+</span></td>
+                  <td>32</td>
+                  <td>50</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: WiMAX (802.16e) <br />
+                    <u>Edges</u>: 7296<br />
+                    <u>Edges/Row</u>: 6~7 <br />
+                    <u>Edges/Col</u>: 2~6 <br />">
+                      (2304, 1152)
+                    </span>
+                  </td>
+                  <td>10</td>
+                  <td class="vl">1266</td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Following the formula, the throughput should be lower but the authors performed a specific data transfers overlapping with CUDA streams allowing to reach higher throughput.">304.2</span></td>
+                  <td class="vl">60.8</td>
+                  <td>0.027</td>
+                  <td>4112</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref17" data-toggle="tooltip" data-placement="top" data-html="true" title="G. Wang, M. Wu, B. Yin, and J. R. Cavallaro, <b>High Throughput Low Latency LDPC Decoding on GPU for SDR Systems</b>, <i>in Proceedings of the IEEE Global Conference on Signal and Information Processing (GlobalSIP)</i>, December 2013.">[17]</a></td>
+                  <td>2013</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GTX TITAN <br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Kepler<br />
+                      <u>Frequency</u>: 0.84 GHz <br />
+                      <u>SMX/Cores</u>: 14 <br />
+                      <u>SIMD type</u>: SIMT <br />
+                      <u>SIMD length</u>: 192 <br />
+                      <u>TDP</u>: 250 Watts">
+                      GTX TITAN
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalize Min-Sum algorithm + Early termination capable (flooding)">F-NMS+</span></td>
+                  <td>32</td>
+                  <td>6</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: WiMAX (802.16e) <br />
+                    <u>Edges</u>: 7296<br />
+                    <u>Edges/Row</u>: 6~7 <br />
+                    <u>Edges/Col</u>: 2~6 <br />">
+                      (2304, 1152)
+                    </span>
+                  </td>
+                  <td>10</td>
+                  <td class="vl">207</td>
+                  <td>66.8</td>
+                  <td class="vl">13.4</td>
+                  <td>0.006</td>
+                  <td>18657</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref18" data-toggle="tooltip" data-placement="top" data-html="true" title="R. Li, J. Zhou, Y. Dou, S. Guo, D. Zou and S. Wang, <b>A Multi-Standard Efficient Column-Layered LDPC Decoder for Software Defined Radio on GPUs</b>, <i>in Proceedings of the IEEE International Workshop on Signal Processing Advances in Wireless Communications (SPAWC)</i>, June 2013.">[18]</a></td>
+                  <td>2013</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GeForce GTX 580<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Fermi<br />
+                      <u>Frequency</u>: 1.54 GHz<br />
+                      <u>SMX/Cores</u>: 16<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 32<br />
+                      <u>TDP</u>: 244 Watts">
+                      GTX 580
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (column layered)">CL-MS</span></td>
+                  <td>8</td>
+                  <td>1024</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: WiMAX (802.16e) <br />
+                    <u>Edges</u>: 7296<br />
+                    <u>Edges/Row</u>: 6~7 <br />
+                    <u>Edges/Col</u>: 2~6 <br />">
+                      (2304, 1152)
+                    </span>
+                  </td>
+                  <td>5</td>
+                  <td class="vl">3322</td>
+                  <td>710.2</td>
+                  <td class="vl">142.0</td>
+                  <td>0.180</td>
+                  <td>1718</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref19" data-toggle="tooltip" data-placement="top" data-html="true" title="Y. Lin and W. Niu, <b>High Throughput LDPC Decoder on GPU</b>, <i>IEEE Communications Letters (COMML)</i>, February  2014.">[19]</a></td>
+                  <td>2014</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GeForce GTX 660 Ti<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Kepler<br />
+                      <u>Frequency</u>: 0.92 GHz<br />
+                      <u>SMX/Cores</u>: 7<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 192<br />
+                      <u>TDP</u>: 150 Watts">
+                      GTX 660 Ti
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Sum-Product Algorithm (flooding)">F-SPA</span></td>
+                  <td>8</td>
+                  <td>12544</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
                       <u>Type</u>: Reg. & Unstr. <br />
                       <u>Edges</u>: 24000 <br />
                       <u>Edges/Row</u>: 6 <br />
                       <u>Edges/Col</u>: 3 <br />">
-                        (8000, 4000)
-                      </span>
-                    </td>
-                    <td>50</td>
-                    <td class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Not including the memory data transfers time between CPU and GPU">954100</span></td>
-                    <td>105.2</td>
-                    <td class="vl">105.2</td>
-                    <td>0.085</td>
-                    <td>1426</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref20" data-toggle="tooltip" data-placement="top" data-html="true" title="B. Le Gal, C. Jégo, and J. Crenne, <b>A High Throughput Efficient Approach for Decoding LDPC Codes onto GPU Devices</b>, <i>IEEE Embedded Systems Letters (ESL)</i>, June 2014.">[20]</a></td>
-                    <td>2014</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GeForce GTX 660<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Kepler<br />
-                        <u>Frequency</u>: 0.98 GHz<br />
-                        <u>SMX/Cores</u>: 5<br />
-                        <u>SIMD type</u>: SIMT + SIMD<br />
-                        <u>SIMD length</u>: 192 x 4<br />
-                        <u>TDP</u>: 140 Watts">
-                        GTX 660
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Offset Min-Sum Algorithm (horizontal layered)">HL-OMS</span></td>
-                    <td>8</td>
-                    <td>16384</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Edges</u>: 6804 <br />
-                      <u>Standard</u>: Wi-Fi (802.11n) <br />">
-                        (1944, 972)
-                      </span>
-                    </td>
-                    <td>10</td>
-                    <td class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Not including the memory data transfers time between CPU and GPU">34362</span></td>
-                    <td>926.9</td>
-                    <td class="vl">185.4</td>
-                    <td>0.049</td>
-                    <td>755</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref21" data-toggle="tooltip" data-placement="top" data-html="true" title="B. Le Gal and C. Jégo, <b>High-Throughput Multi-Core LDPC Decoders Based on x86 Processor</b>, <i>IEEE Transactions on Parallel and Distributed Systems (TPDS)</i>, May 2016.">[21]</a></td>
-                    <td>2016</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: CPU<br />
-                        <u>Full name</u>: Core i7-4960HQ<br />
-                        <u>Vendor</u>: Intel <br />
-                        <u>Architecture</u>: Haswell <br />
-                        <u>Frequency</u>: 3.40 GHz <br />
-                        <u>SMX/Cores</u>: 4 <br />
-                        <u>SIMD type</u>: AVX2 (256-bit) <br />
-                        <u>SIMD length</u>: 32 (8-bit/elmt) <br />
-                        <u>TDP</u>: 47 Watts">
-                        i7-4960HQ
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalize Min-Sum Algorithm + Early termination capable (horizontal layered)">HL-NMS+</span></td>
-                    <td>8</td>
-                    <td>128</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: WiMAX (802.16e) <br />
-                      <u>Edges</u>: 7296<br />
-                      <u>Edges/Row</u>: 6~7 <br />
-                      <u>Edges/Col</u>: 2~6 <br />">
-                        (2304, 1152)
-                      </span>
-                    </td>
-                    <td>50</td>
-                    <td class="vl">1359</td>
-                    <td>217</td>
-                    <td class="vl">217</td>
-                    <td>0.500</td>
-                    <td>217</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref22" data-toggle="tooltip" data-placement="top" data-html="true" title="B. C. Lai, C. Y. Lee, T. H. Chiu, H. K. Kuo and C. K. Chang, <b>Unified Designs for High Performance LDPC Decoding on GPGPU</b>, <i>IEEE Transactions on Computers (TC)</i>, December 2016.">[22]</a></td>
-                    <td>2016</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: GPU<br />
-                        <u>Full name</u>: GeForce GTX 470<br />
-                        <u>Vendor</u>: Nvidia <br />
-                        <u>Architecture</u>: Fermi<br />
-                        <u>Frequency</u>: 1.22 GHz<br />
-                        <u>SMX/Cores</u>: 14<br />
-                        <u>SIMD type</u>: SIMT<br />
-                        <u>SIMD length</u>: 32<br />
-                        <u>TDP</u> : 215 Watts">
-                        GTX 470
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (parallel layered, TPMP)">PL-MS</span></td>
-                    <td>32</td>
-                    <td>256</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Edges</u>: 6804 <br />
-                      <u>Standard</u>: Wi-Fi (802.11n) <br />">
-                        (1944, 972)
-                      </span>
-                    </td>
-                    <td>10</td>
-                    <td class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Not including the memory data transfers time between CPU and GPU">9739</span></td>
-                    <td>51.1</td>
-                    <td class="vl">10.2</td>
-                    <td>0.019</td>
-                    <td>21078</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref25" data-toggle="tooltip" data-placement="top" data-html="true" title="B. Le Gal and C. Jégo, <b>Low-Latency Software LDPC Decoders for x86 Multi-core Devices</b>, <i>in Proceedings of the IEEE International Workshop on Signal Processing Systems (SiPS)</i>, October 2017.">[25]</a></td>
-                    <td>2017</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: CPU<br />
-                        <u>Full name</u>: Core i7-5650U<br />
-                        <u>Vendor</u>: Intel <br />
-                        <u>Architecture</u>: Broadwell <br />
-                        <u>Frequency</u>: 3.00 GHz <br />
-                        <u>SMX/Cores</u>: 2 <br />
-                        <u>SIMD type</u>: AVX2 (256-bit) <br />
-                        <u>SIMD length</u>: 32 (8-bit/elmt) <br />
-                        <u>TDP</u>: 9.5 Watts">
-                        i7-5650U
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Offset Min-Sum Algorithm + Early termination capable (horizontal layered)">HL-OMS+</span></td>
-                    <td>8</td>
-                    <td>1</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: 802.11e <br />
-                      <u>Edges/Row</u>: 6~7 <br />
-                      <u>z</u>: 96 <br />">
-                        (2304, 1152)
-                      </span>
-                    </td>
-                    <td>10</td>
-                    <td class="vl">11.9</td>
-                    <td>385</td>
-                    <td class="vl">77</td>
-                    <td>0.401</td>
-                    <td>123</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                      (8000, 4000)
+                    </span>
+                  </td>
+                  <td>50</td>
+                  <td class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Not including the memory data transfers time between CPU and GPU">954100</span></td>
+                  <td>105.2</td>
+                  <td class="vl">105.2</td>
+                  <td>0.085</td>
+                  <td>1426</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref20" data-toggle="tooltip" data-placement="top" data-html="true" title="B. Le Gal, C. Jégo, and J. Crenne, <b>A High Throughput Efficient Approach for Decoding LDPC Codes onto GPU Devices</b>, <i>IEEE Embedded Systems Letters (ESL)</i>, June 2014.">[20]</a></td>
+                  <td>2014</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GeForce GTX 660<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Kepler<br />
+                      <u>Frequency</u>: 0.98 GHz<br />
+                      <u>SMX/Cores</u>: 5<br />
+                      <u>SIMD type</u>: SIMT + SIMD<br />
+                      <u>SIMD length</u>: 192 x 4<br />
+                      <u>TDP</u>: 140 Watts">
+                      GTX 660
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Offset Min-Sum Algorithm (horizontal layered)">HL-OMS</span></td>
+                  <td>8</td>
+                  <td>16384</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Edges</u>: 6804 <br />
+                    <u>Standard</u>: Wi-Fi (802.11n) <br />">
+                      (1944, 972)
+                    </span>
+                  </td>
+                  <td>10</td>
+                  <td class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Not including the memory data transfers time between CPU and GPU">34362</span></td>
+                  <td>926.9</td>
+                  <td class="vl">185.4</td>
+                  <td>0.049</td>
+                  <td>755</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref21" data-toggle="tooltip" data-placement="top" data-html="true" title="B. Le Gal and C. Jégo, <b>High-Throughput Multi-Core LDPC Decoders Based on x86 Processor</b>, <i>IEEE Transactions on Parallel and Distributed Systems (TPDS)</i>, May 2016.">[21]</a></td>
+                  <td>2016</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: CPU<br />
+                      <u>Full name</u>: Core i7-4960HQ<br />
+                      <u>Vendor</u>: Intel <br />
+                      <u>Architecture</u>: Haswell <br />
+                      <u>Frequency</u>: 3.40 GHz <br />
+                      <u>SMX/Cores</u>: 4 <br />
+                      <u>SIMD type</u>: AVX2 (256-bit) <br />
+                      <u>SIMD length</u>: 32 (8-bit/elmt) <br />
+                      <u>TDP</u>: 47 Watts">
+                      i7-4960HQ
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalize Min-Sum Algorithm + Early termination capable (horizontal layered)">HL-NMS+</span></td>
+                  <td>8</td>
+                  <td>128</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: WiMAX (802.16e) <br />
+                    <u>Edges</u>: 7296<br />
+                    <u>Edges/Row</u>: 6~7 <br />
+                    <u>Edges/Col</u>: 2~6 <br />">
+                      (2304, 1152)
+                    </span>
+                  </td>
+                  <td>50</td>
+                  <td class="vl">1359</td>
+                  <td>217</td>
+                  <td class="vl">217</td>
+                  <td>0.500</td>
+                  <td>217</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref22" data-toggle="tooltip" data-placement="top" data-html="true" title="B. C. Lai, C. Y. Lee, T. H. Chiu, H. K. Kuo and C. K. Chang, <b>Unified Designs for High Performance LDPC Decoding on GPGPU</b>, <i>IEEE Transactions on Computers (TC)</i>, December 2016.">[22]</a></td>
+                  <td>2016</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: GPU<br />
+                      <u>Full name</u>: GeForce GTX 470<br />
+                      <u>Vendor</u>: Nvidia <br />
+                      <u>Architecture</u>: Fermi<br />
+                      <u>Frequency</u>: 1.22 GHz<br />
+                      <u>SMX/Cores</u>: 14<br />
+                      <u>SIMD type</u>: SIMT<br />
+                      <u>SIMD length</u>: 32<br />
+                      <u>TDP</u> : 215 Watts">
+                      GTX 470
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Min-Sum algorithm (parallel layered, TPMP)">PL-MS</span></td>
+                  <td>32</td>
+                  <td>256</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Edges</u>: 6804 <br />
+                    <u>Standard</u>: Wi-Fi (802.11n) <br />">
+                      (1944, 972)
+                    </span>
+                  </td>
+                  <td>10</td>
+                  <td class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Not including the memory data transfers time between CPU and GPU">9739</span></td>
+                  <td>51.1</td>
+                  <td class="vl">10.2</td>
+                  <td>0.019</td>
+                  <td>21078</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref25" data-toggle="tooltip" data-placement="top" data-html="true" title="B. Le Gal and C. Jégo, <b>Low-Latency Software LDPC Decoders for x86 Multi-core Devices</b>, <i>in Proceedings of the IEEE International Workshop on Signal Processing Systems (SiPS)</i>, October 2017.">[25]</a></td>
+                  <td>2017</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: CPU<br />
+                      <u>Full name</u>: Core i7-5650U<br />
+                      <u>Vendor</u>: Intel <br />
+                      <u>Architecture</u>: Broadwell <br />
+                      <u>Frequency</u>: 3.00 GHz <br />
+                      <u>SMX/Cores</u>: 2 <br />
+                      <u>SIMD type</u>: AVX2 (256-bit) <br />
+                      <u>SIMD length</u>: 32 (8-bit/elmt) <br />
+                      <u>TDP</u>: 9.5 Watts">
+                      i7-5650U
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Offset Min-Sum Algorithm + Early termination capable (horizontal layered)">HL-OMS+</span></td>
+                  <td>8</td>
+                  <td>1</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: 802.11e <br />
+                    <u>Edges/Row</u>: 6~7 <br />
+                    <u>z</u>: 96 <br />">
+                      (2304, 1152)
+                    </span>
+                  </td>
+                  <td>10</td>
+                  <td class="vl">11.9</td>
+                  <td>385</td>
+                  <td class="vl">77</td>
+                  <td>0.401</td>
+                  <td>123</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-
+        <div class="mb-4"></div>
         <div class="bs-example" data-example-id="panel-without-body-with-table">
-          <div class="panel panel-default">
-            <div class="panel-heading">Linear Programming (LP)</div>
-            <div class="table-responsive">
-              <table class="table sortable table-hover table-striped">
-                <thead>
-                  <tr>
-                    <th class="vl">Work</th>
-                    <th id="year2">Year</th>
-                    <th class="vl">Platform</th>
-                    <th>Implem.</th>
-                    <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Precision in bits">Pre.</span></th>
-                    <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Inter frame level: number of frames computed in parallel">Inter</span></th>
-                    <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      LDPC code specifications: <math><mo>(</mo><mi>N</mi><mo>,</mo><mi>K</mi><mo>)</mo></math>">
-                      Code
-                      </span>
-                    </th>
-                    <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of iteration in the decoding process"><math><mi>i</mi></math></span></th>
-                    <th class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Latency in micro seconds: time to decode one frame"><math><mi>Lat.</mi></math></span></th>
-                    <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Coded throughput in Mbps:<br/>
-                        <math>
-                          <mi>Thr.</mi>
+          <p class="lead"><strong>Linear Programming (LP)</strong></p>
+          <div class="table-responsive">
+            <table class="table sortable table-hover table-striped">
+              <thead>
+                <tr>
+                  <th class="vl">Work</th>
+                  <th id="year2">Year</th>
+                  <th class="vl">Platform</th>
+                  <th>Implem.</th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Precision in bits">Pre.</span></th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Inter frame level: number of frames computed in parallel">Inter</span></th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    LDPC code specifications: <math><mo>(</mo><mi>N</mi><mo>,</mo><mi>K</mi><mo>)</mo></math>">
+                    Code
+                    </span>
+                  </th>
+                  <th><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of iteration in the decoding process"><math><mi>i</mi></math></span></th>
+                  <th class="vl"><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Latency in micro seconds: time to decode one frame"><math><mi>Lat.</mi></math></span></th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Coded throughput in Mbps:<br/>
+                      <math>
+                        <mi>Thr.</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mi>N</mi>
+                            <mo>&times;</mo>
+                            <mi>Inter</mi>
+                          </mrow>
+                          <mi>Lat.</mi>
+                        </mfrac>
+                      </math>">
+                      <math><mi>Thr.</mi></math>
+                    </span>
+                  </th>
+                  <th class="vl" id="nthr2">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalized throughput in Mbps:<br/>
+                      <math>
+                        <mi>NThr.</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mrow><mi>Thr.</mi></mrow>
+                            <mo>&times;</mo>
+                            <mrow><mi>i</mi></mrow>
+                          </mrow>
+                          <mrow>
+                            <mi>50</mi>
+                          </mrow>
+                        </mfrac>
+                      </math>">
+                      <math><mi>NThr.</mi></math>
+                    </span>
+                  </th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Throughput under Normalized Decoding Cost:<br/>
+                       <math>
+                          <mi>TNDC</mi>
                           <mo>=</mo>
                           <mfrac>
                             <mrow>
-                              <mi>N</mi>
+                              <mrow><mi>NThr.</mi></mrow>
+                            </mrow>
+                            <mrow>
+                              <mrow><mi>Cores</mi></mrow>
                               <mo>&times;</mo>
-                              <mi>Inter</mi>
-                            </mrow>
-                            <mi>Lat.</mi>
-                          </mfrac>
-                        </math>">
-                        <math><mi>Thr.</mi></math>
-                      </span>
-                    </th>
-                    <th class="vl" id="nthr2">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Normalized throughput in Mbps:<br/>
-                        <math>
-                          <mi>NThr.</mi>
-                          <mo>=</mo>
-                          <mfrac>
-                            <mrow>
-                              <mrow><mi>Thr.</mi></mrow>
+                              <mrow><mi>Freq.</mi></mrow>
                               <mo>&times;</mo>
-                              <mrow><mi>i</mi></mrow>
-                            </mrow>
-                            <mrow>
-                              <mi>50</mi>
+                              <mrow><mi>SIMD</mi></mrow>
                             </mrow>
                           </mfrac>
                         </math>">
-                        <math><mi>NThr.</mi></math>
-                      </span>
-                    </th>
-                    <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Throughput under Normalized Decoding Cost:<br/>
-                         <math>
-                            <mi>TNDC</mi>
-                            <mo>=</mo>
-                            <mfrac>
-                              <mrow>
-                                <mrow><mi>NThr.</mi></mrow>
-                              </mrow>
-                              <mrow>
-                                <mrow><mi>Cores</mi></mrow>
-                                <mo>&times;</mo>
-                                <mrow><mi>Freq.</mi></mrow>
-                                <mo>&times;</mo>
-                                <mrow><mi>SIMD</mi></mrow>
-                              </mrow>
-                            </mfrac>
-                          </math>">
-                        <math><mi>TNDC</mi></math>
-                      </span>
-                    </th>
-                    <th>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules): <br />
-                        <math>
-                          <mrow><msub><mi>E</mi><mi>d</mi></msub></mrow>
-                          <mo>=</mo>
-                          <mfrac>
-                            <mrow>
-                              <mi>TDP</mi>
-                            </mrow>
-                            <mrow>
-                              <mi>NThr.</mi>
-                            </mrow>
-                          </mfrac>
-                          <mo>&times;</mo>
-                          <msup>
-                            <mn>10</mn>
-                            <mn>3</mn>
-                          </msup>
-                        </math>">
-                        <math><msub><mi>E</mi><mi>d</mi></msub></math>
-                      </span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref23" data-toggle="tooltip" data-placement="top" data-html="true" title="I. Debbabi, N. Khouja, F. Tlili, B. Le Gal, C. Jégo, <b>Multicore Implementation of LDPC Decoders Based on ADMM Algorithm</b>, <i>in Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</i>, March 2016.">[23]</a></td>
-                    <td>2016</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: CPU<br />
-                        <u>Full name</u>: Core i7-4960HQ<br />
-                        <u>Vendor</u>: Intel <br />
-                        <u>Architecture</u>: Haswell <br />
-                        <u>Frequency</u>: 3.40 GHz <br />
-                        <u>SMX/Cores</u>: 4 <br />
-                        <u>SIMD type</u>: AVX2 (256-bit) <br />
-                        <u>SIMD length</u>: 8 (32-bit/elmt) <br />
-                        <u>TDP</u>: 47 Watts">
-                        i7-4960HQ
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Alternate Direction Method of Multipliers (flooding)">F-ADMM</span></td>
-                    <td>32</td>
-                    <td>4</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: WiMAX (802.16e) <br />
-                      <u>Edges</u>: 7296<br />
-                      <u>Edges/Row</u>: 6~7 <br />
-                      <u>Edges/Col</u>: 2~6 <br />">
-                        (2304, 1152)
-                      </span>
-                    </td>
-                    <td>8</td>
-                    <td class="vl">1511</td>
-                    <td>6.1</td>
-                    <td class="vl">0.98</td>
-                    <td>0.009</td>
-                    <td>47959</td>
-                  </tr>
-                  <tr>
-                    <td class="vl"><a class="tt" href="#ref24" data-toggle="tooltip" data-placement="top" data-html="true" title="I. Debbabi, B. Le Gal, N. Khouja, F. Tlili, and C. Jégo, <b>Real Time LP Decoding of LDPC Codes for High Correction Performance Applications</b>, <i>IEEE Wireless Communications Letters (WCL)</i>, December 2016.">[24]</a></td>
-                    <td>2016</td>
-                    <td class="vl">
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                        <u>Device type</u>: CPU<br />
-                        <u>Full name</u>: Core i7-4960HQ<br />
-                        <u>Vendor</u>: Intel <br />
-                        <u>Architecture</u>: Haswell <br />
-                        <u>Frequency</u>: 3.40 GHz <br />
-                        <u>SMX/Cores</u>: 4 <br />
-                        <u>SIMD type</u>: AVX2 (256-bit) <br />
-                        <u>SIMD length</u>: 8 (32-bit/elmt) <br />
-                        <u>TDP</u>: 47 Watts">
-                        i7-4960HQ
-                      </span>
-                    </td>
-                    <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Alternate Direction Method of Multipliers (horizontal layered)">HL-ADMM</span></td>
-                    <td>32</td>
-                    <td>32</td>
-                    <td>
-                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
-                      <u>Type</u>: Irr. & Quasi-C. <br />
-                      <u>Standard</u>: WiMAX (802.16e) <br />
-                      <u>Edges</u>: 7296<br />
-                      <u>Edges/Row</u>: 6~7 <br />
-                      <u>Edges/Col</u>: 2~6 <br />">
-                        (2304, 1152)
-                      </span>
-                    </td>
-                    <td>100</td>
-                    <td class="vl">13755</td>
-                    <td>5.4</td>
-                    <td class="vl">10.8</td>
-                    <td>0.099</td>
-                    <td>4352</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                      <math><mi>TNDC</mi></math>
+                    </span>
+                  </th>
+                  <th>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Energy-per-bit (in nano Joules): <br />
+                      <math>
+                        <mrow><msub><mi>E</mi><mi>d</mi></msub></mrow>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mrow>
+                            <mi>TDP</mi>
+                          </mrow>
+                          <mrow>
+                            <mi>NThr.</mi>
+                          </mrow>
+                        </mfrac>
+                        <mo>&times;</mo>
+                        <msup>
+                          <mn>10</mn>
+                          <mn>3</mn>
+                        </msup>
+                      </math>">
+                      <math><msub><mi>E</mi><mi>d</mi></msub></math>
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a class="tt" href="#ref23" data-toggle="tooltip" data-placement="top" data-html="true" title="I. Debbabi, N. Khouja, F. Tlili, B. Le Gal, C. Jégo, <b>Multicore Implementation of LDPC Decoders Based on ADMM Algorithm</b>, <i>in Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</i>, March 2016.">[23]</a></td>
+                  <td>2016</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: CPU<br />
+                      <u>Full name</u>: Core i7-4960HQ<br />
+                      <u>Vendor</u>: Intel <br />
+                      <u>Architecture</u>: Haswell <br />
+                      <u>Frequency</u>: 3.40 GHz <br />
+                      <u>SMX/Cores</u>: 4 <br />
+                      <u>SIMD type</u>: AVX2 (256-bit) <br />
+                      <u>SIMD length</u>: 8 (32-bit/elmt) <br />
+                      <u>TDP</u>: 47 Watts">
+                      i7-4960HQ
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Alternate Direction Method of Multipliers (flooding)">F-ADMM</span></td>
+                  <td>32</td>
+                  <td>4</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: WiMAX (802.16e) <br />
+                    <u>Edges</u>: 7296<br />
+                    <u>Edges/Row</u>: 6~7 <br />
+                    <u>Edges/Col</u>: 2~6 <br />">
+                      (2304, 1152)
+                    </span>
+                  </td>
+                  <td>8</td>
+                  <td class="vl">1511</td>
+                  <td>6.1</td>
+                  <td class="vl">0.98</td>
+                  <td>0.009</td>
+                  <td>47959</td>
+                </tr>
+                <tr>
+                  <td><a class="tt" href="#ref24" data-toggle="tooltip" data-placement="top" data-html="true" title="I. Debbabi, B. Le Gal, N. Khouja, F. Tlili, and C. Jégo, <b>Real Time LP Decoding of LDPC Codes for High Correction Performance Applications</b>, <i>IEEE Wireless Communications Letters (WCL)</i>, December 2016.">[24]</a></td>
+                  <td>2016</td>
+                  <td class="vl">
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                      <u>Device type</u>: CPU<br />
+                      <u>Full name</u>: Core i7-4960HQ<br />
+                      <u>Vendor</u>: Intel <br />
+                      <u>Architecture</u>: Haswell <br />
+                      <u>Frequency</u>: 3.40 GHz <br />
+                      <u>SMX/Cores</u>: 4 <br />
+                      <u>SIMD type</u>: AVX2 (256-bit) <br />
+                      <u>SIMD length</u>: 8 (32-bit/elmt) <br />
+                      <u>TDP</u>: 47 Watts">
+                      i7-4960HQ
+                    </span>
+                  </td>
+                  <td><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Alternate Direction Method of Multipliers (horizontal layered)">HL-ADMM</span></td>
+                  <td>32</td>
+                  <td>32</td>
+                  <td>
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="
+                    <u>Type</u>: Irr. & Quasi-C. <br />
+                    <u>Standard</u>: WiMAX (802.16e) <br />
+                    <u>Edges</u>: 7296<br />
+                    <u>Edges/Row</u>: 6~7 <br />
+                    <u>Edges/Col</u>: 2~6 <br />">
+                      (2304, 1152)
+                    </span>
+                  </td>
+                  <td>100</td>
+                  <td class="vl">13755</td>
+                  <td>5.4</td>
+                  <td class="vl">10.8</td>
+                  <td>0.099</td>
+                  <td>4352</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
         <h2>References</h2>
@@ -1429,25 +1388,18 @@
           <li id="ref25">B. Le Gal and C. Jégo,                                       “<a target="_blank" href="https://doi.org/10.1109/SiPS.2017.8110001"       >Low-Latency Software LDPC Decoders for x86 Multi-core Devices</a>,”                             <i>in Proceedings of the IEEE International Workshop on Signal Processing Systems (SiPS)</i>,                              October   2017.</li>
         </ol>
       </div>
-
+      <div class="mb-4"></div>
       <hr>
-
-      <footer>
-        <p class="pull-right"><a href="#"><i class="fa fa-level-up" aria-hidden="true">&nbsp;</i>Back to top</a></p>
-        <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank">CPU LabEx (Bordeaux)</a> (ANR-
-10-IDEX-03-02).</p>
+      <footer class="container">
+        <p class="float-right"><a href="#"><i class="fa fa-level-up-alt" aria-hidden="true">&nbsp;</i>Back to top</a></p>
+        <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
       </footer>
     </div>
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
-    <script src="http://fred-wang.github.io/mathml.css/mspace.js"></script>
-    <!--<script src="http://fred-wang.github.io/mathjax.js/mpadded-min.js"></script>-->
-
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script type="text/javascript">
       $( document ).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
