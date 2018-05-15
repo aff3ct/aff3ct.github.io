@@ -13,13 +13,13 @@ const LT = {
 	}
 };
 const LAYOUT= {
-	ber: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Bit Error Rate'} },LT),
-	fer: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Frame Error Rate'}},LT),
-	befe: Object.assign({yaxis: { autorange: true, hoverformat: '.2e',title: 'BE/FE'}},LT),
-	thr: Object.assign({ yaxis: { autorange: true, hoverformat: '.2e',title: 'Throughput (Mb/s)'}},LT)
+	ber: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Bit Error Rate (BER)'} },LT),
+	fer: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Frame Error Rate (FER)'}},LT),
+	// befe: Object.assign({yaxis: { autorange: true, hoverformat: '.2e',title: 'BE/FE'}},LT),
+	// thr: Object.assign({ yaxis: { autorange: true, hoverformat: '.2e',title: 'Throughput (Mb/s)'}},LT)
 }
 // The 2 plots displayed in blue and orange
-var LEFT={ber:[],fer:[],thr:[],befe:[]}, RIGHT={ber:[],fer:[],thr:[],befe:[]};
+var LEFT={ber:[],fer:[]/*,thr:[],befe:[]*/}, RIGHT={ber:[],fer:[]/*,thr:[],befe:[]*/};
 var GD={};
 
 // Macro for handling async file loading
@@ -87,7 +87,7 @@ function loadFile(file) {
 			BEFE.y.push(parseFloat(fields[3])/parseFloat(fields[4]));
 			THR.y.push(parseFloat(fields[9]));
 		}
-		var o={name:name,info:info,coderate:coderate,size:size,ber:BER,fer:FER,befe:BEFE,thr:THR,code:code};
+		var o={name:name,info:info,coderate:coderate,size:size,ber:BER,fer:FER,/*befe:BEFE,thr:THR,*/code:code};
 		d.resolve(o);
 	});
 	return d.promise();
@@ -112,8 +112,8 @@ function loadFileList(page,maxperpage) {
 // Click listener for left/right lists
 function addclick(a,side,id) {
 	$(side+" ."+id).click(function() {
-		document.getElementById("plz").style.display = "none";
-		const plots=["ber","fer","befe","thr"];
+		document.getElementById("tips").style.display = "none";
+		const plots=["ber","fer"/*,"befe","thr"*/];
 		$(side+" .bers .active").removeClass("active");
 		$(this).addClass("active");
 		if (side=='.left') LEFT=a; else RIGHT=a;
@@ -122,11 +122,17 @@ function addclick(a,side,id) {
 }
 /* Interaction with the form */
 function displayFileTypes(files) {
+	$(".codetype").empty();
 	var j=0;
-	for (var i in files) {
-		if (j==0) j=i;
-		$(".codetype").append("<option>"+i+"</option>");
+	var l=Object.keys(files).length;
+	for (var i in files)
+	{
+		var selected="";
+		if (j == l -1) selected="selected='selected'";
+		$(".codetype").append("<option " + selected + ">"+i+"</option>");
+		j++;
 	}
+
 	displaySize(".left",i,files);
 	displaySize(".right",i,files);
 	$(".codetype").off();
@@ -162,9 +168,9 @@ function displayFiles(side,files,size) {
 	$(side+" .bers").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
-		var s="<li class='g"+i+" list-group-item list-group-item-action align-item-start'>"+a.name+"<div class='text-muted'><small>Coderate:"+a.coderate+", Codeword:"+a.size;
+		var s="<li class='g"+i+" list-group-item list-group-item-action align-item-start'>"+a.name+"<div class='text-muted twoColumns'><small><u>Coderate</u>: "+a.coderate+"<br/><u>Codeword</u>: "+a.size;
 		for (var j in a.info)
-			s+=", "+j+":"+a.info[j];
+			s+="<br/><u>"+j+"</u>: "+a.info[j];
 		s+="</small></div></li>";
 		$(side+" .bers").append(s);
 		addclick(a,side,"g"+i);
@@ -188,7 +194,7 @@ $(document).ready(function() {
 	var d3 = Plotly.d3;
 	var WIDTH_IN_PERCENT_OF_PARENT = 100,
 	HEIGHT_IN_PERCENT_OF_PARENT = 40;
-	var plots=["ber","fer","befe","thr"];
+	var plots=["ber","fer"/*,"befe","thr"*/];
 	plots.forEach(function(e) {
 	GD[e] = d3.select("#plot"+e)
 		.append('div')
@@ -208,7 +214,7 @@ $(document).ready(function() {
 			var ordered=orderFiles(files);
 			displayFileTypes(ordered);
 			document.getElementById("loader").style.display = "none";
-			document.getElementById("plz").style.display = "block";
+			document.getElementById("tips").style.display = "block";
 		});
 	});
 });

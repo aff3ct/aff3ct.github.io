@@ -24,11 +24,16 @@
     </script>
     <style>
       .right .bers .list-group-item.active {
-        background-color:orange;
+        background-color:#FF7F0E;
+        border-color:#FF7F0E;
+      }
+      .right .list-group-item.active .text-muted
+      {
+        color:#fff !important;
       }
       .left .list-group-item.active .text-muted
       {
-        color:#ddd !important;
+        color:#fff !important;
       }
       #loader {
         position: absolute;
@@ -53,13 +58,21 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
       }
-      #plz {
+      #tips {
         position: absolute;
         left: 50%;
         top: 20%;
         z-index: 1;
         width: 300px;
         margin-left: -159px;
+      }
+      .twoColumns{
+        -webkit-column-gap: 20px;
+        -moz-column-gap: 20px;
+        column-gap: 20px;
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
       }
     </style>
   </head>
@@ -118,13 +131,14 @@
               </div>
             </div>
           </div>
-          <div style="overflow:hidden;width:100%;height:80vh">
-            <ul class="list-group bers" style="overflow-y:scroll;position:relative;height:100%;"></ul>
+          <div class="mb-4"></div>
+          <div style="overflow:hidden;width:100%;height:80vh;">
+            <ul class="list-group bers" style="overflow-y:scroll;position:relative;height:85%;"></ul>
           </div>
         </div>
         <div class="col-6 p-0">
           <div>
-            <p id="plz" class="text-center" style="display:none;"><strong>Please select a curve on the left and/or on the right sides.</strong></p>
+            <p id="tips" class="text-center" style="display:none;"><strong>Please select a curve on the left and/or on the right sides.</strong></p>
             <div id="loader"></div>
           </div>
           <div id="plotber"></div>
@@ -157,8 +171,9 @@
               </div>
             </div>
           </div>
+          <div class="mb-4"></div>
           <div style="overflow:hidden;width:100%;height:80vh">
-            <ul class="list-group bers" style="overflow-y:scroll;position:relative;height:100%;"></ul>
+            <ul class="list-group bers" style="overflow-y:scroll;position:relative;height:85%;"></ul>
           </div>
         </div>
       </div>
