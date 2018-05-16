@@ -175,8 +175,8 @@ function displayFiles(side,files,size) {
 		for (var j in a.info)
 		{
 			var tooltip = "";
-			if (mapDef.get(a.info[j]))
-				tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + mapDef.get(a.info[j]) + "'";
+			if (tooltips.get(a.info[j]))
+				tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.info[j]) + "'";
 			s+="<br/><u>"+j+"</u>: "+"<span" + tooltip + ">" + a.info[j] + "</span>";
 		}
 		s+="</small></div></li>";
