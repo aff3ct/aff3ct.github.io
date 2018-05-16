@@ -33,10 +33,10 @@ function ajaxLoad(url) {
 // Changes the way the file is loaded/decoded
 function setMIME(mime) {
 	$.ajaxSetup({
-	beforeSend: function(xhr){
-		if (xhr.overrideMimeType) xhr.overrideMimeType(mime);
-	},
-	isLocal:true
+		beforeSend: function(xhr){
+			if (xhr.overrideMimeType) xhr.overrideMimeType(mime);
+		},
+		isLocal:true
 	});
 }
 // Reads and stores one file. Returns the content of the file.
@@ -72,7 +72,7 @@ function loadFile(file) {
 				else if (lines[i].indexOf("Info. bits")>-1)
 					infobits=parseFloat(val);
 			}
-		if (coderate==0&&size!=0&&infobits!=0) coderate=infobits/size;
+		if (coderate==0&&size!=0&&infobits!=0) coderate=Math.round(infobits/size*100)/100;
 		for (var i=4;i<lines.length;i++) {
 			if (lines[i].startsWith("#")||lines[i].length==0) continue;
 			var fields = lines[i].split(/\|/);
@@ -110,7 +110,7 @@ function loadFileList(page,maxperpage) {
 	return dirlist.promise();
 }
 // Click listener for left/right lists
-function addclick(a,side,id) {
+function addClick(a,side,id) {
 	$(side+" ."+id).click(function() {
 		document.getElementById("tips").style.display = "none";
 		const plots=["ber","fer"/*,"befe","thr"*/];
@@ -128,13 +128,16 @@ function displayFileTypes(files) {
 	for (var i in files)
 	{
 		var selected="";
-		if (j == l -1) selected="selected='selected'";
+		if (j == 0)
+		{
+			selected="selected='selected'";
+			displaySize(".left",i,files);
+			displaySize(".right",i,files);
+		}
 		$(".codetype").append("<option " + selected + ">"+i+"</option>");
 		j++;
 	}
 
-	displaySize(".left",i,files);
-	displaySize(".right",i,files);
 	$(".codetype").off();
 	$(".left .codetype").change(function() { displaySize(".left",$(this).val(),files); });
 	$(".right .codetype").change(function() { displaySize(".right",$(this).val(),files); });
@@ -170,11 +173,17 @@ function displayFiles(side,files,size) {
 		var a=f[i];
 		var s="<li class='g"+i+" list-group-item list-group-item-action align-item-start'>"+a.name+"<div class='text-muted twoColumns'><small><u>Coderate</u>: "+a.coderate+"<br/><u>Codeword</u>: "+a.size;
 		for (var j in a.info)
-			s+="<br/><u>"+j+"</u>: "+a.info[j];
+		{
+			var tooltip = "";
+			if (mapDef.get(a.info[j]))
+				tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + mapDef.get(a.info[j]) + "'";
+			s+="<br/><u>"+j+"</u>: "+"<span" + tooltip + ">" + a.info[j] + "</span>";
+		}
 		s+="</small></div></li>";
 		$(side+" .bers").append(s);
-		addclick(a,side,"g"+i);
+		addClick(a,side,"g"+i);
 	}
+	$('[data-toggle="tooltip"]').tooltip();
 }
 // files: array of files.
 // ordered: files are first sorted by code type, then by wordsize.
