@@ -207,7 +207,7 @@ function displayFiles(side,files,size) {
 		m+="    </div>";
 		m+="  </div>";
 		m+="</div>";
-		$(side+" .bers").append(m);
+		$("#modals").append(m);
 		addClick(a,side,"g"+i);
 	}
 	$('[data-toggle="tooltip"]').tooltip();
