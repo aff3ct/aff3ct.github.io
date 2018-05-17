@@ -1,4 +1,5 @@
 const GITLAB="https://gitlab.inria.fr/api/v4/projects/2913/repository/";
+const BRANCH="ldpc_update_rules";
 const KEY="&private_token=XiqvmusRrQ3iWf2pnYBx";
 // axis/legend of the 2 plots
 const LT = {
@@ -44,27 +45,30 @@ function loadFile(file) {
 	var d=$.Deferred();
 	setMIME("text/plain");
 	ajaxLoad(
-		GITLAB+"files/"+encodeURIComponent(file)+"/raw?ref=master"+KEY
+		GITLAB+"files/"+encodeURIComponent(file)+"/raw?ref="+BRANCH+KEY
 	).done(function(result) {
 		var lines=result.split("\n");
 		var name=lines[3];
 		var coderate=0,size=0,infobits=0;
 		var BER={x:[],y:[],type:'scatter',name:'BER'};
 		var FER={x:[],y:[],type:'scatter',name:'FER'};
-		var BEFE={x:[],y:[],type:'scatter',name:'BE/FE'};
-		var THR={x:[],y:[],type:'scatter',name:'Mb/s'};
+		// var BEFE={x:[],y:[],type:'scatter',name:'BE/FE'};
+		// var THR={x:[],y:[],type:'scatter',name:'Mb/s'};
 		var info={};
 		for (var i=0;i<lines.length;i++)
 			if (lines[i].startsWith("# * ")&&lines[i+1].indexOf("Type")>-1)
 				info[lines[i].substring(4,lines[i].indexOf("-")).trim()] =
 					lines[i+1].split("=")[1].trim();
 		var code=info.Code;
+		var cmd=lines[1];
+		cmd=cmd.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/master/$1'>$1</a>");
+		cmd=cmd.replace(/\.\/bin\/aff3ct/g,"aff3ct");
 		if (typeof code=="undefined") code=info.Codec;
 		for (var i=0;i<lines.length;i++)
 			if (lines[i].indexOf("=")>-1) {
 				var val=lines[i].split("=")[1].trim();
 				if (lines[i].indexOf("Code rate")>-1)
-					coderate=parseFloat(val);
+					coderate=Math.round(parseFloat(val)*100)/100;
 				else if (lines[i].indexOf("Frame size")>-1)
 					size=parseInt(val,10);
 				else if (lines[i].indexOf("Codeword size")>-1)
@@ -80,14 +84,14 @@ function loadFile(file) {
 			if (x=="NaN") continue;
 			BER.x.push(x);
 			FER.x.push(x);
-			BEFE.x.push(x);
-			THR.x.push(x);
+			// BEFE.x.push(x);
+			// THR.x.push(x);
 			BER.y.push(parseFloat(fields[5]));
 			FER.y.push(parseFloat(fields[6]));
-			BEFE.y.push(parseFloat(fields[3])/parseFloat(fields[4]));
-			THR.y.push(parseFloat(fields[9]));
+			// BEFE.y.push(parseFloat(fields[3])/parseFloat(fields[4]));
+			// THR.y.push(parseFloat(fields[9]));
 		}
-		var o={name:name,info:info,coderate:coderate,size:size,ber:BER,fer:FER,/*befe:BEFE,thr:THR,*/code:code};
+		var o={name:name,info:info,coderate:coderate,size:size,ber:BER,fer:FER,/*befe:BEFE,thr:THR,*/code:code,cmd:cmd};
 		d.resolve(o);
 	});
 	return d.promise();
@@ -142,12 +146,12 @@ function displayFileTypes(files) {
 	$(".left .codetype").change(function() { displaySize(".left",$(this).val(),files); });
 	$(".right .codetype").change(function() { displaySize(".right",$(this).val(),files); });
 }
-/*window.onresize = function() {
+window.onresize = function() {
 	Plotly.Plots.resize(GD.ber);
 	Plotly.Plots.resize(GD.fer);
-	Plotly.Plots.resize(GD.befe);
-	Plotly.Plots.resize(GD.thr);
-};*/
+	// Plotly.Plots.resize(GD.befe);
+	// Plotly.Plots.resize(GD.thr);
+};
 function displaySize(side,code,files) {
 	var p={};
 	var j=0;
@@ -171,16 +175,39 @@ function displayFiles(side,files,size) {
 	$(side+" .bers").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
-		var s="<li class='g"+i+" list-group-item list-group-item-action align-item-start'>"+a.name+"<div class='text-muted twoColumns'><small><u>Coderate</u>: "+a.coderate+"<br/><u>Codeword</u>: "+a.size;
+		var s="<li class='g"+i+" list-group-item list-group-item-action align-item-start'>"+a.name+"&nbsp;<a href='#' data-toggle='modal' data-target='#modalInfo"+i+"' title='Get more information.'><i class='fas fa-info-circle'></i></a><div class='text-muted twoColumns'><small><b>Coderate</b>: "+a.coderate+"<br/><b>Codeword</b>: "+a.size;
 		for (var j in a.info)
 		{
 			var tooltip = "";
 			if (tooltips.get(a.info[j]))
 				tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.info[j]) + "'";
-			s+="<br/><u>"+j+"</u>: "+"<span" + tooltip + ">" + a.info[j] + "</span>";
+			s+="<br/><b>"+j+"</b>: "+"<span" + tooltip + ">" + a.info[j] + "</span>";
 		}
-		s+="</small></div></li>";
+		s+="</small></div>";
+		s+="</li>";
 		$(side+" .bers").append(s);
+		var m="";
+		m+="<div class='modal fade' id='modalInfo"+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+		m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
+		m+="    <div class='modal-content'>";
+		m+="      <div class='modal-header'>";
+		m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.name+"</h5>";
+		m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+		m+="          <span aria-hidden='true'>&times;</span>";
+		m+="        </button>";
+		m+="      </div>";
+		m+="      <div class='modal-body'>";
+		m+="        <p><b>Command line:</b></p>";
+		m+="        <p><!--<pre class='small'>-->$ "+a.cmd+"<!--</pre>--></p>";
+		m+="      </div>";
+		m+="      <div class='modal-footer'>";
+		m+="        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
+		// m+="        <button type='button' class='btn btn-primary'>Save changes</button>";
+		m+="      </div>";
+		m+="    </div>";
+		m+="  </div>";
+		m+="</div>";
+		$(side+" .bers").append(m);
 		addClick(a,side,"g"+i);
 	}
 	$('[data-toggle="tooltip"]').tooltip();
