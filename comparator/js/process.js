@@ -172,10 +172,11 @@ function displaySize(side,code,files) {
 }
 function displayFiles(side,files,size) {
 	var f=files.filter(x=>x.size==size);
-	$(side+" .bers").empty();
+	$(side+ " .bers"  ).empty();
+	$("#"+side.replace(".","")+"modals").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
-		var s="<li class='g"+i+" list-group-item list-group-item-action align-item-start'>"+a.name+"&nbsp;<a href='#' data-toggle='modal' data-target='#modalInfo"+i+"' title='Get more information.'><i class='fas fa-info-circle'></i></a><div class='text-muted twoColumns'><small><b>Coderate</b>: "+a.coderate+"<br/><b>Codeword</b>: "+a.size;
+		var s="<li class='g"+i+" list-group-item list-group-item-action align-item-start'>"+a.name+"&nbsp;<a href='#' data-toggle='modal' data-target='#modalInfo"+side.replace(".","")+i+"' title='Get more information.'><i class='fas fa-info-circle'></i></a><div class='text-muted twoColumns'><small><b>Coderate</b>: "+a.coderate+"<br/><b>Codeword</b>: "+a.size;
 		for (var j in a.info)
 		{
 			var tooltip = "";
@@ -187,7 +188,7 @@ function displayFiles(side,files,size) {
 		s+="</li>";
 		$(side+" .bers").append(s);
 		var m="";
-		m+="<div class='modal fade' id='modalInfo"+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+		m+="<div class='modal fade' id='modalInfo"+side.replace(".","")+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
 		m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
 		m+="    <div class='modal-content'>";
 		m+="      <div class='modal-header'>";
@@ -207,7 +208,7 @@ function displayFiles(side,files,size) {
 		m+="    </div>";
 		m+="  </div>";
 		m+="</div>";
-		$("#modals").append(m);
+		$("#"+side.replace(".","")+"modals").append(m);
 		addClick(a,side,"g"+i);
 	}
 	$('[data-toggle="tooltip"]').tooltip();
