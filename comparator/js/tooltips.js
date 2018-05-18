@@ -51,3 +51,4 @@ tooltips.set("RA",          "Repeat and Accumulate code");
 tooltips.set("POLAR",       "Polar code");
 tooltips.set("TURBO",       "Parallel Turbo code (Single-Binary)");
 tooltips.set("TURBO_DB",    "Parallel Turbo code (Double-Binary)");
+tooltips.set("UNCODED",     "No channel code");
