@@ -1,5 +1,5 @@
 const GITLAB="https://gitlab.inria.fr/api/v4/projects/2913/repository/";
-const BRANCH="ldpc_update_rules";
+const BRANCH="development";
 const KEY="&private_token=XiqvmusRrQ3iWf2pnYBx";
 // axis/legend of the 2 plots
 const LT = {
