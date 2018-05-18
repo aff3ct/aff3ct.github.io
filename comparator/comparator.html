@@ -7,7 +7,8 @@
     <meta name="description" content="A Fast Forward Error Correction Toolbox (AFF3CT)">
     <meta name="author" content="Adrien CASSAGNE">
     <title>AFF3CT - A Fast Forward Error Correction Toolbox</title>
-    <link rel="stylesheet" href="js/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/comparator.css">
     <link href="../css/bootstrap_carousel.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <script src="js/jquery-3.1.1.min.js"></script>
@@ -22,80 +23,6 @@
       ga('create', 'UA-78973823-1', 'auto');
       ga('send', 'pageview');
     </script>
-    <style>
-      .right .bers .list-group-item.active {
-        background-color:#FF7F0E;
-        border-color:#FF7F0E;
-      }
-      .right .list-group-item.active .text-muted
-      {
-        color:#fff !important;
-      }
-      .right .list-group-item.active a
-      {
-        color:#fff !important;
-      }
-      .right .list-group-item.active a:hover
-      {
-        color:#ddd !important;
-      }
-      .left .list-group-item.active .text-muted
-      {
-        color:#fff !important;
-      }
-      .left .list-group-item.active a
-      {
-        color:#fff !important;
-      }
-      .left .list-group-item.active a:hover
-      {
-        color:#ddd !important;
-      }
-      .tt
-      {
-        border-bottom: 1px dotted #aaa;
-        display: inline-block;
-      }
-      #loader {
-        position: absolute;
-        left: 50%;
-        top: 20%;
-        z-index: 1;
-        width: 150px;
-        height: 150px;
-        margin: -75px 0 0 -75px;
-        border: 16px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 16px solid #3498db;
-        -webkit-animation: spin 2s linear infinite;
-        animation: spin 2s linear infinite;
-      }
-      /* Safari */
-      @-webkit-keyframes spin {
-        0% { -webkit-transform: rotate(0deg); }
-        100% { -webkit-transform: rotate(360deg); }
-      }
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-      #tips {
-        position: absolute;
-        left: 50%;
-        top: 20%;
-        z-index: 1;
-        width: 300px;
-        margin-left: -159px;
-      }
-      .twoColumns{
-        -webkit-column-gap: 10px;
-        -moz-column-gap: 10px;
-        column-gap: 10px;
-        -webkit-column-count: 2;
-        -moz-column-count: 2;
-        column-count: 2;
-      }
-    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">

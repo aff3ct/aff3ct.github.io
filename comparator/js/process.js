@@ -91,7 +91,8 @@ function loadFile(file) {
 			// BEFE.y.push(parseFloat(fields[3])/parseFloat(fields[4]));
 			// THR.y.push(parseFloat(fields[9]));
 		}
-		var o={name:name,info:info,coderate:coderate,size:size,ber:BER,fer:FER,/*befe:BEFE,thr:THR,*/code:code,cmd:cmd};
+		var o={name:name,info:info,coderate:coderate,size:size,ber:BER,fer:FER,/*befe:BEFE,thr:THR,*/code:code,
+		       cmd:cmd,file:result};
 		d.resolve(o);
 	});
 	return d.promise();
@@ -176,7 +177,7 @@ function displayFiles(side,files,size) {
 	$("#"+side.replace(".","")+"modals").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
-		var s="<li class='g"+i+" list-group-item list-group-item-action align-item-start'>"+a.name+"&nbsp;<a href='#' data-toggle='modal' data-target='#modalInfo"+side.replace(".","")+i+"' title='Get more information.'><i class='fas fa-info-circle'></i></a><div class='text-muted twoColumns'><small><b>Coderate</b>: "+a.coderate+"<br/><b>Codeword</b>: "+a.size;
+		var s="<li class='g"+i+" list-group-item list-group-item-action align-item-start'>"+a.name+"&nbsp;<div class='text-muted twoColumns'><small><b>Coderate</b>: "+a.coderate+"<br/><b>Codeword</b>: "+a.size;
 		for (var j in a.info)
 		{
 			var tooltip = "";
@@ -185,10 +186,14 @@ function displayFiles(side,files,size) {
 			s+="<br/><b>"+j+"</b>: "+"<span" + tooltip + ">" + a.info[j] + "</span>";
 		}
 		s+="</small></div>";
+		s+="<div class='curveIcons'>";
+		s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+side.replace(".","")+i+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
+		s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoFile"+side.replace(".","")+i+"' title='Original output text file'><i class='fas fa-file-alt'></i></a></span>"
+		s+="</div>";
 		s+="</li>";
 		$(side+" .bers").append(s);
 		var m="";
-		m+="<div class='modal fade' id='modalInfo"+side.replace(".","")+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+		m+="<div class='modal fade' id='modalInfoCmd"+side.replace(".","")+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
 		m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
 		m+="    <div class='modal-content'>";
 		m+="      <div class='modal-header'>";
@@ -198,8 +203,33 @@ function displayFiles(side,files,size) {
 		m+="        </button>";
 		m+="      </div>";
 		m+="      <div class='modal-body'>";
-		m+="        <p><b>Command line:</b></p>";
-		m+="        <p><!--<pre class='small'>-->$ "+a.cmd+"<!--</pre>--></p>";
+		m+="        <div class='shell-wrap'>";
+		m+="          <p class='shell-top-bar'>AFF3CT command line</p>";
+		m+="          <ul class='shell-body'>";
+		m+="            <li>"+a.cmd+"</li>";
+		m+="          </ul>";
+		m+="        </div>";
+		m+="      </div>";
+		// m+="      <div class='modal-footer'>";
+		// m+="        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
+		// m+="        <button type='button' class='btn btn-primary'>Save changes</button>";
+		// m+="      </div>";
+		m+="    </div>";
+		m+="  </div>";
+		m+="</div>";
+		m+="<div class='modal fade' id='modalInfoFile"+side.replace(".","")+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+		m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
+		m+="    <div class='modal-content'>";
+		m+="      <div class='modal-header'>";
+		m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.name+"</h5>";
+		m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+		m+="          <span aria-hidden='true'>&times;</span>";
+		m+="        </button>";
+		m+="      </div>";
+		m+="      <div class='modal-body'>";
+		m+="        <pre>";
+		m+=a.file;
+		m+="        </pre>";
 		m+="      </div>";
 		m+="      <div class='modal-footer'>";
 		m+="        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
@@ -213,6 +243,7 @@ function displayFiles(side,files,size) {
 	}
 	$('[data-toggle="tooltip"]').tooltip();
 }
+
 // files: array of files.
 // ordered: files are first sorted by code type, then by wordsize.
 function orderFiles(files) {
