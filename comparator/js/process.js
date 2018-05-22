@@ -209,7 +209,7 @@ function addClick(a,side) {
 			hitType:       'event',
 			eventCategory: 'BER/FER Comparator',
 			eventAction:   'click',
-			eventLabel:    a.filename
+			eventLabel:    decodeURIComponent(a.filename)
 		});
 	});
 }
