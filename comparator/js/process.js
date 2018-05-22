@@ -13,15 +13,81 @@ const LT = {
 	pad: 4
 	}
 };
+
 const LAYOUT= {
 	ber: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Bit Error Rate (BER)'} },LT),
 	fer: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Frame Error Rate (FER)'}},LT),
 	// befe: Object.assign({yaxis: { autorange: true, hoverformat: '.2e',title: 'BE/FE'}},LT),
 	// thr: Object.assign({ yaxis: { autorange: true, hoverformat: '.2e',title: 'Throughput (Mb/s)'}},LT)
 }
+
 // The 2 plots displayed in blue and orange
 var LEFT={ber:[],fer:[]/*,thr:[],befe:[]*/}, RIGHT={ber:[],fer:[]/*,thr:[],befe:[]*/};
 var GD={};
+
+// function replaceQueryParam(param, search, newval) {
+//     var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+//     var query = search.replace(regex, "$1").replace(/&$/, '');
+//     return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
+// }
+
+function updateURLParameter(url, param, paramVal)
+{
+	var TheAnchor = null;
+	var newAdditionalURL = "";
+	var tempArray = url.split("?");
+	var baseURL = tempArray[0];
+	var additionalURL = tempArray[1];
+	var temp = "";
+
+	if (additionalURL)
+	{
+		var tmpAnchor = additionalURL.split("#");
+		var TheParams = tmpAnchor[0];
+		    TheAnchor = tmpAnchor[1];
+		if(TheAnchor)
+			additionalURL = TheParams;
+
+		tempArray = additionalURL.split("&");
+
+		for (var i=0; i<tempArray.length; i++)
+		{
+			if(tempArray[i].split('=')[0] != param)
+			{
+				newAdditionalURL += temp + tempArray[i];
+				temp = "&";
+			}
+		}
+	}
+	else
+	{
+		var tmpAnchor = baseURL.split("#");
+		var TheParams = tmpAnchor[0];
+		    TheAnchor = tmpAnchor[1];
+
+		if(TheParams)
+			baseURL = TheParams;
+	}
+
+	if(TheAnchor)
+		paramVal += "#" + TheAnchor;
+
+	var rows_txt = temp + "" + param + "=" + paramVal;
+	return baseURL + "?" + newAdditionalURL + rows_txt;
+}
+
+function findGetParameter(parameterName) {
+	var result = null,
+	tmp = [];
+	window.location.search
+		.substr(1)
+		.split("&")
+		.forEach(function (item) {
+			tmp = item.split("=");
+			if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+		});
+	return result;
+}
 
 // Macro for handling async file loading
 function ajaxLoad(url) {
@@ -31,6 +97,7 @@ function ajaxLoad(url) {
 		console.error("**Error "+url+"\n"+status+" "+error);
 	}}));
 }
+
 // Changes the way the file is loaded/decoded
 function setMIME(mime) {
 	$.ajaxSetup({
@@ -40,12 +107,15 @@ function setMIME(mime) {
 		isLocal:true
 	});
 }
+
 // Reads and stores one file. Returns the content of the file.
+var ID=0;
 function loadFile(file) {
 	var d=$.Deferred();
 	setMIME("text/plain");
+	var filename = encodeURIComponent(file);
 	ajaxLoad(
-		GITLAB+"files/"+encodeURIComponent(file)+"/raw?ref="+BRANCH+KEY
+		GITLAB+"files/"+filename+"/raw?ref="+BRANCH+KEY
 	).done(function(result) {
 		var lines=result.split("\n");
 		var name=lines[3];
@@ -91,12 +161,14 @@ function loadFile(file) {
 			// BEFE.y.push(parseFloat(fields[3])/parseFloat(fields[4]));
 			// THR.y.push(parseFloat(fields[9]));
 		}
-		var o={name:name,info:info,coderate:coderate,size:size,ber:BER,fer:FER,/*befe:BEFE,thr:THR,*/code:code,
-		       cmd:cmd,file:result};
+		var o={id:ID,name:name,info:info,coderate:coderate,size:size,ber:BER,fer:FER,/*befe:BEFE,thr:THR,*/code:code,
+		       cmd:cmd,file:result,filename:filename};
 		d.resolve(o);
+		ID=ID+1;
 	});
 	return d.promise();
 }
+
 // Get the list of files (no dir) of the gitlab repo. Uses multiple requests if number of files exceeds 100.
 function loadFileList(page,maxperpage) {
 	var dirlist=$.Deferred();
@@ -114,47 +186,56 @@ function loadFileList(page,maxperpage) {
 	});
 	return dirlist.promise();
 }
+
 // Click listener for left/right lists
-function addClick(a,side,id) {
-	$(side+" ."+id).click(function() {
+function addClick(a,side) {
+	$(side+" .g"+a.id).click(function() {
 		document.getElementById("tips").style.display = "none";
 		const plots=["ber","fer"/*,"befe","thr"*/];
 		$(side+" .bers .active").removeClass("active");
 		$(this).addClass("active");
 		if (side=='.left') LEFT=a; else RIGHT=a;
 		plots.forEach(x => Plotly.newPlot(GD[x],[LEFT[x],RIGHT[x]],LAYOUT[x],{displayModeBar:false}));
-		window.history.replaceState({},"aff3ct.github.io","/comparator/comparator.html?left=value1&right=value2");
+
+		var lval = findGetParameter("left");
+		var rval = findGetParameter("right");
+		var uri  = "/comparator/comparator.html?left="+lval+"&right="+rval;
+		// uri = replaceQueryParam(uri,side.replace(".",""),a.filename);
+		uri = updateURLParameter(uri,side.replace(".",""),a.filename);
+		window.history.replaceState({},"aff3ct.github.io",uri);
 	});
 }
+
 /* Interaction with the form */
-function displayFileTypes(files) {
+function displayCodeTypes(files) {
 	$(".codetype").empty();
 	var j=0;
-	var l=Object.keys(files).length;
 	for (var i in files)
 	{
 		var selected="";
 		if (j == 0)
 		{
 			selected="selected='selected'";
-			displaySize(".left",i,files);
-			displaySize(".right",i,files);
+			displayFrameSizes(".left",i,files);
+			displayFrameSizes(".right",i,files);
 		}
 		$(".codetype").append("<option " + selected + ">"+i+"</option>");
 		j++;
 	}
 
 	$(".codetype").off();
-	$(".left .codetype").change(function() { displaySize(".left",$(this).val(),files); });
-	$(".right .codetype").change(function() { displaySize(".right",$(this).val(),files); });
+	$(".left .codetype").change(function() { displayFrameSizes(".left",$(this).val(),files); });
+	$(".right .codetype").change(function() { displayFrameSizes(".right",$(this).val(),files); });
 }
+
 window.onresize = function() {
 	Plotly.Plots.resize(GD.ber);
 	Plotly.Plots.resize(GD.fer);
 	// Plotly.Plots.resize(GD.befe);
 	// Plotly.Plots.resize(GD.thr);
 };
-function displaySize(side,code,files) {
+
+function displayFrameSizes(side,code,files) {
 	var p={};
 	var j=0;
 	for (var i=0;i<files[code].length;i++) {
@@ -172,13 +253,14 @@ function displaySize(side,code,files) {
 		displayFiles(side,files[code],$(this).val());
 	});
 }
+
 function displayFiles(side,files,size) {
 	var f=files.filter(x=>x.size==size);
-	$(side+ " .bers"  ).empty();
+	$(side+ " .bers").empty();
 	$("#"+side.replace(".","")+"modals").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
-		var s="<li class='g"+i+" list-group-item list-group-item-action align-item-start'>"+a.name+"&nbsp;<div class='text-muted twoColumns'><small><b>Coderate</b>: "+a.coderate+"<br/><b>Codeword</b>: "+a.size;
+		var s="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"+a.name+"&nbsp;<div class='text-muted twoColumns'><small><b>Coderate</b>: "+a.coderate+"<br/><b>Codeword</b>: "+a.size;
 		for (var j in a.info)
 		{
 			var tooltip = "";
@@ -211,10 +293,6 @@ function displayFiles(side,files,size) {
 		m+="          </ul>";
 		m+="        </div>";
 		m+="      </div>";
-		// m+="      <div class='modal-footer'>";
-		// m+="        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
-		// m+="        <button type='button' class='btn btn-primary'>Save changes</button>";
-		// m+="      </div>";
 		m+="    </div>";
 		m+="  </div>";
 		m+="</div>";
@@ -234,13 +312,12 @@ function displayFiles(side,files,size) {
 		m+="      </div>";
 		m+="      <div class='modal-footer'>";
 		m+="        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
-		// m+="        <button type='button' class='btn btn-primary'>Save changes</button>";
 		m+="      </div>";
 		m+="    </div>";
 		m+="  </div>";
 		m+="</div>";
 		$("#"+side.replace(".","")+"modals").append(m);
-		addClick(a,side,"g"+i);
+		addClick(a,side);
 	}
 	$('[data-toggle="tooltip"]').tooltip();
 }
@@ -258,6 +335,29 @@ function orderFiles(files) {
 		ordered[i].sort((a,b)=> a.coderate<b.coderate);
 	return ordered;
 }
+
+function selectFile(files,filename)
+{
+	for (var code in files)
+		for (var f=0;f<files[code].length;f++)
+			if (decodeURIComponent(files[code][f].filename) == filename)
+				return files[code][f];
+	return null;
+}
+
+function drawCurvesFromURI(files,filename,side)
+{
+	var f=selectFile(files,filename);
+	if (f)
+	{
+		$("#codetype"+side).val(f.code);
+		$("."+side+" .codetype").trigger("change");
+		$("#size"+side).val(f.size);
+		$("."+side+" .size").trigger("change");
+		$("."+side+" .g"+f.id).trigger("click");
+	}
+}
+
 //main
 $(document).ready(function() {
 	var d3 = Plotly.d3;
@@ -281,9 +381,14 @@ $(document).ready(function() {
 		function() {
 			var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
 			var ordered=orderFiles(files);
-			displayFileTypes(ordered);
+			displayCodeTypes(ordered);
 			document.getElementById("loader").style.display = "none";
 			document.getElementById("tips").style.display = "block";
+
+			var left = findGetParameter("left");
+			if (left) drawCurvesFromURI(ordered,left,"left");
+			var right = findGetParameter("right");
+			if (right) drawCurvesFromURI(ordered,right,"right");
 		});
 	});
 });
