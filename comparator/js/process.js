@@ -203,6 +203,14 @@ function addClick(a,side) {
 		// uri = replaceQueryParam(uri,side.replace(".",""),a.filename);
 		uri = updateURLParameter(uri,side.replace(".",""),a.filename);
 		window.history.replaceState({},"aff3ct.github.io",uri);
+
+		// track the click with Google Analytics
+		ga('send', {
+			hitType:       'event',
+			eventCategory: 'BER/FER Comparator',
+			eventAction:   'click',
+			eventLabel:    a.filename
+		});
 	});
 }
 
