@@ -197,8 +197,8 @@ function addClick(a,side) {
 		if (side=='.left') LEFT=a; else RIGHT=a;
 		plots.forEach(x => Plotly.newPlot(GD[x],[LEFT[x],RIGHT[x]],LAYOUT[x],{displayModeBar:false}));
 
-		var lval = findGetParameter("left");
-		var rval = findGetParameter("right");
+		var lval = encodeURIComponent(findGetParameter("left"));
+		var rval = encodeURIComponent(findGetParameter("right"));
 		var uri  = "/comparator/comparator.html?left="+lval+"&right="+rval;
 		// uri = replaceQueryParam(uri,side.replace(".",""),a.filename);
 		uri = updateURLParameter(uri,side.replace(".",""),a.filename);
