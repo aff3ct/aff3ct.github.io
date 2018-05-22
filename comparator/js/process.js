@@ -123,6 +123,7 @@ function addClick(a,side,id) {
 		$(this).addClass("active");
 		if (side=='.left') LEFT=a; else RIGHT=a;
 		plots.forEach(x => Plotly.newPlot(GD[x],[LEFT[x],RIGHT[x]],LAYOUT[x],{displayModeBar:false}));
+		window.history.replaceState({},"aff3ct.github.io","/comparator/comparator.html?left=value1&right=value2");
 	});
 }
 /* Interaction with the form */
