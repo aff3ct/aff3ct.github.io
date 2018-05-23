@@ -1,6 +1,7 @@
 const GITLAB="https://gitlab.inria.fr/api/v4/projects/2913/repository/";
 const BRANCH="development";
 const KEY="&private_token=XiqvmusRrQ3iWf2pnYBx";
+
 // axis/legend of the 2 plots
 const LT = {
 	showlegend:false,
@@ -131,6 +132,7 @@ function loadFile(file) {
 					lines[i+1].split("=")[1].trim();
 		var code=info.Code;
 		var cmd=lines[1];
+		cmd=cmd.replace(/"\.\.\/conf\/([^ ]*)"/g, "../conf/$1");
 		cmd=cmd.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/master/$1'>$1</a>");
 		cmd=cmd.replace(/\.\/bin\/aff3ct/g,"aff3ct");
 		if (typeof code=="undefined") code=info.Codec;
