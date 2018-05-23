@@ -132,6 +132,9 @@ function loadFile(file) {
 					lines[i+1].split("=")[1].trim();
 		var code=info.Code;
 		var cmd=lines[1];
+		cmd=cmd.replace(/"([^ ,:;]*)"/g, "$1");
+		cmd=cmd.replace(/\-\-sim\-pyber\ "([^]*)"/g, "");
+		cmd=cmd.replace(/\-\-sim\-pyber\ ([^ ]*)/g, "");
 		cmd=cmd.replace(/"\.\.\/conf\/([^ ]*)"/g, "../conf/$1");
 		cmd=cmd.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/master/$1'>$1</a>");
 		cmd=cmd.replace(/\.\/bin\/aff3ct/g,"aff3ct");
@@ -302,6 +305,8 @@ function displayFiles(side,files,size) {
 		m+="            <li>"+a.cmd+"</li>";
 		m+="          </ul>";
 		m+="        </div>";
+		m+="        <br>";
+		m+="        <p class='text-justify'><b>Be careful</b>, this command is not guarantee to work with the <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/master'><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/development'><i>development</i> branch</a>.</p>"
 		m+="      </div>";
 		m+="    </div>";
 		m+="  </div>";
