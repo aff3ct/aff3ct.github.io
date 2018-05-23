@@ -200,7 +200,7 @@ function addClick(a,side) {
 		$(side+" .bers .active").removeClass("active");
 		$(this).addClass("active");
 		if (side=='.left') LEFT=a; else RIGHT=a;
-		plots.forEach(x => Plotly.newPlot(GD[x],[LEFT[x],RIGHT[x]],LAYOUT[x],{displayModeBar:false}));
+		plots.forEach(x => Plotly.newPlot(GD[x],[LEFT[x],RIGHT[x]],LAYOUT[x],{displaylogo:false}));
 
 		var lval = encodeURIComponent(findGetParameter("left"));
 		var rval = encodeURIComponent(findGetParameter("right"));
