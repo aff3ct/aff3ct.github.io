@@ -120,7 +120,7 @@ function loadFile(file) {
 	).done(function(result) {
 		var lines=result.split("\n");
 		var name=lines[3];
-		var coderate=0,size=0,infobits=0;
+		var coderate=0,framesize=0,infobits=0,codeword=0;
 		var BER={x:[],y:[],type:'scatter',name:'BER'};
 		var FER={x:[],y:[],type:'scatter',name:'FER'};
 		// var BEFE={x:[],y:[],type:'scatter',name:'BE/FE'};
@@ -145,13 +145,16 @@ function loadFile(file) {
 				if (lines[i].indexOf("Code rate")>-1)
 					coderate=Math.round(parseFloat(val)*100)/100;
 				else if (lines[i].indexOf("Frame size")>-1)
-					size=parseInt(val,10);
+					framesize=parseInt(val,10);
 				else if (lines[i].indexOf("Codeword size")>-1)
-					size=parseInt(val,10);
+					codeword=parseInt(val,10);
 				else if (lines[i].indexOf("Info. bits")>-1)
 					infobits=parseFloat(val);
 			}
-		if (coderate==0&&size!=0&&infobits!=0) coderate=Math.round(infobits/size*100)/100;
+		if (framesize==0) framesize=codeword;
+		if (codeword==0) codeword=framesize;
+
+		if (coderate==0&&framesize!=0&&infobits!=0) coderate=Math.round(infobits/framesize*100)/100;
 		for (var i=4;i<lines.length;i++) {
 			if (lines[i].startsWith("#")||lines[i].length==0) continue;
 			var fields = lines[i].split(/\|/);
@@ -166,8 +169,8 @@ function loadFile(file) {
 			// BEFE.y.push(parseFloat(fields[3])/parseFloat(fields[4]));
 			// THR.y.push(parseFloat(fields[9]));
 		}
-		var o={id:ID,name:name,info:info,coderate:coderate,size:size,ber:BER,fer:FER,/*befe:BEFE,thr:THR,*/code:code,
-		       cmd:cmd,file:result,filename:filename};
+		var o={id:ID,name:name,info:info,coderate:coderate,framesize:framesize,codeword:codeword,ber:BER,fer:FER,
+		       /*befe:BEFE,thr:THR,*/code:code,cmd:cmd,file:result,filename:filename};
 		d.resolve(o);
 		ID=ID+1;
 	});
@@ -253,7 +256,7 @@ function displayFrameSizes(side,code,files) {
 	var j=0;
 	for (var i=0;i<files[code].length;i++) {
 		var f=files[code][i];
-		p[f.size]=true;
+		p[f.framesize]=true;
 	}
 	$(side+" .size").empty();
 	for (var i in p){
@@ -267,13 +270,17 @@ function displayFrameSizes(side,code,files) {
 	});
 }
 
-function displayFiles(side,files,size) {
-	var f=files.filter(x=>x.size==size);
+function displayFiles(side,files,framesize) {
+	var f=files.filter(x=>x.framesize==framesize);
 	$(side+ " .bers").empty();
 	$("#"+side.replace(".","")+"modals").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
-		var s="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"+a.name+"&nbsp;<div class='text-muted twoColumns'><small><b>Coderate</b>: "+a.coderate+"<br/><b>Codeword</b>: "+a.size;
+		var s="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"
+		s+=a.name+"&nbsp;<div class='text-muted twoColumns'><small><b>Frame size</b>: "+a.framesize+"<br/>";
+		if (a.codeword > a.framesize)
+			s+="<b>Codeword</b>: "+a.codeword+"<br/>";
+		s+="<b>Coderate</b>: "+a.coderate;
 		for (var j in a.info)
 		{
 			var tooltip = "";
@@ -367,7 +374,7 @@ function drawCurvesFromURI(files,filename,side)
 	{
 		$("#codetype"+side).val(f.code);
 		$("."+side+" .codetype").trigger("change");
-		$("#size"+side).val(f.size);
+		$("#size"+side).val(f.framesize);
 		$("."+side+" .size").trigger("change");
 		$("."+side+" .g"+f.id).trigger("click");
 	}
