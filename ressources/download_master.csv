@@ -1,3 +1,3 @@
 tag;hash;date;message;author;builds
 "v1.3.2";"55e4ba8";"Wed Jun 13 16:34:26 2018 +0200";"Fix the deploy builds script.";"Adrien Cassagne";"aff3ct_master_linux_gcc_avx2_55e4ba8.zip,aff3ct_master_linux_gcc_sse4_2_55e4ba8.zip,aff3ct_master_macos_clang_sse4_2_55e4ba8.zip,aff3ct_master_windows_gcc_sse4_2_55e4ba8.zip"
-"v1.3.2";"156a942";"Wed Jun 13 18:49:23 2018 +0200";"Rename 'mac-osx' in 'macos' + add the builds list in the CSV for the web site.";"Adrien Cassagne";",aff3ct_master_macos_clang_sse4_2_156a942.zip"
+"v1.3.2";"156a942";"Wed Jun 13 18:49:23 2018 +0200";"Rename 'mac-osx' in 'macos' + add the builds list in the CSV for the web site.";"Adrien Cassagne";"aff3ct_master_windows_gcc_sse4_2_156a942.zip,aff3ct_master_linux_gcc_sse4_2_156a942.zip,aff3ct_master_linux_gcc_avx2_156a942.zip,aff3ct_master_macos_clang_sse4_2_156a942.zip"
