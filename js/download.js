@@ -36,34 +36,41 @@ function addBuilds(branch,maxBuilds) {
         break;
       var cols=lines[i].split(";");
       var tag=cols[0].replace(/^"(.*)"$/g, "$1");
-      var hash=cols[1].replace(/^"(.*)"$/g, "$1");;
-      var date=cols[2].replace(/^"(.*)"$/g, "$1");;
-      var message=cols[3].replace(/^"(.*)"$/g, "$1");;
-      var author=cols[4].replace(/^"(.*)"$/g, "$1");;
-      addBuild(branch,tag,hash,date,message,author);
+      var hash=cols[1].replace(/^"(.*)"$/g, "$1");
+      var date=cols[2].replace(/^"(.*)"$/g, "$1");
+      var message=cols[3].replace(/^"(.*)"$/g, "$1");
+      var author=cols[4].replace(/^"(.*)"$/g, "$1");
+      var buildList=cols[5].replace(/^"(.*)"$/g, "$1").split(",");
+      addBuild(branch,tag,hash,date,message,author,buildList);
       $("#"+branch+"_builds").append("<hr>");
     }
   });
 }
 
-function addLink(branch,hash,sys,compiler,isa,name)
+function addLink(branch,hash,build)
 {
-  var file='ressources/builds/aff3ct_'+branch+'_'+sys+'_'+compiler+'_'+isa+'_'+hash+'.zip';
+  var sys="";
+  if (~build.indexOf("windows")) sys="windows";
+  else if (~build.indexOf("macos")) sys="macos";
+  else if (~build.indexOf("linux")) sys="linux";
+  else sys="other"
+
+  var name="";
+  if (~build.indexOf("avx2")) name="64-bit AVX2";
+  else if (~build.indexOf("sse4_2")) name="64-bit SSE4.2";
+  else name="No name"
+
+  var file='ressources/builds/'+build;
   var link='<a class="dropdown-item" href="'+file+'"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>'+name+'</a>';
+
   var idLink="#builds_"+sys+"_"+branch+"_"+hash;
   var idUnavail="#unavailable_builds_"+sys+"_"+branch+"_"+hash;
 
-  $.get(file)
-    .done(function() {
-        // exists file
-        $(idLink).append(link);
-        $(idUnavail).remove();
-    }).fail(function() {
-        // not exists file
-    });
+  $(idLink).append(link);
+  $(idUnavail).remove();
 }
 
-function addBuild(branch,tag,hash,date,message,author) {
+function addBuild(branch,tag,hash,date,message,author,buildsList) {
   var build="";
   build+='<div class="row">';
   build+='  <div class="col-md-1">';
@@ -87,8 +94,8 @@ function addBuild(branch,tag,hash,date,message,author) {
   build+='        <button id="btnGroupDropMac_'+branch+'_'+hash+'" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
   build+='          <i class="fab fa-apple" aria-hidden="true">&nbsp;</i>macOS';
   build+='        </button>';
-  build+='        <div class="dropdown-menu" aria-labelledby="btnGroupDropMac_'+branch+'_'+hash+'" id="builds_mac_osx_'+branch+'_'+hash+'">';
-  build+='          <a class="dropdown-item disabled" href="#" id="unavailable_builds_mac_osx_'+branch+'_'+hash+'"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>Unavailable builds</a>';
+  build+='        <div class="dropdown-menu" aria-labelledby="btnGroupDropMac_'+branch+'_'+hash+'" id="builds_macos_'+branch+'_'+hash+'">';
+  build+='          <a class="dropdown-item disabled" href="#" id="unavailable_builds_macos_'+branch+'_'+hash+'"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>Unavailable builds</a>';
   build+='        </div>';
   build+='      </div>';
   build+='      <div class="btn-group" role="group">';
@@ -108,12 +115,9 @@ function addBuild(branch,tag,hash,date,message,author) {
 
   $("#"+branch+"_builds").append(build);
 
-  addLink(branch,hash,"windows","gcc"  ,"sse4_2","64-bit SSE4.2");
-  addLink(branch,hash,"windows","gcc"  ,"avx2"  ,"64-bit AVX2"  );
-  addLink(branch,hash,"mac_osx","clang","sse4_2","64-bit SSE4.2");
-  addLink(branch,hash,"mac_osx","clang","avx2"  ,"64-bit AVX2"  );
-  addLink(branch,hash,"linux"  ,"gcc"  ,"sse4_2","64-bit SSE4.2");
-  addLink(branch,hash,"linux"  ,"gcc"  ,"avx2"  ,"64-bit AVX2"  );
+  for (var i=buildsList.length-1;i>=0;i--) {
+    addLink(branch,hash,buildsList[i]);
+  }
 }
 
 //main
