@@ -61,7 +61,7 @@ function addBuild(branch,tag,hash,date,message,author) {
   build+='          <i class="fab fa-windows" aria-hidden="true">&nbsp;</i>Windows';
   build+='        </button>';
   build+='        <div class="dropdown-menu" aria-labelledby="btnGroupDropWin_'+branch+'_'+hash+'">';
-  build+='          <a class="dropdown-item" href="ressources/binaries/aff3ct_'+branch+'_windows_gcc_sse4_2_'+hash+'.zip"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>64-bit SSE4.2</a>';
+  build+='          <a class="dropdown-item" href="ressources/builds/aff3ct_'+branch+'_windows_gcc_sse4_2_'+hash+'.zip"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>64-bit SSE4.2</a>';
   build+='        </div>';
   build+='      </div>';
   build+='      <div class="btn-group" role="group">';
@@ -69,7 +69,7 @@ function addBuild(branch,tag,hash,date,message,author) {
   build+='          <i class="fab fa-apple" aria-hidden="true">&nbsp;</i>macOS';
   build+='        </button>';
   build+='        <div class="dropdown-menu" aria-labelledby="btnGroupDropMac_'+branch+'_'+hash+'">';
-  build+='          <a class="dropdown-item" href="ressources/binaries/aff3ct_'+branch+'_macosx_clang_sse4_2_'+hash+'.zip"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>64-bit SSE4.2</a>';
+  build+='          <a class="dropdown-item" href="ressources/builds/aff3ct_'+branch+'_macosx_clang_sse4_2_'+hash+'.zip"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>64-bit SSE4.2</a>';
   build+='        </div>';
   build+='      </div>';
   build+='      <div class="btn-group" role="group">';
@@ -77,8 +77,8 @@ function addBuild(branch,tag,hash,date,message,author) {
   build+='          <i class="fab fa-linux" aria-hidden="true">&nbsp;</i>Linux';
   build+='        </button>';
   build+='        <div class="dropdown-menu" aria-labelledby="btnGroupDropLinux_'+branch+'_'+hash+'">';
-  build+='          <a class="dropdown-item" href="ressources/binaries/aff3ct_'+branch+'_linux_gcc_sse4_2_'+hash+'.zip"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>64-bit SSE4.2</a>';
-  build+='          <a class="dropdown-item" href="ressources/binaries/aff3ct_'+branch+'_linux_gcc_avx2_'+hash+'.zip"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>64-bit AVX2</a>';
+  build+='          <a class="dropdown-item" href="ressources/builds/aff3ct_'+branch+'_linux_gcc_sse4_2_'+hash+'.zip"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>64-bit SSE4.2</a>';
+  build+='          <a class="dropdown-item" href="ressources/builds/aff3ct_'+branch+'_linux_gcc_avx2_'+hash+'.zip"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>64-bit AVX2</a>';
   build+='        </div>';
   build+='      </div>';
   build+='    </div>';
