@@ -23,6 +23,8 @@ function addBuilds(branch,maxBuilds) {
     url
   ).done(function(result) {
     var lines=result.split("\n");
+    if (lines.length >= 1 && lines[lines.length -1] === "")
+      lines.splice(lines.length -1, 1);
     if (lines.length <= 1 || maxBuilds == 0)
       $("#"+branch+"_builds").append('<div class="alert alert-secondary" role="alert">There is no build available to download at this time, please come back later.</div>');
     else
