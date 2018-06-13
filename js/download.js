@@ -56,18 +56,30 @@ function addLink(branch,hash,build)
   else sys="other"
 
   var name="";
-  if (~build.indexOf("avx2")) name="64-bit AVX2";
-  else if (~build.indexOf("sse4_2")) name="64-bit SSE4.2";
-  else name="No name"
+  var simd="";
+  if (~build.indexOf("avx2")) { name="64-bit AVX2"; simd="avx2"; }
+  else if (~build.indexOf("sse4_2")) { name="64-bit SSE4.2"; simd="sse4_2"; }
+  else { name="No name"; simd="unknown"; }
+
+  var idLink="build_"+sys+"_"+branch+"_"+hash+"_"+simd;
+  var idLinks="builds_"+sys+"_"+branch+"_"+hash;
+  var idUnavail="unavailable_builds_"+sys+"_"+branch+"_"+hash;
 
   var file='ressources/builds/'+build;
-  var link='<a class="dropdown-item" href="'+file+'"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>'+name+'</a>';
+  var link='<a class="dropdown-item" href="'+file+'" id="'+idLink+'"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>'+name+'</a>';
 
-  var idLink="#builds_"+sys+"_"+branch+"_"+hash;
-  var idUnavail="#unavailable_builds_"+sys+"_"+branch+"_"+hash;
+  $("#"+idLinks).append(link);
+  $("#"+idUnavail).remove();
 
-  $(idLink).append(link);
-  $(idUnavail).remove();
+  $("#"+idLink).click(function() {
+    // track the click with Google Analytics
+    ga('send', {
+      hitType:       'event',
+      eventCategory: 'Download',
+      eventAction:   'click',
+      eventLabel:    build
+    });
+  });
 }
 
 function addBuild(branch,tag,hash,date,message,author,buildsList) {
@@ -77,10 +89,10 @@ function addBuild(branch,tag,hash,date,message,author,buildsList) {
   build+='    <a target="_blank" href="https://github.com/aff3ct/aff3ct/releases/tag/'+tag+'" class="badge badge-primary">'+tag+'</a>';
   build+='    <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/'+hash+'" class="badge badge-secondary">'+hash+'</a>';
   build+='  </div>';
-  build+='  <div class="col-md-3">';
+  build+='  <div class="col-md-2">';
   build+='    <i>'+date+'</i>';
   build+='  </div>';
-  build+='  <div class="col-md-5">';
+  build+='  <div class="col-md-4">';
   build+='    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">';
   build+='      <div class="btn-group" role="group">';
   build+='        <button id="btnGroupDropWin_'+branch+'_'+ hash+'" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
@@ -108,7 +120,7 @@ function addBuild(branch,tag,hash,date,message,author,buildsList) {
   build+='      </div>';
   build+='    </div>';
   build+='  </div>';
-  build+='  <div class="col-md-2">';
+  build+='  <div class="col-md-5">';
   build+=     message;
   build+='  </div>';
   build+='</div>';
