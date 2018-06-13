@@ -17,17 +17,21 @@ function ajaxLoad(url) {
   }}));
 }
 
-function addBuilds(branch) {
+function addBuilds(branch,maxBuilds) {
   var url="ressources/download_"+branch+".csv";
   ajaxLoad(
     url
   ).done(function(result) {
     var lines=result.split("\n");
-    if (lines.length > 1)
-      $("#"+branch+"_builds").append("<hr>");
-    else
+    if (lines.length <= 1 || maxBuilds == 0)
       $("#"+branch+"_builds").append('<div class="alert alert-secondary" role="alert">There is no build available to download at this time, please come back later.</div>');
-    for (var i=1;i<lines.length;i++) {
+    else
+      $("#"+branch+"_builds").append("<hr>");
+    var nBuilds=0;
+    for (var i=lines.length-1;i>=1;i--) {
+      nBuilds++;
+      if (nBuilds > maxBuilds)
+        break;
       var cols=lines[i].split(";");
       var tag=cols[0].replace(/^"(.*)"$/g, "$1");
       var hash=cols[1].replace(/^"(.*)"$/g, "$1");;
@@ -90,6 +94,6 @@ function addBuild(branch,tag,hash,date,message,author) {
 //main
 $(document).ready(function() {
   setMIME("text/plain");
-  addBuilds("development");
-  addBuilds("master");
+  addBuilds("development",10);
+  addBuilds("master",5);
 });
