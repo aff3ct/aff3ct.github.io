@@ -18,7 +18,7 @@ function ajaxLoad(url) {
 }
 
 function addBuilds(branch) {
-  var url="ressources/"+branch+".csv";
+  var url="ressources/download_"+branch+".csv";
   ajaxLoad(
     url
   ).done(function(result) {
