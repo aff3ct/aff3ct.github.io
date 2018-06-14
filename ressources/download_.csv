@@ -1,1 +1,0 @@
-"v1.3.2";"8654ee9";"Thu Jun 14 14:58:59 2018 +0200";"Fix the terminal display when calling 'legend()' multiple times.";"Adrien Cassagne";"aff3ct__linux_gcc_sse4_2_8654ee9.zip,aff3ct__linux_gcc_avx2_8654ee9.zip,aff3ct__windows_gcc_sse4_2_8654ee9.zip,aff3ct__macos_clang_sse4_2_8654ee9.zip"
