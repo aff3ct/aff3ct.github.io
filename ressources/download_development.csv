@@ -1,2 +1,2 @@
-tag;hash;date;message;author
+tag;hash;date;message;author;builds
 "v1.3.2";"8f08f43";"Wed Jun 13 23:55:23 2018 +0200";"Merge branch 'master' into development";"Adrien Cassagne";"aff3ct_development_linux_gcc_sse4_2_8f08f43.zip,aff3ct_development_linux_gcc_avx2_8f08f43.zip,aff3ct_development_windows_gcc_sse4_2_8f08f43.zip,aff3ct_development_macos_clang_sse4_2_8f08f43.zip"
