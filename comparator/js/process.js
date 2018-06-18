@@ -1,6 +1,6 @@
 const GITLAB="https://gitlab.inria.fr/api/v4/projects/2913/repository/";
 const BRANCH="development";
-const KEY="&private_token=XiqvmusRrQ3iWf2pnYBx";
+const KEY="XiqvmusRrQ3iWf2pnYBx";
 
 // axis/legend of the 2 plots
 const LT = {
@@ -116,7 +116,7 @@ function loadFile(file) {
 	setMIME("text/plain");
 	var filename = encodeURIComponent(file);
 	ajaxLoad(
-		GITLAB+"files/"+filename+"/raw?ref="+BRANCH+KEY
+		GITLAB+"files/"+filename+"/raw?ref="+BRANCH+"&private_token="+KEY
 	).done(function(result) {
 		var lines=result.split("\n");
 		var name=lines[3];
@@ -136,7 +136,7 @@ function loadFile(file) {
 		cmd=cmd.replace(/\-\-sim\-pyber\ "([^]*)"/g, "");
 		cmd=cmd.replace(/\-\-sim\-pyber\ ([^ ]*)/g, "");
 		cmd=cmd.replace(/"\.\.\/conf\/([^ ]*)"/g, "../conf/$1");
-		cmd=cmd.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/master/$1'>$1</a>");
+		cmd=cmd.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1'>$1</a>");
 		cmd=cmd.replace(/\.\/bin\/aff3ct/g,"aff3ct");
 		if (typeof code=="undefined") code=info.Codec;
 		for (var i=0;i<lines.length;i++)
@@ -181,8 +181,8 @@ function loadFile(file) {
 function loadFileList(page,maxperpage) {
 	var dirlist=$.Deferred();
 	ajaxLoad(
-		GITLAB+"tree?ref=master&recursive=true&per_page="+maxperpage+"&page="+page+KEY
-		//GITHUB+"git/trees/master?recursive=1"
+		GITLAB+"tree?ref="+BRANCH+"&recursive=true&per_page="+maxperpage+"&page="+page+"&private_token="+KEY
+		//GITHUB+"git/trees/"+BRANCH+"?recursive=1"
 	).done(function(result) {
 		var dirs=result.filter(x=>x.type=="blob").map(x=>x.path);
 		if (result.length<maxperpage)
