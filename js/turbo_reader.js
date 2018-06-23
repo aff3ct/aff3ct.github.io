@@ -311,6 +311,7 @@ function launch(jsonData)
 		generateSvgGraph(encoder, decoder, "#svg-interleaved", ite);
 
 		var badges = '<span class="badge badge-secondary">ite. ' + (curIte +1) + '/' + decoder.n_ite + '</span>&nbsp;';
+		badges    += '<span class="badge badge-secondary">K = ' + encoder.K + '</span>&nbsp;';
 		badges    += '<span class="badge badge-secondary">R = ' + encoder.R + '</span>&nbsp;';
 		badges    += '<span class="badge badge-secondary">poly = ' + encoder.poly + '</span>';
 		$(".nIte").html(badges);
