@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A Fast Forward Error Correction Toolbox (AFF3CT)">
+    <meta name="author" content="Adrien CASSAGNE">
+    <meta name="keywords" content="BER,FER,comparison,comparator,Bit Error Rate,Frame Error Rate,ECC,Codes,FEC,LDPC,Turbo,Polar,dB,Eb/N0,Monte-Carlo,simulation">
+    <title>AFF3CT - A Fast Forward Error Correction Toolbox</title>
+    <link rel="stylesheet" href="./css/turbo_reader.css">
+    <link rel="stylesheet" href="./css/lib/bootstrap-4.1.1.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/bootstrap_carousel.css">
+    <script src="./js/lib/jquery-3.3.1.min.js"></script>
+    <script src="./js/lib/popper-1.14.3.min.js"></script>
+    <script src="./js/lib/bootstrap-4.1.1.min.js"></script>
+    <script src="./js/lib/plotly-1.37.1.min.js"></script>
+    <script> /* Google Analytics */
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-78973823-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="index.html">AFF3CT</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbarCollapse" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home" aria-hidden="true">&nbsp;</i>Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="publications.html"><i class="fa fa-newspaper" aria-hidden="true">&nbsp;</i>Publications</a></li>
+          <li class="nav-item"><a class="nav-link" href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
+          <li class="nav-item"><a class="nav-link" href="download.html"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/aff3ct/aff3ct" target="_blank"><i class="fab fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+          <li class="nav-item"><a class="nav-link" href="comparator.html"><i class="fas fa-chart-bar" aria-hidden="true">&nbsp;</i>BER/FER Comparator</a></li>
+          <li class="nav-item active"><a class="nav-link" href="turbo_reader.html"><i class="fas fa-code-branch" aria-hidden="true">&nbsp;</i>Turbo Reader</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown_hof" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list" aria-hidden="true">&nbsp;</i>Software Decoders Hall of Fame&nbsp;</a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_hof">
+              <h6 class="dropdown-header">Synoptic tables</h6>
+              <a class="dropdown-item" href="hof_turbo.html">Turbo Codes</a>
+              <a class="dropdown-item" href="hof_ldpc.html">LDPC Codes</a>
+              <a class="dropdown-item" href="hof_polar.html">Polar Codes</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div id="page-wrapper">
+      <div style="float:left;">
+        <h1>Turbo Codes Decoder Reader <span class="nIte"></span></h1>
+        <div id="fileSelection">
+        Select a json file:
+        <input type="file" id="fileInput"> <span id="fileDisplayArea"></span>
+        <p>You just want to try the Turbo Reader? <a href="ressources/turbo_reader/turbo_traces.json.zip">Download a file example.</a></p>
+      </div>
+      <div id="control">
+        <p>
+          <form id="fraForm">
+            Jump to a specific frame:
+            <input type="text" name="fra" value="" id="fraText">
+            <input type="submit" value="Go!" id="fraButton">
+            <span class="nFra"></span>
+          </form>
+        </p>
+        <p>
+          <input type="button" value="Prev. ite." id="prevButton" />
+          <input type="button" value="Next. ite." id="nextButton" />
+          or press "p" for previous and "n" for next iteration.
+        </p>
+        <form id="iteForm">
+          Jump to a specific iteration:
+          <input type="text" name="iIte" value="" id="iteText">
+          <input type="submit" value="Go!" id="iteButton">
+        </form>
+        <p>
+          <input type="checkbox" name="radiusCB" value="radiusCB" id="radiusCB" checked="checked" />Enable variable radius.
+          <input type="checkbox" name="opacityCB" value="opacityCB" id="opacityCB" />Enable opacity.
+          <input type="checkbox" name="bigLinesCB" value="bigLinesCB" id="bigLinesCB" />Enable big lines.
+        </p>
+      </div>
+    </div>
+    <div id="legend">
+      <p>
+        <h3>Legend</h3>
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" height="100px" width="360px">
+          <line x1=" 0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:3;stroke-dasharray:5 3" />
+          <text x ="45"  y="15" fill="black">bit 0</text>
+          <line x1=" 0" y1="35" x2="40" y2="35" style="stroke:rgb(0,0,0);stroke-width:3;" />
+          <text x ="45"  y="40" fill="black">bit 1</text>
+
+          <line x1="100" y1="10" x2="120" y2="10" style="stroke:rgb(0,0,0);stroke-width:3;stroke-dasharray:5 3" />
+          <line x1="125" y1="10" x2="145" y2="10" style="stroke:rgb(0,0,0);stroke-width:3;" />
+          <text x="150"   y="15" fill="black">encoder</text>
+
+          <line x1="100" y1="35" x2="120" y2="35" style="stroke:#3b8217;stroke-width:3;stroke-dasharray:5 3" />
+          <line x1="125" y1="35" x2="145" y2="35" style="stroke:#3b8217;stroke-width:3;" />
+          <text x="150"   y="40" fill="black">decoder</text>
+
+          <circle cx="240" cy="10" r="7" fill="#3b8217" fill-opacity="1" />
+          <text    x="252"  y="15" fill="black">high likelihood</text>
+          <circle cx="240" cy="35" r="7" fill="#821e17" fill-opacity="1" />
+          <text    x="252"  y="40" fill="black">low likelihood</text>
+          <circle cx="240" cy="60" r="7" fill="#000000" fill-opacity="1" />
+          <text    x="252"  y="65" fill="black">impossible</text>
+        </svg>
+      </p>
+    </div>
+    <div id="siso">
+      <h2> SISO in the Natural Domain</h2>
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" id="svg-natural"></svg>
+
+      <h2> SISO in the Interleaved Domain</h2>
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" id="svg-interleaved"></svg>
+    </div>
+  </div>
+  <script type="text/javascript" src="js/turbo_reader.js"></script>
+  </body>
+</html>

@@ -1,13 +1,7 @@
-html {
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 100%;
-	background: #333;
-}
-
 #page-wrapper {
 	background: #FFF;
 	padding: 1em;
-	margin: 1em 1em 1em 1em;
+	margin: 2em 1em 1em 1em;
 	min-height: 300px;
 	border-top: 5px solid #3b8217;
 	box-shadow: 0 2px 10px rgba(0,0,0,0.8);
