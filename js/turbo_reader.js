@@ -39,13 +39,13 @@ function hslToRgb(h, s, l)
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
 
-function componentToHex(c) 
+function componentToHex(c)
 {
     var hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
 }
 
-function rgbToHex(r, g, b) 
+function rgbToHex(r, g, b)
 {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
@@ -171,14 +171,14 @@ function generateSvgGraph(encoder, decoder, idSvg, ite)
 
 			var gamma = decoderGamma[i * 2 + encoder.trellis[7][j]];
 
-			$(idSvg).append("<line stroke=\"" + color + "\" "       + 
-			                "stroke-dasharray=\"5 3\" "             + 
-			                "stroke-width=\"" + strokeWidth + "\" " + 
-			                "x1=\"" + x1 + "\" "                    + 
-			                "x2=\"" + x2 + "\" "                    + 
-			                "y1=\"" + y1 + "\" "                    + 
-			                "y2=\"" + y2 + "\" >"                   + 
-			                "<title>bit = 0, "                      + 
+			$(idSvg).append("<line stroke=\"" + color + "\" "       +
+			                "stroke-dasharray=\"5 3\" "             +
+			                "stroke-width=\"" + strokeWidth + "\" " +
+			                "x1=\"" + x1 + "\" "                    +
+			                "x2=\"" + x2 + "\" "                    +
+			                "y1=\"" + y1 + "\" "                    +
+			                "y2=\"" + y2 + "\" >"                   +
+			                "<title>bit = 0, "                      +
 			                "gamma = " + gamma + "</title></line>");
 		}
 
@@ -186,7 +186,7 @@ function generateSvgGraph(encoder, decoder, idSvg, ite)
 		{
 			var y1 = padY + j           * coefY;
 			var y2 = padY + jIndexS1[j] * coefY;
-			
+
 			var isEncoderTransition = (encoderTransition[i]    == jIndexS1[j]) && (jIndexS1Rev[jIndexS1[j]] == prevStateEnc);
 			var isDecoderTransition = (decoderTransition[i][1] == jIndexS1[j]) && (jIndexS1Rev[jIndexS1[j]] == decoderTransition[i][0]);
 
@@ -202,12 +202,12 @@ function generateSvgGraph(encoder, decoder, idSvg, ite)
 			var gamma = -decoderGamma[i * 2 + encoder.trellis[9][j]];
 
 			$(idSvg).append("<line stroke=\"" + color + "\" "       +
-			                "stroke-width=\"" + strokeWidth + "\" " + 
-			                "x1=\"" + x1 + "\" "                    + 
-			                "x2=\"" + x2 + "\" "                    + 
-			                "y1=\"" + y1 + "\" "                    + 
+			                "stroke-width=\"" + strokeWidth + "\" " +
+			                "x1=\"" + x1 + "\" "                    +
+			                "x2=\"" + x2 + "\" "                    +
+			                "y1=\"" + y1 + "\" "                    +
 			                "y2=\"" + y2 + "\" >"                   +
-			                "<title>bit = 1, "                      + 
+			                "<title>bit = 1, "                      +
 			                "gamma = " + gamma + "</title></line>");
 		}
 
@@ -233,17 +233,17 @@ function generateSvgGraph(encoder, decoder, idSvg, ite)
 	var y1 = padY / 2;
 	var y2 = padY + coefY * (n_states -1) + padY / 2;
 
-	$(idSvg).append("<line stroke=\"#822017\" " + 
-	                "stroke-dasharray=\"5 3\" " + 
-	                "stroke-width=\"2\" "       + 
-	                "x1=\"" + x1 + "\" "        + 
-	                "x2=\"" + x2 + "\" "        + 
-	                "y1=\"" + y1 + "\" "        + 
-	                "y2=\"" + y2 + "\" >"       + 
+	$(idSvg).append("<line stroke=\"#822017\" " +
+	                "stroke-dasharray=\"5 3\" " +
+	                "stroke-width=\"2\" "       +
+	                "x1=\"" + x1 + "\" "        +
+	                "x2=\"" + x2 + "\" "        +
+	                "y1=\"" + y1 + "\" "        +
+	                "y2=\"" + y2 + "\" >"       +
 	                "<title>Tail bits</title></line>");
 
 	// generate nodes
-	for (i = 0; i < K + n_ff +1; i++) 
+	for (i = 0; i < K + n_ff +1; i++)
 	{
 		var x = padX + i * coefX;
 
@@ -283,14 +283,14 @@ function generateSvgGraph(encoder, decoder, idSvg, ite)
 
 			alpha = (alpha != undefined) ? alpha : "-inf";
 			beta  = (beta  != undefined) ? beta  : "-inf";
-			$(idSvg).append("<circle id=\"N_" + i + "_" + j + "\" " + 
-			                "cx=\"" + x + "\" "                     + 
-			                "cy=\"" + y + "\" "                     + 
-			                "r=\"" + radius + "\" "                 + 
-			                "fill=\"" + fillColor + "\" "           + 
+			$(idSvg).append("<circle id=\"N_" + i + "_" + j + "\" " +
+			                "cx=\"" + x + "\" "                     +
+			                "cy=\"" + y + "\" "                     +
+			                "r=\"" + radius + "\" "                 +
+			                "fill=\"" + fillColor + "\" "           +
 			                "fill-opacity=\"" + opVal + "\" >"      +
-			                "<title>" + "N_" + i + "_" + j + ": "   + 
-			                "alpha = " + alpha + ", "               + 
+			                "<title>" + "N_" + i + "_" + j + ": "   +
+			                "alpha = " + alpha + ", "               +
 							"beta = " + beta + "</title></circle>");
 		}
 	}
@@ -309,8 +309,11 @@ function launch(jsonData)
 	{
 		generateSvgGraph(encoder, decoder, "#svg-natural",     ite);
 		generateSvgGraph(encoder, decoder, "#svg-interleaved", ite);
-		
-		$(".nIte").html(" [ite. " + (curIte +1) + "/" + decoder.n_ite + " - K = " + encoder.K + " - R = " + encoder.R + " - poly = " + encoder.poly + "]");
+
+		var badges = '<span class="badge badge-secondary">ite. ' + (curIte +1) + '/' + decoder.n_ite + '</span>&nbsp;';
+		badges    += '<span class="badge badge-secondary">R = ' + encoder.R + '</span>&nbsp;';
+		badges    += '<span class="badge badge-secondary">poly = ' + encoder.poly + '</span>';
+		$(".nIte").html(badges);
 		$(".nFra").html("(" + (curFra +1) + "/" + nFra + ")");
 	}
 
@@ -321,26 +324,26 @@ function launch(jsonData)
 	$("#legend").show();
 	$("#siso").show();
 
-	$("#radiusCB").click(function() 
+	$("#radiusCB").click(function()
 	{
 		variableRadius = !variableRadius;
 		upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
 	});
 
-	$("#opacityCB").click(function() 
+	$("#opacityCB").click(function()
 	{
 		opacity = !opacity;
 		upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
 	});
 
-	$("#bigLinesCB").click(function() 
+	$("#bigLinesCB").click(function()
 	{
 		bigLines = !bigLines;
 		upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
 	});
 
 
-	$("#nextButton").click(function() 
+	$("#nextButton").click(function()
 	{
 		if (curIte < jsonData[curFra][1].n_ite -1)
 		{
@@ -348,7 +351,7 @@ function launch(jsonData)
 		}
 	});
 
-	$("#prevButton").click(function() 
+	$("#prevButton").click(function()
 	{
 		if (curIte >= 1)
 		{
@@ -378,7 +381,7 @@ function launch(jsonData)
 		}
 	});
 
-	$('#iteForm').submit(function () 
+	$('#iteForm').submit(function ()
 	{
 		var wishIte = parseInt($("#iteText").val()) -1;
 
@@ -394,7 +397,7 @@ function launch(jsonData)
 		return false;
 	});
 
-	$('#fraForm').submit(function () 
+	$('#fraForm').submit(function ()
 	{
 		var wishFra = parseInt($("#fraText").val()) -1;
 
@@ -412,10 +415,10 @@ function launch(jsonData)
 	})
 }
 
-window.onload = function() 
+window.onload = function()
 {
 	var fileInput = document.getElementById('fileInput');
-	fileInput.addEventListener('change', function(e) 
+	fileInput.addEventListener('change', function(e)
 	{
 		var file = fileInput.files[0];
 		var jsonExt = /^.*\.json$/;
@@ -423,17 +426,18 @@ window.onload = function()
 		if (file.name.match(jsonExt))
 		{
 			var reader = new FileReader();
-			reader.onload = function(e) 
+			reader.onload = function(e)
 			{
+				$("#presentationTurboReader").empty();
 				var jsonData = JSON.parse(reader.result);
 				launch(jsonData);
 			};
 
 			reader.readAsText(file);
-		} 
-		else 
+		}
+		else
 		{
-			$("#fileDisplayArea").html("File not supported!");
+			$("#fileDisplayArea").html('<span class="alert alert-danger" role="alert">File not supported!</span>');
 		}
 	});
 }

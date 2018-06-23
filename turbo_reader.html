@@ -41,7 +41,7 @@
         </ul>
         <ul class="navbar-nav navbar-right">
           <li class="nav-item"><a class="nav-link" href="comparator.html"><i class="fas fa-chart-bar" aria-hidden="true">&nbsp;</i>BER/FER Comparator</a></li>
-          <li class="nav-item active"><a class="nav-link" href="turbo_reader.html"><i class="fas fa-code-branch" aria-hidden="true">&nbsp;</i>Turbo Reader</a></li>
+          <li class="nav-item active"><a class="nav-link" href="turbo_reader.html"><i class="fas fa-code-branch" aria-hidden="true">&nbsp;</i>Turbo Code Reader</a></li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown_hof" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list" aria-hidden="true">&nbsp;</i>Software Decoders Hall of Fame&nbsp;</a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_hof">
@@ -56,12 +56,20 @@
     </nav>
     <div id="page-wrapper">
       <div style="float:left;">
-        <h1>Turbo Codes Decoder Reader <span class="nIte"></span></h1>
-        <div id="fileSelection">
-        Select a json file:
-        <input type="file" id="fileInput"> <span id="fileDisplayArea"></span>
-        <p>You just want to try the Turbo Reader? <a href="ressources/turbo_reader/turbo_traces.json.zip">Download a file example.</a></p>
-      </div>
+        <h1 class="display-4">Turbo Code Reader</span></h1>
+        <h2 class="nIte"></h2>
+        <div id="presentationTurboReader">
+          <p class="lead">
+            The AFF3CT simulator can dump the internal values (alpha, beta and gamma) from the Turbo code encoder/decoder via JSON files (see the <span class="badge badge-secondary">--enc-json-path</span> option).
+            This page allows you to nicely navigate into those values (fixed-point and/or floating-point data representations) and <strong>to visualize the convergence of the Turbo decoding process</strong> through the iterations
+            (<a href="ressources/turbo_reader/turbo_traces.json.zip">click here to download and play with a dumped file example</a> and do not forget to unzip the file before to open it).
+          </p>
+          <div id="fileSelection">
+            <p class="lead">Select a JSON file:
+              <input type="file" id="fileInput"> <span id="fileDisplayArea"></span>
+            </p>
+          </div>
+        </div>
       <div id="control">
         <p>
           <form id="fraForm">
