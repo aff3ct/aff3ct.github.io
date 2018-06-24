@@ -441,7 +441,7 @@ window.onload = function()
 		}
 		else
 		{
-			$("#fileDisplayArea").html('<span class="alert alert-danger" role="alert">File not supported!</span>');
+			$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">File not supported!</span>');
 		}
 	});
 }
