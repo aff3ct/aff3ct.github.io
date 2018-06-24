@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="A Fast Forward Error Correction Toolbox (AFF3CT)">
     <meta name="author" content="Adrien CASSAGNE">
-    <meta name="keywords" content="BER,FER,comparison,comparator,Bit Error Rate,Frame Error Rate,ECC,Codes,FEC,LDPC,Turbo,Polar,dB,Eb/N0,Monte-Carlo,simulation">
+    <meta name="keywords" content="Turbo,Turbo code,SISO,BCJR,ECC,Codes,FEC">
     <title>AFF3CT - A Fast Forward Error Correction Toolbox</title>
     <link rel="stylesheet" href="./css/turbo_reader.css">
     <link rel="stylesheet" href="./css/lib/bootstrap-4.1.1.min.css">
@@ -54,13 +54,12 @@
         </ul>
       </div>
     </nav>
-    <div id="page-wrapper">
-      <div style="float:left;">
+    <div class="jumbotron">
+      <div class="container marketing">
         <h1 class="display-4">Turbo Code Reader</span></h1>
-        <h2 class="nIte"></h2>
         <div id="presentationTurboReader">
           <p class="lead">
-            The AFF3CT simulator can dump the internal values (alpha, beta and gamma) from the Turbo code encoder/decoder via JSON files (see the <span class="badge badge-secondary">--enc-json-path</span> option).
+            The AFF3CT simulator can dump the internal values (<span class="badge badge-primary">alpha</span>, <span class="badge badge-success">beta</span> and <span class="badge badge-danger">gamma</span>) from the Turbo code encoder/decoder via JSON files (see the <span class="badge badge-secondary">--enc-json-path</span> option).
             This page allows you to nicely navigate into those values (fixed-point and/or floating-point data representations) and <strong>to visualize the convergence of the Turbo decoding process</strong> through the iterations
             (<a href="ressources/turbo_reader/turbo_traces.json.zip">click here to download and play with a dumped file example</a> and do not forget to unzip the file before to open it).
           </p>
@@ -70,66 +69,78 @@
             </p>
           </div>
         </div>
-      <div id="control">
-        <p>
-          <form id="fraForm">
-            Jump to a specific frame:
-            <input type="text" name="fra" value="" id="fraText">
-            <input type="submit" value="Go!" id="fraButton">
-            <span class="nFra"></span>
-          </form>
-        </p>
-        <p>
-          <input type="button" value="Prev. ite." id="prevButton" />
-          <input type="button" value="Next. ite." id="nextButton" />
-          or press "p" for previous and "n" for next iteration.
-        </p>
-        <form id="iteForm">
-          Jump to a specific iteration:
-          <input type="text" name="iIte" value="" id="iteText">
-          <input type="submit" value="Go!" id="iteButton">
-        </form>
-        <p>
-          <input type="checkbox" name="radiusCB" value="radiusCB" id="radiusCB" checked="checked" />Enable variable radius.
-          <input type="checkbox" name="opacityCB" value="opacityCB" id="opacityCB" />Enable opacity.
-          <input type="checkbox" name="bigLinesCB" value="bigLinesCB" id="bigLinesCB" />Enable big lines.
-        </p>
       </div>
     </div>
-    <div id="legend">
-      <p>
-        <h3>Legend</h3>
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" height="100px" width="360px">
-          <line x1=" 0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:3;stroke-dasharray:5 3" />
-          <text x ="45"  y="15" fill="black">bit 0</text>
-          <line x1=" 0" y1="35" x2="40" y2="35" style="stroke:rgb(0,0,0);stroke-width:3;" />
-          <text x ="45"  y="40" fill="black">bit 1</text>
+    <div id="page-wrapper" class="container marketing">
+      <div id="turboReaderPreview">
+        <img class="img-fluid d-block mx-auto rounded" src="images/preview_turbo_reader_grey.png" alt="Turbo code reader preview" title="Turbo code reader preview">
+      </div>
+      <div class="row">
+        <div class="col-md-6" id="control">
+          <p>
+            <form id="fraForm">
+              Jump to a specific frame:
+              <input type="text" name="fra" value="" id="fraText">
+              <input type="submit" value="Go!" id="fraButton">
+              <span class="nFra"></span>
+            </form>
+          </p>
+          <p>
+            <input type="button" value="Prev. ite." id="prevButton" />
+            <input type="button" value="Next. ite." id="nextButton" />
+            <br/>
+            or press <span class="badge badge-primary">p</span> for previous and <span class="badge badge-primary">n</span> for next iteration.
+          </p>
+          <form id="iteForm">
+            Jump to a specific iteration:
+            <input type="text" name="iIte" value="" id="iteText">
+            <input type="submit" value="Go!" id="iteButton">
+          </form>
+          <p>
+            <input type="checkbox" name="radiusCB" value="radiusCB" id="radiusCB" checked="checked" />Enable variable radius.
+            <input type="checkbox" name="opacityCB" value="opacityCB" id="opacityCB" />Enable opacity.
+            <input type="checkbox" name="bigLinesCB" value="bigLinesCB" id="bigLinesCB" />Enable big lines.
+          </p>
+        </div>
+        <div id="legend" class="col-md-6">
+          <!-- <div class="float-right" style="margin-top:5px;"> -->
+          <div style="margin-top:5px;">
+            <h3>Legend</h3>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" height="100px" width="360px">
+              <line x1=" 0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:3;stroke-dasharray:5 3" />
+              <text x ="45"  y="15" fill="black">bit 0</text>
+              <line x1=" 0" y1="35" x2="40" y2="35" style="stroke:rgb(0,0,0);stroke-width:3;" />
+              <text x ="45"  y="40" fill="black">bit 1</text>
 
-          <line x1="100" y1="10" x2="120" y2="10" style="stroke:rgb(0,0,0);stroke-width:3;stroke-dasharray:5 3" />
-          <line x1="125" y1="10" x2="145" y2="10" style="stroke:rgb(0,0,0);stroke-width:3;" />
-          <text x="150"   y="15" fill="black">encoder</text>
+              <line x1="100" y1="10" x2="120" y2="10" style="stroke:rgb(0,0,0);stroke-width:3;stroke-dasharray:5 3" />
+              <line x1="125" y1="10" x2="145" y2="10" style="stroke:rgb(0,0,0);stroke-width:3;" />
+              <text x="150"   y="15" fill="black">encoder</text>
 
-          <line x1="100" y1="35" x2="120" y2="35" style="stroke:#3b8217;stroke-width:3;stroke-dasharray:5 3" />
-          <line x1="125" y1="35" x2="145" y2="35" style="stroke:#3b8217;stroke-width:3;" />
-          <text x="150"   y="40" fill="black">decoder</text>
+              <line x1="100" y1="35" x2="120" y2="35" style="stroke:#3b8217;stroke-width:3;stroke-dasharray:5 3" />
+              <line x1="125" y1="35" x2="145" y2="35" style="stroke:#3b8217;stroke-width:3;" />
+              <text x="150"   y="40" fill="black">decoder</text>
 
-          <circle cx="240" cy="10" r="7" fill="#3b8217" fill-opacity="1" />
-          <text    x="252"  y="15" fill="black">high likelihood</text>
-          <circle cx="240" cy="35" r="7" fill="#821e17" fill-opacity="1" />
-          <text    x="252"  y="40" fill="black">low likelihood</text>
-          <circle cx="240" cy="60" r="7" fill="#000000" fill-opacity="1" />
-          <text    x="252"  y="65" fill="black">impossible</text>
-        </svg>
-      </p>
+              <circle cx="240" cy="10" r="7" fill="#3b8217" fill-opacity="1" />
+              <text    x="252"  y="15" fill="black">high likelihood</text>
+              <circle cx="240" cy="35" r="7" fill="#821e17" fill-opacity="1" />
+              <text    x="252"  y="40" fill="black">low likelihood</text>
+              <circle cx="240" cy="60" r="7" fill="#000000" fill-opacity="1" />
+              <text    x="252"  y="65" fill="black">impossible</text>
+            </svg>
+          </div>
+          <!-- <div class="float-right"> -->
+          <div>
+            <h2 class="nIte"></h2>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="siso">
       <h2> SISO in the Natural Domain</h2>
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" id="svg-natural"></svg>
-
       <h2> SISO in the Interleaved Domain</h2>
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" id="svg-interleaved"></svg>
     </div>
-  </div>
-  <script type="text/javascript" src="js/turbo_reader.js"></script>
+    <script type="text/javascript" src="js/turbo_reader.js"></script>
   </body>
 </html>

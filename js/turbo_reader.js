@@ -310,40 +310,42 @@ function launch(jsonData)
 		generateSvgGraph(encoder, decoder, "#svg-natural",     ite);
 		generateSvgGraph(encoder, decoder, "#svg-interleaved", ite);
 
-		var badges = '<span class="badge badge-secondary">ite. ' + (curIte +1) + '/' + decoder.n_ite + '</span>&nbsp;';
-		badges    += '<span class="badge badge-secondary">K = ' + encoder.K + '</span>&nbsp;';
-		badges    += '<span class="badge badge-secondary">R = ' + encoder.R + '</span>&nbsp;';
-		badges    += '<span class="badge badge-secondary">poly = ' + encoder.poly + '</span>';
+		var badges  = '<span class="badge badge-secondary">ite. ' + (curIte +1) + '/' + decoder.n_ite + '</span>&nbsp;';
+		    badges += '<span class="badge badge-secondary">K = ' + encoder.K + '</span>&nbsp;';
+		    badges += '<span class="badge badge-secondary">R = ' + encoder.R + '</span>&nbsp;';
+		    badges += '<span class="badge badge-secondary">poly = ' + encoder.poly + '</span>';
 		$(".nIte").html(badges);
 		$(".nFra").html("(" + (curFra +1) + "/" + nFra + ")");
 	}
 
 	upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
 
-	$("#fileSelection").hide();
 	$("#control").show();
 	$("#legend").show();
 	$("#siso").show();
 
+	$("#radiusCB").unbind();
 	$("#radiusCB").click(function()
 	{
 		variableRadius = !variableRadius;
 		upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
 	});
 
+	$("#opacityCB").unbind();
 	$("#opacityCB").click(function()
 	{
 		opacity = !opacity;
 		upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
 	});
 
+	$("#bigLinesCB").unbind();
 	$("#bigLinesCB").click(function()
 	{
 		bigLines = !bigLines;
 		upSvg(jsonData[curFra][0], jsonData[curFra][1], curIte);
 	});
 
-
+	$("#nextButton").unbind();
 	$("#nextButton").click(function()
 	{
 		if (curIte < jsonData[curFra][1].n_ite -1)
@@ -352,6 +354,7 @@ function launch(jsonData)
 		}
 	});
 
+	$("#prevButton").unbind();
 	$("#prevButton").click(function()
 	{
 		if (curIte >= 1)
@@ -429,7 +432,7 @@ window.onload = function()
 			var reader = new FileReader();
 			reader.onload = function(e)
 			{
-				$("#presentationTurboReader").empty();
+				$("#turboReaderPreview").hide();
 				var jsonData = JSON.parse(reader.result);
 				launch(jsonData);
 			};
