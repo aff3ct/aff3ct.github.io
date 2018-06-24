@@ -207,7 +207,7 @@ function addClick(a,side) {
 
 		var lval = encodeURIComponent(findGetParameter("left"));
 		var rval = encodeURIComponent(findGetParameter("right"));
-		var uri  = "/comparator/comparator.html?left="+lval+"&right="+rval;
+		var uri  = "/comparator.html?left="+lval+"&right="+rval;
 		// uri = replaceQueryParam(uri,side.replace(".",""),a.filename);
 		uri = updateURLParameter(uri,side.replace(".",""),a.filename);
 		window.history.replaceState({},"aff3ct.github.io",uri);
