@@ -429,6 +429,7 @@ window.onload = function()
 
 		if (file.name.match(jsonExt))
 		{
+			$("#fileDisplayArea").empty();
 			var reader = new FileReader();
 			reader.onload = function(e)
 			{

@@ -93,6 +93,9 @@ function addBuild(branch,tag,hash,date,message,author,buildsList) {
   build+='    <i>'+date+'</i>';
   build+='  </div>';
   build+='  <div class="col-md-4">';
+  build+=     message;
+  build+='  </div>';
+  build+='  <div class="col-md-5">';
   build+='    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">';
   build+='      <div class="btn-group" role="group">';
   build+='        <button id="btnGroupDropWin_'+branch+'_'+ hash+'" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
@@ -119,9 +122,6 @@ function addBuild(branch,tag,hash,date,message,author,buildsList) {
   build+='        </div>';
   build+='      </div>';
   build+='    </div>';
-  build+='  </div>';
-  build+='  <div class="col-md-5">';
-  build+=     message;
   build+='  </div>';
   build+='</div>';
 
