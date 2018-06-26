@@ -55,13 +55,18 @@ function addLink(branch,hash,build)
   else if (~build.indexOf("linux")) sys="linux";
   else sys="other"
 
+  var arch="";
   var name="";
   var simd="";
-  if (~build.indexOf("avx2")) { name="64-bit AVX2"; simd="avx2"; }
-  else if (~build.indexOf("sse4_2")) { name="64-bit SSE4.2"; simd="sse4_2"; }
-  else { name="No name"; simd="unknown"; }
+  if (~build.indexOf("x86")) { name="x86"; arch="x86"; }
+  else if (~build.indexOf("x64")) { name="x64"; arch="x64"; }
+  else { name="x64"; arch="x64"; }
+  name+=" ";
+  if (~build.indexOf("avx2")) { name+="AVX2"; simd="avx2"; }
+  else if (~build.indexOf("sse4_2")) { name+="SSE4.2"; simd="sse4_2"; }
+  else { name="NONAME"; simd="unknown"; }
 
-  var idLink="build_"+sys+"_"+branch+"_"+hash+"_"+simd;
+  var idLink="build_"+sys+"_"+branch+"_"+hash+"_"+arch+"_"+simd;
   var idLinks="builds_"+sys+"_"+branch+"_"+hash;
   var idUnavail="unavailable_builds_"+sys+"_"+branch+"_"+hash;
 
