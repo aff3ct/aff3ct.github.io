@@ -18,7 +18,7 @@ function ajaxLoad(url) {
 }
 
 function addBuilds(branch,maxBuilds) {
-  var url="ressources/download_"+branch+".csv";
+  var url="https://github.com/aff3ct/ressources/raw/master/aff3ct_builds/download_"+branch+".csv";
   ajaxLoad(
     url
   ).done(function(result) {
@@ -70,7 +70,7 @@ function addLink(branch,hash,build)
   var idLinks="builds_"+sys+"_"+branch+"_"+hash;
   var idUnavail="unavailable_builds_"+sys+"_"+branch+"_"+hash;
 
-  var file='https://github.com/aff3ct/aff3ct.github.io/raw/master/ressources/builds/'+build;
+  var file='https://github.com/aff3ct/ressources/raw/master/aff3ct_builds/'+build;
   var link='<a class="dropdown-item" href="'+file+'" id="'+idLink+'"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>'+name+'</a>';
 
   $("#"+idLinks).append(link);
