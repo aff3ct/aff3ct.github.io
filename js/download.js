@@ -9,18 +9,20 @@ function setMIME(mime) {
 }
 
 // Macro for handling async file loading
-function ajaxLoad(url) {
+function ajaxLoad(url,branch) {
   return $.when(
   $.ajax(url,
     {error:function(xhr,status,error) {
     console.error("**Error "+url+"\n"+status+" "+error);
+    $("#"+branch+"_builds").append('<div class="alert alert-secondary" role="alert">There is no build available to download at this time, please come back later.</div>');
   }}));
 }
 
 function addBuilds(branch,maxBuilds) {
-  var url="https://github.com/aff3ct/ressources/raw/master/aff3ct_builds/download_"+branch+".csv";
+  var url="download/download_"+branch+".csv";
   ajaxLoad(
-    url
+    url,
+    branch
   ).done(function(result) {
     var lines=result.split("\n");
     if (lines.length >= 1 && lines[lines.length -1] === "")
