@@ -70,7 +70,7 @@ function addLink(branch,hash,build)
   var idLinks="builds_"+sys+"_"+branch+"_"+hash;
   var idUnavail="unavailable_builds_"+sys+"_"+branch+"_"+hash;
 
-  var file='ressources/builds/'+build;
+  var file='https://github.com/aff3ct/aff3ct.github.io/raw/master/ressources/builds/'+build;
   var link='<a class="dropdown-item" href="'+file+'" id="'+idLink+'"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>'+name+'</a>';
 
   $("#"+idLinks).append(link);
