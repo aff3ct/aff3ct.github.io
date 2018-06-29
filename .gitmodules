@@ -1,4 +1,0 @@
-[submodule "ressources"]
-	path = ressources
-	url = ../ressources/
-	branch = master
