@@ -157,15 +157,21 @@ function loadFile(file) {
 		GITLAB+"files/"+filename+"/raw?ref="+BRANCH+"&private_token="+KEY
 	).done(function(result) {
 		var ini = parseINIString(result);
-		var lines=result.split("\n");
+		ini.metadata.command=ini.metadata.command.replace(/"([^ ,:;]*)"/g, "$1");
+		ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ "([^]*)"/g, "");
+		ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ ([^ ]*)/g, "");
+		ini.metadata.command=ini.metadata.command.replace(/"\.\.\/conf\/([^ ]*)"/g, "../conf/$1");
+		ini.metadata.command=ini.metadata.command.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1'>$1</a>");
+		ini.metadata.command=ini.metadata.command.replace(/\.\/bin\/aff3ct/g,"aff3ct");
 
+		var lines=result.split("\n");
 		var startLine;
 		for (startLine=0;startLine<lines.length;startLine++)
 			if (lines[startLine] == "[trace]")
 				break;
 		lines.splice(0,startLine+1);
 
-		var name=ini.metadata.title;
+		// var name=ini.metadata.title;
 		var coderate=0,framesize=0,infobits=0,codeword=0;
 		var BER={x:[],y:[],type:'scatter',name:'BER'};
 		var FER={x:[],y:[],type:'scatter',name:'FER'};
@@ -177,13 +183,6 @@ function loadFile(file) {
 				info[lines[i].substring(4,lines[i].indexOf("-")).trim()] =
 					lines[i+1].split("=")[1].trim();
 		var code=info.Code;
-		var cmd=ini.metadata.command;
-		cmd=cmd.replace(/"([^ ,:;]*)"/g, "$1");
-		cmd=cmd.replace(/\-\-sim\-meta\ "([^]*)"/g, "");
-		cmd=cmd.replace(/\-\-sim\-meta\ ([^ ]*)/g, "");
-		cmd=cmd.replace(/"\.\.\/conf\/([^ ]*)"/g, "../conf/$1");
-		cmd=cmd.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1'>$1</a>");
-		cmd=cmd.replace(/\.\/bin\/aff3ct/g,"aff3ct");
 		if (typeof code=="undefined") code=info.Codec;
 		for (var i=0;i<lines.length;i++)
 			if (lines[i].indexOf("=")>-1) {
@@ -215,8 +214,8 @@ function loadFile(file) {
 			// BEFE.y.push(parseFloat(fields[3])/parseFloat(fields[4]));
 			// THR.y.push(parseFloat(fields[9]));
 		}
-		var o={id:ID,name:name,info:info,coderate:coderate,framesize:framesize,codeword:codeword,ber:BER,fer:FER,
-		       /*befe:BEFE,thr:THR,*/code:code,cmd:cmd,file:result,filename:filename};
+		var o={id:ID,ini:ini,info:info,coderate:coderate,framesize:framesize,codeword:codeword,ber:BER,fer:FER,
+		       /*befe:BEFE,thr:THR,*/code:code,file:result,filename:filename};
 		d.resolve(o);
 		ID=ID+1;
 	});
@@ -323,7 +322,7 @@ function displayFiles(side,files,framesize) {
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
 		var s="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"
-		s+=a.name+"&nbsp;<div class='text-muted twoColumns'><small><b>Frame size</b>: "+a.framesize+"<br/>";
+		s+=a.ini.metadata.title+"&nbsp;<div class='text-muted twoColumns'><small><b>Frame size</b>: "+a.framesize+"<br/>";
 		if (a.codeword > a.framesize)
 			s+="<b>Codeword</b>: "+a.codeword+"<br/>";
 		s+="<b>Coderate</b>: "+a.coderate;
@@ -336,55 +335,62 @@ function displayFiles(side,files,framesize) {
 		}
 		s+="</small></div>";
 		s+="<div class='curveIcons'>";
+		if (a.ini.metadata.doi)
+		s+="  <span class='curveIcon'><a href='https://doi.org/"+a.ini.metadata.doi+"' target='_blank' title='DOI'><i class='fas fa-book'></i></a></span>"
+		if (a.ini.metadata.url)
+		s+="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL'><i class='fas fa-globe'></i></a></span>"
+		if (a.ini.metadata.command)
 		s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+side.replace(".","")+i+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
 		s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoFile"+side.replace(".","")+i+"' title='Original output text file'><i class='fas fa-file-alt'></i></a></span>"
 		s+="</div>";
 		s+="</li>";
 		$(side+" .bers").append(s);
-		var m="";
-		m+="<div class='modal fade' id='modalInfoCmd"+side.replace(".","")+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
-		m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
-		m+="    <div class='modal-content'>";
-		m+="      <div class='modal-header'>";
-		m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.name+"</h5>";
-		m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
-		m+="          <span aria-hidden='true'>&times;</span>";
-		m+="        </button>";
-		m+="      </div>";
-		m+="      <div class='modal-body'>";
-		m+="        <div class='shell-wrap'>";
-		m+="          <p class='shell-top-bar'>AFF3CT command line</p>";
-		m+="          <ul class='shell-body'>";
-		m+="            <li>"+a.cmd+"</li>";
-		m+="          </ul>";
-		m+="        </div>";
-		m+="        <br>";
-		m+="        <p class='text-justify'><b>Be careful</b>, this command is not guarantee to work with the <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/master'><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/development'><i>development</i> branch</a>.</p>"
-		m+="      </div>";
-		m+="    </div>";
-		m+="  </div>";
-		m+="</div>";
-		m+="<div class='modal fade' id='modalInfoFile"+side.replace(".","")+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
-		m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
-		m+="    <div class='modal-content'>";
-		m+="      <div class='modal-header'>";
-		m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.name+"</h5>";
-		m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
-		m+="          <span aria-hidden='true'>&times;</span>";
-		m+="        </button>";
-		m+="      </div>";
-		m+="      <div class='modal-body'>";
-		m+="        <pre>";
-		m+=a.file;
-		m+="        </pre>";
-		m+="      </div>";
-		m+="      <div class='modal-footer'>";
-		m+="        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
-		m+="      </div>";
-		m+="    </div>";
-		m+="  </div>";
-		m+="</div>";
-		$("#"+side.replace(".","")+"modals").append(m);
+		if (a.ini.metadata.command) {
+			var m="";
+			m+="<div class='modal fade' id='modalInfoCmd"+side.replace(".","")+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+			m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
+			m+="    <div class='modal-content'>";
+			m+="      <div class='modal-header'>";
+			m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.ini.metadata.title+"</h5>";
+			m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+			m+="          <span aria-hidden='true'>&times;</span>";
+			m+="        </button>";
+			m+="      </div>";
+			m+="      <div class='modal-body'>";
+			m+="        <div class='shell-wrap'>";
+			m+="          <p class='shell-top-bar'>AFF3CT command line</p>";
+			m+="          <ul class='shell-body'>";
+			m+="            <li>"+a.ini.metadata.command+"</li>";
+			m+="          </ul>";
+			m+="        </div>";
+			m+="        <br>";
+			m+="        <p class='text-justify'><b>Be careful</b>, this command is not guarantee to work with the <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/master'><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/development'><i>development</i> branch</a>.</p>"
+			m+="      </div>";
+			m+="    </div>";
+			m+="  </div>";
+			m+="</div>";
+			m+="<div class='modal fade' id='modalInfoFile"+side.replace(".","")+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+			m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
+			m+="    <div class='modal-content'>";
+			m+="      <div class='modal-header'>";
+			m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.ini.metadata.title+"</h5>";
+			m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+			m+="          <span aria-hidden='true'>&times;</span>";
+			m+="        </button>";
+			m+="      </div>";
+			m+="      <div class='modal-body'>";
+			m+="        <pre>";
+			m+=a.file;
+			m+="        </pre>";
+			m+="      </div>";
+			m+="      <div class='modal-footer'>";
+			m+="        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
+			m+="      </div>";
+			m+="    </div>";
+			m+="  </div>";
+			m+="</div>";
+			$("#"+side.replace(".","")+"modals").append(m);
+		}
 		addClick(a,side);
 	}
 	$('[data-toggle="tooltip"]').tooltip();
