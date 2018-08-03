@@ -109,6 +109,44 @@ function setMIME(mime) {
 	});
 }
 
+function parseINIString(data) {
+	var regex = {
+		section: /^\s*\[\s*([^\]]*)\s*\]\s*$/,
+		param: /^\s*([^=]+?)\s*=\s*(.*?)\s*$/,
+		comment: /^\s*;.*$/
+	};
+	var value = {};
+	var lines = data.split(/[\r\n]+/);
+	var section = null;
+	var over = false;
+	lines.forEach(function(line){
+		if (!over){
+			if(regex.comment.test(line)){
+				return;
+			}else if(regex.param.test(line)){
+				var match = line.match(regex.param);
+				if(section){
+					value[section][match[1]] = match[2];
+				}else{
+					value[match[1]] = match[2];
+				}
+			}else if(regex.section.test(line)){
+				var match = line.match(regex.section);
+				if (match[1] == "trace")
+				{
+					over = true;
+					return;
+				}
+				value[match[1]] = {};
+				section = match[1];
+			}else if(line.length == 0 && section){
+				section = null;
+			};
+		}
+	});
+	return value;
+}
+
 // Reads and stores one file. Returns the content of the file.
 var ID=0;
 function loadFile(file) {
@@ -118,8 +156,16 @@ function loadFile(file) {
 	ajaxLoad(
 		GITLAB+"files/"+filename+"/raw?ref="+BRANCH+"&private_token="+KEY
 	).done(function(result) {
+		var ini = parseINIString(result);
 		var lines=result.split("\n");
-		var name=lines[3];
+
+		var startLine;
+		for (startLine=0;startLine<lines.length;startLine++)
+			if (lines[startLine] == "[trace]")
+				break;
+		lines.splice(0,startLine+1);
+
+		var name=ini.metadata.title;
 		var coderate=0,framesize=0,infobits=0,codeword=0;
 		var BER={x:[],y:[],type:'scatter',name:'BER'};
 		var FER={x:[],y:[],type:'scatter',name:'FER'};
@@ -131,10 +177,10 @@ function loadFile(file) {
 				info[lines[i].substring(4,lines[i].indexOf("-")).trim()] =
 					lines[i+1].split("=")[1].trim();
 		var code=info.Code;
-		var cmd=lines[1];
+		var cmd=ini.metadata.command;
 		cmd=cmd.replace(/"([^ ,:;]*)"/g, "$1");
-		cmd=cmd.replace(/\-\-sim\-pyber\ "([^]*)"/g, "");
-		cmd=cmd.replace(/\-\-sim\-pyber\ ([^ ]*)/g, "");
+		cmd=cmd.replace(/\-\-sim\-meta\ "([^]*)"/g, "");
+		cmd=cmd.replace(/\-\-sim\-meta\ ([^ ]*)/g, "");
 		cmd=cmd.replace(/"\.\.\/conf\/([^ ]*)"/g, "../conf/$1");
 		cmd=cmd.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1'>$1</a>");
 		cmd=cmd.replace(/\.\/bin\/aff3ct/g,"aff3ct");
