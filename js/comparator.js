@@ -202,6 +202,7 @@ function loadFile(file) {
 		if (coderate==0&&framesize!=0&&infobits!=0) coderate=Math.round(infobits/framesize*100)/100;
 		for (var i=4;i<lines.length;i++) {
 			if (lines[i].startsWith("#")||lines[i].length==0) continue;
+			lines[i]=lines[i].replace(/\|\|/g,"|");
 			var fields = lines[i].split(/\|/);
 			var x=parseFloat(fields[1]);
 			if (x=="NaN") continue;
