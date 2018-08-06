@@ -332,6 +332,8 @@ function displayFiles(side,files,framesize) {
 			var tooltip = "";
 			if (tooltips.get(a.info[j]))
 				tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.info[j]) + "'";
+			if (a.info[j] == "BP_HORIZONTAL_LAYERED") a.info[j] = "BP_HLAYERED";
+			if (a.info[j] == "BP_VERTICAL_LAYERED") a.info[j] = "BP_VLAYERED";
 			s+="<br/><b>"+j+"</b>: "+"<span" + tooltip + ">" + a.info[j] + "</span>";
 		}
 		s+="</small></div>";
