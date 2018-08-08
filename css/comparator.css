@@ -54,10 +54,8 @@
   animation: spin 2s linear infinite;
 }*/
 
-#loader {
-  margin-top: 50px;
-  margin-left: 10px;
-  margin-right: 10px;
+#loader .progress{
+  margin-top: 20px;
 }
 
 /* Safari */

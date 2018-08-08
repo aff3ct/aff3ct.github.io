@@ -477,6 +477,7 @@ $(document).ready(function() {
 			displayCodeTypes(ordered);
 			document.getElementById("loader").style.display = "none";
 			document.getElementById("tips").style.display = "block";
+			document.getElementById("comparator").style.display = "block";
 
 			var left = findGetParameter("left");
 			if (left) drawCurvesFromURI(ordered,left,"left");
