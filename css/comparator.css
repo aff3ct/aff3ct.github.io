@@ -39,7 +39,7 @@
   display: inline-block;
 }
 
-#loader {
+/*#loader {
   position: absolute;
   left: 50%;
   top: 20%;
@@ -52,6 +52,12 @@
   border-top: 16px solid #3498db;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
+}*/
+
+#loader {
+  margin-top: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 /* Safari */

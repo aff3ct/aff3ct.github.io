@@ -149,6 +149,8 @@ function parseINIString(data) {
 
 // Reads and stores one file. Returns the content of the file.
 var ID=0;
+var curFile=0;
+var nFiles=0;
 function loadFile(file) {
 	var d=$.Deferred();
 	setMIME("text/plain");
@@ -219,6 +221,12 @@ function loadFile(file) {
 		       /*befe:BEFE,thr:THR,*/code:code,file:result,filename:filename};
 		d.resolve(o);
 		ID=ID+1;
+
+		// Progress bar
+		curFile=curFile+1
+		let percentage=Math.round(((curFile)/nFiles)*100);
+		$("#loader .progress-bar").html(percentage+"%");
+		$('#loader .progress-bar').attr('aria-valuenow', percentage).css('width',percentage+"%");
 	});
 	return d.promise();
 }
@@ -231,6 +239,14 @@ function loadFileList(page,maxperpage) {
 		//GITHUB+"git/trees/"+BRANCH+"?recursive=1"
 	).done(function(result) {
 		var dirs=result.filter(x=>x.type=="blob").map(x=>x.path);
+
+		var supported_ext = ["data", "perf", "dat", "txt"];
+		dirs = dirs.filter(function(x){
+			var filename = encodeURIComponent(x);
+			var ext = filename.split('.').pop();
+			return supported_ext.indexOf(ext) > -1;
+		});
+
 		if (result.length<maxperpage)
 			dirlist.resolve(dirs);
 		else
@@ -454,8 +470,8 @@ $(document).ready(function() {
 
 	setMIME("application/json");
 	loadFileList(1,100).done(function(files) {
-	$.when.apply(this,files.map(x=>loadFile(x))).done(
-		function() {
+		nFiles=files.length;
+		$.when.apply(this,files.map(x=>loadFile(x))).done(function() {
 			var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
 			var ordered=orderFiles(files);
 			displayCodeTypes(ordered);
