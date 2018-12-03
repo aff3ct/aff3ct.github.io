@@ -163,7 +163,7 @@ function loadFile(file) {
 		ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ "([^]*)"/g, "");
 		ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ ([^ ]*)/g, "");
 		ini.metadata.command=ini.metadata.command.replace(/"\.\.\/conf\/([^ ]*)"/g, "../conf/$1");
-		ini.metadata.command=ini.metadata.command.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1'>$1</a>");
+		ini.metadata.command=ini.metadata.command.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1' onclick='trackOutboundLink(\"https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1\");return false;'>$1</a>");
 		ini.metadata.command=ini.metadata.command.replace(/\.\/bin\/aff3ct/g,"aff3ct");
 
 		var lines=result.split("\n");
@@ -355,9 +355,9 @@ function displayFiles(side,files,framesize) {
 		s+="</small></div>";
 		s+="<div class='curveIcons'>";
 		if (a.ini.metadata.doi)
-		s+="  <span class='curveIcon'><a href='https://doi.org/"+a.ini.metadata.doi+"' target='_blank' title='DOI'><i class='fas fa-book'></i></a></span>"
+		s+="  <span class='curveIcon'><a href='https://doi.org/"+a.ini.metadata.doi+"' target='_blank' title='DOI' onclick='trackOutboundLink(\"https://doi.org/"+a.ini.metadata.doi+"\");return false;'><i class='fas fa-book'></i></a></span>"
 		if (a.ini.metadata.url)
-		s+="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL'><i class='fas fa-globe'></i></a></span>"
+		s+="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='trackOutboundLink(\""+a.ini.metadata.url+"\");return false;'><i class='fas fa-globe'></i></a></span>"
 		if (a.ini.metadata.command)
 		s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+side.replace(".","")+i+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
 		s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoFile"+side.replace(".","")+i+"' title='Original output text file'><i class='fas fa-file-alt'></i></a></span>"
@@ -383,7 +383,7 @@ function displayFiles(side,files,framesize) {
 			m+="          </ul>";
 			m+="        </div>";
 			m+="        <br>";
-			m+="        <p class='text-justify'><b>Be careful</b>, this command is not guarantee to work with the <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/master'><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/development'><i>development</i> branch</a>.</p>"
+			m+="        <p class='text-justify'><b>Be careful</b>, this command is not guarantee to work with the <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/master' onclick='trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");return false;'><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/development' onclick='trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");return false;'><i>development</i> branch</a>.</p>"
 			m+="      </div>";
 			m+="    </div>";
 			m+="  </div>";

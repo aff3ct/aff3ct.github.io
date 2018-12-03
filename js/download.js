@@ -73,7 +73,7 @@ function addLink(branch,hash,build)
   var idUnavail="unavailable_builds_"+sys+"_"+branch+"_"+hash;
 
   var file='https://github.com/aff3ct/ressources/raw/master/aff3ct_builds/'+build;
-  var link='<a class="dropdown-item" href="'+file+'" id="'+idLink+'"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>'+name+'</a>';
+  var link='<a class="dropdown-item" href="'+file+'" id="'+idLink+'" onclick="trackOutboundLink(\''+file+'\');return false;"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>'+name+'</a>';
 
   $("#"+idLinks).append(link);
   $("#"+idUnavail).remove();
@@ -93,8 +93,8 @@ function addBuild(branch,tag,hash,date,message,author,buildsList) {
   var build="";
   build+='<div class="row">';
   build+='  <div class="col-md-1">';
-  build+='    <a target="_blank" href="https://github.com/aff3ct/aff3ct/releases/tag/'+tag+'" class="badge badge-primary">'+tag+'</a>';
-  build+='    <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/'+hash+'" class="badge badge-secondary">'+hash+'</a>';
+  build+='    <a target="_blank" href="https://github.com/aff3ct/aff3ct/releases/tag/'+tag+'" onclick="trackOutboundLink(\'https://github.com/aff3ct/aff3ct/releases/tag/'+tag+'\');return false;" class="badge badge-primary">'+tag+'</a>';
+  build+='    <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/'+hash+'" onclick="trackOutboundLink(\'https://github.com/aff3ct/aff3ct/tree/'+hash+'\');return false;" class="badge badge-secondary">'+hash+'</a>';
   build+='  </div>';
   build+='  <div class="col-md-2">';
   build+='    <i>'+date+'</i>';
