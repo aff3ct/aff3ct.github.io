@@ -28,11 +28,15 @@
       * as the event label. Setting the transport method to 'beacon' lets the hit be sent
       * using 'navigator.sendBeacon' in browser that support it.
       */
-      var trackOutboundLink = function(url) {
-         ga('send', 'event', 'outbound', 'click', url, {
-           'transport': 'beacon',
-           'hitCallback': function(){document.location = url;}
-         });
+      var trackOutboundLink = function(url, isExternal = true) {
+        var params = {};
+        if (!isExternal) {
+          params.hitCallback = function () {
+            document.location = url;
+          }
+        }
+        ga('send', 'event', 'outbound', 'click', url, params);
+        return isExternal;
       }
     </script>
   </head>
@@ -48,8 +52,8 @@
           <li class="nav-item"><a class="nav-link" href="publications.html"><i class="fa fa-newspaper" aria-hidden="true">&nbsp;</i>Publications</a></li>
           <li class="nav-item active"><a class="nav-link" href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
           <li class="nav-item"><a class="nav-link" href="download.html"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://aff3ct.readthedocs.io" target="_blank" onclick="trackOutboundLink('https://aff3ct.readthedocs.io');return false;"><i class="fas fa-book" aria-hidden="true">&nbsp;</i>Documentation</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://github.com/aff3ct/aff3ct" target="_blank" onclick="trackOutboundLink('https://github.com/aff3ct/aff3ct');return false;"><i class="fab fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://aff3ct.readthedocs.io" target="_blank" onclick="return trackOutboundLink('https://aff3ct.readthedocs.io');"><i class="fas fa-book" aria-hidden="true">&nbsp;</i>Documentation</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/aff3ct/aff3ct" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/aff3ct');"><i class="fab fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
         </ul>
         <ul class="navbar-nav navbar-right">
           <li class="nav-item"><a class="nav-link" href="comparator.html"><i class="fas fa-chart-bar" aria-hidden="true">&nbsp;</i>BER/FER Comparator</a></li>
@@ -69,19 +73,19 @@
     <div class="container marketing">
       <div class="mb-4"></div>
       <h1 class="display-4">Partners and Contributors</h1>
-      <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');return false;"><img src="images/logo/cpu_labex.jpg" style="width:400px; max-width:100%"/></a>
-      <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="trackOutboundLink('http://www.agence-nationale-recherche.fr/');return false;"><img src="images/logo/anr.gif" style="width:200px; max-width:100%"/></a>
-      <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');return false;"><img src="images/logo/nand.png" style="width:200px; max-width:100%"/></a>
-      <a href="https://www.ims-bordeaux.fr" target="_blank" onclick="trackOutboundLink('https://www.ims-bordeaux.fr');return false;"><img src="images/logo/ims.jpg" style="width:200px; max-width:100%"/></a>
-      <a href="http://www.inria.fr/" target="_blank" onclick="trackOutboundLink('http://www.inria.fr/');return false;"><img src="images/logo/inria.jpg" style="width:200px; max-width:100%"/></a>
-      <a href="https://www.bordeaux-inp.fr/" target="_blank" onclick="trackOutboundLink('https://www.bordeaux-inp.fr/');return false;"><img src="images/logo/inp.png" style="width:200px; max-width:100%"/></a>
+      <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="return trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');"><img src="images/logo/cpu_labex.jpg" style="width:400px; max-width:100%"/></a>
+      <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="return trackOutboundLink('http://www.agence-nationale-recherche.fr/');"><img src="images/logo/anr.gif" style="width:200px; max-width:100%"/></a>
+      <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="return trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');"><img src="images/logo/nand.png" style="width:200px; max-width:100%"/></a>
+      <a href="https://www.ims-bordeaux.fr" target="_blank" onclick="return trackOutboundLink('https://www.ims-bordeaux.fr');"><img src="images/logo/ims.jpg" style="width:200px; max-width:100%"/></a>
+      <a href="http://www.inria.fr/" target="_blank" onclick="return trackOutboundLink('http://www.inria.fr/');"><img src="images/logo/inria.jpg" style="width:200px; max-width:100%"/></a>
+      <a href="https://www.bordeaux-inp.fr/" target="_blank" onclick="return trackOutboundLink('https://www.bordeaux-inp.fr/');"><img src="images/logo/inp.png" style="width:200px; max-width:100%"/></a>
       <h2>List of contributors</h2>
       <p>Main developpers:</p>
       <p>
         <ul>
-          <li><a href="http://www.potionmagic.eu/~adrien/" target="_blank" onclick="trackOutboundLink('http://www.potionmagic.eu/~adrien/');return false;">Adrien Cassagne</a> (Ph.D) - <i>Inria, IMS lab., Univ. of Bordeaux, France</i></li>
+          <li><a href="http://www.potionmagic.eu/~adrien/" target="_blank" onclick="return trackOutboundLink('http://www.potionmagic.eu/~adrien/');">Adrien Cassagne</a> (Ph.D) - <i>Inria, IMS lab., Univ. of Bordeaux, France</i></li>
           <li>Mathieu Léonardon (Ph.D) - <i>IMS lab., Univ. of Bordeaux, France and Polytechnique Montréal, Canada</i></li>
-          <li><a href="http://archive.ims-bordeaux.fr/IMS/pages/pagePerso.php?guidPage=NGVkMzVlM2M1MjIzZQ==&email=camille.leroux@ims-bordeaux.fr" target="_blank" onclick="trackOutboundLink('http://archive.ims-bordeaux.fr/IMS/pages/pagePerso.php?guidPage=NGVkMzVlM2M1MjIzZQ==&email=camille.leroux@ims-bordeaux.fr');return false;">Camille Leroux</a> (Professor) - <i>IMS lab., Univ. of Bordeaux, France</i></li>
+          <li><a href="http://archive.ims-bordeaux.fr/IMS/pages/pagePerso.php?guidPage=NGVkMzVlM2M1MjIzZQ==&email=camille.leroux@ims-bordeaux.fr" target="_blank" onclick="return trackOutboundLink('http://archive.ims-bordeaux.fr/IMS/pages/pagePerso.php?guidPage=NGVkMzVlM2M1MjIzZQ==&email=camille.leroux@ims-bordeaux.fr');">Camille Leroux</a> (Professor) - <i>IMS lab., Univ. of Bordeaux, France</i></li>
           <li>Romain Tajan (Professor) - <i>IMS lab., Univ. of Bordeaux, France</i></li>
           <li>Olivier Hartmann (Engineer) - <i>IMS lab., Univ. of Bordeaux, France and Thales Alenia Space, Toulouse</i></li>
           <li>Thibaud Tonnellier (Ph.D) - <i>IMS lab., Univ. of Bordeaux, France</i></li>
@@ -90,14 +94,14 @@
       <p>Other contributors:</p>
       <p>
         <ul>
-          <li><a href="http://legal.vvv.enseirb-matmeca.fr/" target="_blank" onclick="trackOutboundLink('http://legal.vvv.enseirb-matmeca.fr/');return false;">Bertrand Le Gal</a> (Professor) - <i>IMS lab., Univ. of Bordeaux, France</i></li>
-          <li><a href="https://runtime.bordeaux.inria.fr/oaumage/oa/" target="_blank" onclick="trackOutboundLink('https://runtime.bordeaux.inria.fr/oaumage/oa/');return false;">Olivier Aumage</a> (Research associate) - <i> Inria Bordeaux, France</i></li>
-          <li><a href="http://www.labri.fr/perso/barthou/" target="_blank" onclick="trackOutboundLink('http://www.labri.fr/perso/barthou/');return false;">Denis Barthou</a> (Full professor) - <i>Bordeaux INP/Inria, France</i></li>
+          <li><a href="http://legal.vvv.enseirb-matmeca.fr/" target="_blank" onclick="return trackOutboundLink('http://legal.vvv.enseirb-matmeca.fr/');">Bertrand Le Gal</a> (Professor) - <i>IMS lab., Univ. of Bordeaux, France</i></li>
+          <li><a href="https://runtime.bordeaux.inria.fr/oaumage/oa/" target="_blank" onclick="return trackOutboundLink('https://runtime.bordeaux.inria.fr/oaumage/oa/');">Olivier Aumage</a> (Research associate) - <i> Inria Bordeaux, France</i></li>
+          <li><a href="http://www.labri.fr/perso/barthou/" target="_blank" onclick="return trackOutboundLink('http://www.labri.fr/perso/barthou/');">Denis Barthou</a> (Full professor) - <i>Bordeaux INP/Inria, France</i></li>
           <li>Christophe Jego (Full professor) - <i>IMS lab., Univ. of Bordeaux, France</i></li>
-          <li><a href="http://benaddi.perso.enseeiht.fr/" target="_blank" onclick="trackOutboundLink('http://benaddi.perso.enseeiht.fr/');return false;">Tarik Benaddi</a> (Professor) - <i>TELECOM Bretagne, Toulouse</i></li>
-          <li><a href="http://poulliat.perso.enseeiht.fr/" target="_blank" onclick="trackOutboundLink('http://poulliat.perso.enseeiht.fr/');return false;">Charly Poulliat</a> (Full professor) - <i>INP Toulouse, France</i></li>
-          <li><a href="http://dcn.infos.ru/~petert/" target="_blank" onclick="trackOutboundLink('http://dcn.infos.ru/~petert/');return false;">Peter Trifonov</a> (Professor) - <i>Polytechnique Saint-Petersburg, Russia</i></li>
-          <li><a href="http://www.sjsu.edu/people/robert.morelos-zaragoza/" target="_blank" onclick="trackOutboundLink('http://www.sjsu.edu/people/robert.morelos-zaragoza/');return false;">Robert Morelos-Zaragoza</a> (Full professor) - <i>San José State University, United States</i></li>
+          <li><a href="http://benaddi.perso.enseeiht.fr/" target="_blank" onclick="return trackOutboundLink('http://benaddi.perso.enseeiht.fr/');">Tarik Benaddi</a> (Professor) - <i>TELECOM Bretagne, Toulouse</i></li>
+          <li><a href="http://poulliat.perso.enseeiht.fr/" target="_blank" onclick="return trackOutboundLink('http://poulliat.perso.enseeiht.fr/');">Charly Poulliat</a> (Full professor) - <i>INP Toulouse, France</i></li>
+          <li><a href="http://dcn.infos.ru/~petert/" target="_blank" onclick="return trackOutboundLink('http://dcn.infos.ru/~petert/');">Peter Trifonov</a> (Professor) - <i>Polytechnique Saint-Petersburg, Russia</i></li>
+          <li><a href="http://www.sjsu.edu/people/robert.morelos-zaragoza/" target="_blank" onclick="return trackOutboundLink('http://www.sjsu.edu/people/robert.morelos-zaragoza/');">Robert Morelos-Zaragoza</a> (Full professor) - <i>San José State University, United States</i></li>
           <li>Elie Janin (Engineer) - <i>Thales Communications & Security, Gennevilliers, France</i></li>
           <li>Alireza Ghaffari (Ph.D) - <i>Polytechnique Montréal, Canada</i></li>
           <li>Guillaume Delbergue (Ph.D) - <i>IMS lab., Univ. of Bordeaux, France and Greensocs, France</i></li>
@@ -111,7 +115,7 @@
       <hr>
       <footer class="container">
         <p class="float-right"><a href="#"><i class="fa fa-level-up-alt" aria-hidden="true">&nbsp;</i>Back to top</a></p>
-        <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="trackOutboundLink('http://www.agence-nationale-recherche.fr/');return false;">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');return false;">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');return false;">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
+        <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="return trackOutboundLink('http://www.agence-nationale-recherche.fr/');">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="return trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="return trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
       </footer>
     </div>
   </body>
