@@ -142,6 +142,6 @@ function addBuild(branch,tag,hash,date,message,author,buildsList) {
 //main
 $(document).ready(function() {
   setMIME("text/plain");
-  addBuilds("development",10);
+  addBuilds("development",5);
   addBuilds("master",5);
 });
