@@ -1,6 +1,5 @@
-const GITLAB="https://gitlab.inria.fr/api/v4/projects/2913/repository/";
+const GITLAB="https://gitlab.com/api/v4/projects/10354484/repository/";
 const BRANCH="development";
-const KEY="XiqvmusRrQ3iWf2pnYBx";
 
 // axis/legend of the 2 plots
 const LT = {
@@ -156,7 +155,7 @@ function loadFile(file) {
 	setMIME("text/plain");
 	var filename = encodeURIComponent(file);
 	ajaxLoad(
-		GITLAB+"files/"+filename+"/raw?ref="+BRANCH+"&private_token="+KEY
+		GITLAB+"files/"+filename+"/raw?ref="+BRANCH
 	).done(function(result) {
 		var ini = parseINIString(result);
 		ini.metadata.command=ini.metadata.command.replace(/"([^ ,:;]*)"/g, "$1");
@@ -237,7 +236,7 @@ function loadFile(file) {
 function loadFileList(page,maxperpage) {
 	var dirlist=$.Deferred();
 	ajaxLoad(
-		GITLAB+"tree?ref="+BRANCH+"&recursive=true&per_page="+maxperpage+"&page="+page+"&private_token="+KEY
+		GITLAB+"tree?ref="+BRANCH+"&recursive=true&per_page="+maxperpage+"&page="+page
 		//GITHUB+"git/trees/"+BRANCH+"?recursive=1"
 	).done(function(result) {
 		var dirs=result.filter(x=>x.type=="blob").map(x=>x.path);
