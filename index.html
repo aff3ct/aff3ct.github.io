@@ -7,6 +7,7 @@
     <meta name="description" content="A Fast Forward Error Correction Toolbox (AFF3CT)">
     <meta name="author" content="Adrien CASSAGNE">
     <title>AFF3CT - A Fast Forward Error Correction Toolbox</title>
+    <link rel="stylesheet" href="./css/comparator.css">
     <link rel="stylesheet" href="./css/lib/bootstrap-4.1.1.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/bootstrap_carousel.css">
@@ -39,6 +40,10 @@
         return isExternal;
       }
     </script>
+    <style>
+      .table { width: 95% !important; margin: 0 auto !important; }
+      .tt { border-bottom: 1px dotted #888; display: inline-block; }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -94,7 +99,7 @@
       <div class="row featurette">
         <div class="col-md-7 order-md-5">
           <h2 class="featurette-heading">Unleash the power of your CPU <span class="text-muted">with fixed-point arithmetic.</span></h2>
-          <p class="lead">AFF3CT takes advantage of the <strong>8-bit</strong> and <strong>16-bit</strong> built-in fixed-point and saturated arithmetic of your CPU. This enables <strong>high performance</strong> on General Purpose Processors while it gives you the opportunity <strong>to estimate the decoding performance on real hardware</strong>.</p>
+          <p class="lead">AFF3CT takes advantage of the <strong>8-bit</strong> and <strong>16-bit</strong> built-in fixed-point and saturated arithmetic of your CPU. This enables <strong>high performance</strong> on General Purpose Processors while it gives you the opportunity <strong>to estimate the decoding performance on real hardware</strong>. <a href="#" data-toggle="modal" data-target="#performancesModal">See simulator throughput performances on modern architectures.</a></p>
         </div>
         <div class="col-md-5 order-md-1">
           <img class="featurette-image img-fluid d-block mx-auto" src="images/bfer/bfer_6144.svg" alt="FER curves">
@@ -108,6 +113,134 @@
         </div>
         <div class="col-md-2">
           <img class="featurette-image img-fluid d-block mx-auto" src="images/cross_platform.png" alt="Cross-platform">
+        </div>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="performancesModal" tabindex="-1" role="dialog" aria-labelledby="performancesModalLabel" aria-hidden="true">
+        <div class="modal-dialog mw-100 w-75" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="performancesModalLabel">AFF3CT simulation speedup and throughput on modern architectures</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                      <thead class="thead-inverse">
+                        <tr>
+                          <!-- CPU         --> <th class=""><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Central Process Unit">CPU</span></th>
+                          <!-- Vendor      --> <th class=""><span>Vendor</span></th>
+                          <!-- Archi       --> <th class=""><span>Architecture</span></th>
+                          <!-- SIMD        --> <th class=""><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Single Instruction Multiple Data">SIMD</span></th>
+                          <!-- SIMD length --> <th class=""><span>SIMD length</span></th>
+                          <!-- Proc.       --> <th class=""><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of processors"># Proc.</span></th>
+                          <!-- Cores       --> <th class=""><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of cores per processor"># Cores per proc.</span></th>
+                          <!-- Freq.       --> <th class=""><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="CPU clock frequency">Freq. (GHz)</span></th>
+                          <!-- SMT         --> <th class=""><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Simultaneous Multi-Threading or Hyper-Threading">SMT</span></th>
+                          <!-- TB          --> <th class=""><span>Turbo Boost</span></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <!-- CPU         --> <td><a href="https://en.wikichip.org/wiki/cavium/thunderx2/cn9975" target="_blank" onclick="return trackOutboundLink('https://en.wikichip.org/wiki/cavium/thunderx2/cn9975');">ThunderX2 CN9975</a></td>
+                          <!-- Vendor      --> <td>Cavium</td>
+                          <!-- Archi       --> <td>ARMv8.1</td>
+                          <!-- SIMD        --> <td>NEON</td>
+                          <!-- SIMD length --> <td>128-bit</td>
+                          <!-- Proc.       --> <td>2</td>
+                          <!-- Cores       --> <td>28</td>
+                          <!-- Freq.       --> <td>2.00</td>
+                          <!-- SMT         --> <td>4</td>
+                          <!-- TB          --> <td>Unavailable</td>
+                        </tr>
+                        <tr>
+                          <!-- CPU         --> <td><a href="https://ark.intel.com/fr/products/94034/Intel-Xeon-Phi-Processor-7230-16GB-1-30-GHz-64-core-" target="_blank" onclick="return trackOutboundLink('https://ark.intel.com/fr/products/94034/Intel-Xeon-Phi-Processor-7230-16GB-1-30-GHz-64-core-');">Xeon Phi 7230</a></td>
+                          <!-- Vendor      --> <td>Intel</td>
+                          <!-- Archi       --> <td>Knights Landing</td>
+                          <!-- SIMD        --> <td>AVX-512F</td>
+                          <!-- SIMD length --> <td>512-bit</td>
+                          <!-- Proc.       --> <td>1</td>
+                          <!-- Cores       --> <td>64</td>
+                          <!-- Freq.       --> <td>1.30</td>
+                          <!-- SMT         --> <td>4</td>
+                          <!-- TB          --> <td>On</td>
+                        </tr>
+                        <tr>
+                          <!-- CPU         --> <td><a href="https://ark.intel.com/fr/products/81908/Intel-Xeon-Processor-E5-2680-v3-30M-Cache-2-50-GHz-" target="_blank" onclick="return trackOutboundLink('https://ark.intel.com/fr/products/81908/Intel-Xeon-Processor-E5-2680-v3-30M-Cache-2-50-GHz-');">Xeon E5-2680 v3</a></td>
+                          <!-- Vendor      --> <td>Intel</td>
+                          <!-- Archi       --> <td>Haswell</td>
+                          <!-- SIMD        --> <td>AVX2</td>
+                          <!-- SIMD length --> <td>256-bit</td>
+                          <!-- Proc.       --> <td>2</td>
+                          <!-- Cores       --> <td>12</td>
+                          <!-- Freq.       --> <td>2.50</td>
+                          <!-- SMT         --> <td>1</td>
+                          <!-- TB          --> <td>Off</td>
+                        </tr>
+                        <tr>
+                          <!-- CPU         --> <td><a href="https://ark.intel.com/products/120485/Intel-Xeon-Gold-6140-Processor-24-75M-Cache-2-30-GHz-" target="_blank" onclick="return trackOutboundLink('https://ark.intel.com/products/120485/Intel-Xeon-Gold-6140-Processor-24-75M-Cache-2-30-GHz-');">Xeon Gold 6140</a></td>
+                          <!-- Vendor      --> <td>Intel</td>
+                          <!-- Archi       --> <td>Skylake</td>
+                          <!-- SIMD        --> <td>AVX-512F+BQ</td>
+                          <!-- SIMD length --> <td>512-bit</td>
+                          <!-- Proc.       --> <td>2</td>
+                          <!-- Cores       --> <td>18</td>
+                          <!-- Freq.       --> <td>2.30</td>
+                          <!-- SMT         --> <td>2</td>
+                          <!-- TB          --> <td>On</td>
+                        </tr>
+                        <tr>
+                          <!-- CPU         --> <td><a href="https://ark.intel.com/products/120487/Intel-Xeon-Gold-6142-Processor-22M-Cache-2-60-GHz-" target="_blank" onclick="return trackOutboundLink('https://ark.intel.com/products/120487/Intel-Xeon-Gold-6142-Processor-22M-Cache-2-60-GHz-');">Xeon Gold 6142</a></td>
+                          <!-- Vendor      --> <td>Intel</td>
+                          <!-- Archi       --> <td>Skylake</td>
+                          <!-- SIMD        --> <td>AVX-512F+BQ</td>
+                          <!-- SIMD length --> <td>512-bit</td>
+                          <!-- Proc.       --> <td>2</td>
+                          <!-- Cores       --> <td>16</td>
+                          <!-- Freq.       --> <td>2.60</td>
+                          <!-- SMT         --> <td>1</td>
+                          <!-- TB          --> <td>Off</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-4"></div>
+              <div class="row">
+                <div class="col-xl-6">
+                  <img src="images/speedup.svg" alt="speedup" title="AFF3CT Simulator Speedups" class="img-fluid d-block mx-auto" style="width: 100%">
+                </div>
+                <div class="col-xl-6">
+                  <img src="images/throughput.svg" alt="speedup" title="AFF3CT Simulator Throughputs" class="img-fluid d-block mx-auto" style="width: 100%">
+                </div>
+              </div>
+              <div class="mb-4"></div>
+              <div class="row">
+                <div class="col-xl-12">
+                  <p>
+                    A N=2048 and K=1723 Polar code (<span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Fully Adaptive Successive Cancellation List">FA-SCL</span> decoder, L=32, 32-bit GZip <code>0x04C11DB7</code> <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Cyclic Redundancy Check">CRC</span>) is simulated with a <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Binary Phase-Shift Keying">BPSK</span> modulation and over an <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Additive White Gaussian Noise">AWGN</span> channel (E_b/N_0 = 4.5 dB, <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Bit Error Rate">BER</span> = 4.34e-10). The frozen bits of the Polar code have been generated with the <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Gaussian Approximation">GA</span> method. The communication chain is fully vectorized with the <a href="https://github.com/aff3ct/MIPP" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/MIPP');">MIPP wrapper</a> and multi-threaded with C++11 threads. For all the CPU targets, the code has been compiled with the <a href="https://gcc.gnu.org/gcc-8/" target="_blank" onclick="return trackOutboundLink('https://gcc.gnu.org/gcc-8/');">C++ GNU compiler version 8.2</a>, with the following optimization flags: <code>-O3 -funroll-loops -march=native</code>.
+                  </p>
+                </div>
+              </div>
+              <div class="mb-4"></div>
+              <hr>
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="shell-wrap">
+                  <p class="shell-top-bar">AFF3CT command line (<a href="https://github.com/aff3ct/aff3ct/tree/4d14567865c91f571dd91cfc7504f38d998bf6ab" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/aff3ct/tree/4d14567865c91f571dd91cfc7504f38d998bf6ab');">v2.2.2-14-g4d14567</a>)</p>
+                    <ul class="shell-body">
+                      <li>aff3ct -p 8 --sim-type BFER -C POLAR -m 4.5 -M 4.5 -K 1755 -N 2048 --src-type AZCW --crc-type 32-GZIP --crc-implem FAST --enc-fb-gen-method GA --chn-type AWGN --chn-implem FAST --qnt-bits 6 --qnt-dec 1 --qnt-implem FAST --dec-type ASCL --dec-implem FAST --dec-simd INTRA -L 32 --dec-polar-nodes "{R0,R0L,R1,REP_2-8,REPL,SPC_4}"</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="mb-4"></div>
