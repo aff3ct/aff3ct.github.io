@@ -43,6 +43,9 @@
     <style>
       .table { width: 95% !important; margin: 0 auto !important; }
       .tt { border-bottom: 1px dotted #888; display: inline-block; }
+      .aff3ct { color:#ADD9AB; }
+      .num   { color:#F4A3A4; }
+      .str  { color:#A5C9E1; }
     </style>
   </head>
   <body>
@@ -95,11 +98,12 @@
           <img class="featurette-image img-fluid d-block mx-auto" src="images/aff3ct2.png" alt="AFF3CT run">
         </div>
       </div>
+      <a name="performances"></a>
       <hr class="featurette-divider">
       <div class="row featurette">
         <div class="col-md-7 order-md-5">
           <h2 class="featurette-heading">Unleash the power of your CPU <span class="text-muted">with fixed-point arithmetic.</span></h2>
-          <p class="lead">AFF3CT takes advantage of the <strong>8-bit</strong> and <strong>16-bit</strong> built-in fixed-point and saturated arithmetic of your CPU. This enables <strong>high performance</strong> on General Purpose Processors while it gives you the opportunity <strong>to estimate the decoding performance on real hardware</strong>. <a href="#" data-toggle="modal" data-target="#performancesModal">See simulator throughput performances on modern architectures.</a></p>
+          <p class="lead">AFF3CT takes advantage of the <strong>8-bit</strong> and <strong>16-bit</strong> built-in fixed-point and saturated arithmetic of your CPU. This enables <strong>high performance</strong> on General Purpose Processors while it gives you the opportunity <strong>to estimate the decoding performance on real hardware</strong>. <a href="#performances" id="performancesId">See simulator throughput performances on modern architectures.</a></p>
         </div>
         <div class="col-md-5 order-md-1">
           <img class="featurette-image img-fluid d-block mx-auto" src="images/bfer/bfer_6144.svg" alt="FER curves">
@@ -109,7 +113,7 @@
       <div class="row featurette">
         <div class="col-md-10">
           <h2 class="featurette-heading">A Cross-platform <span class="text-muted">and Open-source software.</span></h2>
-          <p class="lead">AFF3CT runs on <strong>Linux&nbsp;<i class="fab fa-linux" aria-hidden="true"></i></strong>, <strong>macOS&nbsp;<i class="fab fa-apple" aria-hidden="true"></i></strong> and <strong>Windows&nbsp;<i class="fab fa-windows" aria-hidden="true"></i></strong>. It has been optimized for <strong>x86</strong> targets (with the <strong>SSE</strong> and <strong>AVX</strong> set of instructions) and for <strong>ARM</strong> devices (with the <strong>NEON</strong> set of instructions). The code SIMDization rest upon the <a href="https://github.com/aff3ct/MIPP" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/MIPP');">MIPP wrapper</a>. AFF3CT is Open-source and it is currently developed, the code is written in <strong>C++11</strong> style where it intensively uses <strong>the template metaprogramming technique</strong>.</p>
+          <p class="lead">AFF3CT runs on <strong>Linux&nbsp;<i class="fab fa-linux" aria-hidden="true"></i></strong>, <strong>macOS&nbsp;<i class="fab fa-apple" aria-hidden="true"></i></strong> and <strong>Windows&nbsp;<i class="fab fa-windows" aria-hidden="true"></i></strong>. It has been optimized for <strong>x86</strong> targets (with the <strong>SSE</strong> and <strong>AVX</strong> set of instructions) and for <strong>ARM</strong> devices (with the <strong>NEON</strong> set of instructions). The code SIMDization rest upon the <a href="https://github.com/aff3ct/MIPP" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/MIPP');">MIPP wrapper</a>. AFF3CT is Open-source and it is currently developed, the code is written in <strong>C++11</strong> style where it intensively uses <strong>the template meta-programming technique</strong>.</p>
         </div>
         <div class="col-md-2">
           <img class="featurette-image img-fluid d-block mx-auto" src="images/cross_platform.png" alt="Cross-platform">
@@ -234,7 +238,7 @@
                   <div class="shell-wrap">
                   <p class="shell-top-bar">AFF3CT command line (<a href="https://github.com/aff3ct/aff3ct/tree/4d14567865c91f571dd91cfc7504f38d998bf6ab" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/aff3ct/tree/4d14567865c91f571dd91cfc7504f38d998bf6ab');">v2.2.2-14-g4d14567</a>)</p>
                     <ul class="shell-body">
-                      <li>aff3ct -p 8 --sim-type BFER -C POLAR -m 4.5 -M 4.5 -K 1755 -N 2048 --src-type AZCW --crc-type 32-GZIP --crc-implem FAST --enc-fb-gen-method GA --chn-type AWGN --chn-implem FAST --qnt-bits 6 --qnt-dec 1 --qnt-implem FAST --dec-type ASCL --dec-implem FAST --dec-simd INTRA -L 32 --dec-polar-nodes "{R0,R0L,R1,REP_2-8,REPL,SPC_4}"</li>
+                      <li><span class="aff3ct">aff3ct</span> -p <span class="num">8</span> --sim-type <span class="str">BFER</span> -m <span class="num">4.5</span> -M <span class="num">4.5</span> -C <span class="str">POLAR</span> -K <span class="num">1755</span> -N <span class="num">2048</span> --src-type <span class="str">AZCW</span> --crc-type <span class="str">32-GZIP</span> --crc-implem <span class="str">FAST</span> --enc-fb-gen-method <span class="str">GA</span> --chn-type <span class="str">AWGN</span> --chn-implem <span class="str">FAST</span> --qnt-type <span class="str">POW2</span> --qnt-implem <span class="str">FAST</span> --qnt-bits <span class="num">6</span> --qnt-dec <span class="num">1</span> --dec-type <span class="str">ASCL</span> --dec-implem <span class="str">FAST</span> --dec-simd <span class="str">INTRA</span> -L <span class="num">32</span> --dec-polar-nodes <span class="str">"{R0,R0L,R1,REP_2-8,REPL,SPC_4}"</span></li>
                     </ul>
                   </div>
                 </div>
@@ -250,5 +254,16 @@
         <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="return trackOutboundLink('http://www.agence-nationale-recherche.fr/');">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="return trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="return trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
       </footer>
     </div>
+    <script type="text/javascript">
+      jQuery(document).ready(function() {
+        $("#performancesId").click(function() {
+          $('#performancesModal').modal('toggle');
+        });
+        var url = window.location.href;
+        var anchor = url.substring(url.indexOf("#")+1);
+        if (anchor == "performances")
+          $('#performancesModal').modal('toggle');
+      });
+    </script>
   </body>
 </html>
