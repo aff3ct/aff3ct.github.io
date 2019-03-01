@@ -36,20 +36,21 @@ function addBuilds(branch,maxBuilds) {
       nBuilds++;
       if (nBuilds > maxBuilds)
         break;
-      var cols=lines[i].split(";");
+      var cols=lines[i].split(",");
       var tag=cols[0].replace(/^"(.*)"$/g, "$1");
       var hash=cols[1].replace(/^"(.*)"$/g, "$1");
       var date=cols[2].replace(/^"(.*)"$/g, "$1");
       var message=cols[3].replace(/^"(.*)"$/g, "$1");
       var author=cols[4].replace(/^"(.*)"$/g, "$1");
-      var buildList=cols[5].replace(/^"(.*)"$/g, "$1").split(",");
-      addBuild(branch,tag,hash,date,message,author,buildList);
+      var path=cols[5].replace(/^"(.*)"$/g, "$1");
+      var buildList=cols[6].replace(/^"(.*)"$/g, "$1").split(";");
+      addBuild(branch,tag,hash,date,message,author,path,buildList);
       $("#"+branch+"_builds").append("<hr>");
     }
   });
 }
 
-function addLink(branch,hash,build)
+function addLink(branch,hash,path,build)
 {
   var sys="";
   if (~build.indexOf("windows")) sys="windows";
@@ -72,7 +73,7 @@ function addLink(branch,hash,build)
   var idLinks="builds_"+sys+"_"+branch+"_"+hash;
   var idUnavail="unavailable_builds_"+sys+"_"+branch+"_"+hash;
 
-  var file='https://github.com/aff3ct/ressources/raw/master/aff3ct_builds/'+build;
+  var file=path+build;
   var link='<a class="dropdown-item" href="'+file+'" id="'+idLink+'" onclick="return trackOutboundLink(\''+file+'\');"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>'+name+'</a>';
 
   $("#"+idLinks).append(link);
@@ -89,7 +90,7 @@ function addLink(branch,hash,build)
   });
 }
 
-function addBuild(branch,tag,hash,date,message,author,buildsList) {
+function addBuild(branch,tag,hash,date,message,author,path,buildsList) {
   var build="";
   build+='<div class="row">';
   build+='  <div class="col-md-1">';
@@ -135,7 +136,7 @@ function addBuild(branch,tag,hash,date,message,author,buildsList) {
   $("#"+branch+"_builds").append(build);
 
   for (var i=buildsList.length-1;i>=0;i--) {
-    addLink(branch,hash,buildsList[i]);
+    addLink(branch,hash,path,buildsList[i]);
   }
 }
 
