@@ -95,6 +95,19 @@
   margin-left: 10px;
 }
 
+/* Selector */
+
+.selector-group > .row {
+  overflow-x: auto;
+  white-space: nowrap;
+  display: block;
+}
+
+.selector-group > .row > .col-3 {
+  display: inline-block;
+  float: none;
+}
+
 /* ----------------------------------------------------------------- Terminal */
 .shell-wrap {
   width: 98%;

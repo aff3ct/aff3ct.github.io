@@ -476,9 +476,13 @@ $(document).ready(function() {
 			var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
 			var ordered=orderFiles(files);
 			displayCodeTypes(ordered);
-			document.getElementById("loader").style.display = "none";
-			document.getElementById("tips").style.display = "block";
-			document.getElementById("comparator").style.display = "block";
+		    document.getElementById("loader").style.display = "none";
+		    document.getElementById("tips").style.display = "block";
+		    document.getElementById("selector").style.display = "block";
+		    document.getElementById("selector2").style.display = "none";
+		    //document.getElementById("selector").style.overflowX = "scroll";
+		    document.getElementById("comparator").style.display = "none";
+		    //document.getElementById("comparator").style.overflow = "scroll";
 
 			var left = findGetParameter("left");
 			if (left) drawCurvesFromURI(ordered,left,"left");
