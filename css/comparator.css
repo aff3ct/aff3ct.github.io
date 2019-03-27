@@ -1,6 +1,6 @@
 .right .bers .list-group-item.active {
-  background-color:#FF7F0E;
-  border-color:#FF7F0E;
+  background-color:#2EA12E;
+  border-color:#2EA12E;
 }
 
 .right .list-group-item.active .text-muted
@@ -14,6 +14,26 @@
 }
 
 .right .list-group-item.active a:hover
+{
+  color:#ddd !important;
+}
+
+.middle .bers .list-group-item.active {
+  background-color:#FF7F0E;
+  border-color:#FF7F0E;
+}
+
+.middle .list-group-item.active .text-muted
+{
+  color:#fff !important;
+}
+
+.middle .list-group-item.active a
+{
+  color:#fff !important;
+}
+
+.middle .list-group-item.active a:hover
 {
   color:#ddd !important;
 }
@@ -101,9 +121,22 @@
   overflow-x: auto;
   white-space: nowrap;
   display: block;
+  flex-wrap: nowrap;
 }
 
 .selector-group > .row > .col-3 {
+  display: inline-block;
+  float: none;
+}
+
+.comparator-group > .row {
+  overflow-x: hidden;
+  white-space: nowrap;
+  display: block;
+  flex-wrap: nowrap;
+}
+
+.comparator-group > .row > .col-6 {
   display: inline-block;
   float: none;
 }

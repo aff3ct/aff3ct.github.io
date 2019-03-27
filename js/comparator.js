@@ -22,7 +22,7 @@ const LAYOUT= {
 }
 
 // The 2 plots displayed in blue and orange
-var LEFT={ber:[],fer:[]/*,thr:[],befe:[]*/}, RIGHT={ber:[],fer:[]/*,thr:[],befe:[]*/};
+var LEFT={ber:[],fer:[]/*,thr:[],befe:[]*/}, MIDDLE={ber:[],fer:[]/*,thr:[],befe:[]*/}, RIGHT={ber:[],fer:[]/*,thr:[],befe:[]*/};
 var GD={};
 
 // function replaceQueryParam(param, search, newval) {
@@ -258,19 +258,20 @@ function loadFileList(page,maxperpage) {
 	return dirlist.promise();
 }
 
-// Click listener for left/right lists
+// Click listener for left/middle/right lists
 function addClick(a,side) {
-	$(side+" .g"+a.id).click(function() {
-		document.getElementById("tips").style.display = "none";
-		const plots=["ber","fer"/*,"befe","thr"*/];
-		$(side+" .bers .active").removeClass("active");
-		$(this).addClass("active");
-		if (side=='.left') LEFT=a; else RIGHT=a;
-		plots.forEach(x => Plotly.newPlot(GD[x],[LEFT[x],RIGHT[x]],LAYOUT[x],{displaylogo:false}));
-
-		var lval = encodeURIComponent(findGetParameter("left"));
-		var rval = encodeURIComponent(findGetParameter("right"));
-		var uri  = "/comparator.html?left="+lval+"&right="+rval;
+    $(side+" .g"+a.id).click(function() {
+	document.getElementById("tips").style.display = "none";
+	const plots=["ber","fer"/*,"befe","thr"*/];
+	$(side+" .bers .active").removeClass("active");
+	$(this).addClass("active");
+	if (side=='.left') LEFT=a; else if (side=='.right') RIGHT=a; else MIDDLE=a;
+	plots.forEach(x => Plotly.newPlot(GD[x],[LEFT[x],MIDDLE[x],RIGHT[x]],LAYOUT[x],{displaylogo:false}));
+	
+	var lval = encodeURIComponent(findGetParameter("left"));
+	var mval = encodeURIComponent(findGetParameter("middle"));/** **/
+	var rval = encodeURIComponent(findGetParameter("right"));
+		var uri  = "/comparator.html?left="+lval+"&middle="+mval+"&right="+rval;
 		// uri = replaceQueryParam(uri,side.replace(".",""),a.filename);
 		uri = updateURLParameter(uri,side.replace(".",""),a.filename);
 		window.history.replaceState({},"aff3ct.github.io",uri);
@@ -291,20 +292,22 @@ function displayCodeTypes(files) {
 	var j=0;
 	for (var i in files)
 	{
-		var selected="";
-		if (j == 0)
-		{
-			selected="selected='selected'";
-			displayFrameSizes(".left",i,files);
-			displayFrameSizes(".right",i,files);
+	    var selected="";
+	    if (j == 0)
+	    {
+		selected="selected='selected'";
+		displayFrameSizes(".left",i,files);
+		displayFrameSizes(".middle",i,files);
+		displayFrameSizes(".right",i,files);
 		}
 		$(".codetype").append("<option " + selected + ">"+i+"</option>");
 		j++;
 	}
-
-	$(".codetype").off();
-	$(".left .codetype").change(function() { displayFrameSizes(".left",$(this).val(),files); });
-	$(".right .codetype").change(function() { displayFrameSizes(".right",$(this).val(),files); });
+    
+    $(".codetype").off();
+    $(".left .codetype").change(function() { displayFrameSizes(".left",$(this).val(),files); });
+    $(".middle .codetype").change(function() { displayFrameSizes(".middle",$(this).val(),files); });
+    $(".right .codetype").change(function() { displayFrameSizes(".right",$(this).val(),files); });
 }
 
 window.onresize = function() {
@@ -456,7 +459,7 @@ function drawCurvesFromURI(files,filename,side)
 $(document).ready(function() {
 	var d3 = Plotly.d3;
 	var WIDTH_IN_PERCENT_OF_PARENT = 100,
-	HEIGHT_IN_PERCENT_OF_PARENT = 40;
+	    HEIGHT_IN_PERCENT_OF_PARENT = 40;
 	var plots=["ber","fer"/*,"befe","thr"*/];
 	plots.forEach(function(e) {
 	GD[e] = d3.select("#plot"+e)
@@ -477,17 +480,16 @@ $(document).ready(function() {
 			var ordered=orderFiles(files);
 			displayCodeTypes(ordered);
 		    document.getElementById("loader").style.display = "none";
+		    document.getElementById("curvesTip").style.display = "block";
 		    document.getElementById("tips").style.display = "block";
 		    document.getElementById("selector").style.display = "block";
-		    document.getElementById("selector2").style.display = "none";
-		    //document.getElementById("selector").style.overflowX = "scroll";
-		    document.getElementById("comparator").style.display = "none";
-		    //document.getElementById("comparator").style.overflow = "scroll";
-
-			var left = findGetParameter("left");
-			if (left) drawCurvesFromURI(ordered,left,"left");
-			var right = findGetParameter("right");
-			if (right) drawCurvesFromURI(ordered,right,"right");
+		    document.getElementById("comparator").style.display = "block";
+		    var left = findGetParameter("left");
+		    if (left) drawCurvesFromURI(ordered,left,"left");
+		    var middle = findGetParameter("middle");
+		    if (middle) drawCurvesFromURI(ordered, middle,"middle");
+		    var right = findGetParameter("right");
+		    if (right) drawCurvesFromURI(ordered,right,"right");
 		});
 	});
 });
