@@ -22,7 +22,7 @@ const LAYOUT= {
 }
 
 // The 2 plots displayed in blue and orange
-var LEFT={ber:[],fer:[]/*,thr:[],befe:[]*/}, MIDDLE={ber:[],fer:[]/*,thr:[],befe:[]*/}, RIGHT={ber:[],fer:[]/*,thr:[],befe:[]*/};
+var LEFT={ber:[],fer:[]/*,thr:[],befe:[]*/}, MIDDLE1={ber:[],fer:[]/*,thr:[],befe:[]*/}, MIDDLE2={ber:[],fer:[]/*,thr:[],befe:[]*/}, MIDDLE3={ber:[],fer:[]/*,thr:[],befe:[]*/}, RIGHT={ber:[],fer:[]/*,thr:[],befe:[]*/};
 var GD={};
 
 // function replaceQueryParam(param, search, newval) {
@@ -258,20 +258,22 @@ function loadFileList(page,maxperpage) {
 	return dirlist.promise();
 }
 
-// Click listener for left/middle/right lists
+// Click listener for left/middle1/middle2/middle3/right lists
 function addClick(a,side) {
     $(side+" .g"+a.id).click(function() {
 	document.getElementById("tips").style.display = "none";
 	const plots=["ber","fer"/*,"befe","thr"*/];
 	$(side+" .bers .active").removeClass("active");
 	$(this).addClass("active");
-	if (side=='.left') LEFT=a; else if (side=='.right') RIGHT=a; else MIDDLE=a;
-	plots.forEach(x => Plotly.newPlot(GD[x],[LEFT[x],MIDDLE[x],RIGHT[x]],LAYOUT[x],{displaylogo:false}));
+	if (side=='.left') LEFT=a; else if (side=='.middle1') MIDDLE1=a; else if (side=='.middle2') MIDDLE2=a; else if (side=='.middle3') MIDDLE3=a; else RIGHT=a;
+	plots.forEach(x => Plotly.newPlot(GD[x],[LEFT[x],MIDDLE1[x],MIDDLE2[x],MIDDLE3[x],RIGHT[x]],LAYOUT[x],{displaylogo:false}));
 	
 	var lval = encodeURIComponent(findGetParameter("left"));
-	var mval = encodeURIComponent(findGetParameter("middle"));/** **/
+	var mval1 = encodeURIComponent(findGetParameter("middle1"));/** **/
+	var mval2 = encodeURIComponent(findGetParameter("middle2"));/** **/
+	var mval3 = encodeURIComponent(findGetParameter("middle3"));/** **/
 	var rval = encodeURIComponent(findGetParameter("right"));
-		var uri  = "/comparator.html?left="+lval+"&middle="+mval+"&right="+rval;
+		var uri  = "/comparator.html?left="+lval+"&middle1="+mval1+"&middle2="+mval2+"&middle3="+mval3+"&right="+rval;
 		// uri = replaceQueryParam(uri,side.replace(".",""),a.filename);
 		uri = updateURLParameter(uri,side.replace(".",""),a.filename);
 		window.history.replaceState({},"aff3ct.github.io",uri);
@@ -297,7 +299,9 @@ function displayCodeTypes(files) {
 	    {
 		selected="selected='selected'";
 		displayFrameSizes(".left",i,files);
-		displayFrameSizes(".middle",i,files);
+		displayFrameSizes(".middle1",i,files);
+		displayFrameSizes(".middle2",i,files);
+		displayFrameSizes(".middle3",i,files);
 		displayFrameSizes(".right",i,files);
 		}
 		$(".codetype").append("<option " + selected + ">"+i+"</option>");
@@ -306,7 +310,9 @@ function displayCodeTypes(files) {
     
     $(".codetype").off();
     $(".left .codetype").change(function() { displayFrameSizes(".left",$(this).val(),files); });
-    $(".middle .codetype").change(function() { displayFrameSizes(".middle",$(this).val(),files); });
+    $(".middle1 .codetype").change(function() { displayFrameSizes(".middle1",$(this).val(),files); });
+    $(".middle2 .codetype").change(function() { displayFrameSizes(".middle2",$(this).val(),files); });
+    $(".middle3 .codetype").change(function() { displayFrameSizes(".middle3",$(this).val(),files); });
     $(".right .codetype").change(function() { displayFrameSizes(".right",$(this).val(),files); });
 }
 
@@ -486,8 +492,12 @@ $(document).ready(function() {
 		    document.getElementById("comparator").style.display = "block";
 		    var left = findGetParameter("left");
 		    if (left) drawCurvesFromURI(ordered,left,"left");
-		    var middle = findGetParameter("middle");
-		    if (middle) drawCurvesFromURI(ordered, middle,"middle");
+		    var middle1 = findGetParameter("middle1");
+		    if (middle1) drawCurvesFromURI(ordered, middle1,"middle1");
+		    var middle2 = findGetParameter("middle2");
+		    if (middle1) drawCurvesFromURI(ordered, middle1,"middle2");
+		    var middle3 = findGetParameter("middle3");
+		    if (middle1) drawCurvesFromURI(ordered, middle1,"middle3");
 		    var right = findGetParameter("right");
 		    if (right) drawCurvesFromURI(ordered,right,"right");
 		});

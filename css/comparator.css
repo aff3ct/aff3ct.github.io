@@ -1,6 +1,6 @@
 .right .bers .list-group-item.active {
-  background-color:#2EA12E;
-  border-color:#2EA12E;
+  background-color:#9467BD;
+  border-color:#9467BD;
 }
 
 .right .list-group-item.active .text-muted
@@ -18,22 +18,62 @@
   color:#ddd !important;
 }
 
-.middle .bers .list-group-item.active {
+.middle3 .bers .list-group-item.active {
+  background-color:#D62728;
+  border-color:#D62728;
+}
+
+.middle3 .list-group-item.active .text-muted
+{
+  color:#fff !important;
+}
+
+.middle3 .list-group-item.active a
+{
+  color:#fff !important;
+}
+
+.middle3 .list-group-item.active a:hover
+{
+  color:#ddd !important;
+}
+
+.middle2 .bers .list-group-item.active {
+  background-color:#2EA12E;
+  border-color:#2EA12E;
+}
+
+.middle2 .list-group-item.active .text-muted
+{
+  color:#fff !important;
+}
+
+.middle2 .list-group-item.active a
+{
+  color:#fff !important;
+}
+
+.middle2 .list-group-item.active a:hover
+{
+  color:#ddd !important;
+}
+
+.middle1 .bers .list-group-item.active {
   background-color:#FF7F0E;
   border-color:#FF7F0E;
 }
 
-.middle .list-group-item.active .text-muted
+.middle1 .list-group-item.active .text-muted
 {
   color:#fff !important;
 }
 
-.middle .list-group-item.active a
+.middle1 .list-group-item.active a
 {
   color:#fff !important;
 }
 
-.middle .list-group-item.active a:hover
+.middle1 .list-group-item.active a:hover
 {
   color:#ddd !important;
 }
