@@ -1,6 +1,10 @@
 const GITLAB="https://gitlab.com/api/v4/projects/10354484/repository/";
 const BRANCH="development";
 
+let nbChoices=1;
+let nbCurves=0;
+const curvesName=["left","middle1","middle2","middle3","right"];
+
 // axis/legend of the 2 plots
 const LT = {
 	showlegend:false,
@@ -265,8 +269,80 @@ function addClick(a,side) {
 	const plots=["ber","fer"/*,"befe","thr"*/];
 	$(side+" .bers .active").removeClass("active");
 	$(this).addClass("active");
-	if (side=='.left') LEFT=a; else if (side=='.middle1') MIDDLE1=a; else if (side=='.middle2') MIDDLE2=a; else if (side=='.middle3') MIDDLE3=a; else RIGHT=a;
-	plots.forEach(x => Plotly.newPlot(GD[x],[LEFT[x],MIDDLE1[x],MIDDLE2[x],MIDDLE3[x],RIGHT[x]],LAYOUT[x],{displaylogo:false}));
+	if (side=='.left') {
+	    LEFT=a;
+	    if (nbChoices===1) {
+		if (nbCurves===0) {
+		    nbChoices=2;
+		    nbCurves=1;
+		    document.getElementById(curvesName[nbCurves]).style.display = "inline-block";
+		}
+		else {
+		    nbChoices=2;
+		    nbCurves=2;
+		    document.getElementById(curvesName[nbCurves-1]).style.display = "inline-block";
+		}
+	    }
+	}
+	else if (side=='.middle1') {
+	    MIDDLE1=a;
+	    if (nbChoices===2) {
+		if (nbCurves===1) {
+		    nbChoices=3;
+		    nbCurves=2;
+		    document.getElementById(curvesName[nbCurves]).style.display = "inline-block";
+		}
+		else {
+		    nbChoices=3;
+		    nbCurves=3;
+		    document.getElementById(curvesName[nbCurves-1]).style.display = "inline-block";
+		}
+	    }
+	}
+	else if (side=='.middle2') {
+	    MIDDLE2=a;
+	    if (nbChoices===3) {
+		if (nbCurves===2) {
+		    nbChoices=4;
+		    nbCurves=3;
+		    document.getElementById(curvesName[nbCurves]).style.display = "inline-block";
+		}
+		else {
+		    nbChoices=4;
+		    nbCurves=4;
+		    document.getElementById(curvesName[nbCurves-1]).style.display = "inline-block";
+		}
+	    }
+	}
+	else if (side=='.middle3') {
+	    MIDDLE3=a;
+	    if (nbChoices===4) {
+		if (nbCurves===3) {
+		    nbChoices=5;
+		    nbCurves=4;
+		    document.getElementById(curvesName[nbCurves]).style.display = "inline-block";
+		}
+		else {
+		    nbChoices=5;
+		    nbCurves=5;
+		    document.getElementById(curvesName[nbCurves-1]).style.display = "inline-block";
+		}
+	    }
+	}
+	else {
+	    RIGHT=a;
+	    nbCurves=5;
+	}
+	const CURVES=[LEFT,MIDDLE1,MIDDLE2,MIDDLE3,RIGHT];
+	plots.forEach(function(x) {
+	    const CURVES=[LEFT[x],MIDDLE1[x],MIDDLE2[x],MIDDLE3[x],RIGHT[x]];
+	    if (nbCurves!==nbChoices) {
+		Plotly.newPlot(GD[x],CURVES.slice(0,nbCurves+1),LAYOUT[x],{displaylogo:false});
+	    }
+	    else {
+		Plotly.newPlot(GD[x],CURVES.slice(0,nbCurves),LAYOUT[x],{displaylogo:false});
+	    }
+	});
 	
 	var lval = encodeURIComponent(findGetParameter("left"));
 	var mval1 = encodeURIComponent(findGetParameter("middle1"));/** **/
@@ -286,6 +362,18 @@ function addClick(a,side) {
 			eventLabel:    decodeURIComponent(a.filename)
 		});
 	});
+}
+
+function deleteClick(divId) {
+    const plots=["ber","fer"/*,"befe","thr"*/];
+    if (nbChoices !== 1) {
+	document.getElementById(curvesName[nbChoices-1]).style.display = "none";
+	if (nbChoices===nbCurves) {
+	    plots.forEach(x => Plotly.deleteTraces(GD[x], nbCurves-1));
+	    nbCurves-=1;
+	}
+	nbChoices-=1;
+    }
 }
 
 /* Interaction with the form */
