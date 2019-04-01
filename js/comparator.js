@@ -1,9 +1,17 @@
 const GITLAB="https://gitlab.com/api/v4/projects/10354484/repository/";
 const BRANCH="development";
 
+
+const maxNbCurves=5;//Colors are defined for only 5 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for 6 or more curves. Sincerely, Me.
+const CURVES=[];
+const curvesNames=[];
+for (let i=0; i<maxNbCurves; i++) {
+    CURVES.push({ber:[],fer:[]/*,thr:[],befe:[]*/});
+    curvesNames.push("curve"+String(i));
+}
 let nbChoices=1;
 let nbCurves=0;
-const curvesName=["left","middle1","middle2","middle3","right"];
+
 
 // axis/legend of the 2 plots
 const LT = {
@@ -25,8 +33,6 @@ const LAYOUT= {
 	// thr: Object.assign({ yaxis: { autorange: true, hoverformat: '.2e',title: 'Throughput (Mb/s)'}},LT)
 }
 
-// The 2 plots displayed in blue and orange
-var LEFT={ber:[],fer:[]/*,thr:[],befe:[]*/}, MIDDLE1={ber:[],fer:[]/*,thr:[],befe:[]*/}, MIDDLE2={ber:[],fer:[]/*,thr:[],befe:[]*/}, MIDDLE3={ber:[],fer:[]/*,thr:[],befe:[]*/}, RIGHT={ber:[],fer:[]/*,thr:[],befe:[]*/};
 var GD={};
 
 // function replaceQueryParam(param, search, newval) {
@@ -261,96 +267,58 @@ function loadFileList(page,maxperpage) {
 	});
 	return dirlist.promise();
 }
-
-// Click listener for left/middle1/middle2/middle3/right lists
+function addClickBranches(x) {
+    if (nbChoices===x) {
+	if (nbCurves===x-1) {
+	    nbChoices=x+1;
+	    nbCurves=x;
+	    document.getElementById(curvesNames[nbCurves]).style.display = "inline-block";
+	}
+	else {
+	    nbChoices=x+1;
+	    nbCurves=x+1;
+	    document.getElementById(curvesNames[nbCurves-1]).style.display = "inline-block";
+	}
+    }
+}
+// Click listener for curves list
 function addClick(a,side) {
     $(side+" .g"+a.id).click(function() {
 	document.getElementById("tips").style.display = "none";
 	const plots=["ber","fer"/*,"befe","thr"*/];
 	$(side+" .bers .active").removeClass("active");
 	$(this).addClass("active");
-	if (side=='.left') {
-	    LEFT=a;
-	    if (nbChoices===1) {
-		if (nbCurves===0) {
-		    nbChoices=2;
-		    nbCurves=1;
-		    document.getElementById(curvesName[nbCurves]).style.display = "inline-block";
-		}
-		else {
-		    nbChoices=2;
-		    nbCurves=2;
-		    document.getElementById(curvesName[nbCurves-1]).style.display = "inline-block";
-		}
-	    }
-	}
-	else if (side=='.middle1') {
-	    MIDDLE1=a;
-	    if (nbChoices===2) {
-		if (nbCurves===1) {
-		    nbChoices=3;
-		    nbCurves=2;
-		    document.getElementById(curvesName[nbCurves]).style.display = "inline-block";
-		}
-		else {
-		    nbChoices=3;
-		    nbCurves=3;
-		    document.getElementById(curvesName[nbCurves-1]).style.display = "inline-block";
-		}
-	    }
-	}
-	else if (side=='.middle2') {
-	    MIDDLE2=a;
-	    if (nbChoices===3) {
-		if (nbCurves===2) {
-		    nbChoices=4;
-		    nbCurves=3;
-		    document.getElementById(curvesName[nbCurves]).style.display = "inline-block";
-		}
-		else {
-		    nbChoices=4;
-		    nbCurves=4;
-		    document.getElementById(curvesName[nbCurves-1]).style.display = "inline-block";
-		}
-	    }
-	}
-	else if (side=='.middle3') {
-	    MIDDLE3=a;
-	    if (nbChoices===4) {
-		if (nbCurves===3) {
-		    nbChoices=5;
-		    nbCurves=4;
-		    document.getElementById(curvesName[nbCurves]).style.display = "inline-block";
-		}
-		else {
-		    nbChoices=5;
-		    nbCurves=5;
-		    document.getElementById(curvesName[nbCurves-1]).style.display = "inline-block";
-		}
-	    }
+	
+	let nb=/**replaceString(side, '.curve', '');**/side.substring(6,side.length+1);
+	nb=Number(nb);
+	CURVES[nb]=a;
+	if (nb===maxNbCurves-1) {
+	    nbCurves=maxNbCurves;
 	}
 	else {
-	    RIGHT=a;
-	    nbCurves=5;
+	    addClickBranches(nb+1);
 	}
-	const CURVES=[LEFT,MIDDLE1,MIDDLE2,MIDDLE3,RIGHT];
 	plots.forEach(function(x) {
-	    const CURVES=[LEFT[x],MIDDLE1[x],MIDDLE2[x],MIDDLE3[x],RIGHT[x]];
+	    const CURVESBIS=[];
+	    for (let l=0; l<maxNbCurves; l++) {
+		CURVESBIS.push(CURVES[l][x]);
+	    }
 	    if (nbCurves!==nbChoices) {
-		Plotly.newPlot(GD[x],CURVES.slice(0,nbCurves+1),LAYOUT[x],{displaylogo:false});
+		Plotly.newPlot(GD[x],CURVESBIS.slice(0,nbCurves+1),LAYOUT[x],{displaylogo:false});
 	    }
 	    else {
-		Plotly.newPlot(GD[x],CURVES.slice(0,nbCurves),LAYOUT[x],{displaylogo:false});
+		Plotly.newPlot(GD[x],CURVESBIS.slice(0,nbCurves),LAYOUT[x],{displaylogo:false});
 	    }
 	});
-	
-	var lval = encodeURIComponent(findGetParameter("left"));
-	var mval1 = encodeURIComponent(findGetParameter("middle1"));/** **/
-	var mval2 = encodeURIComponent(findGetParameter("middle2"));/** **/
-	var mval3 = encodeURIComponent(findGetParameter("middle3"));/** **/
-	var rval = encodeURIComponent(findGetParameter("right"));
-		var uri  = "/comparator.html?left="+lval+"&middle1="+mval1+"&middle2="+mval2+"&middle3="+mval3+"&right="+rval;
-		// uri = replaceQueryParam(uri,side.replace(".",""),a.filename);
+
+	let cval=[];
+	for (let i=0; i<maxNbCurves; i++) {
+	    cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
+	}
+	var uri  = "/comparator.html?curve0="+cval[0];
+	for (let i=1; i<maxNbCurves; i++) {
+	    uri=uri+"&curve"+String(i)+"="+cval[i];
+	}
 		uri = updateURLParameter(uri,side.replace(".",""),a.filename);
 		window.history.replaceState({},"aff3ct.github.io",uri);
 
@@ -367,7 +335,8 @@ function addClick(a,side) {
 function deleteClick(divId) {
     const plots=["ber","fer"/*,"befe","thr"*/];
     if (nbChoices !== 1) {
-	document.getElementById(curvesName[nbChoices-1]).style.display = "none";
+	//document.getElementById("delete"+String(nbChoices)).style.display = "none";
+	document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
 	if (nbChoices===nbCurves) {
 	    plots.forEach(x => Plotly.deleteTraces(GD[x], nbCurves-1));
 	    nbCurves-=1;
@@ -386,22 +355,18 @@ function displayCodeTypes(files) {
 	    if (j == 0)
 	    {
 		selected="selected='selected'";
-		displayFrameSizes(".left",i,files);
-		displayFrameSizes(".middle1",i,files);
-		displayFrameSizes(".middle2",i,files);
-		displayFrameSizes(".middle3",i,files);
-		displayFrameSizes(".right",i,files);
+		for (let k=0; k<maxNbCurves; k++) {
+		    displayFrameSizes(".curve"+String(k),i,files);
 		}
-		$(".codetype").append("<option " + selected + ">"+i+"</option>");
-		j++;
+	    }
+	    $(".codetype").append("<option " + selected + ">"+i+"</option>");
+	    j++;
 	}
     
     $(".codetype").off();
-    $(".left .codetype").change(function() { displayFrameSizes(".left",$(this).val(),files); });
-    $(".middle1 .codetype").change(function() { displayFrameSizes(".middle1",$(this).val(),files); });
-    $(".middle2 .codetype").change(function() { displayFrameSizes(".middle2",$(this).val(),files); });
-    $(".middle3 .codetype").change(function() { displayFrameSizes(".middle3",$(this).val(),files); });
-    $(".right .codetype").change(function() { displayFrameSizes(".right",$(this).val(),files); });
+    for (let k=0; k<maxNbCurves; k++) {
+	$(".curve"+String(k)+" .codetype").change(function() { displayFrameSizes(".curve"+String(k),$(this).val(),files); });
+    }
 }
 
 window.onresize = function() {
@@ -570,24 +535,19 @@ $(document).ready(function() {
 	loadFileList(1,100).done(function(files) {
 		nFiles=files.length;
 		$.when.apply(this,files.map(x=>loadFile(x))).done(function() {
-			var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
-			var ordered=orderFiles(files);
-			displayCodeTypes(ordered);
+		    var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
+		    var ordered=orderFiles(files);
+		    displayCodeTypes(ordered);
 		    document.getElementById("loader").style.display = "none";
 		    document.getElementById("curvesTip").style.display = "block";
 		    document.getElementById("tips").style.display = "block";
 		    document.getElementById("selector").style.display = "block";
 		    document.getElementById("comparator").style.display = "block";
-		    var left = findGetParameter("left");
-		    if (left) drawCurvesFromURI(ordered,left,"left");
-		    var middle1 = findGetParameter("middle1");
-		    if (middle1) drawCurvesFromURI(ordered, middle1,"middle1");
-		    var middle2 = findGetParameter("middle2");
-		    if (middle1) drawCurvesFromURI(ordered, middle1,"middle2");
-		    var middle3 = findGetParameter("middle3");
-		    if (middle1) drawCurvesFromURI(ordered, middle1,"middle3");
-		    var right = findGetParameter("right");
-		    if (right) drawCurvesFromURI(ordered,right,"right");
+		    const varSide=[];
+		    for (let k=0; k<maxNbCurves; k++) {
+			varSide.push(findGetParameter("curve"+String(k)));
+			if (varSide[k]) drawCurvesFromURI(ordered,varSide[k],"curve"+String(k));
+		    }
 		});
 	});
 });
