@@ -5,14 +5,17 @@ const BRANCH="development";
 const maxNbCurves=5;//Colors are defined for only 5 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for 6 or more curves. Sincerely, Me.
 const CURVES=[];
 const curvesNames=[];
-for (let i=0; i<maxNbCurves; i++) {
-    CURVES.push({ber:[],fer:[]/*,thr:[],befe:[]*/});
-    curvesNames.push("curve"+String(i));
-}
 let nbChoices=1;
 let nbCurves=0;
+const INDICES_DISPLAY=[];
 
-
+function initialization() {
+    for (let i=0; i<maxNbCurves; i++) {
+	CURVES.push({ber:[],fer:[]/*,thr:[],befe:[]*/});
+	curvesNames.push("curve"+String(i));
+	INDICES_DISPLAY.push(0);
+    }
+}
 // axis/legend of the 2 plots
 const LT = {
     showlegend:false,
@@ -281,9 +284,97 @@ function addClickBranches(x) {
 	}
     }
 }
+
+
+function displaySelectedCurve(a,side,i) {
+    $("#scurve"+side.substring(6,side.length+1)).empty();
+    var s='<div class="card" id="s'+side.substring(1,side.length+1)+'"><div class="card-header" id="sheading'+side.substring(6,side.length+1)+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
+    s+='<div class="col-sm-6"><button class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#scollapse'+side.substring(6,side.length+1)+'" aria-expanded="true" aria-controls="scollapse'+side.substring(6,side.length+1)+'">';
+    s+=a.ini.metadata.title;
+    s+='</button></div></h5></div><div id="scollapse'+side.substring(6,side.length+1)+'" class="collapse" aria-labelledby="sheading'+side.substring(6,side.length+1)+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
+	///////////////////////
+    s+="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"
+    s+=/**a.ini.metadata.title+"&nbsp;**/"<div class='text-muted twoColumns'><small><b>Frame size</b>: "+a.framesize+"<br/>";
+    if (a.codeword > a.framesize)
+	s+="<b>Codeword</b>: "+a.codeword+"<br/>";
+    s+="<b>Coderate</b>: "+a.coderate;
+    for (var j in a.info)
+    {
+	var tooltip = "";
+	if (tooltips.get(a.info[j]))
+	    tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.info[j]) + "'";
+	if (a.info[j] == "BP_HORIZONTAL_LAYERED") a.info[j] = "BP_HLAYERED";
+	if (a.info[j] == "BP_VERTICAL_LAYERED") a.info[j] = "BP_VLAYERED";
+	s+="<br/><b>"+j+"</b>: "+"<span" + tooltip + ">" + a.info[j] + "</span>";
+    }
+    s+="</small></div>";
+    s+="<div class='curveIcons'>";
+    if (a.ini.metadata.doi)
+	s+="  <span class='curveIcon'><a href='https://doi.org/"+a.ini.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.ini.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>"
+    if (a.ini.metadata.url)
+	s+="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>"
+    if (a.ini.metadata.command)
+	s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+side.replace(".","")+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
+    s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoFile"+side.replace(".","")+"_"+a.id+"' title='Original output text file'><i class='fas fa-file-alt'></i></a></span>"
+    s+="</div>";
+    s+="</li>";
+    ////////////////////////////////
+    s+='</div></div></div>';
+    $("#scurve"+side.substring(6,side.length+1)).append(s);
+    if (a.ini.metadata.command) {
+	var m="";
+	m+="<div class='modal fade' id='modalInfoCmd"+"_"+a.id+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+	m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
+	m+="    <div class='modal-content'>";
+	m+="      <div class='modal-header'>";
+	m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.ini.metadata.title+"</h5>";
+	m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+	m+="          <span aria-hidden='true'>&times;</span>";
+	m+="        </button>";
+	m+="      </div>";
+	m+="      <div class='modal-body'>";
+	m+="        <div class='shell-wrap'>";
+	m+="          <p class='shell-top-bar'>AFF3CT command line</p>";
+	m+="          <ul class='shell-body'>";
+	m+="            <li>"+a.ini.metadata.command+"</li>";
+	m+="          </ul>";
+	m+="        </div>";
+	m+="        <br>";
+	m+="        <p class='text-justify'><b>Be careful</b>, this command is not guarantee to work with the <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/master' onclick='return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");'><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/development' onclick='return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");'><i>development</i> branch</a>.</p>"
+	m+="      </div>";
+	m+="    </div>";
+	m+="  </div>";
+	m+="</div>";
+	m+="<div class='modal fade' id='modalInfoFile"+"_"+a.id+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+	m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
+	m+="    <div class='modal-content'>";
+	m+="      <div class='modal-header'>";
+	m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.ini.metadata.title+"</h5>";
+	m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+	m+="          <span aria-hidden='true'>&times;</span>";
+	m+="        </button>";
+	m+="      </div>";
+	m+="      <div class='modal-body'>";
+	m+="        <pre>";
+	m+=a.file;
+	m+="        </pre>";
+	m+="      </div>";
+	m+="      <div class='modal-footer'>";
+	m+="        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
+	m+="      </div>";
+	m+="    </div>";
+	m+="  </div>";
+	m+="</div>";
+	$("#"+side.replace(".","")+"modals").append(m);
+    }
+}
+
+
+
 // Click listener for curves list
 function addClick(a,side) {
     /**$(side+" .bers :button"/** .curve0"+a.id/** #accordion0"/**+" .rounded .bers .card-header"/** "+side+a.id).**//**document.getElementById(side.substring(1,side.length+1)+a.id).click(**/$('#'+side.substring(1,side.length+1)+a.id).on('click', function() {
+	displaySelectedCurve(a,side);
 	if (nbChoices!==5) document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
 	document.getElementById("tips").style.display = "none";
 	const plots=["ber","fer"/*,"befe","thr"*/];
@@ -333,13 +424,15 @@ function addClick(a,side) {
     });
 }
 
-function deleteClick(divId) {
+function deleteClick(divId, idSide) {
     const plots=["ber","fer"/*,"befe","thr"*/];
     if (nbChoices !== 1) {
 	//document.getElementById("delete"+String(nbChoices)).style.display = "none";
 	document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
 	document.getElementById(curvesNames[nbChoices-2]).style.display = "inline-block";
 	if (nbChoices===nbCurves) {
+	    $("#s"+idSide).empty();
+	    //document.getElementById('s'+idSide).style.display = "none";
 	    plots.forEach(x => Plotly.deleteTraces(GD[x], nbCurves-1));
 	    nbCurves-=1;
 	}
@@ -477,7 +570,7 @@ function displayFiles(side,files,framesize) {
     $("#"+side.replace(".","")+"modals").empty();
     for (var i=0;i<f.length;i++) {
 	var a=f[i];
-	var s='<div class="card"><div class="card-header" id="heading'+side.substring(6,side.length+1)+i+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
+	var s='<div class="card card'+i+'"><div class="card-header" id="heading'+side.substring(6,side.length+1)+i+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
 	s+='<div class="col-sm-2"><button type="button" id="'+side.substring(1,side.length+1)+a.id+'" class="btn btn-dark"><b>+</b></button></div>';
 	s+='<div class="col-sm-6"><button class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#collapse'+side.substring(6,side.length+1)+i+'" aria-expanded="true" aria-controls="collapse'+side.substring(6,side.length+1)+i+'">';
 	s+=a.ini.metadata.title;
@@ -504,8 +597,8 @@ function displayFiles(side,files,framesize) {
 	if (a.ini.metadata.url)
 	    s+="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>"
 	if (a.ini.metadata.command)
-	    s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+side.replace(".","")+side.substring(6,side.length+1)+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
-	s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoFile"+side.replace(".","")+side.substring(6,side.length+1)+"' title='Original output text file'><i class='fas fa-file-alt'></i></a></span>"
+	    s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+side.replace(".","")+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
+	s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoFile"+side.replace(".","")+"_"+a.id+"' title='Original output text file'><i class='fas fa-file-alt'></i></a></span>"
 	s+="</div>";
 	s+="</li>";
 	////////////////////////////////
@@ -513,7 +606,7 @@ function displayFiles(side,files,framesize) {
 	$(side+" .bers #accordion"+side.substring(6,side.length+1)).append(s);
 	if (a.ini.metadata.command) {
 	    var m="";
-	    m+="<div class='modal fade' id='modalInfoCmd"+side.replace(".","")+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+	    m+="<div class='modal fade' id='modalInfoCmd"+side.replace(".","")+"_"+a.id+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
 	    m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
 	    m+="    <div class='modal-content'>";
 	    m+="      <div class='modal-header'>";
@@ -535,7 +628,7 @@ function displayFiles(side,files,framesize) {
 	    m+="    </div>";
 	    m+="  </div>";
 	    m+="</div>";
-	    m+="<div class='modal fade' id='modalInfoFile"+side.replace(".","")+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+	    m+="<div class='modal fade' id='modalInfoFile"+side.replace(".","")+"_"+a.id+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
 	    m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
 	    m+="    <div class='modal-content'>";
 	    m+="      <div class='modal-header'>";
@@ -600,6 +693,7 @@ function drawCurvesFromURI(files,filename,side)
 
 //main
 $(document).ready(function() {
+    initialization();
     var d3 = Plotly.d3;
     var WIDTH_IN_PERCENT_OF_PARENT = 100,
 	HEIGHT_IN_PERCENT_OF_PARENT = 40;
