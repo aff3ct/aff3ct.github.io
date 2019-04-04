@@ -270,6 +270,7 @@ function loadFileList(page,maxperpage) {
     });
     return dirlist.promise();
 }
+
 function addClickBranches(x) {
     if (nbChoices===x) {
 	if (nbCurves===x-1) {
@@ -285,14 +286,13 @@ function addClickBranches(x) {
     }
 }
 
-
 function displaySelectedCurve(a,side,i) {
     $("#scurve"+side.substring(6,side.length+1)).empty();
     var s='<div class="card" id="s'+side.substring(1,side.length+1)+'"><div class="card-header" id="sheading'+side.substring(6,side.length+1)+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
     s+='<div class="col-sm-6"><button class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#scollapse'+side.substring(6,side.length+1)+'" aria-expanded="true" aria-controls="scollapse'+side.substring(6,side.length+1)+'">';
     s+=a.ini.metadata.title;
     s+='</button></div></h5></div><div id="scollapse'+side.substring(6,side.length+1)+'" class="collapse" aria-labelledby="sheading'+side.substring(6,side.length+1)+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
-	///////////////////////
+    ///////////////////////
     s+="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"
     s+=/**a.ini.metadata.title+"&nbsp;**/"<div class='text-muted twoColumns'><small><b>Frame size</b>: "+a.framesize+"<br/>";
     if (a.codeword > a.framesize)
@@ -369,11 +369,9 @@ function displaySelectedCurve(a,side,i) {
     }
 }
 
-
-
 // Click listener for curves list
 function addClick(a,side) {
-    /**$(side+" .bers :button"/** .curve0"+a.id/** #accordion0"/**+" .rounded .bers .card-header"/** "+side+a.id).**//**document.getElementById(side.substring(1,side.length+1)+a.id).click(**/$('#'+side.substring(1,side.length+1)+a.id).on('click', function() {
+    $('#'+side.substring(1,side.length+1)+a.id).on('click', function() {
 	displaySelectedCurve(a,side);
 	if (nbChoices!==5) document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
 	document.getElementById("tips").style.display = "none";
@@ -381,7 +379,7 @@ function addClick(a,side) {
 	$(side+" .bers .active").removeClass("active");
 	$(this).addClass("active");
 	
-	let nb=/**replaceString(side, '.curve', '');**/side.substring(6,side.length+1);
+	let nb=side.substring(6,side.length+1);
 	nb=Number(nb);
 	CURVES[nb]=a;
 	if (nb===maxNbCurves-1) {
@@ -427,12 +425,10 @@ function addClick(a,side) {
 function deleteClick(divId, idSide) {
     const plots=["ber","fer"/*,"befe","thr"*/];
     if (nbChoices !== 1) {
-	//document.getElementById("delete"+String(nbChoices)).style.display = "none";
 	document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
 	document.getElementById(curvesNames[nbChoices-2]).style.display = "inline-block";
 	if (nbChoices===nbCurves) {
 	    $("#s"+idSide).empty();
-	    //document.getElementById('s'+idSide).style.display = "none";
 	    plots.forEach(x => Plotly.deleteTraces(GD[x], nbCurves-1));
 	    nbCurves-=1;
 	}
@@ -490,80 +486,6 @@ function displayFrameSizes(side,code,files) {
     });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
-
-<div id="accordion">
-  <div class="card">
-    <div class="card-header" id="headingi">
-      <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapsei" aria-expanded="true" aria-controls="collapsei">
-          Collapsible Group Item #1
-        </button>
-      </h5>
-    </div>
-
-    <div id="collapsei" class="collapse show" aria-labelledby="headingi" data-parent="#accordion">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingi">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsei" aria-expanded="false" aria-controls="collapsei">
-          Collapsible Group Item #2
-        </button>
-      </h5>
-    </div>
-    <div id="collapsei" class="collapse" aria-labelledby="headingi" data-parent="#accordion">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingi">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsei" aria-expanded="false" aria-controls="collapsei">
-          Collapsible Group Item #3
-        </button>
-      </h5>
-    </div>
-    <div id="collapsei" class="collapse" aria-labelledby="headingi" data-parent="#accordion">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-</div>
-
-**/
-
-
-
-
-
-
-
-
-
 function displayFiles(side,files,framesize) {
     var f=files.filter(x=>x.framesize==framesize);
     $(side+ " .bers #accordion"+side.substring(6,side.length+1)).empty();
@@ -575,7 +497,7 @@ function displayFiles(side,files,framesize) {
 	s+='<div class="col-sm-6"><button class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#collapse'+side.substring(6,side.length+1)+i+'" aria-expanded="true" aria-controls="collapse'+side.substring(6,side.length+1)+i+'">';
 	s+=a.ini.metadata.title;
 	s+='</button></div></h5></div><div id="collapse'+side.substring(6,side.length+1)+i+'" class="collapse" aria-labelledby="heading'+side.substring(6,side.length+1)+i+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
-	///////////////////////
+	
 	s+="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"
 	s+=/**a.ini.metadata.title+"&nbsp;**/"<div class='text-muted twoColumns'><small><b>Frame size</b>: "+a.framesize+"<br/>";
 	if (a.codeword > a.framesize)
@@ -601,7 +523,7 @@ function displayFiles(side,files,framesize) {
 	s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoFile"+side.replace(".","")+"_"+a.id+"' title='Original output text file'><i class='fas fa-file-alt'></i></a></span>"
 	s+="</div>";
 	s+="</li>";
-	////////////////////////////////
+
 	s+='</div></div></div>';
 	$(side+" .bers #accordion"+side.substring(6,side.length+1)).append(s);
 	if (a.ini.metadata.command) {
