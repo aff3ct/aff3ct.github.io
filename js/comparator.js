@@ -283,8 +283,8 @@ function addClickBranches(x) {
 }
 // Click listener for curves list
 function addClick(a,side) {
-    console.log(side.substring(1,side.length+1)+a.id);
     /**$(side+" .bers :button"/** .curve0"+a.id/** #accordion0"/**+" .rounded .bers .card-header"/** "+side+a.id).**//**document.getElementById(side.substring(1,side.length+1)+a.id).click(**/$('#'+side.substring(1,side.length+1)+a.id).on('click', function() {
+	if (nbChoices!==5) document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
 	document.getElementById("tips").style.display = "none";
 	const plots=["ber","fer"/*,"befe","thr"*/];
 	$(side+" .bers .active").removeClass("active");
@@ -338,6 +338,7 @@ function deleteClick(divId) {
     if (nbChoices !== 1) {
 	//document.getElementById("delete"+String(nbChoices)).style.display = "none";
 	document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
+	document.getElementById(curvesNames[nbChoices-2]).style.display = "inline-block";
 	if (nbChoices===nbCurves) {
 	    plots.forEach(x => Plotly.deleteTraces(GD[x], nbCurves-1));
 	    nbCurves-=1;
