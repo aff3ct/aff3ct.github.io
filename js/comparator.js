@@ -288,8 +288,8 @@ function addClickBranches(x) {
 
 function displaySelectedCurve(a,side,i) {
     $("#scurve"+side.substring(6,side.length+1)).empty();
-    var s='<div class="card" id="s'+side.substring(1,side.length+1)+'"><div class="card-header" id="sheading'+side.substring(6,side.length+1)+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
-    s+='<div class="col-sm-6"><button class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#scollapse'+side.substring(6,side.length+1)+'" aria-expanded="true" aria-controls="scollapse'+side.substring(6,side.length+1)+'">';
+    var s='<div class="card" id="ss'+side.substring(1,side.length+1)+'"><div class="card-header" id="sheading'+side.substring(6,side.length+1)+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
+    s+='<div class="col-sm-6"><button class="btn btn-light dropdown-toggle" data-toggle="collapse" data-target="#scollapse'+side.substring(6,side.length+1)+'" aria-expanded="true" aria-controls="scollapse'+side.substring(6,side.length+1)+'">';
     s+=a.ini.metadata.title;
     s+='</button></div></h5></div><div id="scollapse'+side.substring(6,side.length+1)+'" class="collapse" aria-labelledby="sheading'+side.substring(6,side.length+1)+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
     ///////////////////////
@@ -372,6 +372,7 @@ function displaySelectedCurve(a,side,i) {
 // Click listener for curves list
 function addClick(a,side) {
     $('#'+side.substring(1,side.length+1)+a.id).on('click', function() {
+	console.log("Add: Before: nbChoices="+nbChoices+" nbCurves="+nbCurves);
 	displaySelectedCurve(a,side);
 	if (nbChoices!==5) document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
 	document.getElementById("tips").style.display = "none";
@@ -388,6 +389,7 @@ function addClick(a,side) {
 	else {
 	    addClickBranches(nb+1);
 	}
+	console.log("Add: After: nbChoices="+nbChoices+" nbCurves="+nbCurves);
 	plots.forEach(function(x) {
 	    const CURVESBIS=[];
 	    for (let l=0; l<maxNbCurves; l++) {
@@ -419,11 +421,13 @@ function addClick(a,side) {
 	    eventAction:   'click',
 	    eventLabel:    decodeURIComponent(a.filename)
 	});
+	console.log("Add: After: nbChoices="+nbChoices+" nbCurves="+nbCurves);
     });
 }
 
 function deleteClick(divId, idSide) {
     const plots=["ber","fer"/*,"befe","thr"*/];
+    console.log("Delete: Before: nbChoices="+nbChoices+" nbCurves="+nbCurves);
     if (nbChoices !== 1) {
 	document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
 	document.getElementById(curvesNames[nbChoices-2]).style.display = "inline-block";
@@ -434,6 +438,7 @@ function deleteClick(divId, idSide) {
 	}
 	nbChoices-=1;
     }
+    console.log("Delete: After: nbChoices="+nbChoices+" nbCurves="+nbCurves);
 }
 
 /* Interaction with the form */
@@ -494,7 +499,7 @@ function displayFiles(side,files,framesize) {
 	var a=f[i];
 	var s='<div class="card card'+i+'"><div class="card-header" id="heading'+side.substring(6,side.length+1)+i+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
 	s+='<div class="col-sm-2"><button type="button" id="'+side.substring(1,side.length+1)+a.id+'" class="btn btn-dark"><b>+</b></button></div>';
-	s+='<div class="col-sm-6"><button class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#collapse'+side.substring(6,side.length+1)+i+'" aria-expanded="true" aria-controls="collapse'+side.substring(6,side.length+1)+i+'">';
+	s+='<div class="col-sm-6"><button class="btn btn-secondary dropdown-toggle" data-toggle="collapse" data-target="#collapse'+side.substring(6,side.length+1)+i+'" aria-expanded="true" aria-controls="collapse'+side.substring(6,side.length+1)+i+'">';
 	s+=a.ini.metadata.title;
 	s+='</button></div></h5></div><div id="collapse'+side.substring(6,side.length+1)+i+'" class="collapse" aria-labelledby="heading'+side.substring(6,side.length+1)+i+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
 	

@@ -1,94 +1,85 @@
-.curve4 .bers .list-group-item.active {
+#sscurve4
+{
   background-color:#9467BD;
   border-color:#9467BD;
 }
 
-.curve4 .list-group-item.active .text-muted
+#sscurve4 
 {
   color:#fff !important;
 }
 
-.curve4 .list-group-item.active a
-{
-  color:#fff !important;
-}
-
-.curve4 .list-group-item.active a:hover
+#sscurve4
 {
   color:#ddd !important;
 }
 
-.curve3 .bers .list-group-item.active {
+#sscurve3
+{
   background-color:#D62728;
   border-color:#D62728;
 }
 
-.curve3 .list-group-item.active .text-muted
+#sscurve3
 {
   color:#fff !important;
 }
 
-.curve3 .list-group-item.active a
+#sscurve3
 {
   color:#fff !important;
 }
 
-.curve3 .list-group-item.active a:hover
+#sscurve3
 {
   color:#ddd !important;
 }
 
-.curve2 .bers .list-group-item.active {
+#sscurve2
+{
   background-color:#2EA12E;
   border-color:#2EA12E;
 }
 
-.curve2 .list-group-item.active .text-muted
+#sscurve2
 {
   color:#fff !important;
 }
 
-.curve2 .list-group-item.active a
-{
-  color:#fff !important;
-}
-
-.curve2 .list-group-item.active a:hover
+#sscurve2
 {
   color:#ddd !important;
 }
 
-.curve1 .bers .list-group-item.active {
+#sscurve1
+{
   background-color:#FF7F0E;
   border-color:#FF7F0E;
 }
 
-.curve1 .list-group-item.active .text-muted
+#sscurve1
 {
   color:#fff !important;
 }
 
-.curve1 .list-group-item.active a
-{
-  color:#fff !important;
-}
 
-.curve1 .list-group-item.active a:hover
+#sscurve1
 {
   color:#ddd !important;
 }
 
-.curve0 .list-group-item.active .text-muted
+#sscurve0
+{
+  background-color:#1F77B4;
+  border-color:#1F77B4;
+}
+
+#sscurve0
 {
   color:#fff !important;
 }
 
-.curve0 .list-group-item.active a
-{
-  color:#fff !important;
-}
-
-.curve0 .list-group-item.active a:hover
+#sscurve0
 {
   color:#ddd !important;
 }
