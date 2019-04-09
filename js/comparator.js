@@ -286,12 +286,18 @@ function addClickBranches(x) {
     }
 }
 
-function displaySelectedCurve(a,side,i) {
+function displaySelectedCurve(a,side) {
     $("#scurve"+side.substring(6,side.length+1)).empty();
     var s='<div class="card" id="ss'+side.substring(1,side.length+1)+'"><div class="card-header" id="sheading'+side.substring(6,side.length+1)+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
-    s+='<div class="col-sm-6"><button class="btn btn-light dropdown-toggle" data-toggle="collapse" data-target="#scollapse'+side.substring(6,side.length+1)+'" aria-expanded="true" aria-controls="scollapse'+side.substring(6,side.length+1)+'">';
-    s+=a.ini.metadata.title;
-    s+='</button></div></h5></div><div id="scollapse'+side.substring(6,side.length+1)+'" class="collapse" aria-labelledby="sheading'+side.substring(6,side.length+1)+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
+    s+='<div class="col-sm-11 btn-group">';
+    if (a.ini.metadata.title.length <= 21) s=s+'<button class="btn btn-block btn-dark text-left">'+a.ini.metadata.title;
+    else s=s+'<button class="btn btn-block btn-dark text-left" data-toggle="tooltip" data-placement="left" title="'+a.ini.metadata.title+'">'+a.ini.metadata.title.substring(0,17)+"... ";
+    s+='</button>';
+    s+='<button class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="collapse" data-target="#scollapse'+side.substring(6,side.length+1)+'" aria-expanded="true" aria-controls="scollapse'+side.substring(6,side.length+1)+'" aria-haspopup="true">';
+    s+='<span class="sr-only">Toggle Dropdown</span>';
+    s+='</button></div>';
+    if (Number(side.substring(6,side.length+1))>=1) s+='<div id="delete1" class="col-0"><button type="button" class="close" aria-label="Close" onclick="deleteClick(\'delete\', \''+side.substring(1,side.length+1)+'\')"><span aria-hidden="true">&times;</span></button></div>';
+    s+='</h5></div><div id="scollapse'+side.substring(6,side.length+1)+'" class="collapse" aria-labelledby="sheading'+side.substring(6,side.length+1)+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
     ///////////////////////
     s+="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"
     s+=/**a.ini.metadata.title+"&nbsp;**/"<div class='text-muted twoColumns'><small><b>Frame size</b>: "+a.framesize+"<br/>";
@@ -500,7 +506,8 @@ function displayFiles(side,files,framesize) {
 	var s='<div class="card card'+i+'"><div class="card-header" id="heading'+side.substring(6,side.length+1)+i+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
 	s+='<div class="col-sm-2"><button type="button" id="'+side.substring(1,side.length+1)+a.id+'" class="btn btn-dark"><b>+</b></button></div>';
 	s+='<div class="col-sm-6"><button class="btn btn-secondary dropdown-toggle" data-toggle="collapse" data-target="#collapse'+side.substring(6,side.length+1)+i+'" aria-expanded="true" aria-controls="collapse'+side.substring(6,side.length+1)+i+'">';
-	s+=a.ini.metadata.title;
+	if (a.ini.metadata.title.length <= 21) s+=a.ini.metadata.title;
+	else s+=a.ini.metadata.title.substring(0,17)+'... ';
 	s+='</button></div></h5></div><div id="collapse'+side.substring(6,side.length+1)+i+'" class="collapse" aria-labelledby="heading'+side.substring(6,side.length+1)+i+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
 	
 	s+="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"
