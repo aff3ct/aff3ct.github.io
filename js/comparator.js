@@ -8,6 +8,7 @@ const curvesNames=[];
 let nbChoices=1;
 let nbCurves=0;
 const INDICES_DISPLAY=[];
+const OG=['#1F77B4', '#ff7f0e', '#2ea12e', '#d62728', '#9467bd'];
 
 function initialization() {
     for (let i=0; i<maxNbCurves; i++) {
@@ -26,7 +27,8 @@ const LT = {
 	b: 40,
 	t: 40,
 	pad: 4
-    }
+    },
+    colorway: OG,
 };
 
 const LAYOUT= {
@@ -34,7 +36,7 @@ const LAYOUT= {
     fer: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Frame Error Rate (FER)'}},LT),
     // befe: Object.assign({yaxis: { autorange: true, hoverformat: '.2e',title: 'BE/FE'}},LT),
     // thr: Object.assign({ yaxis: { autorange: true, hoverformat: '.2e',title: 'Throughput (Mb/s)'}},LT)
-}
+};
 
 var GD={};
 
@@ -43,6 +45,22 @@ var GD={};
 //     var query = search.replace(regex, "$1").replace(/&$/, '');
 //     return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
 // }
+
+function updateColors(Tab) {
+    LT = {
+    showlegend:false,
+    xaxis:{ zeroline:false, hoverformat: '.e', title: 'Eb/N0 (dB)'},
+    margin: {
+	l: 100,
+	r: 40,
+	b: 40,
+	t: 40,
+	pad: 4
+    },
+    colorway: TAB,
+};
+
+}
 
 function updateURLParameter(url, param, paramVal)
 {
@@ -271,32 +289,15 @@ function loadFileList(page,maxperpage) {
     return dirlist.promise();
 }
 
-function addClickBranches(x) {
-    if (nbChoices===x) {
-	if (nbCurves===x-1) {
-	    nbChoices=x+1;
-	    nbCurves=x;
-	    document.getElementById(curvesNames[nbCurves]).style.display = "inline-block";
-	}
-	else {
-	    nbChoices=x+1;
-	    nbCurves=x+1;
-	    document.getElementById(curvesNames[nbCurves-1]).style.display = "inline-block";
-	}
-    }
-}
-
 function displaySelectedCurve(a,side) {
+    document.getElementById("scurve"+side.substring(6,side.length+1)).style.display = "inline";
     $("#scurve"+side.substring(6,side.length+1)).empty();
     var s='<div class="card" id="ss'+side.substring(1,side.length+1)+'"><div class="card-header" id="sheading'+side.substring(6,side.length+1)+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
-    s+='<div class="col-sm-11 btn-group">';
-    if (a.ini.metadata.title.length <= 21) s=s+'<button class="btn btn-block btn-dark text-left">'+a.ini.metadata.title;
-    else s=s+'<button class="btn btn-block btn-dark text-left" data-toggle="tooltip" data-placement="left" title="'+a.ini.metadata.title+'">'+a.ini.metadata.title.substring(0,17)+"... ";
-    s+='</button>';
-    s+='<button class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="collapse" data-target="#scollapse'+side.substring(6,side.length+1)+'" aria-expanded="true" aria-controls="scollapse'+side.substring(6,side.length+1)+'" aria-haspopup="true">';
-    s+='<span class="sr-only">Toggle Dropdown</span>';
+    s+='<div class="col-sm-11" data-toggle="collapse" data-target="#scollapse'+side.substring(6,side.length+1)+'" aria-expanded="true" aria-controls="scollapse'+side.substring(6,side.length+1)+'">';
+    if (a.ini.metadata.title.length <= 21) s=s+'<button class="btn btn-block btn-link text-left">'+a.ini.metadata.title;
+    else s=s+'<button class="btn btn-block btn-link text-left" data-toggle="tooltip" data-placement="left" title="'+a.ini.metadata.title+'">'+a.ini.metadata.title.substring(0,17)+"... ";
     s+='</button></div>';
-    if (Number(side.substring(6,side.length+1))>=1) s+='<div id="delete1" class="col-0"><button type="button" class="close" aria-label="Close" onclick="deleteClick(\'delete\', \''+side.substring(1,side.length+1)+'\')"><span aria-hidden="true">&times;</span></button></div>';
+    /**if (Number(side.substring(6,side.length+1))>=1) **/s+='<div id="delete1" class="col-0"><button type="button" class="close" aria-label="Close" onclick="deleteClick(\'delete\', \''+side.substring(1,side.length+1)+'\')"><span aria-hidden="true">&times;</span></button></div>';
     s+='</h5></div><div id="scollapse'+side.substring(6,side.length+1)+'" class="collapse" aria-labelledby="sheading'+side.substring(6,side.length+1)+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
     ///////////////////////
     s+="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"
@@ -375,6 +376,21 @@ function displaySelectedCurve(a,side) {
     }
 }
 
+function addClickBranches(x) {
+    if (nbChoices===x) {
+	if (nbCurves===x-1) {
+	    nbChoices=x+1;
+	    nbCurves=x;
+	    document.getElementById(curvesNames[nbCurves]).style.display = "inline-block";
+	}
+	else {
+	    nbChoices=x+1;
+	    nbCurves=x+1;
+	    document.getElementById(curvesNames[nbCurves-1]).style.display = "inline-block";
+	}
+    }
+}
+
 // Click listener for curves list
 function addClick(a,side) {
     $('#'+side.substring(1,side.length+1)+a.id).on('click', function() {
@@ -401,12 +417,14 @@ function addClick(a,side) {
 	    for (let l=0; l<maxNbCurves; l++) {
 		CURVESBIS.push(CURVES[l][x]);
 	    }
+	    /**
 	    if (nbCurves!==nbChoices) {
 		Plotly.newPlot(GD[x],CURVESBIS.slice(0,nbCurves+1),LAYOUT[x],{displaylogo:false});
 	    }
 	    else {
 		Plotly.newPlot(GD[x],CURVESBIS.slice(0,nbCurves),LAYOUT[x],{displaylogo:false});
-	    }
+		}**/
+	    Plotly.newPlot(GD[x],CURVESBIS.slice(0,nbCurves),LAYOUT[x],{displaylogo:false});
 	});
 
 	let cval=[];
@@ -431,18 +449,29 @@ function addClick(a,side) {
     });
 }
 
+
 function deleteClick(divId, idSide) {
-    const plots=["ber","fer"/*,"befe","thr"*/];
+    const plots=["ber","fer"];
     console.log("Delete: Before: nbChoices="+nbChoices+" nbCurves="+nbCurves);
     if (nbChoices !== 1) {
-	document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
-	document.getElementById(curvesNames[nbChoices-2]).style.display = "inline-block";
-	if (nbChoices===nbCurves) {
-	    $("#s"+idSide).empty();
-	    plots.forEach(x => Plotly.deleteTraces(GD[x], nbCurves-1));
-	    nbCurves-=1;
+	if (nbCurves!==5) {
+	    document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
+	    document.getElementById(curvesNames[nbChoices-2]).style.display = "inline-block";
 	}
-	nbChoices-=1;
+	$("#s"+idSide).empty();
+	if (Number(idSide.substring(5,idSide.length+1)) >= GD[plots[0]].data.length-1) {
+	    plots.forEach(x => Plotly.deleteTraces(GD[x], GD[x].data.length-1));
+	}
+	else {
+	    plots.forEach(x => Plotly.deleteTraces(GD[x], Number(idSide.substring(5,idSide.length+1))));
+	}
+	console.log("scurve"+idSide.substring(5,idSide.length+1));
+	document.getElementById("scurve"+idSide.substring(5,idSide.length+1)).style.display = "none";
+	if (nbCurves===nbChoices) nbCurves-=1;
+	else {
+	    nbCurves-=1;
+	    nbChoices-=1;
+	}
     }
     console.log("Delete: After: nbChoices="+nbChoices+" nbCurves="+nbCurves);
 }
@@ -504,8 +533,8 @@ function displayFiles(side,files,framesize) {
     for (var i=0;i<f.length;i++) {
 	var a=f[i];
 	var s='<div class="card card'+i+'"><div class="card-header" id="heading'+side.substring(6,side.length+1)+i+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
-	s+='<div class="col-sm-2"><button type="button" id="'+side.substring(1,side.length+1)+a.id+'" class="btn btn-dark"><b>+</b></button></div>';
-	s+='<div class="col-sm-6"><button class="btn btn-secondary dropdown-toggle" data-toggle="collapse" data-target="#collapse'+side.substring(6,side.length+1)+i+'" aria-expanded="true" aria-controls="collapse'+side.substring(6,side.length+1)+i+'">';
+	s+='<div class="col-sm-2"><button type="button" id="'+side.substring(1,side.length+1)+a.id+'" class="btn btn-primary"><b>+</b></button></div>';
+	s+='<div class="col-sm-6"><button class="btn btn-link" data-toggle="collapse" data-target="#collapse'+side.substring(6,side.length+1)+i+'" aria-expanded="true" aria-controls="collapse'+side.substring(6,side.length+1)+i+'">';
 	if (a.ini.metadata.title.length <= 21) s+=a.ini.metadata.title;
 	else s+=a.ini.metadata.title.substring(0,17)+'... ';
 	s+='</button></div></h5></div><div id="collapse'+side.substring(6,side.length+1)+i+'" class="collapse" aria-labelledby="heading'+side.substring(6,side.length+1)+i+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';

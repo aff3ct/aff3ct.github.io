@@ -1,86 +1,35 @@
-#sscurve4
+#scurve4 :nth-child(0n+1)
 {
   background-color:#9467BD;
   border-color:#9467BD;
-}
-
-#sscurve4 
-{
-  color:#fff !important;
-}
-
-#sscurve4
-{
   color:#ddd !important;
 }
 
-#sscurve3
+#scurve3 :nth-child(0n+1)
 {
   background-color:#D62728;
   border-color:#D62728;
-}
-
-#sscurve3
-{
-  color:#fff !important;
-}
-
-#sscurve3
-{
-  color:#fff !important;
-}
-
-#sscurve3
-{
   color:#ddd !important;
 }
 
-#sscurve2
+#scurve2 :nth-child(0n+1)
 {
   background-color:#2EA12E;
   border-color:#2EA12E;
-}
-
-#sscurve2
-{
-  color:#fff !important;
-}
-
-#sscurve2
-{
   color:#ddd !important;
 }
 
-#sscurve1
+#scurve1 :nth-child(0n+1)
 {
   background-color:#FF7F0E;
   border-color:#FF7F0E;
-}
-
-#sscurve1
-{
-  color:#fff !important;
-}
-
-
-#sscurve1
-{
   color:#ddd !important;
 }
 
-#sscurve0
+#scurve0 :nth-child(0n+1)
 {
   background-color:#1F77B4;
   border-color:#1F77B4;
-}
-
-#sscurve0
-{
-  color:#fff !important;
-}
-
-#sscurve0
-{
   color:#ddd !important;
 }
 
