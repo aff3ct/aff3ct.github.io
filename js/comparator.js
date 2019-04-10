@@ -2,7 +2,7 @@ const GITLAB="https://gitlab.com/api/v4/projects/10354484/repository/";
 const BRANCH="development";
 
 
-const maxNbCurves=5;//Colors are defined for only 5 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for 6 or more curves. Sincerely, Me.
+const maxNbCurves=5;//Colors are defined for only 5 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for more than 5 curves. Sincerely, Me.
 const CURVES=[];
 const curvesNames=[];
 let nbChoices=1;
@@ -297,7 +297,7 @@ function displaySelectedCurve(a,side) {
     if (a.ini.metadata.title.length <= 21) s=s+'<button class="btn btn-block btn-link text-left">'+a.ini.metadata.title;
     else s=s+'<button class="btn btn-block btn-link text-left" data-toggle="tooltip" data-placement="left" title="'+a.ini.metadata.title+'">'+a.ini.metadata.title.substring(0,17)+"... ";
     s+='</button></div>';
-    /**if (Number(side.substring(6,side.length+1))>=1) **/s+='<div id="delete1" class="col-0"><button type="button" class="close" aria-label="Close" onclick="deleteClick(\'delete\', \''+side.substring(1,side.length+1)+'\')"><span aria-hidden="true">&times;</span></button></div>';
+    /**if (Number(side.substring(6,side.length+1))>=1) **/s+='<div id="delete'+side.substring(6,side.length+1)+'" class="col-0"><button type="button" class="close" aria-label="Close" onclick="deleteClick(\'delete\', \''+side.substring(1,side.length+1)+'\')"><span aria-hidden="true">&times;</span></button></div>';
     s+='</h5></div><div id="scollapse'+side.substring(6,side.length+1)+'" class="collapse" aria-labelledby="sheading'+side.substring(6,side.length+1)+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
     ///////////////////////
     s+="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"
@@ -395,6 +395,9 @@ function addClickBranches(x) {
 function addClick(a,side) {
     $('#'+side.substring(1,side.length+1)+a.id).on('click', function() {
 	console.log("Add: Before: nbChoices="+nbChoices+" nbCurves="+nbCurves);
+	if ($("#delete"+String(Number(side.substring(6,side.length+1))-1)).length!==0) {
+	    document.getElementById("delete"+String(Number(side.substring(6,side.length+1))-1)).style.display = "none";
+	}
 	displaySelectedCurve(a,side);
 	if (nbChoices!==5) document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
 	document.getElementById("tips").style.display = "none";
@@ -453,6 +456,13 @@ function addClick(a,side) {
 function deleteClick(divId, idSide) {
     const plots=["ber","fer"];
     console.log("Delete: Before: nbChoices="+nbChoices+" nbCurves="+nbCurves);
+    if ($("#delete"+idSide.substring(5,idSide.length+1)).length!==0) {
+	if (Number(idSide.substring(5,idSide.length+1))!==0) {
+	    document.getElementById("delete"+String(Number(idSide.substring(5,idSide.length+1))-1)).style.display = "inline";
+	    document.getElementById("delete"+idSide.substring(5,idSide.length+1)).style.display = "none"; 
+	}
+	else document.getElementById("delete"+idSide.substring(5,idSide.length+1)).style.display = "none";
+    }
     if (nbChoices !== 1) {
 	if (nbCurves!==5) {
 	    document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
