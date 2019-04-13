@@ -289,6 +289,82 @@ function loadFileList(page,maxperpage) {
     return dirlist.promise();
 }
 
+/////////////////////////////////////////////////////////////
+
+
+function displaySelectors() {
+    for(let i=4; i>=0; i--) {
+	var selectorTemplate = $('#selectorTemplate').html();
+	Mustache.parse(selectorTemplate);
+	if (i===0) var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "curve"+String(i), selectorI: String(i), displayNone: ""});
+	else var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "curve"+String(i), selectorI: String(i), displayNone: "display:none"});
+	$("#comparator #comparatorNext").prepend(selectorRendered);
+    }
+}
+
+
+////////////////////////////////////////////////////////////
+
+
+function displayFiles(side,files,framesize) {
+    var f=files.filter(x=>x.framesize==framesize);
+    $(side+ " .bers #accordion"+side.substring(6,side.length+1)).empty();
+    $("#"+side.replace(".","")+"modals").empty();
+    for (var i=0;i<f.length;i++) {
+		var a=f[i];
+		var metadataTitle=a.ini.metadata.title;
+		var codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="";
+		if (a.ini.metadata.title.length > 23)
+			metadataTitle=a.ini.metadata.title.substring(0,22)+'... ';
+		if (a.codeword > a.framesize)
+	    	codeWord="<b>Codeword</b>: "+a.codeword+"<br/>";
+	    for (var j in a.info) {
+	    	var tooltip2 = "";
+	    	if (tooltips.get(a.info[j]))
+				tooltip2 = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.info[j]) + "'";
+	    	if (a.info[j] == "BP_HORIZONTAL_LAYERED") a.info[j] = "BP_HLAYERED";
+	    	if (a.info[j] == "BP_VERTICAL_LAYERED") a.info[j] = "BP_VLAYERED";
+	    	tooltip+="<br/><b>"+j+"</b>: "+"<span" + tooltip2 + ">" + a.info[j] + "</span>";
+		}
+		if (a.ini.metadata.doi)
+	    	metadataDoi="  <span class='curveIcon'><a href='https://doi.org/"+a.ini.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.ini.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>";
+		if (a.ini.metadata.url)
+	    	metadataUrl="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
+		if (a.ini.metadata.command)
+	    	metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+side.replace(".","")+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
+    	var filesTemplate = $('#filesTemplate').html();
+    	Mustache.parse(filesTemplate);
+    	var filesRendered=Mustache.render(filesTemplate, 	{filesI: String(i),
+	    													sideNumber: side.substring(6,side.length+1),
+	    													side: side.substring(1,side.length+1),
+	    													aId: a.id,
+	    													aTitle: metadataTitle,
+	    													aFramesize: a.framesize,
+	    													filesCodeword: codeWord,
+	    													aCoderate: a.coderate,
+	    													filesTooltip: tooltip,
+	    													filesDoi: metadataDoi,
+	    													filesUrl: metadataUrl,
+	    													filesCommand: metadataCommand});
+    	$(side+ " .bers #accordion"+side.substring(6,side.length+1)).append(filesRendered);
+    	if (a.ini.metadata.command) {
+    		var filesTemplate1 = $('#filesTemplate1').html();
+    		Mustache.parse(filesTemplate1);
+    		var fileRendered1=Mustache.render(filesTemplate1, 	{side: side.substring(1,side.length+1),
+	    														aId: a.id,
+	    														aTitle: metadataTitle,
+	    														aCommand: String(a.ini.metadata.command),
+	    														aFile: String(a.file),
+    															});
+	    	$("#"+side.replace(".","")+"modals").append(fileRendered1);
+    	}
+	addClick(a,side);
+	}
+    $('[data-toggle="tooltip"]').tooltip();
+}
+
+////////////////////////////////////////////////////////////
+
 function displaySelectedCurve(a,side) {
     document.getElementById("scurve"+side.substring(6,side.length+1)).style.display = "inline";
     $("#scurve"+side.substring(6,side.length+1)).empty();
@@ -535,98 +611,95 @@ function displayFrameSizes(side,code,files) {
 	displayFiles(side,files[code],$(this).val());
     });
 }
+//    var f=files.filter(x=>x.framesize==framesize);
+//    $(side+ " .bers #accordion"+side.substring(6,side.length+1)).empty();
+//    $("#"+side.replace(".","")+"modals").empty();
+//    for (var i=0;i<f.length;i++) {
+//	var a=f[i];
+//	var s='<div class="card card'+i+'"><div class="card-header p-2" id="heading'+side.substring(6,side.length+1)+i+'"><h5 class="mb-0"><div class="mb-0 mx-0 form-group row">';
+//	s+='<div class="col-md-auto px-0"><button type="button" id="'+side.substring(1,side.length+1)+a.id+'" class="btn btn-primary"><b>+</b></button></div>';
+//	s+='<div class="col-md-10 px-0"><button class="btn btn-link pr-0" data-toggle="collapse" data-target="#collapse'+side.substring(6,side.length+1)+i+'" aria-expanded="true" aria-controls="collapse'+side.substring(6,side.length+1)+i+'">';
+//	if (a.ini.metadata.title.length <= 23) s+=a.ini.metadata.title;
+//	else s+=a.ini.metadata.title.substring(0,22)+'... ';
+//	s+='</button></div></h5></div><div id="collapse'+side.substring(6,side.length+1)+i+'" class="collapse" aria-labelledby="heading'+side.substring(6,side.length+1)+i+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
+//	
+//	s+="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"
+//	s+=/**a.ini.metadata.title+"&nbsp;**/"<div class='text-muted twoColumns'><small><b>Frame size</b>: "+a.framesize+"<br/>";
+//	if (a.codeword > a.framesize)
+//	    s+="<b>Codeword</b>: "+a.codeword+"<br/>";
+//	s+="<b>Coderate</b>: "+a.coderate;
+//	for (var j in a.info) {
+//	    var tooltip = "";
+//	    if (tooltips.get(a.info[j]))
+//		tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.info[j]) + "'";
+//	    if (a.info[j] == "BP_HORIZONTAL_LAYERED") a.info[j] = "BP_HLAYERED";
+//	    if (a.info[j] == "BP_VERTICAL_LAYERED") a.info[j] = "BP_VLAYERED";
+//	    s+="<br/><b>"+j+"</b>: "+"<span" + tooltip + ">" + a.info[j] + "</span>";
+//	}
+//	s+="</small></div>";
+//	s+="<div class='curveIcons'>";
+//	if (a.ini.metadata.doi)
+//	    s+="  <span class='curveIcon'><a href='https://doi.org/"+a.ini.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.ini.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>"
+//	if (a.ini.metadata.url)
+//	    s+="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>"
+//	if (a.ini.metadata.command)
+//	    s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+side.replace(".","")+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
+//	s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoFile"+side.replace(".","")+"_"+a.id+"' title='Original output text file'><i class='fas fa-file-alt'></i></a></span>"
+//	s+="</div>";
+//	s+="</li>";//
 
-function displayFiles(side,files,framesize) {
-    var f=files.filter(x=>x.framesize==framesize);
-    $(side+ " .bers #accordion"+side.substring(6,side.length+1)).empty();
-    $("#"+side.replace(".","")+"modals").empty();
-    for (var i=0;i<f.length;i++) {
-	var a=f[i];
-	var s='<div class="card card'+i+'"><div class="card-header" id="heading'+side.substring(6,side.length+1)+i+'"><h5 class="mb-0"><div class="mb-0 form-group row">';
-	s+='<div class="col-sm-2"><button type="button" id="'+side.substring(1,side.length+1)+a.id+'" class="btn btn-primary"><b>+</b></button></div>';
-	s+='<div class="col-sm-6"><button class="btn btn-link" data-toggle="collapse" data-target="#collapse'+side.substring(6,side.length+1)+i+'" aria-expanded="true" aria-controls="collapse'+side.substring(6,side.length+1)+i+'">';
-	if (a.ini.metadata.title.length <= 21) s+=a.ini.metadata.title;
-	else s+=a.ini.metadata.title.substring(0,17)+'... ';
-	s+='</button></div></h5></div><div id="collapse'+side.substring(6,side.length+1)+i+'" class="collapse" aria-labelledby="heading'+side.substring(6,side.length+1)+i+'" data-parent="#accordion'+side.substring(6,side.length+1)+'"><div class="card-body">';
-	
-	s+="<li class='g"+a.id+" list-group-item list-group-item-action align-item-start'>"
-	s+=/**a.ini.metadata.title+"&nbsp;**/"<div class='text-muted twoColumns'><small><b>Frame size</b>: "+a.framesize+"<br/>";
-	if (a.codeword > a.framesize)
-	    s+="<b>Codeword</b>: "+a.codeword+"<br/>";
-	s+="<b>Coderate</b>: "+a.coderate;
-	for (var j in a.info)
-	{
-	    var tooltip = "";
-	    if (tooltips.get(a.info[j]))
-		tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.info[j]) + "'";
-	    if (a.info[j] == "BP_HORIZONTAL_LAYERED") a.info[j] = "BP_HLAYERED";
-	    if (a.info[j] == "BP_VERTICAL_LAYERED") a.info[j] = "BP_VLAYERED";
-	    s+="<br/><b>"+j+"</b>: "+"<span" + tooltip + ">" + a.info[j] + "</span>";
-	}
-	s+="</small></div>";
-	s+="<div class='curveIcons'>";
-	if (a.ini.metadata.doi)
-	    s+="  <span class='curveIcon'><a href='https://doi.org/"+a.ini.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.ini.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>"
-	if (a.ini.metadata.url)
-	    s+="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>"
-	if (a.ini.metadata.command)
-	    s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+side.replace(".","")+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
-	s+="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoFile"+side.replace(".","")+"_"+a.id+"' title='Original output text file'><i class='fas fa-file-alt'></i></a></span>"
-	s+="</div>";
-	s+="</li>";
-
-	s+='</div></div></div>';
-	$(side+" .bers #accordion"+side.substring(6,side.length+1)).append(s);
-	if (a.ini.metadata.command) {
-	    var m="";
-	    m+="<div class='modal fade' id='modalInfoCmd"+side.replace(".","")+"_"+a.id+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
-	    m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
-	    m+="    <div class='modal-content'>";
-	    m+="      <div class='modal-header'>";
-	    m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.ini.metadata.title+"</h5>";
-	    m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
-	    m+="          <span aria-hidden='true'>&times;</span>";
-	    m+="        </button>";
-	    m+="      </div>";
-	    m+="      <div class='modal-body'>";
-	    m+="        <div class='shell-wrap'>";
-	    m+="          <p class='shell-top-bar'>AFF3CT command line</p>";
-	    m+="          <ul class='shell-body'>";
-	    m+="            <li>"+a.ini.metadata.command+"</li>";
-	    m+="          </ul>";
-	    m+="        </div>";
-	    m+="        <br>";
-	    m+="        <p class='text-justify'><b>Be careful</b>, this command is not guarantee to work with the <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/master' onclick='return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");'><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/development' onclick='return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");'><i>development</i> branch</a>.</p>"
-	    m+="      </div>";
-	    m+="    </div>";
-	    m+="  </div>";
-	    m+="</div>";
-	    m+="<div class='modal fade' id='modalInfoFile"+side.replace(".","")+"_"+a.id+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
-	    m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
-	    m+="    <div class='modal-content'>";
-	    m+="      <div class='modal-header'>";
-	    m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.ini.metadata.title+"</h5>";
-	    m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
-	    m+="          <span aria-hidden='true'>&times;</span>";
-	    m+="        </button>";
-	    m+="      </div>";
-	    m+="      <div class='modal-body'>";
-	    m+="        <pre>";
-	    m+=a.file;
-	    m+="        </pre>";
-	    m+="      </div>";
-	    m+="      <div class='modal-footer'>";
-	    m+="        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
-	    m+="      </div>";
-	    m+="    </div>";
-	    m+="  </div>";
-	    m+="</div>";
-	    $("#"+side.replace(".","")+"modals").append(m);
-	}
-	addClick(a,side);
-    }
-    $('[data-toggle="tooltip"]').tooltip();
-}
+//	s+='</div></div></div>';
+//	$(side+" .bers #accordion"+side.substring(6,side.length+1)).append(s);
+//	if (a.ini.metadata.command) {
+//	    var m="";
+//	    m+="<div class='modal fade' id='modalInfoCmd"+side.replace(".","")+"_"+a.id+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+//	    m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
+//	    m+="    <div class='modal-content'>";
+//	    m+="      <div class='modal-header'>";
+//	    m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.ini.metadata.title+"</h5>";
+//	    m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+//	    m+="          <span aria-hidden='true'>&times;</span>";
+//	    m+="        </button>";
+//	    m+="      </div>";
+//	    m+="      <div class='modal-body'>";
+//	    m+="        <div class='shell-wrap'>";
+//	    m+="          <p class='shell-top-bar'>AFF3CT command line</p>";
+//	    m+="          <ul class='shell-body'>";
+//	    m+="            <li>"+a.ini.metadata.command+"</li>";
+//	    m+="          </ul>";
+//	    m+="        </div>";
+//	    m+="        <br>";
+//	    m+="        <p class='text-justify'><b>Be careful</b>, this command is not guarantee to work with the <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/master' onclick='return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");'><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target='_blank' href='https://github.com/aff3ct/aff3ct/tree/development' onclick='return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");'><i>development</i> branch</a>.</p>"
+//	    m+="      </div>";
+//	    m+="    </div>";
+//	    m+="  </div>";
+//	    m+="</div>";
+//	    m+="<div class='modal fade' id='modalInfoFile"+side.replace(".","")+"_"+a.id+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>";
+//	    m+="  <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>";
+//	    m+="    <div class='modal-content'>";
+//	    m+="      <div class='modal-header'>";
+//	    m+="        <h5 class='modal-title' id='exampleModalLongTitle'>"+a.ini.metadata.title+"</h5>";
+//	    m+="        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+//	    m+="          <span aria-hidden='true'>&times;</span>";
+//	    m+="        </button>";
+//	    m+="      </div>";
+//	    m+="      <div class='modal-body'>";
+//	    m+="        <pre>";
+//	    m+=a.file;
+//	    m+="        </pre>";
+//	    m+="      </div>";
+//	    m+="      <div class='modal-footer'>";
+//	    m+="        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
+//	    m+="      </div>";
+//	    m+="    </div>";
+//	    m+="  </div>";
+//	    m+="</div>";
+//	    $("#"+side.replace(".","")+"modals").append(m);
+//	}
+//	addClick(a,side);
+//    }
+//    $('[data-toggle="tooltip"]').tooltip();
+//}
 
 // files: array of files.
 // ordered: files are first sorted by code type, then by wordsize.
@@ -667,6 +740,7 @@ function drawCurvesFromURI(files,filename,side)
 //main
 $(document).ready(function() {
     initialization();
+    displaySelectors();
     var d3 = Plotly.d3;
     var WIDTH_IN_PERCENT_OF_PARENT = 100,
 	HEIGHT_IN_PERCENT_OF_PARENT = 40;
