@@ -557,7 +557,7 @@ function displayCodeTypes(files) {
 
 	$(".codetype").off();
 	for (let k=0; k<maxNbCurves; k++) {
-		$(".curve"+String(k)+" .codetype").change(function() { displayFrameSizes(".curve"+String(k),$(this).val(),files); });
+		$(".curve"+String(k)+" .codetype").change(function() { for (let i=0; i<maxNbCurves; i++) displayFrameSizes(".curve"+String(i),$(this).val(),files); });
 	}
 }
 
@@ -583,7 +583,7 @@ function displayFrameSizes(side,code,files) {
 	displayFiles(side,files[code],j);
 	$(side+" .size").off();
 	$(side+" .size").change(function() {
-		displayFiles(side,files[code],$(this).val());
+		for(let i=0; i<maxNbCurves; i++) displayFiles(side.substring(0,side.length-1)+String(i),files[code],$(this).val());
 	});
 }
 

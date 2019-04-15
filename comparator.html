@@ -16,7 +16,7 @@
   <script src="./js/lib/popper-1.14.3.min.js"></script>
   <script src="./js/lib/bootstrap-4.1.1.min.js"></script>
   <script src="./js/lib/plotly-1.37.1.min.js"></script>
-  <script src="./js/mustache.js"></script>
+  <script src="./js/lib/mustache.js"></script>
   <script> /* Google Analytics */
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -104,16 +104,12 @@
     <div class="container marketing" id="comparator" style="height:80vh;overflow-y:hidden;display:none;">
       <div class="row" id="comparatorNext">
 
-
-
-
-
         <script id="filesTemplate" type="x-tmpl-mustache">
           <div class="card card{{filesI}}">
            <div class="card-header p-2" id="heading{{sideNumber}}{{filesI}}">
              <h5 class="mb-0">
                <div class="mb-0 mx-0 form-group row">
-                 <div class="col-md-auto px-0">
+                <div class="col-md-auto px-0">
                   <button type="button" id="{{side}}{{aId}}" class="btn btn-primary">
                     <b>+</b>
                   </button>
@@ -149,10 +145,7 @@
         </div>
       </div>
     </div>
-
-
   </script>
-
 
   <script id="filesTemplate1" type="x-tmpl-mustache">
     <div class="modal fade" id="modalInfoCmd{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -198,34 +191,32 @@
 </div>
 </script>
 
-
-
 <script id="selectorTemplate" type="x-tmpl-mustache">
   <div class="col-3 p-1 {{selectorCurveId}}" id="{{selectorCurveId}}" style="max-height:536px;{{displayNone}}">
    <div class="container">
     <div class="form-group row">
       <label for="codetype{{selectorCurveId}}" class="col-sm-6">Type of code</label>
       <div class="col-sm-6">
-       <select class="form-control codetype" id="codetype{{selectorCurveId}}">
-        <option>Select code</option>
-      </select>
+        <select class="form-control codetype" id="codetype{{selectorCurveId}}">
+          <option>Select code</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="size{{selectorCurveId}}" class="col-sm-6">Frame size (N)</label>
+      <div class="col-sm-6">
+        <select class="form-control size" id="size{{selectorCurveId}}">
+          <option>Select size</option>
+        </select>
+      </div>
     </div>
   </div>
-  <div class="form-group row">
-    <label for="size{{selectorCurveId}}" class="col-sm-6">Frame size (N)</label>
-    <div class="col-sm-6">
-     <select class="form-control size" id="size{{selectorCurveId}}">
-      <option>Select size</option>
-    </select>
-  </div>
-</div>
-</div>
-<div class="mb-4"></div>
-<div class="shadow-sm p-3 mb-3 bg-white rounded" style="max-height:325px;overflow:auto;padding:0rem !important">
-  <ul class="list-group bers">
-   <div id="accordion{{selectorI}}"></div>
- </ul>
-</div>
+  <div class="mb-4"></div>
+  <div class="shadow-sm p-3 mb-3 bg-white rounded" style="max-height:325px;overflow:auto;padding:0rem !important">
+    <ul class="list-group bers">
+     <div id="accordion{{selectorI}}"></div>
+   </ul>
+ </div>
 </div>
 </script>
 
@@ -236,40 +227,40 @@
         <div class="mb-0 form-group row">
           <div class="col-sm-11" data-toggle="collapse" data-target="#scollapse{{sideNumber}}" aria-expanded="true" aria-controls="scollapse{{sideNumber}}">
             <button class="btn btn-block btn-link text-left" {{{filesTooltip1}}}{{aTitle}}
-            </button>
-          </div>
-          <div id="delete{{sideNumber}}" class="col-0">
-            <button type="button" class="close" aria-label="Close" onclick="deleteClick('delete', '{{side}}')">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        </div>  
-      </h5>
-    </div>
-    <div id="scollapse{{sideNumber}}" class="collapse" aria-labelledby="sheading{{sideNumber}}" data-parent="#accordion{{sideNumber}}">
-      <div class="card-body">
-        <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
-          <div class="text-muted twoColumns">
-            <small><b>Frame size</b>: {{aFramesize}}<br/>
-              {{{filesCodeword}}}
-              <b>Coderate</b>: {{aCoderate}}
-              {{{filesTooltip2}}}
-            </small>
-          </div>
-          <div class="curveIcons">
-            {{{filesDoi}}}
-            {{{filesUrl}}}
-            {{{filesCommand}}}
-            <span class="curveIcon">
-              <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
-                <i class="fas fa-file-alt"></i>
-              </a>
-            </span>
-          </div>
-        </li>
-      </div>
+          </button>
+        </div>
+        <div id="delete{{sideNumber}}" class="col-0">
+          <button type="button" class="close" aria-label="Close" onclick="deleteClick('delete', '{{side}}')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>  
+    </h5>
+  </div>
+  <div id="scollapse{{sideNumber}}" class="collapse" aria-labelledby="sheading{{sideNumber}}" data-parent="#accordion{{sideNumber}}">
+    <div class="card-body">
+      <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
+        <div class="text-muted twoColumns">
+          <small><b>Frame size</b>: {{aFramesize}}<br/>
+            {{{filesCodeword}}}
+            <b>Coderate</b>: {{aCoderate}}
+            {{{filesTooltip2}}}
+          </small>
+        </div>
+        <div class="curveIcons">
+          {{{filesDoi}}}
+          {{{filesUrl}}}
+          {{{filesCommand}}}
+          <span class="curveIcon">
+            <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
+              <i class="fas fa-file-alt"></i>
+            </a>
+          </span>
+        </div>
+      </li>
     </div>
   </div>
+</div>
 </script>
 
 
