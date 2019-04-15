@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="A Fast Forward Error Correction Toolbox (AFF3CT)">
-    <meta name="author" content="Denis BARTHOU and Adrien CASSAGNE">
-    <meta name="keywords" content="BER,FER,comparison,comparator,Bit Error Rate,Frame Error Rate,ECC,Codes,FEC,LDPC,Turbo,Polar,dB,Eb/N0,Monte-Carlo,simulation">
-    <title>AFF3CT - A Fast Forward Error Correction Toolbox</title>
-    <link rel="stylesheet" href="./css/comparator.css">
-    <link rel="stylesheet" href="./css/lib/bootstrap-4.1.1.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/bootstrap_carousel.css">
-    <script src="./js/lib/jquery-3.3.1.min.js"></script>
-    <script src="./js/lib/popper-1.14.3.min.js"></script>
-    <script src="./js/lib/bootstrap-4.1.1.min.js"></script>
-    <script src="./js/lib/plotly-1.37.1.min.js"></script>
-    <script src="./js/mustache.js"></script>
-    <script> /* Google Analytics */
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-78973823-1', 'auto');
-      ga('send', 'pageview');
-    </script>
-    <script>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="A Fast Forward Error Correction Toolbox (AFF3CT)">
+  <meta name="author" content="Denis BARTHOU and Adrien CASSAGNE">
+  <meta name="keywords" content="BER,FER,comparison,comparator,Bit Error Rate,Frame Error Rate,ECC,Codes,FEC,LDPC,Turbo,Polar,dB,Eb/N0,Monte-Carlo,simulation">
+  <title>AFF3CT - A Fast Forward Error Correction Toolbox</title>
+  <link rel="stylesheet" href="./css/comparator.css">
+  <link rel="stylesheet" href="./css/lib/bootstrap-4.1.1.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/bootstrap_carousel.css">
+  <script src="./js/lib/jquery-3.3.1.min.js"></script>
+  <script src="./js/lib/popper-1.14.3.min.js"></script>
+  <script src="./js/lib/bootstrap-4.1.1.min.js"></script>
+  <script src="./js/lib/plotly-1.37.1.min.js"></script>
+  <script src="./js/mustache.js"></script>
+  <script> /* Google Analytics */
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78973823-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script>
       /**
       * Function that tracks a click on an outbound link in Analytics.
       * This function takes a valid URL string as an argument, and uses that URL string
@@ -94,167 +94,205 @@
     
     
     
-   
 
-<div class="container selector-group" id="selector" style="max-height:350px;display:none;">
-  <div class="row" style="max-height:350px">
+
+    <div class="container selector-group" id="selector" style="max-height:350px;display:none;">
+      <div class="row" style="max-height:350px">
+      </div>
+    </div>
+
+    <div class="container marketing" id="comparator" style="height:80vh;overflow-y:hidden;display:none;">
+      <div class="row" id="comparatorNext">
+
+
+
+
+
+        <script id="filesTemplate" type="x-tmpl-mustache">
+          <div class="card card{{filesI}}">
+           <div class="card-header p-2" id="heading{{sideNumber}}{{filesI}}">
+             <h5 class="mb-0">
+               <div class="mb-0 mx-0 form-group row">
+                 <div class="col-md-auto px-0">
+                  <button type="button" id="{{side}}{{aId}}" class="btn btn-primary">
+                    <b>+</b>
+                  </button>
+                </div>
+                <div class="col-md-10 px-0">
+                  <button class="btn btn-link pr-0" data-toggle="collapse" data-target="#collapse{{sideNumber}}{{filesI}}" aria-expanded="true" aria-controls="collapse{{sideNumber}}{{filesI}}">
+                    {{aTitle}}
+                  </button>
+                </div>
+              </div>
+            </h5>
+          </div>
+          <div id="collapse{{sideNumber}}{{filesI}}" class="collapse" aria-labelledby="heading{{sideNumber}}{{filesI}}" data-parent="#accordion{{sideNumber}}">
+           <div class="card-body">
+             <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
+               <div class="text-muted twoColumns"><small><b>Frame size</b>: {{aFramesize}}<br/>
+                {{{filesCodeword}}}
+                <b>Coderate</b>: {{aCoderate}}
+                {{{filesTooltip}}}
+              </small>
+            </div>
+            <div class="curveIcons">
+              {{{filesDoi}}}
+              {{{filesUrl}}}
+              {{{filesCommand}}}
+              <span class="curveIcon">
+                <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
+                  <i class="fas fa-file-alt"></i>
+                </a>
+              </span>
+            </div>
+          </li>
+        </div>
+      </div>
+    </div>
+
+
+  </script>
+
+
+  <script id="filesTemplate1" type="x-tmpl-mustache">
+    <div class="modal fade" id="modalInfoCmd{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">
+           <div class="shell-wrap">
+             <p class="shell-top-bar">AFF3CT command line</p>
+             <ul class="shell-body">
+              <li>{{aCommand}}</li>
+            </ul>
+          </div><br>
+          <p class="text-justify">
+            <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalInfoFile{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre>{{aFile}}</pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
-
-<div class="container marketing" id="comparator" style="height:80vh;overflow-y:hidden;display:none;">
-  <div class="row" id="comparatorNext">
+</script>
 
 
 
-    
-
-    <script id="filesTemplate" type="x-tmpl-mustache">
-      <div class="card card{{filesI}}">
-	<div class="card-header p-2" id="heading{{sideNumber}}{{filesI}}">
-	  <h5 class="mb-0">
-	    <div class="mb-0 mx-0 form-group row">
-	      <div class="col-md-auto px-0">
-		<button type="button" id="{{side}}{{aId}}" class="btn btn-primary">
-		  <b>+</b>
-		</button>
-	      </div>
-	      <div class="col-md-10 px-0">
-		<button class="btn btn-link pr-0" data-toggle="collapse" data-target="#collapse{{sideNumber}}{{filesI}}" aria-expanded="true" aria-controls="collapse{{sideNumber}}{{filesI}}">
-		  {{aTitle}}
-		</button>
-	      </div>
-	    </div>
-	  </h5>
-	</div>
-	<div id="collapse{{sideNumber}}{{filesI}}" class="collapse" aria-labelledby="heading{{sideNumber}}{{filesI}}" data-parent="#accordion{{sideNumber}}">
-	  <div class="card-body">
-	    <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
-	      <div class="text-muted twoColumns"><small><b>Frame size</b>: {{aFramesize}}<br/>
-		  {{{filesCodeword}}}
-		  <b>Coderate</b>: {{aCoderate}}
-		  {{{filesTooltip}}}
-		</small>
-	      </div>
-	      <div class="curveIcons">
-		{{{filesDoi}}}
-		{{{filesUrl}}}
-		{{{filesCommand}}}
-		<span class="curveIcon">
-		  <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
-		    <i class="fas fa-file-alt"></i>
-		  </a>
-		</span>
-	      </div>
-	    </li>
-	  </div>
-	</div>
-      </div>
-
-		
-    </script>
-
-
-    <script id="filesTemplate1" type="x-tmpl-mustache">
-      <div class="modal fade" id="modalInfoCmd{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-	  <div class="modal-content">
-	    <div class="modal-header">
-	      <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	        <span aria-hidden="true">&times;</span>
-	      </button>
-	    </div>
-	    <div class="modal-body">
-	      <div class="shell-wrap">
-	        <p class="shell-top-bar">AFF3CT command line</p>
-	        <ul class="shell-body">
-		  <li>{{aCommand}}</li>
-		</ul>
-	      </div><br>
-	      <p class="text-justify">
-		<b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
-	      </p>
-	    </div>
-	  </div>
-	</div>
-      </div>
-      <div class="modal fade" id="modalInfoFile{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-	 <div class="modal-content">
-	   <div class="modal-header">
-	     <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-	     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	       <span aria-hidden="true">&times;</span>
-	     </button>
-	   </div>
-	   <div class="modal-body">
-	     <pre>{{aFile}}</pre>
-	     </div>
-	   <div class="modal-footer">
-	     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	   </div>
-	 </div>
-	</div>
-      </div>
-
-
-	     
-	
-    </script>
-
-
-    
-    <script id="selectorTemplate" type="x-tmpl-mustache">
-      <div class="col-3 p-1 {{selectorCurveId}}" id="{{selectorCurveId}}" style="max-height:536px;{{displayNone}}">
-	<div class="container">
-          <div class="form-group row">
-            <label for="codetype{{selectorCurveId}}" class="col-sm-6">Type of code</label>
-            <div class="col-sm-6">
-	      <select class="form-control codetype" id="codetype{{selectorCurveId}}">
-		<option>Select code</option>
-	      </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="size{{selectorCurveId}}" class="col-sm-6">Frame size (N)</label>
-            <div class="col-sm-6">
-	      <select class="form-control size" id="size{{selectorCurveId}}">
-		<option>Select size</option>
-	      </select>
-            </div>
-          </div>
-	</div>
-	<div class="mb-4"></div>
-	<div class="shadow-sm p-3 mb-3 bg-white rounded" style="max-height:325px;overflow:auto;padding:0rem !important">
-          <ul class="list-group bers">
-	    <div id="accordion{{selectorI}}"></div>
-	  </ul>
-	</div>
-      </div>
-    </script>
-
-    
-    
-    <div class="col-6 p-0">
-      <div id="curvesTip" style="display:none">
-	<p id="tips" class="text-center">
-	  <strong>Please select up to 5 curves on the left</strong>
-	</p>
-      </div>
-      <div id="plotber"></div>
-      <div id="plotfer"></div>
+<script id="selectorTemplate" type="x-tmpl-mustache">
+  <div class="col-3 p-1 {{selectorCurveId}}" id="{{selectorCurveId}}" style="max-height:536px;{{displayNone}}">
+   <div class="container">
+    <div class="form-group row">
+      <label for="codetype{{selectorCurveId}}" class="col-sm-6">Type of code</label>
+      <div class="col-sm-6">
+       <select class="form-control codetype" id="codetype{{selectorCurveId}}">
+        <option>Select code</option>
+      </select>
     </div>
+  </div>
+  <div class="form-group row">
+    <label for="size{{selectorCurveId}}" class="col-sm-6">Frame size (N)</label>
+    <div class="col-sm-6">
+     <select class="form-control size" id="size{{selectorCurveId}}">
+      <option>Select size</option>
+    </select>
+  </div>
+</div>
+</div>
+<div class="mb-4"></div>
+<div class="shadow-sm p-3 mb-3 bg-white rounded" style="max-height:325px;overflow:auto;padding:0rem !important">
+  <ul class="list-group bers">
+   <div id="accordion{{selectorI}}"></div>
+ </ul>
+</div>
+</div>
+</script>
 
-    
-    <div class="col-3 p-1 scurve" id="scurve" style="max-height:536px">
-      <div id="scurve0"></div>
-      <div id="scurve1"></div>
-      <div id="scurve2"></div>
-      <div id="scurve3"></div>
-      <div id="scurve4"></div>
+<script id="selectedTemplate" type="x-tmpl-mustache">
+  <div class="card" id="ss{{side}}">
+    <div class="card-header" id="sheading{{sideNumber}}">
+      <h5 class="mb-0">
+        <div class="mb-0 form-group row">
+          <div class="col-sm-11" data-toggle="collapse" data-target="#scollapse{{sideNumber}}" aria-expanded="true" aria-controls="scollapse{{sideNumber}}">
+            <button class="btn btn-block btn-link text-left" {{{filesTooltip1}}}{{aTitle}}
+            </button>
+          </div>
+          <div id="delete{{sideNumber}}" class="col-0">
+            <button type="button" class="close" aria-label="Close" onclick="deleteClick('delete', '{{side}}')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>  
+      </h5>
     </div>
+    <div id="scollapse{{sideNumber}}" class="collapse" aria-labelledby="sheading{{sideNumber}}" data-parent="#accordion{{sideNumber}}">
+      <div class="card-body">
+        <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
+          <div class="text-muted twoColumns">
+            <small><b>Frame size</b>: {{aFramesize}}<br/>
+              {{{filesCodeword}}}
+              <b>Coderate</b>: {{aCoderate}}
+              {{{filesTooltip2}}}
+            </small>
+          </div>
+          <div class="curveIcons">
+            {{{filesDoi}}}
+            {{{filesUrl}}}
+            {{{filesCommand}}}
+            <span class="curveIcon">
+              <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
+                <i class="fas fa-file-alt"></i>
+              </a>
+            </span>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+</script>
 
-    
+
+<div class="col-6 p-0">
+  <div id="curvesTip" style="display:none">
+   <p id="tips" class="text-center">
+     <strong>Please select up to 5 curves on the left</strong>
+   </p>
+ </div>
+ <div id="plotber"></div>
+ <div id="plotfer"></div>
+</div>
+
+
+<div class="col-3 p-1 scurve" id="scurve" style="max-height:536px">
+  <div id="scurve0"></div>
+  <div id="scurve1"></div>
+  <div id="scurve2"></div>
+  <div id="scurve3"></div>
+  <div id="scurve4"></div>
+</div>
+
+
     <!-- <div class="col-3 p-0">
          <div id="plotber"></div>
          <div id="plotbefe"></div>
@@ -288,5 +326,5 @@
 </div>
 <script src="./js/comparator_tooltips.js"></script>
 <script src="./js/comparator.js"></script>
-  </body>
+</body>
 </html>
