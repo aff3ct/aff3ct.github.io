@@ -1,4 +1,3 @@
-console.log("hello1");
 const GITLAB="https://gitlab.com/api/v4/projects/10354484/repository/";
 const BRANCH="development";
 
@@ -55,9 +54,9 @@ const Curves = {
 			if (this.disponibility[nb]==0) {
 				this.id[nb]=-1;
 				this.length--;
-				this.values[nb]={ber:[],fer:[]/*,thr:[],befe:[]*/};
-				this.disponibility[nb]=1;
-			}
+			this.values[nb]={ber:[],fer:[]/*,thr:[],befe:[]*/};
+			this.disponibility[nb]=1;
+		}
 		else {
 			console.log("Curve"+String(nb)+" is already available.");
 		}
@@ -349,13 +348,11 @@ function displaySelector() {
 function displayFiles(files,framesize) {
 	Curves.currentFile=files;
 	Curves.currentFrameSize=framesize;
-	Curves.updateAddButtons();
 	var f=files.filter(x=>x.framesize==framesize);
 	$("#selector .bers #accordion").empty();
 	//$("#"+Curves.curveId()+"modals").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
-		console.log(a.id);
 		var metadataTitle=a.ini.metadata.title;
 		var codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="";
 		if (a.ini.metadata.title.length > 23)
@@ -393,6 +390,7 @@ function displayFiles(files,framesize) {
 			filesCommand: metadataCommand
 		});
 		$("#selector .bers #accordion").append(filesRendered);
+		Curves.updateAddButtons();
 		if (a.ini.metadata.command) {
 			var filesTemplate1 = $('#filesTemplate1').html();
 			Mustache.parse(filesTemplate1);
@@ -402,7 +400,6 @@ function displayFiles(files,framesize) {
 				aCommand: String(a.ini.metadata.command),
 				aFile: String(a.file),
 			});
-			console.log(Curves.curveId());
 			$("#"+Curves.curveId()+"modals").append(fileRendered1);
 		}
 		addClick(a,files,framesize);
@@ -414,7 +411,6 @@ function displayFiles(files,framesize) {
 
 
 function displaySelectedCurve(a) {
-	console.log("scurve"+Curves.curveId().substring(5,Curves.curveId().length+1));
 	document.getElementById("s"+Curves.curveId()).style.display = "inline";
 	$("#s"+Curves.curveId()).empty();
 	var metadataTitle=a.ini.metadata.title;
@@ -490,18 +486,15 @@ function addClickBranches(x) {
 function addClick(a,files,framesize) {
 	$('#'+Curves.curveId()+a.id).on('click', function() {
 		$('#'+Curves.curveId()+a.id).prop('disabled', true);
-		console.log("Add: Before: nbChoices="+nbChoices+" nbCurves="+nbCurves);
 		if ($("#delete"+String(Number(Curves.curveId().substring(5,Curves.curveId().length+1))-1)).length!==0) {
 			document.getElementById("delete"+String(Number(Curves.curveId().substring(5,Curves.curveId().length+1))-1)).style.display = "none";
 		}
-		console.log("addClick curveId: "+Curves.curveId());
 		displaySelectedCurve(a,Curves.curveId());
 		document.getElementById("tips").style.display = "none";
 		const plots=["ber","fer"/*,"befe","thr"*/];
 		$("#selector .bers .active").removeClass("active");
 		$(this).addClass("active");
 		let nb=Number(Curves.firstAvailable());
-		console.log("nb= "+Curves.firstAvailable())
 		if (nb==-1) console.log("Maximum of curves reached!");
 		else {
 			Curves.increment(a);
@@ -516,7 +509,7 @@ function addClick(a,files,framesize) {
 			else {
 				addClickBranches(nb+1);
 			}
-			console.log("Add: After: nbChoices="+nbChoices+" nbCurves="+nbCurves);
+			
 			plots.forEach(function(x) {
 				const CURVESBIS=[];
 				for (let l=0; l<Curves.max; l++) {
@@ -524,7 +517,6 @@ function addClick(a,files,framesize) {
 				}
 				Plotly.newPlot(GD[x],CURVESBIS.slice(0,nbCurves),LAYOUT[x],{displaylogo:false});
 			});
-
 			let cval=[];
 			for (let i=0; i<Curves.max; i++) {
 				cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
@@ -550,7 +542,6 @@ function addClick(a,files,framesize) {
 
 function deleteClick(divId, idSide) {
 	const plots=["ber","fer"];
-	console.log("Delete: Before: nbChoices="+nbChoices+" nbCurves="+nbCurves);
 	$('#'+Curves.curveId()+Curves.id[idSide.substring(5,idSide.length+1)]).prop('disabled', false);
 	Curves.decrement(idSide.substring(5, idSide.length+1));
 	displayFiles(Curves.currentFile,Curves.currentFrameSize);
@@ -570,7 +561,6 @@ function deleteClick(divId, idSide) {
 		else {
 			plots.forEach(x => Plotly.deleteTraces(GD[x], Number(idSide.substring(5,idSide.length+1))));
 		}
-		console.log("scurve"+idSide.substring(5,idSide.length+1));
 		document.getElementById("scurve"+idSide.substring(5,idSide.length+1)).style.display = "none";
 		if (nbCurves===nbChoices) nbCurves-=1;
 		else {
@@ -578,7 +568,6 @@ function deleteClick(divId, idSide) {
 			nbChoices-=1;
 		}
 	}
-	console.log("Delete: After: nbChoices="+nbChoices+" nbCurves="+nbCurves);
 }
 
 /* Interaction with the form */
@@ -613,7 +602,6 @@ window.onresize = function() {
 function displayFrameSizes(code,files) {
 	var p={};
 	var j=0;
-	//console.log(files[code].length);
 	for (var i=0;i<(files[code]).length;i++) {
 		var f=files[code][i];
 		p[f.framesize]=true;
@@ -670,7 +658,6 @@ function drawCurvesFromURI(files,filename) {
 
 //main
 $(document).ready(function() {
-	console.log("hello2");
 	Curves.initialization();
 	displaySelector();
 	var d3 = Plotly.d3;
