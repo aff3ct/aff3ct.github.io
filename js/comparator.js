@@ -1,22 +1,83 @@
+console.log("hello1");
 const GITLAB="https://gitlab.com/api/v4/projects/10354484/repository/";
 const BRANCH="development";
 
+const Curves = {
+	max: 5,//Colors are defined for only 5 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for more than 5 curves. Sincerely, Me.
+	length: 0,//number of displayed curves
+	disponibility: [],//index==id! disponibility[id]=1 => available && disponibility[id]=0 => unavailable
+	id: [],
+	names: [],//names[id]=name_of_the_curve
+	values: [],//where values of the curve are
+	colors: ['#1f77b4', '#ff7f0e', '#2ea12e', '#d62728', '#9467bd'],
+	plots: ["ber","fer"/*,"befe","thr"*/],
+	currentFile: "",
+	currentFrameSize: "",
+	initialization() {
+		for (let i=0; i<this.max; i++) {
+		this.values.push({ber:[],fer:[]/*,thr:[],befe:[]*/});
+		this.names.push("curve"+String(i));
+		this.id.push(-1);
+		this.disponibility.push(1);
+	}
+},
+	firstAvailable() {//return the id of the first free curve, -1 if it's full
+	let result=this.max-1;
+	let i=0;
+	while (i<this.max) {
+		if ((this.disponibility[i]==1) && (i<result)) result=i;
+		i++;
+	}
+	return String(result);
+},
+	displayed(i) {//return the curve name of the i^(th) displayed curve (% Curves.max), "null" if it's empty 
+	if (this.length==0) {
+		return "null";
+	}
+	i=i%this.max;
+	let j=0, k=0;
+	while (k<i) {
+		if (this.disponibility[j]==0) k++;
+		j++;
+		j=j%this.max;
+	}
+	return this.names[(j-1)%this.max];
+},
+	increment(a) {//increment the number of curves
+		let i=this.firstAvailable();
+		this.id[i]=a.id;
+		this.plots.forEach(x => this.values[i][x]=a[x]);
+		if (this.length<this.max) this.length++;
+		this.disponibility[i]=0;
+	},
+	decrement(nb) {//decrement the number of curves
+		if (nb<=this.max) {
+			if (this.disponibility[nb]==0) {
+				this.id[nb]=-1;
+				this.length--;
+				this.values[nb]={ber:[],fer:[]/*,thr:[],befe:[]*/};
+				this.disponibility[nb]=1;
+			}
+		else {
+			console.log("Curve"+String(nb)+" is already available.");
+		}
+	}
+	else {
+		console.log(String(nb)+" > Curves.max (Curves.max = "+String(this.max));
+	}
+},
+curveId() {
+	return "curve"+this.firstAvailable();
+},
+updateAddButtons() {
+	Curves.id.forEach(function(x) {
+		if (x!=-1)	$('#'+Curves.curveId()+x).prop('disabled', true);
+	});
+}
+};
 
-const maxNbCurves=5;//Colors are defined for only 5 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for more than 5 curves. Sincerely, Me.
-const CURVES=[];
-const curvesNames=[];
 let nbChoices=1;
 let nbCurves=0;
-const INDICES_DISPLAY=[];
-const OG=['#1F77B4', '#ff7f0e', '#2ea12e', '#d62728', '#9467bd'];
-
-function initialization() {
-	for (let i=0; i<maxNbCurves; i++) {
-	CURVES.push({ber:[],fer:[]/*,thr:[],befe:[]*/});
-	curvesNames.push("curve"+String(i));
-	INDICES_DISPLAY.push(0);
-}
-}
 // axis/legend of the 2 plots
 const LT = {
 	showlegend:false,
@@ -28,7 +89,7 @@ const LT = {
 		t: 40,
 		pad: 4
 	},
-	colorway: OG,
+	colorway: Curves.colors,
 };
 
 const LAYOUT= {
@@ -45,22 +106,6 @@ var GD={};
 //     var query = search.replace(regex, "$1").replace(/&$/, '');
 //     return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
 // }
-
-function updateColors(Tab) {
-	LT = {
-		showlegend:false,
-		xaxis:{ zeroline:false, hoverformat: '.e', title: 'Eb/N0 (dB)'},
-		margin: {
-			l: 100,
-			r: 40,
-			b: 40,
-			t: 40,
-			pad: 4
-		},
-		colorway: TAB,
-	};
-
-}
 
 function updateURLParameter(url, param, paramVal)
 {
@@ -271,14 +316,12 @@ function loadFileList(page,maxperpage) {
 	//GITHUB+"git/trees/"+BRANCH+"?recursive=1"
 	).done(function(result) {
 		var dirs=result.filter(x=>x.type=="blob").map(x=>x.path);
-
 		var supported_ext = ["data", "perf", "dat", "txt"];
 		dirs = dirs.filter(function(x){
 			var filename = encodeURIComponent(x);
 			var ext = filename.split('.').pop();
 			return supported_ext.indexOf(ext) > -1;
 		});
-
 		if (result.length<maxperpage)
 			dirlist.resolve(dirs);
 		else
@@ -292,26 +335,27 @@ function loadFileList(page,maxperpage) {
 /////////////////////////////////////////////////////////////
 
 
-function displaySelectors() {
-	for(let i=4; i>=0; i--) {
-		var selectorTemplate = $('#selectorTemplate').html();
-		Mustache.parse(selectorTemplate);
-		if (i===0) var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "curve"+String(i), selectorI: String(i), displayNone: ""});
-		else var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "curve"+String(i), selectorI: String(i), displayNone: "display:none"});
-		$("#comparator #comparatorNext").prepend(selectorRendered);
-	}
+function displaySelector() {
+	var selectorTemplate = $('#selectorTemplate').html();
+	Mustache.parse(selectorTemplate);
+	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: ""});
+	$("#comparator #comparatorNext").prepend(selectorRendered);
 }
 
 
 ////////////////////////////////////////////////////////////
 
 
-function displayFiles(side,files,framesize) {
+function displayFiles(files,framesize) {
+	Curves.currentFile=files;
+	Curves.currentFrameSize=framesize;
+	Curves.updateAddButtons();
 	var f=files.filter(x=>x.framesize==framesize);
-	$(side+ " .bers #accordion"+side.substring(6,side.length+1)).empty();
-	$("#"+side.replace(".","")+"modals").empty();
+	$("#selector .bers #accordion").empty();
+	//$("#"+Curves.curveId()+"modals").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
+		console.log(a.id);
 		var metadataTitle=a.ini.metadata.title;
 		var codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="";
 		if (a.ini.metadata.title.length > 23)
@@ -331,13 +375,13 @@ function displayFiles(side,files,framesize) {
 		if (a.ini.metadata.url)
 			metadataUrl="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
 		if (a.ini.metadata.command)
-			metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+side.replace(".","")+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
+			metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+Curves.curveId()+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
 		var filesTemplate = $('#filesTemplate').html();
 		Mustache.parse(filesTemplate);
 		var filesRendered=Mustache.render(filesTemplate, {
 			filesI: String(i),
-			sideNumber: side.substring(6,side.length+1),
-			side: side.substring(1,side.length+1),
+			sideNumber: Curves.curveId().substring(5,Curves.curveId().length+1),
+			side: Curves.curveId(),
 			aId: a.id,
 			aTitle: metadataTitle,
 			aFramesize: a.framesize,
@@ -348,19 +392,20 @@ function displayFiles(side,files,framesize) {
 			filesUrl: metadataUrl,
 			filesCommand: metadataCommand
 		});
-		$(side+ " .bers #accordion"+side.substring(6,side.length+1)).append(filesRendered);
+		$("#selector .bers #accordion").append(filesRendered);
 		if (a.ini.metadata.command) {
 			var filesTemplate1 = $('#filesTemplate1').html();
 			Mustache.parse(filesTemplate1);
-			var fileRendered1=Mustache.render(filesTemplate1, 	{side: side.substring(1,side.length+1),
+			var fileRendered1=Mustache.render(filesTemplate1, 	{side: Curves.curveId(),
 				aId: a.id,
 				aTitle: metadataTitle,
 				aCommand: String(a.ini.metadata.command),
 				aFile: String(a.file),
 			});
-			$("#"+side.replace(".","")+"modals").append(fileRendered1);
+			console.log(Curves.curveId());
+			$("#"+Curves.curveId()+"modals").append(fileRendered1);
 		}
-		addClick(a,side);
+		addClick(a,files,framesize);
 	}
 	$('[data-toggle="tooltip"]').tooltip();
 }
@@ -368,9 +413,10 @@ function displayFiles(side,files,framesize) {
 ////////////////////////////////////////////////////////////
 
 
-function displaySelectedCurve(a,side) {
-	document.getElementById("scurve"+side.substring(6,side.length+1)).style.display = "inline";
-	$("#scurve"+side.substring(6,side.length+1)).empty();
+function displaySelectedCurve(a) {
+	console.log("scurve"+Curves.curveId().substring(5,Curves.curveId().length+1));
+	document.getElementById("s"+Curves.curveId()).style.display = "inline";
+	$("#s"+Curves.curveId()).empty();
 	var metadataTitle=a.ini.metadata.title;
 	var codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="";
 	if (a.ini.metadata.title.length > 21) {
@@ -393,12 +439,12 @@ function displaySelectedCurve(a,side) {
 	if (a.ini.metadata.url)
 		metadataUrl="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>"
 	if (a.ini.metadata.command)
-		metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+side.replace(".","")+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
+		metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+Curves.curveId()+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
 	var selectedTemplate = $('#selectedTemplate').html();
 	Mustache.parse(selectedTemplate);
 	var selectedRendered=Mustache.render(selectedTemplate, {
-		sideNumber: side.substring(6,side.length+1),
-		side: side.substring(1,side.length+1),
+		sideNumber: Curves.curveId().substring(5,Curves.curveId().length+1),
+		side: Curves.curveId(),
 		aId: a.id,
 		aTitle: metadataTitle,
 		aFramesize: a.framesize,
@@ -410,17 +456,17 @@ function displaySelectedCurve(a,side) {
 		filesUrl: metadataUrl,
 		filesCommand: metadataCommand
 	});
-	$("#scurve"+side.substring(6,side.length+1)).append(selectedRendered);
+	$("#s"+Curves.curveId()).append(selectedRendered);
 	if (a.ini.metadata.command) {
 		var filesTemplate1 = $('#filesTemplate1').html();
 		Mustache.parse(filesTemplate1);
-		var fileRendered1=Mustache.render(filesTemplate1, 	{side: side.substring(1,side.length+1),
+		var fileRendered1=Mustache.render(filesTemplate1, 	{side: Curves.curveId(),
 			aId: a.id,
 			aTitle: metadataTitle,
 			aCommand: String(a.ini.metadata.command),
 			aFile: String(a.file),
 		});
-		$("#"+side.replace(".","")+"modals").append(fileRendered1);
+		$("#"+Curves.curveId()+"modals").append(fileRendered1);
 	}
 }
 
@@ -432,65 +478,64 @@ function addClickBranches(x) {
 		if (nbCurves===x-1) {
 			nbChoices=x+1;
 			nbCurves=x;
-			document.getElementById(curvesNames[nbCurves]).style.display = "inline-block";
 		}
 		else {
 			nbChoices=x+1;
 			nbCurves=x+1;
-			document.getElementById(curvesNames[nbCurves-1]).style.display = "inline-block";
 		}
 	}
 }
 
 // Click listener for curves list
-function addClick(a,side) {
-	$('#'+side.substring(1,side.length+1)+a.id).on('click', function() {
+function addClick(a,files,framesize) {
+	$('#'+Curves.curveId()+a.id).on('click', function() {
+		$('#'+Curves.curveId()+a.id).prop('disabled', true);
 		console.log("Add: Before: nbChoices="+nbChoices+" nbCurves="+nbCurves);
-		if ($("#delete"+String(Number(side.substring(6,side.length+1))-1)).length!==0) {
-			document.getElementById("delete"+String(Number(side.substring(6,side.length+1))-1)).style.display = "none";
+		if ($("#delete"+String(Number(Curves.curveId().substring(5,Curves.curveId().length+1))-1)).length!==0) {
+			document.getElementById("delete"+String(Number(Curves.curveId().substring(5,Curves.curveId().length+1))-1)).style.display = "none";
 		}
-		displaySelectedCurve(a,side);
-		if (nbChoices!==5) document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
+		console.log("addClick curveId: "+Curves.curveId());
+		displaySelectedCurve(a,Curves.curveId());
 		document.getElementById("tips").style.display = "none";
 		const plots=["ber","fer"/*,"befe","thr"*/];
-		$(side+" .bers .active").removeClass("active");
+		$("#selector .bers .active").removeClass("active");
 		$(this).addClass("active");
-
-		let nb=side.substring(6,side.length+1);
-		nb=Number(nb);
-		CURVES[nb]=a;
-		if (nb===maxNbCurves-1) {
-			nbCurves=maxNbCurves;
-		}
+		let nb=Number(Curves.firstAvailable());
+		console.log("nb= "+Curves.firstAvailable())
+		if (nb==-1) console.log("Maximum of curves reached!");
 		else {
-			addClickBranches(nb+1);
-		}
-		console.log("Add: After: nbChoices="+nbChoices+" nbCurves="+nbCurves);
-		plots.forEach(function(x) {
-			const CURVESBIS=[];
-			for (let l=0; l<maxNbCurves; l++) {
-				CURVESBIS.push(CURVES[l][x]);
+			Curves.increment(a);
+			displayFiles(files,framesize);
+			Curves.updateAddButtons();
+			//Curves.id.forEach(function(x) {
+			//	if (x!=-1)	$('#'+Curves.curveId()+x).prop('disabled', true);
+			//});
+			if (nb===Curves.max-1) {
+				nbCurves=Curves.max;
 			}
-	    /**
-	    if (nbCurves!==nbChoices) {
-		Plotly.newPlot(GD[x],CURVESBIS.slice(0,nbCurves+1),LAYOUT[x],{displaylogo:false});
-	    }
-	    else {
-		Plotly.newPlot(GD[x],CURVESBIS.slice(0,nbCurves),LAYOUT[x],{displaylogo:false});
-	}**/
-	Plotly.newPlot(GD[x],CURVESBIS.slice(0,nbCurves),LAYOUT[x],{displaylogo:false});
-});
+			else {
+				addClickBranches(nb+1);
+			}
+			console.log("Add: After: nbChoices="+nbChoices+" nbCurves="+nbCurves);
+			plots.forEach(function(x) {
+				const CURVESBIS=[];
+				for (let l=0; l<Curves.max; l++) {
+					CURVESBIS.push(Curves.values[l][x]);
+				}
+				Plotly.newPlot(GD[x],CURVESBIS.slice(0,nbCurves),LAYOUT[x],{displaylogo:false});
+			});
 
-		let cval=[];
-		for (let i=0; i<maxNbCurves; i++) {
-			cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
+			let cval=[];
+			for (let i=0; i<Curves.max; i++) {
+				cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
+			}
+			var uri  = "/comparator.html?curve0="+cval[0];
+			for (let i=1; i<Curves.max; i++) {
+				uri=uri+"&curve"+String(i)+"="+cval[i];
+			}
+			uri = updateURLParameter(uri,Curves.curveId(),a.filename);
+			//window.history.replaceState({},"aff3ct.github.io",uri);
 		}
-		var uri  = "/comparator.html?curve0="+cval[0];
-		for (let i=1; i<maxNbCurves; i++) {
-			uri=uri+"&curve"+String(i)+"="+cval[i];
-		}
-		uri = updateURLParameter(uri,side.replace(".",""),a.filename);
-		window.history.replaceState({},"aff3ct.github.io",uri);
 
 	// track the click with Google Analytics
 	ga('send', {
@@ -499,7 +544,6 @@ function addClick(a,side) {
 		eventAction:   'click',
 		eventLabel:    decodeURIComponent(a.filename)
 	});
-	console.log("Add: After: nbChoices="+nbChoices+" nbCurves="+nbCurves);
 });
 }
 
@@ -507,6 +551,10 @@ function addClick(a,side) {
 function deleteClick(divId, idSide) {
 	const plots=["ber","fer"];
 	console.log("Delete: Before: nbChoices="+nbChoices+" nbCurves="+nbCurves);
+	$('#'+Curves.curveId()+Curves.id[idSide.substring(5,idSide.length+1)]).prop('disabled', false);
+	Curves.decrement(idSide.substring(5, idSide.length+1));
+	displayFiles(Curves.currentFile,Curves.currentFrameSize);
+	Curves.updateAddButtons();
 	if ($("#delete"+idSide.substring(5,idSide.length+1)).length!==0) {
 		if (Number(idSide.substring(5,idSide.length+1))!==0) {
 			document.getElementById("delete"+String(Number(idSide.substring(5,idSide.length+1))-1)).style.display = "inline";
@@ -515,10 +563,6 @@ function deleteClick(divId, idSide) {
 		else document.getElementById("delete"+idSide.substring(5,idSide.length+1)).style.display = "none";
 	}
 	if (nbChoices !== 1) {
-		if (nbCurves!==5) {
-			document.getElementById(curvesNames[nbChoices-1]).style.display = "none";
-			document.getElementById(curvesNames[nbChoices-2]).style.display = "inline-block";
-		}
 		$("#s"+idSide).empty();
 		if (Number(idSide.substring(5,idSide.length+1)) >= GD[plots[0]].data.length-1) {
 			plots.forEach(x => Plotly.deleteTraces(GD[x], GD[x].data.length-1));
@@ -547,18 +591,16 @@ function displayCodeTypes(files) {
 		if (j == 0)
 		{
 			selected="selected='selected'";
-			for (let k=0; k<maxNbCurves; k++) {
-				displayFrameSizes(".curve"+String(k),i,files);
-			}
+			displayFrameSizes(i,files);
 		}
 		$(".codetype").append("<option " + selected + ">"+i+"</option>");
 		j++;
 	}
 
 	$(".codetype").off();
-	for (let k=0; k<maxNbCurves; k++) {
-		$(".curve"+String(k)+" .codetype").change(function() { for (let i=0; i<maxNbCurves; i++) displayFrameSizes(".curve"+String(i),$(this).val(),files); });
-	}
+	$(".selector .codetype").change(function() {
+		displayFrameSizes($(this).val(),files);
+	});
 }
 
 window.onresize = function() {
@@ -568,22 +610,23 @@ window.onresize = function() {
     // Plotly.Plots.resize(GD.thr);
 };
 
-function displayFrameSizes(side,code,files) {
+function displayFrameSizes(code,files) {
 	var p={};
 	var j=0;
-	for (var i=0;i<files[code].length;i++) {
+	//console.log(files[code].length);
+	for (var i=0;i<(files[code]).length;i++) {
 		var f=files[code][i];
 		p[f.framesize]=true;
 	}
-	$(side+" .size").empty();
+	$("#selector .size").empty();
 	for (var i in p){
 		if (j==0) j=i;
-		$(side+" .size").append("<option>"+i+"</option>");
+		$("#selector .size").append("<option>"+i+"</option>");
 	}
-	displayFiles(side,files[code],j);
-	$(side+" .size").off();
-	$(side+" .size").change(function() {
-		for(let i=0; i<maxNbCurves; i++) displayFiles(side.substring(0,side.length-1)+String(i),files[code],$(this).val());
+	displayFiles(files[code],j);
+	$("#selector .size").off();
+	$("#selector .size").change(function() {
+		displayFiles(files[code],$(this).val());
 	});
 }
 
@@ -614,21 +657,22 @@ function selectFile(files,filename)
 	}
 }
 
-function drawCurvesFromURI(files,filename,side) {
+function drawCurvesFromURI(files,filename) {
 	var f=selectFile(files,filename);
 	if (f) {
-		$("#codetype"+side).val(f.code);
-		$("."+side+" .codetype").trigger("change");
-		$("#size"+side).val(f.framesize);
-		$("."+side+" .size").trigger("change");
-		$("."+side+" .g"+f.id).trigger("click");
+		$("#codetype"+Curves.curveId()).val(f.code);
+		$(".selector .codetype").trigger("change");
+		$("#sizeselector").val(f.framesize);
+		$(".selector .size").trigger("change");
+		$(".selector .g"+f.id).trigger("click");
 	}
 }
 
 //main
 $(document).ready(function() {
-	initialization();
-	displaySelectors();
+	console.log("hello2");
+	Curves.initialization();
+	displaySelector();
 	var d3 = Plotly.d3;
 	var WIDTH_IN_PERCENT_OF_PARENT = 100,
 	HEIGHT_IN_PERCENT_OF_PARENT = 40;
@@ -656,7 +700,7 @@ $(document).ready(function() {
 			document.getElementById("selector").style.display = "block";
 			document.getElementById("comparator").style.display = "block";
 			const varSide=[];
-			for (let k=0; k<maxNbCurves; k++) {
+			for (let k=0; k<Curves.max; k++) {
 				varSide.push(findGetParameter("curve"+String(k)));
 				if (varSide[k]) drawCurvesFromURI(ordered,varSide[k],"curve"+String(k));
 			}
