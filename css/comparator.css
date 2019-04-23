@@ -1,3 +1,38 @@
+/**.scurve .card:nth-of-type(5)
+{
+  background-color:#9467BD;
+  border-color:#9467BD;
+  color:#fff !important;
+}
+
+.scurve .card:nth-of-type(4)
+{
+  background-color:#D62728;
+  border-color:#D62728;
+  color:#fff !important;
+}
+
+.scurve .card:nth-of-type(3)
+{
+  background-color:#2EA12E;
+  border-color:#2EA12E;
+  color:#fff !important;
+}
+
+.scurve .card:nth-of-type(2)
+{
+  background-color:#FF7F0E;
+  border-color:#FF7F0E;
+  color:#fff !important;
+}
+
+.scurve .card:nth-of-type(1)
+{
+  background-color:#1F77B4;
+  border-color:#1F77B4;
+  color:#fff !important;
+}**/
+
 #scurve4 :nth-child(0n+1)
 {
   background-color:#9467BD;

@@ -12,22 +12,39 @@ const Curves = {
 	plots: ["ber","fer"/*,"befe","thr"*/],
 	currentFile: "",
 	currentFrameSize: "",
+	plotOrder: [],
 	initialization() {
 		for (let i=0; i<this.max; i++) {
 		this.values.push({ber:[],fer:[]/*,thr:[],befe:[]*/});
 		this.names.push("curve"+String(i));
 		this.id.push(-1);
 		this.disponibility.push(1);
+		this.plotOrder.push(-1);
 	}
 },
-	firstAvailable() {//return the id of the first free curve, -1 if it's full
-	let result=this.max-1;
+	firstSideAvailable() {//return the id of the first free curve according to the disponibility tab, 4 if it's full
+	let result=this.max;
 	let i=0;
 	while (i<this.max) {
 		if ((this.disponibility[i]==1) && (i<result)) result=i;
 		i++;
 	}
+	if (result==this.max) result=-1;
 	return String(result);
+},
+firstIndexAvailable() {
+	let i=0;
+	let result=-1;
+	while (i<this.max) {
+		if (this.plotOrder[i]==-1) {
+			result=i;
+			i=this.max;
+		}
+		else {
+			i++;
+		}
+	}
+	return result;
 },
 	displayed(i) {//return the curve name of the i^(th) displayed curve (% Curves.max), "null" if it's empty 
 	if (this.length==0) {
@@ -43,7 +60,10 @@ const Curves = {
 	return this.names[(j-1)%this.max];
 },
 	increment(a) {//increment the number of curves
-		let i=this.firstAvailable();
+		let i=this.firstSideAvailable();
+		console.log(this.firstSideAvailable());
+		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
+		console.log(this.length);
 		this.id[i]=a.id;
 		this.plots.forEach(x => this.values[i][x]=a[x]);
 		if (this.length<this.max) this.length++;
@@ -52,27 +72,34 @@ const Curves = {
 	decrement(nb) {//decrement the number of curves
 		if (nb<=this.max) {
 			if (this.disponibility[nb]==0) {
+				let a=this.plotOrder[this.plotOrder.indexOf(Number(nb))];
+				let col=this.colors[this.plotOrder.indexOf(Number(nb))];
+				this.colors.splice(this.plotOrder.indexOf(Number(nb)),1);
+				this.colors.push(col);
+				console.log("a="+a+"    this.plotOrder.indexOf(nb)="+this.plotOrder.indexOf(Number(nb)));
+				this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
+				this.plotOrder.push(-1);
 				this.id[nb]=-1;
 				this.length--;
-			this.values[nb]={ber:[],fer:[]/*,thr:[],befe:[]*/};
-			this.disponibility[nb]=1;
+				this.values[nb]={ber:[],fer:[]};
+				this.disponibility[nb]=1;
+			}
+			else {
+				console.log("Curve"+String(nb)+" is already available.");
+			}
 		}
 		else {
-			console.log("Curve"+String(nb)+" is already available.");
+			console.log(String(nb)+" > Curves.max (Curves.max = "+String(this.max));
 		}
+	},
+	curveId() {
+		return "curve"+this.firstSideAvailable();
+	},
+	updateAddButtons() {
+		Curves.id.forEach(function(x) {
+			if (x!=-1)	$('#'+Curves.curveId()+x).prop('disabled', true);
+		});
 	}
-	else {
-		console.log(String(nb)+" > Curves.max (Curves.max = "+String(this.max));
-	}
-},
-curveId() {
-	return "curve"+this.firstAvailable();
-},
-updateAddButtons() {
-	Curves.id.forEach(function(x) {
-		if (x!=-1)	$('#'+Curves.curveId()+x).prop('disabled', true);
-	});
-}
 };
 
 let nbChoices=1;
@@ -411,8 +438,6 @@ function displayFiles(files,framesize) {
 
 
 function displaySelectedCurve(a) {
-	document.getElementById("s"+Curves.curveId()).style.display = "inline";
-	$("#s"+Curves.curveId()).empty();
 	var metadataTitle=a.ini.metadata.title;
 	var codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="";
 	if (a.ini.metadata.title.length > 21) {
@@ -452,7 +477,7 @@ function displaySelectedCurve(a) {
 		filesUrl: metadataUrl,
 		filesCommand: metadataCommand
 	});
-	$("#s"+Curves.curveId()).append(selectedRendered);
+	$("#scurve").append(selectedRendered);
 	if (a.ini.metadata.command) {
 		var filesTemplate1 = $('#filesTemplate1').html();
 		Mustache.parse(filesTemplate1);
@@ -485,21 +510,22 @@ function addClickBranches(x) {
 // Click listener for curves list
 function addClick(a,files,framesize) {
 	$('#'+Curves.curveId()+a.id).on('click', function() {
-		$('#'+Curves.curveId()+a.id).prop('disabled', true);
 		if ($("#delete"+String(Number(Curves.curveId().substring(5,Curves.curveId().length+1))-1)).length!==0) {
-			document.getElementById("delete"+String(Number(Curves.curveId().substring(5,Curves.curveId().length+1))-1)).style.display = "none";
+			//document.getElementById("delete"+String(Number(Curves.curveId().substring(5,Curves.curveId().length+1))-1)).style.display = "none";
 		}
-		displaySelectedCurve(a,Curves.curveId());
 		document.getElementById("tips").style.display = "none";
 		const plots=["ber","fer"/*,"befe","thr"*/];
 		$("#selector .bers .active").removeClass("active");
 		$(this).addClass("active");
-		let nb=Number(Curves.firstAvailable());
+		let nb=Number(Curves.firstSideAvailable());
 		if (nb==-1) console.log("Maximum of curves reached!");
 		else {
+			$('#'+Curves.curveId()+a.id).prop('disabled', true);
+			displaySelectedCurve(a,Curves.curveId());
 			Curves.increment(a);
 			displayFiles(files,framesize);
 			Curves.updateAddButtons();
+			console.log(Curves.plotOrder);
 			//Curves.id.forEach(function(x) {
 			//	if (x!=-1)	$('#'+Curves.curveId()+x).prop('disabled', true);
 			//});
@@ -513,9 +539,12 @@ function addClick(a,files,framesize) {
 			plots.forEach(function(x) {
 				const CURVESBIS=[];
 				for (let l=0; l<Curves.max; l++) {
-					CURVESBIS.push(Curves.values[l][x]);
+					if (Curves.plotOrder[l]!=-1) {
+						CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
+					}
 				}
-				Plotly.newPlot(GD[x],CURVESBIS.slice(0,nbCurves),LAYOUT[x],{displaylogo:false});
+				console.log("addlength="+Curves.length);
+				Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
 			});
 			let cval=[];
 			for (let i=0; i<Curves.max; i++) {
@@ -543,31 +572,49 @@ function addClick(a,files,framesize) {
 function deleteClick(divId, idSide) {
 	const plots=["ber","fer"];
 	$('#'+Curves.curveId()+Curves.id[idSide.substring(5,idSide.length+1)]).prop('disabled', false);
-	Curves.decrement(idSide.substring(5, idSide.length+1));
-	displayFiles(Curves.currentFile,Curves.currentFrameSize);
-	Curves.updateAddButtons();
 	if ($("#delete"+idSide.substring(5,idSide.length+1)).length!==0) {
 		if (Number(idSide.substring(5,idSide.length+1))!==0) {
-			document.getElementById("delete"+String(Number(idSide.substring(5,idSide.length+1))-1)).style.display = "inline";
-			document.getElementById("delete"+idSide.substring(5,idSide.length+1)).style.display = "none"; 
+			//document.getElementById("delete"+String(Number(idSide.substring(5,idSide.length+1))-1)).style.display = "inline";
+			//document.getElementById("delete"+idSide.substring(5,idSide.length+1)).style.display = "none"; 
 		}
-		else document.getElementById("delete"+idSide.substring(5,idSide.length+1)).style.display = "none";
+//		else document.getElementById("delete"+idSide.substring(5,idSide.length+1)).style.display = "none";
+}
+if (Curves.length !== 0) {/**
+	if (Number(idSide.substring(5,idSide.length)) >= GD[plots[0]].data.length-1) {
+		console.log("data_length = "+GD[plots[0]].data.length);
+		plots.forEach(x => Plotly.deleteTraces(GD[x], GD[x].data.length-1));
 	}
-	if (nbChoices !== 1) {
-		$("#s"+idSide).empty();
-		if (Number(idSide.substring(5,idSide.length+1)) >= GD[plots[0]].data.length-1) {
-			plots.forEach(x => Plotly.deleteTraces(GD[x], GD[x].data.length-1));
+	else {
+		console.log(Number(idSide.substring(5,idSide.length)));
+		console.log(Curves.plotOrder.indexOf(Number(idSide.substring(5,idSide.length))));
+		plots.forEach(x => Plotly.deleteTraces(GD[x], Curves.plotOrder.indexOf(Number(idSide.substring(5,idSide.length)))));
+	}**/
+	//plots.forEach(x => Plotly.deleteTraces(GD[x], Curves.plotOrder.indexOf(Number(idSide.substring(5,idSide.length)))));
+	Curves.decrement(idSide.substring(5, idSide.length));
+	console.log("nb="+idSide.substring(5, idSide.length));
+	displayFiles(Curves.currentFile,Curves.currentFrameSize);
+	Curves.updateAddButtons();
+	console.log(Curves.plotOrder);
+	console.log("Curves.length = "+Curves.length);
+	$("#ss"+idSide).remove();
+	plots.forEach(function(x) {
+		const CURVESBIS=[];
+		for (let l=0; l<Curves.max; l++) {
+			if ((Curves.plotOrder[l]!=-1) && (l!=Curves.plotOrder.indexOf(Number(idSide.substring(5,idSide.length))))) {
+				CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
+			}
 		}
-		else {
-			plots.forEach(x => Plotly.deleteTraces(GD[x], Number(idSide.substring(5,idSide.length+1))));
-		}
-		document.getElementById("scurve"+idSide.substring(5,idSide.length+1)).style.display = "none";
-		if (nbCurves===nbChoices) nbCurves-=1;
-		else {
-			nbCurves-=1;
-			nbChoices-=1;
-		}
+		console.log("addlength="+Curves.length);
+		Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
+	});
+	console.log("scurve"+idSide.substring(5,idSide.length))
+	//document.getElementById("scurve"+idSide.substring(5,idSide.length+1)).style.display = "none";
+	if (nbCurves===nbChoices) nbCurves-=1;
+	else {
+		nbCurves-=1;
+		nbChoices-=1;
 	}
+}
 }
 
 /* Interaction with the form */

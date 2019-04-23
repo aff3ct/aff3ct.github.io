@@ -212,46 +212,47 @@
 </script>
 
 <script id="selectedTemplate" type="x-tmpl-mustache">
-  <div class="card" id="ss{{side}}">
-    <div class="card-header" id="sheading{{sideNumber}}">
-      <h5 class="mb-0">
-        <div class="mb-0 form-group row">
-          <div class="col-sm-11" data-toggle="collapse" data-target="#scollapse{{sideNumber}}" aria-expanded="true" aria-controls="scollapse{{sideNumber}}">
-            <button class="btn btn-block btn-link text-left" {{{filesTooltip1}}}{{aTitle}}
-          </button>
-        </div>
-        <div id="delete{{sideNumber}}" class="col-0">
-          <button type="button" class="close" aria-label="Close" onclick="deleteClick('delete', '{{side}}')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      </div>  
-    </h5>
-  </div>
-  <div id="scollapse{{sideNumber}}" class="collapse" aria-labelledby="sheading{{sideNumber}}" data-parent="#accordion{{sideNumber}}">
-    <div class="card-body">
-      <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
-        <div class="text-muted twoColumns">
-          <small><b>Frame size</b>: {{aFramesize}}<br/>
-            {{{filesCodeword}}}
-            <b>Coderate</b>: {{aCoderate}}
-            {{{filesTooltip2}}}
-          </small>
-        </div>
-        <div class="curveIcons">
-          {{{filesDoi}}}
-          {{{filesUrl}}}
-          {{{filesCommand}}}
-          <span class="curveIcon">
-            <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
-              <i class="fas fa-file-alt"></i>
-            </a>
-          </span>
-        </div>
-      </li>
+  <div id="scurve{{sideNumber}}">
+    <div class="card" id="ss{{side}}">
+      <div class="card-header" id="sheading{{sideNumber}}">
+        <h5 class="mb-0">
+          <div class="mb-0 form-group row">
+            <div class="col-sm-11" data-toggle="collapse" data-target="#scollapse{{sideNumber}}" aria-expanded="true" aria-controls="scollapse{{sideNumber}}">
+              <button class="btn btn-block btn-link text-left" {{{filesTooltip1}}}{{aTitle}}
+            </button>
+          </div>
+          <div id="delete{{sideNumber}}" class="col-0">
+            <button type="button" class="close" aria-label="Close" onclick="deleteClick('delete', '{{side}}')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>  
+      </h5>
+    </div>
+    <div id="scollapse{{sideNumber}}" class="collapse" aria-labelledby="sheading{{sideNumber}}" data-parent="#accordion{{sideNumber}}">
+      <div class="card-body">
+        <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
+          <div class="text-muted twoColumns">
+            <small><b>Frame size</b>: {{aFramesize}}<br/>
+              {{{filesCodeword}}}
+              <b>Coderate</b>: {{aCoderate}}
+              {{{filesTooltip2}}}
+            </small>
+          </div>
+          <div class="curveIcons">
+            {{{filesDoi}}}
+            {{{filesUrl}}}
+            {{{filesCommand}}}
+            <span class="curveIcon">
+              <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
+                <i class="fas fa-file-alt"></i>
+              </a>
+            </span>
+          </div>
+        </li>
+      </div>
     </div>
   </div>
-</div>
 </script>
 
 
@@ -266,15 +267,7 @@
 </div>
 
 
-<div class="col-3 p-1 scurve" id="scurve" style="max-height:536px">
-  <div id="scurve0"></div>
-  <div id="scurve1"></div>
-  <div id="scurve2"></div>
-  <div id="scurve3"></div>
-  <div id="scurve4"></div>
-</div>
-
-
+<div class="col-3 p-1 scurve" id="scurve" style="max-height:536px"></div>
     <!-- <div class="col-3 p-0">
          <div id="plotber"></div>
          <div id="plotbefe"></div>
