@@ -8,7 +8,8 @@ const Curves = {
 	id: [],
 	names: [],//names[id]=name_of_the_curve
 	values: [],//where values of the curve are
-	colors: ['#1f77b4', '#ff7f0e', '#2ea12e', '#d62728', '#9467bd'],
+	colors: ['#1f77b4', '#ff7f0e', '#2ea12e', '#d62728', '#9467bd'], // Blue, Orange, Green, Red, Purple
+	colorsOrder: [0, 1, 2, 3, 4], // 0:blue, 1:orange, 2:green, 3:red, 4:purple;
 	plots: ["ber","fer"/*,"befe","thr"*/],
 	currentFile: "",
 	currentFrameSize: "",
@@ -23,14 +24,7 @@ const Curves = {
 	}
 },
 	firstSideAvailable() {//return the id of the first free curve according to the disponibility tab, 4 if it's full
-	let result=this.max;
-	let i=0;
-	while (i<this.max) {
-		if ((this.disponibility[i]==1) && (i<result)) result=i;
-		i++;
-	}
-	if (result==this.max) result=-1;
-	return String(result);
+	return String(this.colorsOrder[this.length]);
 },
 firstIndexAvailable() {
 	let i=0;
@@ -74,8 +68,11 @@ firstIndexAvailable() {
 			if (this.disponibility[nb]==0) {
 				let a=this.plotOrder[this.plotOrder.indexOf(Number(nb))];
 				let col=this.colors[this.plotOrder.indexOf(Number(nb))];
+				let colIndex=this.colorsOrder[this.plotOrder.indexOf(Number(nb))];
 				this.colors.splice(this.plotOrder.indexOf(Number(nb)),1);
+				this.colorsOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
 				this.colors.push(col);
+				this.colorsOrder.push(colIndex);
 				console.log("a="+a+"    this.plotOrder.indexOf(nb)="+this.plotOrder.indexOf(Number(nb)));
 				this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
 				this.plotOrder.push(-1);
@@ -378,6 +375,7 @@ function displayFiles(files,framesize) {
 	var f=files.filter(x=>x.framesize==framesize);
 	$("#selector .bers #accordion").empty();
 	//$("#"+Curves.curveId()+"modals").empty();
+	$("#"+Curves.curveId()+"modalsSelector").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
 		var metadataTitle=a.ini.metadata.title;
@@ -399,7 +397,7 @@ function displayFiles(files,framesize) {
 		if (a.ini.metadata.url)
 			metadataUrl="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
 		if (a.ini.metadata.command)
-			metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+Curves.curveId()+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
+			metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
 		var filesTemplate = $('#filesTemplate').html();
 		Mustache.parse(filesTemplate);
 		var filesRendered=Mustache.render(filesTemplate, {
@@ -419,15 +417,15 @@ function displayFiles(files,framesize) {
 		$("#selector .bers #accordion").append(filesRendered);
 		Curves.updateAddButtons();
 		if (a.ini.metadata.command) {
-			var filesTemplate1 = $('#filesTemplate1').html();
-			Mustache.parse(filesTemplate1);
-			var fileRendered1=Mustache.render(filesTemplate1, 	{side: Curves.curveId(),
+			var cmdSelectorTemplate = $('#cmdSelectorTemplate').html();
+			Mustache.parse(cmdSelectorTemplate);
+			var fileRendered1=Mustache.render(cmdSelectorTemplate, 	{side: Curves.curveId(),
 				aId: a.id,
 				aTitle: metadataTitle,
 				aCommand: String(a.ini.metadata.command),
 				aFile: String(a.file),
 			});
-			$("#"+Curves.curveId()+"modals").append(fileRendered1);
+			$("#curvemodalsSelector").append(fileRendered1);
 		}
 		addClick(a,files,framesize);
 	}
@@ -464,8 +462,8 @@ function displaySelectedCurve(a) {
 	var selectedTemplate = $('#selectedTemplate').html();
 	Mustache.parse(selectedTemplate);
 	var selectedRendered=Mustache.render(selectedTemplate, {
-		sideNumber: Curves.curveId().substring(5,Curves.curveId().length+1),
-		side: Curves.curveId(),
+		sideNumber: Curves.curveId().substring(5,Curves.curveId().length),//Curves.curveId().substring(5,Curves.curveId().length+1),
+		side: Curves.curveId(),//"curve"+String(Curves.colorsOrder[Number(Curves.curveId().substring(5,Curves.curveId().length))]),
 		aId: a.id,
 		aTitle: metadataTitle,
 		aFramesize: a.framesize,
@@ -479,9 +477,9 @@ function displaySelectedCurve(a) {
 	});
 	$("#scurve").append(selectedRendered);
 	if (a.ini.metadata.command) {
-		var filesTemplate1 = $('#filesTemplate1').html();
-		Mustache.parse(filesTemplate1);
-		var fileRendered1=Mustache.render(filesTemplate1, 	{side: Curves.curveId(),
+		var cmdSelectedTemplate = $('#cmdSelectedTemplate').html();
+		Mustache.parse(cmdSelectedTemplate);
+		var fileRendered1=Mustache.render(cmdSelectedTemplate, 	{side: Curves.curveId(),
 			aId: a.id,
 			aTitle: metadataTitle,
 			aCommand: String(a.ini.metadata.command),

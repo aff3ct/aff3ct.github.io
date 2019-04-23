@@ -95,6 +95,15 @@
     <div class="container marketing" id="comparator" style="height:80vh;overflow-y:hidden;display:none;">
       <div class="row" id="comparatorNext">
 
+        <script id="colorCssTemplate" type="x-tmpl-mustache">
+          #{{divId}} :nth-child(0n+1)
+          {
+            background-color:{{color}};
+            border-color:{{color}};
+            color:#fff !important;
+          }
+        </script>
+
         <script id="filesTemplate" type="x-tmpl-mustache">
           <div class="card card{{filesI}}">
            <div class="card-header p-2" id="heading{{sideNumber}}{{filesI}}">
@@ -127,7 +136,7 @@
               {{{filesUrl}}}
               {{{filesCommand}}}
               <span class="curveIcon">
-                <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
+                <a href="#" data-toggle="modal" data-target="#modalInfoFile_{{aId}}" title="Original output text file">
                   <i class="fas fa-file-alt"></i>
                 </a>
               </span>
@@ -138,8 +147,8 @@
     </div>
   </script>
 
-  <script id="filesTemplate1" type="x-tmpl-mustache">
-    <div class="modal fade" id="modalInfoCmd{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <script id="cmdSelectorTemplate" type="x-tmpl-mustache">
+    <div class="modal fade" id="modalInfoCmd_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -162,7 +171,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="modalInfoFile{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade" id="modalInfoFile_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -179,6 +188,50 @@
       </div>
     </div>
   </div>
+</div>
+</script>
+
+<script id="cmdSelectedTemplate" type="x-tmpl-mustache">
+  <div class="modal fade" id="modalInfoCmd{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <div class="shell-wrap">
+           <p class="shell-top-bar">AFF3CT command line</p>
+           <ul class="shell-body">
+            <li>{{{aCommand}}}</li>
+          </ul>
+        </div><br>
+        <p class="text-justify">
+          <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalInfoFile{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <pre>{{aFile}}</pre>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
 </div>
 </script>
 
@@ -284,6 +337,7 @@
 <div id="curve2modals"></div>
 <div id="curve3modals"></div>
 <div id="curve4modals"></div>
+<div id="curvemodalsSelector"></div>
 <div class="container marketing">
   <br/><br/>
   <h2>More BER/FER references</h2>
