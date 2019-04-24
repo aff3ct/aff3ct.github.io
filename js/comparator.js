@@ -14,6 +14,8 @@ const Curves = {
 	currentFile: "",
 	currentFrameSize: "",
 	plotOrder: [],
+	toolTips: [],
+	toolTipsSelected: ["", "", "", "", ""],
 	initialization() {
 		for (let i=0; i<this.max; i++) {
 		this.values.push({ber:[],fer:[]/*,thr:[],befe:[]*/});
@@ -53,47 +55,47 @@ firstIndexAvailable() {
 	}
 	return this.names[(j-1)%this.max];
 },
-	addCurve(a) {
-		let i=this.firstSideAvailable();
-		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
-		this.id[i]=a.id;
-		this.plots.forEach(x => this.values[i][x]=a[x]);
-		if (this.length<this.max) this.length++;
-		this.disponibility[i]=0;
-	},
-	deleteCurve(nb) {
-		if (nb<=this.max) {
-			if (this.disponibility[nb]==0) {
-				let a=this.plotOrder[this.plotOrder.indexOf(Number(nb))];
-				let col=this.colors[this.plotOrder.indexOf(Number(nb))];
-				let colIndex=this.colorsOrder[this.plotOrder.indexOf(Number(nb))];
-				this.colors.splice(this.plotOrder.indexOf(Number(nb)),1);
-				this.colorsOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
-				this.colors.push(col);
-				this.colorsOrder.push(colIndex);
-				this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
-				this.plotOrder.push(-1);
-				this.id[nb]=-1;
-				this.length--;
-				this.values[nb]={ber:[],fer:[]};
-				this.disponibility[nb]=1;
-			}
-			else {
-				console.log("Curve"+String(nb)+" is already available.");
-			}
+addCurve(a) {
+	let i=this.firstSideAvailable();
+	this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
+	this.id[i]=a.id;
+	this.plots.forEach(x => this.values[i][x]=a[x]);
+	if (this.length<this.max) this.length++;
+	this.disponibility[i]=0;
+},
+deleteCurve(nb) {
+	if (nb<=this.max) {
+		if (this.disponibility[nb]==0) {
+			let a=this.plotOrder[this.plotOrder.indexOf(Number(nb))];
+			let col=this.colors[this.plotOrder.indexOf(Number(nb))];
+			let colIndex=this.colorsOrder[this.plotOrder.indexOf(Number(nb))];
+			this.colors.splice(this.plotOrder.indexOf(Number(nb)),1);
+			this.colorsOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
+			this.colors.push(col);
+			this.colorsOrder.push(colIndex);
+			this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
+			this.plotOrder.push(-1);
+			this.id[nb]=-1;
+			this.length--;
+			this.values[nb]={ber:[],fer:[]};
+			this.disponibility[nb]=1;
 		}
 		else {
-			console.log(String(nb)+" > Curves.max (Curves.max = "+String(this.max));
+			console.log("Curve"+String(nb)+" is already available.");
 		}
-	},
-	curveId() {
-		return "curve"+this.firstSideAvailable();
-	},
-	updateAddButtons() {
-		Curves.id.forEach(function(x) {
-			if (x!=-1)	$('#'+Curves.curveId()+x).prop('disabled', true);
-		});
 	}
+	else {
+		console.log(String(nb)+" > Curves.max (Curves.max = "+String(this.max));
+	}
+},
+curveId() {
+	return "curve"+this.firstSideAvailable();
+},
+updateAddButtons() {
+	Curves.id.forEach(function(x) {
+		if (x!=-1)	$('#'+Curves.curveId()+x).prop('disabled', true);
+	});
+}
 };
 // axis/legend of the 2 plots
 const LT = {
@@ -358,6 +360,7 @@ function displaySelector() {
 
 function displayFiles(files,framesize) {
 	Curves.currentFile=files;
+	Curves.toolTips=[];
 	Curves.currentFrameSize=framesize;
 	var f=files.filter(x=>x.framesize==framesize);
 	$("#selector .bers #accordion").empty();
@@ -365,9 +368,14 @@ function displayFiles(files,framesize) {
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
 		var metadataTitle=a.ini.metadata.title;
-		var codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="";
-		if (a.ini.metadata.title.length > 23)
-			metadataTitle=a.ini.metadata.title.substring(0,22)+'... ';
+		var metadataTitleShort=a.ini.metadata.title;
+		var codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="", tooltipParam="";
+		if (a.ini.metadata.title.length > 23) {
+			metadataTitleShort=a.ini.metadata.title.substring(0,22)+'... ';
+			let nb=Curves.toolTips.length;
+			tooltipParam="id='toolTip"+String(nb)+"' data-tippy-content='"+String(metadataTitle)+"'";
+			Curves.toolTips.push('#toolTip'+String(nb));
+		}
 		if (a.codeword > a.framesize)
 			codeWord="<b>Codeword</b>: "+a.codeword+"<br/>";
 		for (var j in a.info) {
@@ -391,6 +399,8 @@ function displayFiles(files,framesize) {
 			sideNumber: Curves.curveId().substring(5,Curves.curveId().length+1),
 			side: Curves.curveId(),
 			aId: a.id,
+			tooltip: tooltipParam,
+			aTitleShort: metadataTitleShort,
 			aTitle: metadataTitle,
 			aFramesize: a.framesize,
 			filesCodeword: codeWord,
@@ -401,6 +411,11 @@ function displayFiles(files,framesize) {
 			filesCommand: metadataCommand
 		});
 		$("#selector .bers #accordion").append(filesRendered);
+		tippy(Curves.toolTips[Curves.toolTips.length-1], {
+			arrow: true,
+			arrowType: 'sharp',
+			animation: 'fade',
+		});
 		Curves.updateAddButtons();
 		if (a.ini.metadata.command) {
 			var cmdSelectorTemplate = $('#cmdSelectorTemplate').html();
@@ -420,10 +435,12 @@ function displayFiles(files,framesize) {
 
 function displaySelectedCurve(a) {
 	var metadataTitle=a.ini.metadata.title;
-	var codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="";
+	var codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="", metadataTitleShort=a.ini.metadata.title, nb=-1;
 	if (a.ini.metadata.title.length > 21) {
-		tooltip1='data-toggle="tooltip" data-placement="left" title="'+a.ini.metadata.title+'">';
-		metadataTitle=a.ini.metadata.title.substring(0,20)+"... ";
+		nb=Curves.curveId().substring(5, Curves.curveId().length);
+		tooltip1="id='TooltipCurve"+nb+"' data-tippy-content='"+String(metadataTitle)+"'>";
+		Curves.toolTipsSelected[Number(nb)]='#TooltipCurve'+nb;
+		metadataTitleShort=a.ini.metadata.title.substring(0,20)+"... ";
 	}
 	if (a.codeword > a.framesize)
 		codeWord="<b>Codeword</b>: "+a.codeword+"<br/>";
@@ -449,6 +466,7 @@ function displaySelectedCurve(a) {
 		side: Curves.curveId(),
 		aId: a.id,
 		aTitle: metadataTitle,
+		aTitleShort: metadataTitleShort,
 		aFramesize: a.framesize,
 		filesCodeword: codeWord,
 		aCoderate: a.coderate,
@@ -459,6 +477,11 @@ function displaySelectedCurve(a) {
 		filesCommand: metadataCommand
 	});
 	$("#scurve #sAccordion").append(selectedRendered);
+	tippy(Curves.toolTipsSelected[nb], {
+			arrow: true,
+			arrowType: 'sharp',
+			animation: 'fade',
+		});
 	if (a.ini.metadata.command) {
 		var cmdSelectedTemplate = $('#cmdSelectedTemplate').html();
 		Mustache.parse(cmdSelectedTemplate);
@@ -479,11 +502,10 @@ function addClick(a,files,framesize) {
 		const plots=["ber","fer"/*,"befe","thr"*/];
 		$("#selector .bers .active").removeClass("active");
 		$(this).addClass("active");
-		let nb=Number(Curves.firstSideAvailable());
-		if (nb==-1) console.log("Maximum of curves reached!");
+		if (Curves.length==5) console.log("Maximum quantity of curves reached!");
 		else {
 			$('#'+Curves.curveId()+a.id).prop('disabled', true);
-			displaySelectedCurve(a,Curves.curveId());
+			displaySelectedCurve(a);
 			Curves.addCurve(a);
 			displayFiles(files,framesize);
 			Curves.updateAddButtons();

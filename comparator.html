@@ -16,7 +16,8 @@
   <script src="./js/lib/popper-1.14.3.min.js"></script>
   <script src="./js/lib/bootstrap-4.1.1.min.js"></script>
   <script src="./js/lib/plotly-1.37.1.min.js"></script>
-  <script src="./js/lib/mustache.js"></script>
+  <script src="./js/lib/mustache-3.0.1.js"></script>
+  <script src="./js/lib/tippy-4.2.1.js"></script>
   <script> /* Google Analytics */
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -54,8 +55,8 @@
               </button>
             </div>
             <div class="col-md-10 px-0">
-              <button class="btn btn-link pr-0" data-toggle="collapse" data-target="#collapse{{sideNumber}}{{filesI}}" aria-expanded="true" aria-controls="collapse{{sideNumber}}{{filesI}}">
-                {{aTitle}}
+              <button class="btn btn-link pr-0" data-toggle="collapse" data-target="#collapse{{sideNumber}}{{filesI}}" aria-expanded="true" aria-controls="collapse{{sideNumber}}{{filesI}}" {{{tooltip}}}>
+                {{aTitleShort}}
               </button>
             </div>
           </div>
@@ -195,7 +196,7 @@
     </div>
   </div>
   <div class="mb-4"></div>
-  <div class="shadow-sm p-3 mb-3 bg-white rounded" style="height:60vh;overflow:auto;padding:0rem !important">
+  <div class="shadow-sm p-3 mb-3 bg-white rounded" style="height:55vh;overflow:auto;padding:0rem !important">
     <ul class="list-group bers">
      <div id="accordion"></div>
    </ul>
@@ -210,7 +211,7 @@
         <h5 class="mb-0">
           <div class="mb-0 form-group row">
             <div class="col-sm-11" data-toggle="collapse" data-target="#scollapse{{sideNumber}}" aria-expanded="true" aria-controls="scollapse{{sideNumber}}">
-              <button class="btn btn-block btn-link text-left" {{{filesTooltip1}}}{{aTitle}}
+              <button class="btn btn-block btn-link text-left" {{{filesTooltip1}}}{{aTitleShort}}
             </button>
           </div>
           <div id="delete{{sideNumber}}" class="col-0">
