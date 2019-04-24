@@ -43,151 +43,90 @@
         return isExternal;
       }
     </script>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="index.html">AFF3CT</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <script id="filesTemplate" type="x-tmpl-mustache">
+      <div class="card card{{filesI}}">
+       <div class="card-header p-2" id="heading{{sideNumber}}{{filesI}}">
+         <h5 class="mb-0">
+           <div class="mb-0 mx-0 form-group row">
+            <div class="col-md-auto px-0">
+              <button type="button" id="{{side}}{{aId}}" class="btn btn-primary">
+                <b>+</b>
+              </button>
+            </div>
+            <div class="col-md-10 px-0">
+              <button class="btn btn-link pr-0" data-toggle="collapse" data-target="#collapse{{sideNumber}}{{filesI}}" aria-expanded="true" aria-controls="collapse{{sideNumber}}{{filesI}}">
+                {{aTitle}}
+              </button>
+            </div>
+          </div>
+        </h5>
+      </div>
+      <div id="collapse{{sideNumber}}{{filesI}}" class="collapse" aria-labelledby="heading{{sideNumber}}{{filesI}}" data-parent="#accordion{{sideNumber}}">
+       <div class="card-body">
+         <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
+           <div class="text-muted twoColumns"><small><b>Frame size</b>: {{aFramesize}}<br/>
+            {{{filesCodeword}}}
+            <b>Coderate</b>: {{aCoderate}}
+            {{{filesTooltip}}}
+          </small>
+        </div>
+        <div class="curveIcons">
+          {{{filesDoi}}}
+          {{{filesUrl}}}
+          {{{filesCommand}}}
+          <span class="curveIcon">
+            <a href="#" data-toggle="modal" data-target="#modalInfoFile_{{aId}}" title="Original output text file">
+              <i class="fas fa-file-alt"></i>
+            </a>
+          </span>
+        </div>
+      </li>
+    </div>
+  </div>
+</div>
+</script>
+
+<script id="cmdSelectorTemplate" type="x-tmpl-mustache">
+  <div class="modal fade" id="modalInfoCmd_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <div class="shell-wrap">
+           <p class="shell-top-bar">AFF3CT command line</p>
+           <ul class="shell-body">
+            <li>{{{aCommand}}}</li>
+          </ul>
+        </div><br>
+        <p class="text-justify">
+          <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalInfoFile_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
       </button>
-      <div id="navbarCollapse" class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home" aria-hidden="true">&nbsp;</i>Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="publications.html"><i class="fa fa-newspaper" aria-hidden="true">&nbsp;</i>Publications</a></li>
-          <li class="nav-item"><a class="nav-link" href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
-          <li class="nav-item"><a class="nav-link" href="download.html"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://aff3ct.readthedocs.io" target="_blank" onclick="return trackOutboundLink('https://aff3ct.readthedocs.io');"><i class="fas fa-book" aria-hidden="true">&nbsp;</i>Documentation</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://github.com/aff3ct/aff3ct" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/aff3ct');"><i class="fab fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
-        </ul>
-        <ul class="navbar-nav navbar-right">
-          <li class="nav-item active"><a class="nav-link" href="comparator.html"><i class="fas fa-chart-bar" aria-hidden="true">&nbsp;</i>BER/FER Comparator</a></li>
-          <li class="nav-item"><a class="nav-link" href="turbo_reader.html"><i class="fas fa-code-branch" aria-hidden="true">&nbsp;</i>Turbo Code Reader</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown_hof" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list" aria-hidden="true">&nbsp;</i>Software Decoders Hall of Fame&nbsp;</a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_hof">
-              <h6 class="dropdown-header">Synoptic tables</h6>
-              <a class="dropdown-item" href="hof_turbo.html">Turbo Codes</a>
-              <a class="dropdown-item" href="hof_ldpc.html">LDPC Codes</a>
-              <a class="dropdown-item" href="hof_polar.html">Polar Codes</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="jumbotron">
-      <div class="container marketing">
-        <h1 class="display-4">BER/FER Comparator</h1>
-        <p class="lead">This page is an online tool dedicated to the <strong>Bit Error Rate (BER) and Frame Error Rate (FER) curve comparisons</strong>. Various type of codes are considered like <b>the Turbo codes (LTE, LTE-Advanced, CCSDS, etc.), the Low-Density Parity-Check (LDPC) codes (Wi-Fi, WiMAX, CCSDS, WRAN, DVB-S2, etc.), and the recently introduced Polar codes (candidates for 5G)</b>.</p>
-        <p class="lead">The presented results have been simulated with <a href="index.html">AFF3CT</a>: our Open-source communication chain dedicated to the Forward Error Correction (FEC) simulations. The simulated output text files are freely available on our dedicated <a href="https://github.com/aff3ct/error_rate_references/tree/development" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/error_rate_references/tree/development');">GitHub repository</a>.</p>
-      </div>
     </div>
-    <div class="container marketing" id="loader">
-      <div class="row">
-        <div class="col-md-12">
-          <h2>Loading the references...</h2>
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-          </div>
-        </div>
-      </div>
+    <div class="modal-body">
+      <pre>{{aFile}}</pre>
     </div>
-
-    <div class="container marketing" id="comparator" style="height:80vh;overflow-y:hidden;display:none;">
-      <div class="row" id="comparatorNext">
-
-        <script id="colorCssTemplate" type="x-tmpl-mustache">
-          #{{divId}} :nth-child(0n+1)
-          {
-            background-color:{{color}};
-            border-color:{{color}};
-            color:#fff !important;
-          }
-        </script>
-
-        <script id="filesTemplate" type="x-tmpl-mustache">
-          <div class="card card{{filesI}}">
-           <div class="card-header p-2" id="heading{{sideNumber}}{{filesI}}">
-             <h5 class="mb-0">
-               <div class="mb-0 mx-0 form-group row">
-                <div class="col-md-auto px-0">
-                  <button type="button" id="{{side}}{{aId}}" class="btn btn-primary">
-                    <b>+</b>
-                  </button>
-                </div>
-                <div class="col-md-10 px-0">
-                  <button class="btn btn-link pr-0" data-toggle="collapse" data-target="#collapse{{sideNumber}}{{filesI}}" aria-expanded="true" aria-controls="collapse{{sideNumber}}{{filesI}}">
-                    {{aTitle}}
-                  </button>
-                </div>
-              </div>
-            </h5>
-          </div>
-          <div id="collapse{{sideNumber}}{{filesI}}" class="collapse" aria-labelledby="heading{{sideNumber}}{{filesI}}" data-parent="#accordion{{sideNumber}}">
-           <div class="card-body">
-             <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
-               <div class="text-muted twoColumns"><small><b>Frame size</b>: {{aFramesize}}<br/>
-                {{{filesCodeword}}}
-                <b>Coderate</b>: {{aCoderate}}
-                {{{filesTooltip}}}
-              </small>
-            </div>
-            <div class="curveIcons">
-              {{{filesDoi}}}
-              {{{filesUrl}}}
-              {{{filesCommand}}}
-              <span class="curveIcon">
-                <a href="#" data-toggle="modal" data-target="#modalInfoFile_{{aId}}" title="Original output text file">
-                  <i class="fas fa-file-alt"></i>
-                </a>
-              </span>
-            </div>
-          </li>
-        </div>
-      </div>
-    </div>
-  </script>
-
-  <script id="cmdSelectorTemplate" type="x-tmpl-mustache">
-    <div class="modal fade" id="modalInfoCmd_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-         </div>
-         <div class="modal-body">
-           <div class="shell-wrap">
-             <p class="shell-top-bar">AFF3CT command line</p>
-             <ul class="shell-body">
-              <li>{{{aCommand}}}</li>
-            </ul>
-          </div><br>
-          <p class="text-justify">
-            <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
-          </p>
-        </div>
-      </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     </div>
   </div>
-  <div class="modal fade" id="modalInfoFile_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <pre>{{aFile}}</pre>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
+</div>
 </div>
 </script>
 
@@ -236,7 +175,7 @@
 </script>
 
 <script id="selectorTemplate" type="x-tmpl-mustache">
-  <div class="col-3 p-1 {{selectorCurveId}}" id="{{selectorCurveId}}" style="max-height:536px;{{displayNone}}">
+  <div class="col-3 p-1 {{selectorCurveId}}" id="{{selectorCurveId}}" style="height:80vh;{{displayNone}}">
    <div class="container">
     <div class="form-group row">
       <label for="codetype{{selectorCurveId}}" class="col-sm-6">Type of code</label>
@@ -256,7 +195,7 @@
     </div>
   </div>
   <div class="mb-4"></div>
-  <div class="shadow-sm p-3 mb-3 bg-white rounded" style="max-height:325px;overflow:auto;padding:0rem !important">
+  <div class="shadow-sm p-3 mb-3 bg-white rounded" style="height:60vh;overflow:auto;padding:0rem !important">
     <ul class="list-group bers">
      <div id="accordion"></div>
    </ul>
@@ -282,7 +221,7 @@
         </div>  
       </h5>
     </div>
-    <div id="scollapse{{sideNumber}}" class="collapse" aria-labelledby="sheading{{sideNumber}}" data-parent="#accordion{{sideNumber}}">
+    <div id="scollapse{{sideNumber}}" class="collapse" aria-labelledby="sheading{{sideNumber}}" data-parent="#sAccordion">
       <div class="card-body">
         <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
           <div class="text-muted twoColumns">
@@ -307,29 +246,71 @@
     </div>
   </div>
 </script>
-
-
-<div class="col-6 p-0">
-  <div id="curvesTip" style="display:none">
-   <p id="tips" class="text-center">
-     <strong>Please select up to 5 curves on the left</strong>
-   </p>
- </div>
- <div id="plotber"></div>
- <div id="plotfer"></div>
-</div>
-
-
-<div class="col-3 p-1 scurve" id="scurve" style="max-height:536px"></div>
-    <!-- <div class="col-3 p-0">
-         <div id="plotber"></div>
-         <div id="plotbefe"></div>
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="index.html">AFF3CT</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home" aria-hidden="true">&nbsp;</i>Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="publications.html"><i class="fa fa-newspaper" aria-hidden="true">&nbsp;</i>Publications</a></li>
+        <li class="nav-item"><a class="nav-link" href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
+        <li class="nav-item"><a class="nav-link" href="download.html"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://aff3ct.readthedocs.io" target="_blank" onclick="return trackOutboundLink('https://aff3ct.readthedocs.io');"><i class="fas fa-book" aria-hidden="true">&nbsp;</i>Documentation</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://github.com/aff3ct/aff3ct" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/aff3ct');"><i class="fab fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
+      </ul>
+      <ul class="navbar-nav navbar-right">
+        <li class="nav-item active"><a class="nav-link" href="comparator.html"><i class="fas fa-chart-bar" aria-hidden="true">&nbsp;</i>BER/FER Comparator</a></li>
+        <li class="nav-item"><a class="nav-link" href="turbo_reader.html"><i class="fas fa-code-branch" aria-hidden="true">&nbsp;</i>Turbo Code Reader</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown_hof" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list" aria-hidden="true">&nbsp;</i>Software Decoders Hall of Fame&nbsp;</a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_hof">
+            <h6 class="dropdown-header">Synoptic tables</h6>
+            <a class="dropdown-item" href="hof_turbo.html">Turbo Codes</a>
+            <a class="dropdown-item" href="hof_ldpc.html">LDPC Codes</a>
+            <a class="dropdown-item" href="hof_polar.html">Polar Codes</a>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class="col-3 p-0">
-      <div id="plotfer"></div>
-      <div id="plotthr"></div>
-    </div> -->
-    
+  </nav>
+  <div class="jumbotron">
+    <div class="container marketing">
+      <h1 class="display-4">BER/FER Comparator</h1>
+      <p class="lead">This page is an online tool dedicated to the <strong>Bit Error Rate (BER) and Frame Error Rate (FER) curve comparisons</strong>. Various type of codes are considered like <b>the Turbo codes (LTE, LTE-Advanced, CCSDS, etc.), the Low-Density Parity-Check (LDPC) codes (Wi-Fi, WiMAX, CCSDS, WRAN, DVB-S2, etc.), and the recently introduced Polar codes (candidates for 5G)</b>.</p>
+      <p class="lead">The presented results have been simulated with <a href="index.html">AFF3CT</a>: our Open-source communication chain dedicated to the Forward Error Correction (FEC) simulations. The simulated output text files are freely available on our dedicated <a href="https://github.com/aff3ct/error_rate_references/tree/development" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/error_rate_references/tree/development');">GitHub repository</a>.</p>
+    </div>
+  </div>
+  <div class="container marketing" id="loader">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Loading the references...</h2>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container marketing" id="comparator" style="height:80vh;overflow-y:hidden;display:none;">
+    <div class="row" id="comparatorNext">
+      <div class="col-6 p-0">
+        <div id="curvesTip" style="display:none">
+         <p id="tips" class="text-center">
+           <strong>Please select up to 5 curves on the left.<br/>You can delete them on the right.</strong>
+         </p>
+       </div>
+       <div id="plotber"></div>
+       <div id="plotfer"></div><!-- <div class="col-3 p-0"><div id="plotber"></div><div id="plotbefe"></div></div><div class="col-3 p-0"><div id="plotfer"></div><div id="plotthr"></div></div> -->
+     </div>
+
+
+     <div class="col-3 p-1 scurve" id="scurve" style="height:80vh;overflow-y:scroll">
+      <div id="sAccordion"></div>
+    </div>
   </div>
 </div>
 <div id="curve0modals"></div>
