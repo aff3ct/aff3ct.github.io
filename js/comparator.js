@@ -646,7 +646,8 @@ function drawCurvesFromURI(ordered) {
 				$(".selector .codetype").trigger("change");
 				$("#sizeselector").val(f.framesize);
 				$(".selector .size").trigger("change");
-				$(".selector .g"+f.id).trigger("click");
+				console.log("f.id="+f.id);
+				$(idSide+f.id).trigger("click");
 			}
 		}
 	});
