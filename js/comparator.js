@@ -549,6 +549,7 @@ function deleteClick(divId, idSide) {
 	$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).prop('disabled', false);
 	if (Curves.length !== 0) {
 		Curves.deleteCurve(idSide.substring(5, idSide.length));
+		uri = updateURLParameter(uri,idSide,"");
 		displayFiles(Curves.currentFile,Curves.currentFrameSize);
 		Curves.updateAddButtons();
 		$("#ss"+idSide).remove();
