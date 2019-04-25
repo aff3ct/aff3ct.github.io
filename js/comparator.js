@@ -628,34 +628,20 @@ function orderFiles(files) {
 
 function selectFile(files,filename)
 {
-	console.log("files="+files);
 	for (var code in files) {
 		for (var f=0;f<files[code].length;f++) {
-			console.log(files[code].length);
-			console.log("decodeURIComponent(files[code][f].filename="+decodeURIComponent(files[code][f].filename));
 			if (decodeURIComponent(files[code][f].filename) == filename) return files[code][f];
-			return null;
 		}
 	}
+	return null;
 }
 
 function drawCurvesFromURI(ordered) {
 	Curves.names.forEach(function(idSide) {
 		let filename=findGetParameter(idSide);
-				console.log("1:");
-				console.log("idSide="+idSide);
-				console.log("filename="+filename);
 		if (filename) {
 			let f=selectFile(ordered,filename);
-				console.log("2:");
-				console.log("idSide="+idSide);
-				console.log("filename="+filename);
-				console.log("f.id="+String(f));
 			if (f) {
-				console.log("3:");
-				console.log("idSide="+idSide);
-				console.log("filename="+filename);
-				console.log("f.id="+f.id);
 				$("#codetypeselector").val(f.code);
 				$(".selector .codetype").trigger("change");
 				$("#sizeselector").val(f.framesize);
