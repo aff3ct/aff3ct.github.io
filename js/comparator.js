@@ -639,15 +639,17 @@ function selectFile(files,filename)
 function drawCurvesFromURI(ordered) {
 	Curves.names.forEach(function(idSide) {
 		let filename=findGetParameter(idSide);
+				console.log("1:");
 				console.log("idSide="+idSide);
 				console.log("filename="+filename);
-				console.log("f.id="+f.id);
 		if (filename) {
 			let f=selectFile(ordered,filename);
+				console.log("2:");
 				console.log("idSide="+idSide);
 				console.log("filename="+filename);
 				console.log("f.id="+f.id);
 			if (f) {
+				console.log("3:");
 				console.log("idSide="+idSide);
 				console.log("filename="+filename);
 				console.log("f.id="+f.id);
