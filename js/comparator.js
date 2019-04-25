@@ -653,6 +653,7 @@ function drawCurvesFromURI(ordered) {
 			}
 		}
 	});
+}
 
 //main
 $(document).ready(function() {
