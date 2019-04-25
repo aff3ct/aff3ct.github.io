@@ -630,6 +630,7 @@ function selectFile(files,filename)
 {
 	for (var code in files) {
 		for (var f=0;f<files[code].length;f++) {
+			console.log("decodeURIComponent(files[code][f].filename="+decodeURIComponent(files[code][f].filename));
 			if (decodeURIComponent(files[code][f].filename) == filename) return files[code][f];
 			return null;
 		}
