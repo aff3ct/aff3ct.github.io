@@ -647,7 +647,7 @@ function drawCurvesFromURI(ordered) {
 				console.log("2:");
 				console.log("idSide="+idSide);
 				console.log("filename="+filename);
-				console.log("f.id="+f.id);
+				console.log("f.id="+String(f.id));
 			if (f) {
 				console.log("3:");
 				console.log("idSide="+idSide);
