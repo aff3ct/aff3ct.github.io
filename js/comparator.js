@@ -631,6 +631,7 @@ function selectFile(files,filename)
 	console.log("files="+files);
 	for (var code in files) {
 		for (var f=0;f<files[code].length;f++) {
+			console.log(files[code].length);
 			console.log("decodeURIComponent(files[code][f].filename="+decodeURIComponent(files[code][f].filename));
 			if (decodeURIComponent(files[code][f].filename) == filename) return files[code][f];
 			return null;
