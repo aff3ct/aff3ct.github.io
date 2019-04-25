@@ -170,7 +170,7 @@ function updateURLParameter(url, param, paramVal)
 
 	if(TheAnchor)
 		paramVal += "#" + TheAnchor;
-
+	if (paramVal=="") paramVal="null";
 	var rows_txt = temp + "" + param + "=" + paramVal;
 	return baseURL + "?" + newAdditionalURL + rows_txt;
 }
