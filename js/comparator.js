@@ -519,7 +519,6 @@ function addClick(a,files,framesize) {
 				uri=uri+"&curve"+String(i)+"="+cval[i];
 			}
 			uri = updateURLParameter(uri,Curves.curveId(),a.filename);
-			console.log(a.filename);
 			window.history.replaceState({},"aff3ct.github.io",uri);
 			Curves.addCurve(a);
 			displayFiles(files,framesize);
@@ -550,7 +549,15 @@ function deleteClick(divId, idSide) {
 	$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).prop('disabled', false);
 	if (Curves.length !== 0) {
 		Curves.deleteCurve(idSide.substring(5, idSide.length));
-		//uri = updateURLParameter(uri,idSide,"");
+		let cval=[];
+		var uri  = "/comparator.html?curve0=";
+		for (let i=0; i<Curves.max; i++) {
+			cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
+			if (i==0) uri+=cval[0];
+			else uri=uri+"&curve"+String(i)+"="+cval[i];
+		}
+		uri = updateURLParameter(uri,idSide,"");
+		window.history.replaceState({},"aff3ct.github.io",uri);
 		displayFiles(Curves.currentFile,Curves.currentFrameSize);
 		Curves.updateAddButtons();
 		$("#ss"+idSide).remove();
