@@ -641,6 +641,9 @@ function drawCurvesFromURI(ordered) {
 		let filename=findGetParameter(idSide);
 		if (filename) {
 			let f=selectFile(ordered,filename);
+				console.log("idSide="+idSide);
+				console.log("filename="+filename);
+				console.log("f.id="+f.id);
 			if (f) {
 				console.log("idSide="+idSide);
 				console.log("filename="+filename);
