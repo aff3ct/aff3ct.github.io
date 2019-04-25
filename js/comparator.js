@@ -639,6 +639,9 @@ function selectFile(files,filename)
 function drawCurvesFromURI(ordered) {
 	Curves.names.forEach(function(idSide) {
 		let filename=findGetParameter(idSide);
+				console.log("idSide="+idSide);
+				console.log("filename="+filename);
+				console.log("f.id="+f.id);
 		if (filename) {
 			let f=selectFile(ordered,filename);
 				console.log("idSide="+idSide);
