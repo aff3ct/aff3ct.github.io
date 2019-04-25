@@ -658,6 +658,20 @@ function drawCurvesFromURI(ordered) {
 				$("#"+idSide+f.id).click();
 			}
 		}
+		else {
+			filename=findGetParameter(idSide.substring(0,idSide.length-1)+String(Number(idSide.substring(idSide.length-1,idSIde.length))-1));
+		if (filename) {
+			let f=selectFile(ordered,filename);
+			if (f) {
+				$("#codetypeselector").val(f.code);
+				$(".selector .codetype").trigger("change");
+				$("#sizeselector").val(f.framesize);
+				$(".selector .size").trigger("change");
+				$("#"+idSide+f.id).click();
+				$("#delete"+idSide.substring(idSide.length-1,idSide.length)+" .close").click();
+			}
+		}
+		}
 	});
 }
 
