@@ -519,7 +519,7 @@ function addClick(a,files,framesize) {
 				uri=uri+"&curve"+String(i)+"="+cval[i];
 			}
 			uri = updateURLParameter(uri,Curves.curveId(),a.filename);
-			//window.history.replaceState({},"aff3ct.github.io",uri);
+			window.history.replaceState({},"aff3ct.github.io",uri);
 			Curves.addCurve(a);
 			displayFiles(files,framesize);
 			Curves.updateAddButtons();
