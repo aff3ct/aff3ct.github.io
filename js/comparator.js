@@ -642,6 +642,9 @@ function drawCurvesFromURI(ordered) {
 		if (filename) {
 			let f=selectFile(ordered,filename);
 			if (f) {
+				console.log("idSide="+idSide);
+				console.log("filename="+filename);
+				console.log("f.id="+f.id);
 				$("#codetypeselector").val(f.code);
 				$(".selector .codetype").trigger("change");
 				$("#sizeselector").val(f.framesize);
@@ -650,16 +653,6 @@ function drawCurvesFromURI(ordered) {
 			}
 		}
 	});
-
-	var f=selectFile(files,filename);
-	if (f) {
-		$("#codetypeselector").val(f.code);
-		$(".selector .codetype").trigger("change");
-		$("#sizeselector").val(f.framesize);
-		$(".selector .size").trigger("change");
-		$(".selector .g"+f.id).trigger("click");
-	}
-}
 
 //main
 $(document).ready(function() {
