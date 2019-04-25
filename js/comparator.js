@@ -15,7 +15,7 @@ const Curves = {
 	currentFrameSize: "",
 	plotOrder: [],
 	toolTips: [],
-	toolTipsSelected: ["", "", "", "", ""],
+	toolTipsSelected: [],
 	initialization() {
 		for (let i=0; i<this.max; i++) {
 		this.values.push({ber:[],fer:[]/*,thr:[],befe:[]*/});
@@ -23,6 +23,7 @@ const Curves = {
 		this.id.push(-1);
 		this.disponibility.push(1);
 		this.plotOrder.push(-1);
+		this.toolTipsSelected.push("");
 	}
 },
 	firstSideAvailable() {//return the id of the first free curve according to the disponibility tab, 4 if it's full
@@ -506,6 +507,16 @@ function addClick(a,files,framesize) {
 		else {
 			$('#'+Curves.curveId()+a.id).prop('disabled', true);
 			displaySelectedCurve(a);
+			let cval=[];
+			for (let i=0; i<Curves.max; i++) {
+				cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
+			}
+			var uri  = "/comparator.html?curve0="+cval[0];
+			for (let i=1; i<Curves.max; i++) {
+				uri=uri+"&curve"+String(i)+"="+cval[i];
+			}
+			uri = updateURLParameter(uri,Curves.curveId(),a.filename);
+			window.history.replaceState({},"aff3ct.github.io",uri);
 			Curves.addCurve(a);
 			displayFiles(files,framesize);
 			Curves.updateAddButtons();
@@ -518,16 +529,6 @@ function addClick(a,files,framesize) {
 				}
 				Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
 			});
-			let cval=[];
-			for (let i=0; i<Curves.max; i++) {
-				cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
-			}
-			var uri  = "/comparator.html?curve0="+cval[0];
-			for (let i=1; i<Curves.max; i++) {
-				uri=uri+"&curve"+String(i)+"="+cval[i];
-			}
-			uri = updateURLParameter(uri,Curves.curveId(),a.filename);
-			window.history.replaceState({},"aff3ct.github.io",uri);
 		}
 	// track the click with Google Analytics
 	ga('send', {
