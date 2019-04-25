@@ -628,6 +628,7 @@ function orderFiles(files) {
 
 function selectFile(files,filename)
 {
+	console.log("files="+files);
 	for (var code in files) {
 		for (var f=0;f<files[code].length;f++) {
 			console.log("decodeURIComponent(files[code][f].filename="+decodeURIComponent(files[code][f].filename));
