@@ -659,6 +659,7 @@ function drawCurvesFromURI(ordered) {
 			}
 		}
 		else {
+			console.log(findGetParameter(idSide.substring(0,idSide.length-1)+String(Number(idSide.substring(idSide.length-1,idSIde.length))-1)));
 			filename=findGetParameter(idSide.substring(0,idSide.length-1)+String(Number(idSide.substring(idSide.length-1,idSIde.length))-1));
 		if (filename) {
 			let f=selectFile(ordered,filename);
