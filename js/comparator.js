@@ -27,7 +27,8 @@ const Curves = {
 	}
 },
 	firstSideAvailable() {//return the id of the first free curve according to the disponibility tab, 4 if it's full
-	return String(this.colorsOrder[this.length]);
+	if (this.length<=4) return String(this.colorsOrder[this.length]);
+	else return String(this.colorsOrder[this.max-1]);
 },
 firstIndexAvailable() {
 	let i=0;
@@ -94,7 +95,9 @@ curveId() {
 },
 updateAddButtons() {
 	Curves.id.forEach(function(x) {
-		if (x!=-1)	$('#'+Curves.curveId()+x).prop('disabled', true);
+		Curves.names.forEach(function(y) {
+			if (x!=-1)	$('#'+y+x).prop('disabled', true);
+		});
 	});
 }
 };
@@ -397,7 +400,7 @@ function displayFiles(files,framesize) {
 		Mustache.parse(filesTemplate);
 		var filesRendered=Mustache.render(filesTemplate, {
 			filesI: String(i),
-			sideNumber: Curves.curveId().substring(5,Curves.curveId().length+1),
+			sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
 			side: Curves.curveId(),
 			aId: a.id,
 			tooltip: tooltipParam,
@@ -479,10 +482,10 @@ function displaySelectedCurve(a) {
 	});
 	$("#scurve #sAccordion").append(selectedRendered);
 	tippy(Curves.toolTipsSelected[nb], {
-			arrow: true,
-			arrowType: 'sharp',
-			animation: 'fade',
-		});
+		arrow: true,
+		arrowType: 'sharp',
+		animation: 'fade',
+	});
 	if (a.ini.metadata.command) {
 		var cmdSelectedTemplate = $('#cmdSelectedTemplate').html();
 		Mustache.parse(cmdSelectedTemplate);
@@ -516,7 +519,7 @@ function addClick(a,files,framesize) {
 				uri=uri+"&curve"+String(i)+"="+cval[i];
 			}
 			uri = updateURLParameter(uri,Curves.curveId(),a.filename);
-			window.history.replaceState({},"aff3ct.github.io",uri);
+			//window.history.replaceState({},"aff3ct.github.io",uri);
 			Curves.addCurve(a);
 			displayFiles(files,framesize);
 			Curves.updateAddButtons();
@@ -543,7 +546,7 @@ function addClick(a,files,framesize) {
 
 function deleteClick(divId, idSide) {
 	const plots=["ber","fer"];
-	$('#'+Curves.curveId()+Curves.id[idSide.substring(5,idSide.length+1)]).prop('disabled', false);
+	$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).prop('disabled', false);
 	if (Curves.length !== 0) {
 		Curves.deleteCurve(idSide.substring(5, idSide.length));
 		displayFiles(Curves.currentFile,Curves.currentFrameSize);
@@ -633,10 +636,35 @@ function selectFile(files,filename)
 	}
 }
 
-function drawCurvesFromURI(files,filename) {
+function drawCurvesFromURI(files,filename, idSide) {
 	var f=selectFile(files,filename);
 	if (f) {
-		$("#codetype"+Curves.curveId()).val(f.code);
+		$("#codetypeselector").val(f.code);
+		$(".selector .codetype").trigger("change");
+		$("#sizeselector").val(f.framesize);
+		$(".selector .size").trigger("change");
+		$(".selector .g"+f.id).trigger("click");
+	}
+}
+
+function drawCurvesFromURI() {
+	Curves.names.forEach(function(idSide) {
+		let filename=findGetParameter(idSide);
+		if (filename) {
+			let f=selectFile(ordered,filename);
+			if (f) {
+				$("#codetypeselector").val(f.code);
+				$(".selector .codetype").trigger("change");
+				$("#sizeselector").val(f.framesize);
+				$(".selector .size").trigger("change");
+				$(".selector .g"+f.id).trigger("click");
+			}
+		}
+	});
+
+	var f=selectFile(files,filename);
+	if (f) {
+		$("#codetypeselector").val(f.code);
 		$(".selector .codetype").trigger("change");
 		$("#sizeselector").val(f.framesize);
 		$(".selector .size").trigger("change");
@@ -674,11 +702,11 @@ $(document).ready(function() {
 			document.getElementById("tips").style.display = "block";
 			document.getElementById("selector").style.display = "block";
 			document.getElementById("comparator").style.display = "block";
-			const varSide=[];
-			for (let k=0; k<Curves.max; k++) {
-				varSide.push(findGetParameter("curve"+String(k)));
-				if (varSide[k]) drawCurvesFromURI(ordered,varSide[k],"curve"+String(k));
-			}
+			Curves.names.forEach(function(x) {
+				let a=findGetParameter(x);
+				if (a) drawCurvesFromURI(ordered,a,x);
+			});
 		});
 	});
 });
+
