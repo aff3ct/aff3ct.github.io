@@ -113,6 +113,7 @@ const LT = {
 		pad: 4
 	},
 	colorway: Curves.colors,
+	hovermode: 'x',
 };
 
 const LAYOUT= {
@@ -504,6 +505,11 @@ function displaySelectedCurve(a) {
 // Click listener for curves list
 function addClick(a,files,framesize) {
 	$('#'+Curves.curveId()+a.id).on('click', function() {
+		if (Curves.length==0) {
+			var deleteAllTemplate = $('#deleteAllTemplate').html();
+			Mustache.parse(deleteAllTemplate);
+			$("#scurve").prepend(deleteAllTemplate);
+		}
 		document.getElementById("tips").style.display = "none";
 		const plots=["ber","fer"/*,"befe","thr"*/];
 		$("#selector .bers .active").removeClass("active");
@@ -536,12 +542,12 @@ function addClick(a,files,framesize) {
 			});
 		}
 	// track the click with Google Analytics
-	ga('send', {
+	/**ga('send', {
 		hitType:       'event',
 		eventCategory: 'BER/FER Comparator',
 		eventAction:   'click',
 		eventLabel:    decodeURIComponent(a.filename)
-	});
+	});**/
 });
 }
 
@@ -554,6 +560,7 @@ function deleteClick(divId, idSide) {
 	$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).prop('disabled', false);
 	if (Curves.length !== 0) {
 		Curves.deleteCurve(idSide.substring(5, idSide.length));
+		if (Curves.length==0) $("#closeAll").remove();
 		let cval=[];
 		var uri  = "/comparator.html?curve0=";
 		for (let i=0; i<Curves.max; i++) {
