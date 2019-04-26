@@ -658,7 +658,7 @@ function drawCurvesFromURI(ordered) {
 				$("#"+idSide+f.id).click();
 			}
 			else {
-				filename=findGetParameter(idSide.substring(0,idSide.length-1)+String(Number(idSide.substring(idSide.length-1,idSIde.length))-1));
+				filename=findGetParameter(idSide.substring(0,idSide.length-1)+String(Number(idSide.substring(idSide.length-1,idSide.length))-1));
 				if (filename) {
 					f=selectFile(ordered,filename);
 					if (f) {
