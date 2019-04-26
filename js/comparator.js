@@ -439,7 +439,8 @@ function displayFiles(files,framesize) {
 
 function displaySelectedCurve(a) {
 	var metadataTitle=a.ini.metadata.title;
-	var codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="", metadataTitleShort=a.ini.metadata.title, nb=-1;
+	var codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="", metadataTitleShort=a.ini.metadata.title, nb=-1, allFunc="";
+	//Curves.names.forEach(x => allFunc+="deleteClick('delete', '"+x+"'),");
 	if (a.ini.metadata.title.length > 21) {
 		nb=Curves.curveId().substring(5, Curves.curveId().length);
 		tooltip1="id='TooltipCurve"+nb+"' data-tippy-content='"+String(metadataTitle)+"'>";
@@ -468,6 +469,7 @@ function displaySelectedCurve(a) {
 	var selectedRendered=Mustache.render(selectedTemplate, {
 		sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
 		side: Curves.curveId(),
+		//allFunctions: allFunc,
 		aId: a.id,
 		aTitle: metadataTitle,
 		aTitleShort: metadataTitleShort,
@@ -543,6 +545,9 @@ function addClick(a,files,framesize) {
 });
 }
 
+function deleteAll() {
+	Curves.names.forEach(x => deleteClick('delete', x));
+}
 
 function deleteClick(divId, idSide) {
 	const plots=["ber","fer"];
