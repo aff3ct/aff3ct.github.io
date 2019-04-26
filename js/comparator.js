@@ -96,7 +96,11 @@ curveId() {
 updateAddButtons() {
 	Curves.id.forEach(function(x) {
 		Curves.names.forEach(function(y) {
-			if (x!=-1)	$('#'+y+x).prop('disabled', true);
+			if (x!=-1)	{
+				$('#'+y+x).prop('disabled', true);
+				$('#'+y+x).empty();
+				$('#'+y+x).append("-");
+			}
 		});
 	});
 }
@@ -559,6 +563,8 @@ function deleteClick(divId, idSide) {
 	const plots=["ber","fer"];
 	$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).prop('disabled', false);
 	if (Curves.length !== 0) {
+		$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).empty();
+		$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).append("+");
 		Curves.deleteCurve(idSide.substring(5, idSide.length));
 		if (Curves.length==0) $("#closeAll").remove();
 		let cval=[];
