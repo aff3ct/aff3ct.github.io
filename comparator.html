@@ -218,8 +218,8 @@
             <button type="button" class="close" aria-label="Close" onclick="deleteClick('delete', '{{side}}')">
               <span aria-hidden="true">&times;</span>
             </button>
-            <button id="hide{{sideNumber}}" type="button" class="btn btn-light btn-sm" onclick="hideCurve('{{sideNumber}}')">
-              Hide
+            <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-sm" onclick="hideCurve('{{sideNumber}}')">
+              <i class="fas fa-eye-slash"></i>
             </button> 
           </div>
         </div>  
@@ -258,14 +258,14 @@
 </script>
 
 <script id="showTemplate" type="x-tmpl-mustache">
-  <button id="show{{sideNumber}}" type="button" class="btn btn-light btn-sm" onclick="showCurve('{{sideNumber}}')">
-    Show
+  <button id="show{{sideNumber}}" type="button" class="btn btn-sm btn-link" onclick="showCurve('{{sideNumber}}')">
+    <i class="fas fa-eye"></i>
   </button> 
 </script>
 
 <script id="hideTemplate" type="x-tmpl-mustache">
-  <button id="hide{{sideNumber}}" type="button" class="btn btn-light btn-sm" onclick="hideCurve('{{sideNumber}}')">
-    Hide
+  <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-sm" onclick="hideCurve('{{sideNumber}}')">
+    <i class="fas fa-eye-slash"></i>
   </button> 
 </script>
 
