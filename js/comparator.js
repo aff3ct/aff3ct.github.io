@@ -5,9 +5,11 @@ const Curves = {
 	max: 5,//Colors are defined for only 5 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for more than 5 curves. Sincerely, Me.
 	length: 0,//number of displayed curves
 	disponibility: [],//index==id! disponibility[id]=1 => available && disponibility[id]=0 => unavailable
+	hidden: [],
 	id: [],
 	names: [],//names[id]=name_of_the_curve
 	values: [],//where values of the curve are
+	referenceColors: ['#1f77b4', '#ff7f0e', '#2ea12e', '#d62728', '#9467bd'], // Do not modify this tab!!! Use it as a reference
 	colors: ['#1f77b4', '#ff7f0e', '#2ea12e', '#d62728', '#9467bd'], // Blue, Orange, Green, Red, Purple
 	colorsOrder: [0, 1, 2, 3, 4], // 0:blue, 1:orange, 2:green, 3:red, 4:purple;
 	plots: ["ber","fer"/*,"befe","thr"*/],
@@ -24,6 +26,7 @@ const Curves = {
 		this.disponibility.push(1);
 		this.plotOrder.push(-1);
 		this.toolTipsSelected.push("");
+		this.hidden.push(0);
 	}
 },
 	firstSideAvailable() {//return the id of the first free curve according to the disponibility tab, 4 if it's full
@@ -64,6 +67,7 @@ addCurve(a) {
 	this.plots.forEach(x => this.values[i][x]=a[x]);
 	if (this.length<this.max) this.length++;
 	this.disponibility[i]=0;
+	this.hidden[i]=0;
 },
 deleteCurve(nb) {
 	if (nb<=this.max) {
@@ -72,8 +76,10 @@ deleteCurve(nb) {
 			let col=this.colors[this.plotOrder.indexOf(Number(nb))];
 			let colIndex=this.colorsOrder[this.plotOrder.indexOf(Number(nb))];
 			this.colors.splice(this.plotOrder.indexOf(Number(nb)),1);
+			this.referenceColors.splice(this.plotOrder.indexOf(Number(nb)),1);
 			this.colorsOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
 			this.colors.push(col);
+			this.referenceColors.push(col);
 			this.colorsOrder.push(colIndex);
 			this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
 			this.plotOrder.push(-1);
@@ -531,7 +537,7 @@ function addClick(a,files,framesize) {
 				uri=uri+"&curve"+String(i)+"="+cval[i];
 			}
 			uri = updateURLParameter(uri,Curves.curveId(),a.filename);
-			window.history.replaceState({},"aff3ct.github.io",uri);
+			//window.history.replaceState({},"aff3ct.github.io",uri);
 			Curves.addCurve(a);
 			displayFiles(files,framesize);
 			Curves.updateAddButtons();
@@ -559,6 +565,76 @@ function deleteAll() {
 	Curves.names.forEach(x => deleteClick('delete', x));
 }
 
+function showCurve(idSide) {
+	const plots=["ber","fer"];
+	/**
+	let y=0;
+	Curves.hidden.forEach(function(x) {
+		//if (x==1) {
+			Curves.colors[Curves.plotOrder.indexOf(Number(y))]=Curves.referenceColors[Curves.colorsOrder.indexOf(Number(y))];
+		//}
+		y++;
+	});**/
+
+	//Curves.colors[Curves.colors.indexOf(Curves.referenceColors[Number(idSide)])]=Curves.referenceColors[Number(idSide)];
+	Curves.colors.splice(Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]),1);
+	let nb=Curves.plotOrder.indexOf(Number(idSide));
+	for(let i=0; i<=nb; i++) {
+		if (Curves.hidden[i]==1 && (i!=Curves.plotOrder.indexOf(Number(idSide)))) {
+			nb--;
+		}
+	}
+	Curves.colors.splice(/**Curves.referenceColors.indexOf(Curves.referenceColors[Number(idSide)])**/nb,0,Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]);
+	plots.forEach(function(x) {
+		const CURVESBIS=[];
+		for (let l=0; l<Curves.max; l++) {
+			if (l==Curves.plotOrder.indexOf(Number(idSide))) {
+				Curves.hidden[l]=0;
+			}
+			if ((Curves.plotOrder[l]!=-1) && /**(l!=Curves.plotOrder.indexOf(Number(sideNumber)))**/ (Curves.hidden[l]==0)) {
+				CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
+			}
+		}
+		Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
+	});
+	$("#scurve"+String(idSide)).fadeTo("fast", 1);
+	$("#show"+String(idSide)).remove();
+	var hideTemplate = $('#hideTemplate').html();
+	Mustache.parse(hideTemplate);
+	var hideRendered=Mustache.render(hideTemplate, {
+		sideNumber: String(idSide) 
+	});
+	$("#delete"+String(idSide)).append(hideRendered);
+}
+
+function hideCurve(idSide) {
+	const plots=["ber","fer"];
+	let a=Curves.colors[Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))])];
+	Curves.colors.splice(/**Curves.plotOrder.indexOf(Number(idSide))**/Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]),1);
+	Curves.colors.push(a);
+	plots.forEach(function(x) {
+		const CURVESBIS=[];
+		for (let l=0; l<Curves.max; l++) {
+			if (l==Curves.plotOrder.indexOf(Number(idSide))) {
+				Curves.hidden[l]=1;
+			}
+			if ((Curves.plotOrder[l]!=-1) && /**(l!=Curves.plotOrder.indexOf(Number(sideNumber)))**/ (Curves.hidden[l]==0)) {
+				CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
+			}
+		}
+		Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
+	});
+	$("#scurve"+String(idSide)).fadeTo("slow", 0.33);
+	$("#hide"+String(idSide)).remove();
+	var showTemplate = $('#showTemplate').html();
+	Mustache.parse(showTemplate);
+	var showRendered=Mustache.render(showTemplate, {
+		sideNumber: String(idSide) 
+	});
+	$("#delete"+String(idSide)).append(showRendered);
+	//$("#show"+String(idSide)).fadeTo("fast", 1);
+}
+
 function deleteClick(divId, idSide) {
 	const plots=["ber","fer"];
 	$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).prop('disabled', false);
@@ -575,7 +651,7 @@ function deleteClick(divId, idSide) {
 			else uri=uri+"&curve"+String(i)+"="+cval[i];
 		}
 		uri = updateURLParameter(uri,idSide,"");
-		window.history.replaceState({},"aff3ct.github.io",uri);
+		//window.history.replaceState({},"aff3ct.github.io",uri);
 		displayFiles(Curves.currentFile,Curves.currentFrameSize);
 		Curves.updateAddButtons();
 		$("#ss"+idSide).remove();
