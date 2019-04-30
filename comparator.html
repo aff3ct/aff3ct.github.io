@@ -210,7 +210,7 @@
       <div class="card-header" id="sheading{{sideNumber}}">
         <h5 class="mb-0">
           <div class="mb-0 form-group row">
-            <div class="col-sm-11" data-toggle="collapse" data-target="#scollapse{{sideNumber}}" aria-expanded="true" aria-controls="scollapse{{sideNumber}}">
+            <div class="col-sm-9" data-toggle="collapse" data-target="#scollapse{{sideNumber}}" aria-expanded="true" aria-controls="scollapse{{sideNumber}}">
               <button class="btn btn-block btn-link text-left" {{{filesTooltip1}}}{{aTitleShort}}
             </button>
           </div>
@@ -218,6 +218,9 @@
             <button type="button" class="close" aria-label="Close" onclick="deleteClick('delete', '{{side}}')">
               <span aria-hidden="true">&times;</span>
             </button>
+            <button id="hide{{sideNumber}}" type="button" class="btn btn-light btn-sm" onclick="hideCurve('{{sideNumber}}')">
+              Hide
+            </button> 
           </div>
         </div>  
       </h5>
@@ -252,6 +255,18 @@
   <div id="closeAll">
     <button type="button" class="btn btn-secondary" onclick="deleteAll()">Delete All</button>
   </div>
+</script>
+
+<script id="showTemplate" type="x-tmpl-mustache">
+  <button id="show{{sideNumber}}" type="button" class="btn btn-light btn-sm" onclick="showCurve('{{sideNumber}}')">
+    Show
+  </button> 
+</script>
+
+<script id="hideTemplate" type="x-tmpl-mustache">
+  <button id="hide{{sideNumber}}" type="button" class="btn btn-light btn-sm" onclick="hideCurve('{{sideNumber}}')">
+    Hide
+  </button> 
 </script>
 
 </head>
