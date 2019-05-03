@@ -538,7 +538,8 @@ function subAddClick(a, files, framesize, input) {
 			for (let i=1; i<Curves.max; i++) {
 				uri=uri+"&curve"+String(i)+"="+cval[i];
 			}
-			uri = updateURLParameter(uri,Curves.curveId(),a.filename);
+			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),a.filename);
+			else uri = updateURLParameter(uri,Curves.curveId(),a.file);
 			window.history.replaceState({},"aff3ct.github.io",uri);
 		//}
 		Curves.addCurve(a);
