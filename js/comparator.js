@@ -529,7 +529,7 @@ function subAddClick(a, files, framesize, input) {
 	else {
 		$('#'+Curves.curveId()+a.id).prop('disabled', true);
 		displaySelectedCurve(a);
-		if (input==0) {
+		//if (input==0) {
 			let cval=[];
 			for (let i=0; i<Curves.max; i++) {
 				cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
@@ -540,7 +540,7 @@ function subAddClick(a, files, framesize, input) {
 			}
 			uri = updateURLParameter(uri,Curves.curveId(),a.filename);
 			window.history.replaceState({},"aff3ct.github.io",uri);
-		}
+		//}
 		Curves.addCurve(a);
 		if (input==0) {
 			Curves.updateAddButtons();
