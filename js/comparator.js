@@ -84,6 +84,7 @@ deleteCurve(nb) {
 			this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
 			this.plotOrder.push(-1);
 			this.id[nb]=-1;
+			this.hidden[nb];
 			this.length--;
 			this.values[nb]={ber:[],fer:[]};
 			this.disponibility[nb]=1;
@@ -256,34 +257,22 @@ function parseINIString(data) {
 	return value;
 }
 
-// Reads and stores one file. Returns the content of the file.
-var ID=0;
-var curFile=0;
-var nFiles=0;
-function loadFile(file) {
-	var d=$.Deferred();
-	setMIME("text/plain");
-	var filename = encodeURIComponent(file);
-	ajaxLoad(
-		GITLAB+"files/"+filename+"/raw?ref="+BRANCH
-		).done(function(result) {
-			var ini = parseINIString(result);
-			ini.metadata.command=ini.metadata.command.replace(/"([^ ,:;]*)"/g, "$1");
-			ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ "([^]*)"/g, "");
-			ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ ([^ ]*)/g, "");
-			ini.metadata.command=ini.metadata.command.replace(/"\.\.\/conf\/([^ ]*)"/g, "../conf/$1");
-			ini.metadata.command=ini.metadata.command.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1' onclick='return trackOutboundLink(\"https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1\");'>conf/$1</a>");
-			ini.metadata.command=ini.metadata.command.replace(/"conf\/([^ ]*)"/g, "conf/$1");
-			ini.metadata.command=ini.metadata.command.replace(/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1' onclick='return trackOutboundLink(\"https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1\");'>conf/$1</a>");
-			ini.metadata.command=ini.metadata.command.replace(/\.\/bin\/aff3ct/g,"aff3ct");
-
-			var lines=result.split("\n");
-			var startLine;
-			for (startLine=0;startLine<lines.length;startLine++)
-				if (lines[startLine] == "[trace]")
-					break;
-				lines.splice(0,startLine+1);
-
+function parseFile(filename, result) {//Return data ready-to-plot
+	var ini = parseINIString(result);
+	ini.metadata.command=ini.metadata.command.replace(/"([^ ,:;]*)"/g, "$1");
+	ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ "([^]*)"/g, "");
+	ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ ([^ ]*)/g, "");
+	ini.metadata.command=ini.metadata.command.replace(/"\.\.\/conf\/([^ ]*)"/g, "../conf/$1");
+	ini.metadata.command=ini.metadata.command.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1' onclick='return trackOutboundLink(\"https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1\");'>conf/$1</a>");
+	ini.metadata.command=ini.metadata.command.replace(/"conf\/([^ ]*)"/g, "conf/$1");
+	ini.metadata.command=ini.metadata.command.replace(/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1' onclick='return trackOutboundLink(\"https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1\");'>conf/$1</a>");
+	ini.metadata.command=ini.metadata.command.replace(/\.\/bin\/aff3ct/g,"aff3ct");
+	var lines=result.split("\n");
+	var startLine;
+	for (startLine=0;startLine<lines.length;startLine++)
+		if (lines[startLine] == "[trace]")
+			break;
+		lines.splice(0,startLine+1);
 	// var name=ini.metadata.title;
 	var coderate=0,framesize=0,infobits=0,codeword=0;
 	var BER={x:[],y:[],type:'scatter',name:'BER'};
@@ -330,17 +319,29 @@ function loadFile(file) {
 	}
 	var o={id:ID,ini:ini,info:info,coderate:coderate,framesize:framesize,codeword:codeword,ber:BER,fer:FER,
 		/*befe:BEFE,thr:THR,*/code:code,file:result,filename:filename};
+		return o;
+	}
+
+// Reads and stores one file. Returns the content of the file.
+var ID=0;
+var curFile=0;
+var nFiles=0;
+function loadFile(file) {
+	var d=$.Deferred();
+	setMIME("text/plain");
+	var filename = encodeURIComponent(file);
+	ajaxLoad(GITLAB+"files/"+filename+"/raw?ref="+BRANCH).done(function(result) {
+		let o=parseFile(filename, result);
 		d.resolve(o);
 		ID=ID+1;
-
-	// Progress bar
-	curFile=curFile+1;
-	let percentage=Math.round(((curFile)/nFiles)*100);
-	$("#loader .progress-bar").html(percentage+"%");
-	$('#loader .progress-bar').attr('aria-valuenow', percentage).css('width',percentage+"%");
-});
-		return d.promise();
-	}
+		// Progress bar
+		curFile=curFile+1;
+		let percentage=Math.round(((curFile)/nFiles)*100);
+		$("#loader .progress-bar").html(percentage+"%");
+		$('#loader .progress-bar').attr('aria-valuenow', percentage).css('width',percentage+"%");
+	});
+	return d.promise();
+}
 
 // Get the list of files (no dir) of the gitlab repo. Uses multiple requests if number of files exceeds 100.
 function loadFileList(page,maxperpage) {
@@ -443,7 +444,7 @@ function displayFiles(files,framesize) {
 			});
 			$("#curvemodalsSelector").append(fileRendered1);
 		}
-		addClick(a,files,framesize);
+		addClick(a,files,framesize,0);
 	}
 	$('[data-toggle="tooltip"]').tooltip();
 }
@@ -512,22 +513,23 @@ function displaySelectedCurve(a) {
 	}
 }
 
-// Click listener for curves list
-function addClick(a,files,framesize) {
-	$('#'+Curves.curveId()+a.id).on('click', function() {
-		if (Curves.length==0) {
-			var deleteAllTemplate = $('#deleteAllTemplate').html();
-			Mustache.parse(deleteAllTemplate);
-			$("#scurve").prepend(deleteAllTemplate);
-		}
-		document.getElementById("tips").style.display = "none";
-		const plots=["ber","fer"/*,"befe","thr"*/];
-		$("#selector .bers .active").removeClass("active");
-		$(this).addClass("active");
-		if (Curves.length==5) console.log("Maximum quantity of curves reached!");
-		else {
-			$('#'+Curves.curveId()+a.id).prop('disabled', true);
-			displaySelectedCurve(a);
+function subAddClick(a, files, framesize, input) {
+	if (Curves.length==0) {
+		var deleteAllTemplate = $('#deleteAllTemplate').html();
+		Mustache.parse(deleteAllTemplate);
+		$("#scurve").prepend(deleteAllTemplate);
+		document.getElementById("plotber").style.display = "inline";
+		document.getElementById("plotfer").style.display = "inline";
+	}
+	document.getElementById("tips").style.display = "none";
+	const plots=["ber","fer"/*,"befe","thr"*/];
+	$("#selector .bers .active").removeClass("active");
+	$(this).addClass("active");
+	if (Curves.length==5) console.log("Maximum quantity of curves reached!");
+	else {
+		$('#'+Curves.curveId()+a.id).prop('disabled', true);
+		displaySelectedCurve(a);
+		if (input==0) {
 			let cval=[];
 			for (let i=0; i<Curves.max; i++) {
 				cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
@@ -538,27 +540,39 @@ function addClick(a,files,framesize) {
 			}
 			uri = updateURLParameter(uri,Curves.curveId(),a.filename);
 			window.history.replaceState({},"aff3ct.github.io",uri);
-			Curves.addCurve(a);
-			displayFiles(files,framesize);
-			Curves.updateAddButtons();
-			plots.forEach(function(x) {
-				const CURVESBIS=[];
-				for (let l=0; l<Curves.max; l++) {
-					if (Curves.plotOrder[l]!=-1) {
-						CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
-					}
-				}
-				Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
-			});
 		}
-	// track the click with Google Analytics
-	/**ga('send', {
-		hitType:       'event',
-		eventCategory: 'BER/FER Comparator',
-		eventAction:   'click',
-		eventLabel:    decodeURIComponent(a.filename)
-	});**/
-});
+		Curves.addCurve(a);
+		if (input==0) {
+			Curves.updateAddButtons();
+			displayFiles(files,framesize);
+		}
+		plots.forEach(function(x) {
+			const CURVESBIS=[];
+			for (let l=0; l<Curves.max; l++) {
+				if (Curves.plotOrder[l]!=-1) {
+					CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
+				}
+			}
+			Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
+		});
+	}
+}
+
+// Click listener for curves list
+function addClick(a, files, framesize, input) {
+	$('#'+Curves.curveId()+a.id).on('click', function() {
+		subAddClick(a, files, framesize, 0);
+		// track the click with Google Analytics
+		/**ga('send', {
+			hitType:       'event',
+			eventCategory: 'BER/FER Comparator',
+			eventAction:   'click',
+			eventLabel:    decodeURIComponent(a.filename)
+		});**/
+	});
+	if (input==1) {
+		subAddClick(a, files, framesize, input);
+	}
 }
 
 function deleteAll() {
@@ -567,16 +581,6 @@ function deleteAll() {
 
 function showCurve(idSide) {
 	const plots=["ber","fer"];
-	/**
-	let y=0;
-	Curves.hidden.forEach(function(x) {
-		//if (x==1) {
-			Curves.colors[Curves.plotOrder.indexOf(Number(y))]=Curves.referenceColors[Curves.colorsOrder.indexOf(Number(y))];
-		//}
-		y++;
-	});**/
-
-	//Curves.colors[Curves.colors.indexOf(Curves.referenceColors[Number(idSide)])]=Curves.referenceColors[Number(idSide)];
 	Curves.colors.splice(Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]),1);
 	let nb=Curves.plotOrder.indexOf(Number(idSide));
 	for(let i=0; i<=nb; i++) {
@@ -584,14 +588,14 @@ function showCurve(idSide) {
 			nb--;
 		}
 	}
-	Curves.colors.splice(/**Curves.referenceColors.indexOf(Curves.referenceColors[Number(idSide)])**/nb,0,Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]);
+	Curves.colors.splice(nb,0,Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]);
 	plots.forEach(function(x) {
 		const CURVESBIS=[];
 		for (let l=0; l<Curves.max; l++) {
 			if (l==Curves.plotOrder.indexOf(Number(idSide))) {
 				Curves.hidden[l]=0;
 			}
-			if ((Curves.plotOrder[l]!=-1) && /**(l!=Curves.plotOrder.indexOf(Number(sideNumber)))**/ (Curves.hidden[l]==0)) {
+			if ((Curves.plotOrder[l]!=-1) && (Curves.hidden[l]==0)) {
 				CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
 			}
 		}
@@ -610,7 +614,7 @@ function showCurve(idSide) {
 function hideCurve(idSide) {
 	const plots=["ber","fer"];
 	let a=Curves.colors[Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))])];
-	Curves.colors.splice(/**Curves.plotOrder.indexOf(Number(idSide))**/Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]),1);
+	Curves.colors.splice(Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]),1);
 	Curves.colors.push(a);
 	plots.forEach(function(x) {
 		const CURVESBIS=[];
@@ -618,7 +622,7 @@ function hideCurve(idSide) {
 			if (l==Curves.plotOrder.indexOf(Number(idSide))) {
 				Curves.hidden[l]=1;
 			}
-			if ((Curves.plotOrder[l]!=-1) && /**(l!=Curves.plotOrder.indexOf(Number(sideNumber)))**/ (Curves.hidden[l]==0)) {
+			if ((Curves.plotOrder[l]!=-1) && (Curves.hidden[l]==0)) {
 				CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
 			}
 		}
@@ -632,17 +636,24 @@ function hideCurve(idSide) {
 		sideNumber: String(idSide) 
 	});
 	$("#delete"+String(idSide)).append(showRendered);
-	//$("#show"+String(idSide)).fadeTo("fast", 1);
 }
 
 function deleteClick(divId, idSide) {
 	const plots=["ber","fer"];
+	for (let i=0; i<Curves.max; i++) {
+		if (Curves.hidden[i]==1) showCurve(i);
+	}
 	$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).prop('disabled', false);
 	if (Curves.length !== 0) {
 		$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).empty();
 		$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).append("+");
 		Curves.deleteCurve(idSide.substring(5, idSide.length));
-		if (Curves.length==0) $("#closeAll").remove();
+		if (Curves.length==0) {
+			$("#closeAll").remove();
+			document.getElementById("tips").style.display = "inline";
+			document.getElementById("plotber").style.display = "none";
+			document.getElementById("plotfer").style.display = "none";
+		}
 		let cval=[];
 		var uri  = "/comparator.html?curve0=";
 		for (let i=0; i<Curves.max; i++) {
@@ -665,6 +676,39 @@ function deleteClick(divId, idSide) {
 			Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
 		});
 	}
+}
+window.onload = function() {
+//function importFile() {
+
+	const plots=["ber","fer"/*,"befe","thr"*/];
+	var fileInput = document.getElementById('fileInput');/**
+	console.log(fileInput.files[0].type);
+	console.log(fileInput.files[0].name);**/
+	fileInput.addEventListener('change', function(e)
+	{
+		var file = fileInput.files[0];
+		if (file.type=="text/plain")
+		{
+			$("#fileDisplayArea").empty();
+			if (Curves.length<Curves.max) {
+				var reader = new FileReader();
+				reader.readAsText(file);
+				reader.onloadend = function(e)
+				{
+					var filename = encodeURIComponent(file);
+					let o=parseFile(filename, reader.result);
+					addClick(o, file, o.framesize, 1);
+				};
+			}
+			else {
+				$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">Too many curves displayed</span>');//.<br>Please Remove one of them<br>and try again.</span>');
+			}
+		}
+		else
+		{
+			$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">File not supported!</span>');
+		}
+	});
 }
 
 /* Interaction with the form */
