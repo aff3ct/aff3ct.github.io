@@ -539,7 +539,7 @@ function subAddClick(a, files, framesize, input) {
 				uri=uri+"&curve"+String(i)+"="+cval[i];
 			}
 			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),a.filename);
-			else uri = updateURLParameter(uri,Curves.curveId(),a.file);
+			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(compressToEncodedURIComponent(a.file)));
 			window.history.replaceState({},"aff3ct.github.io",uri);
 		//}
 		Curves.addCurve(a);
@@ -715,16 +715,13 @@ window.onload = function() {
 /* Interaction with the form */
 function displayCodeTypes(files) {
 	$(".codetype").empty();
+	let selected="selected='selected'";
+	$(".codetype").append("<option " + selected + ">Select code</option>");
+	displayFrameSizes("Select code",files);
 	var j=0;
 	for (var i in files)
 	{
-		var selected="";
-		if (j == 0)
-		{
-			selected="selected='selected'";
-			displayFrameSizes(i,files);
-		}
-		$(".codetype").append("<option " + selected + ">"+i+"</option>");
+		$(".codetype").append("<option>"+i+"</option>");
 		j++;
 	}
 
@@ -742,22 +739,28 @@ window.onresize = function() {
 };
 
 function displayFrameSizes(code,files) {
-	var p={};
-	var j=0;
-	for (var i=0;i<(files[code]).length;i++) {
-		var f=files[code][i];
-		p[f.framesize]=true;
+	if (code!="Select code") {
+		var p={};
+		var j=0;
+		for (var i=0;i<(files[code]).length;i++) {
+			var f=files[code][i];
+			p[f.framesize]=true;
+		}
+		$("#selector .size").empty();
+		for (var i in p){
+			if (j==0) j=i;
+			$("#selector .size").append("<option>"+i+"</option>");
+		}
+		displayFiles(files[code],j);
+		$("#selector .size").off();
+		$("#selector .size").change(function() {
+			displayFiles(files[code],$(this).val());
+		});
 	}
-	$("#selector .size").empty();
-	for (var i in p){
-		if (j==0) j=i;
-		$("#selector .size").append("<option>"+i+"</option>");
+	else {
+		$("#selector .bers #accordion").empty();
+		$("#"+Curves.curveId()+"modalsSelector").empty();
 	}
-	displayFiles(files[code],j);
-	$("#selector .size").off();
-	$("#selector .size").change(function() {
-		displayFiles(files[code],$(this).val());
-	});
 }
 
 // files: array of files.
@@ -788,25 +791,30 @@ function drawCurvesFromURI(ordered) {
 	Curves.names.forEach(function(idSide) {
 		let filename=findGetParameter(idSide);
 		if (filename) {
-			let f=selectFile(ordered,filename);
-			if (f) {
-				$("#codetypeselector").val(f.code);
-				$(".selector .codetype").trigger("change");
-				$("#sizeselector").val(f.framesize);
-				$(".selector .size").trigger("change");
-				$("#"+idSide+f.id).click();
+			if (filename.slice(1,10)=="metadata") {
+				console.log("ok");
 			}
 			else {
-				filename=findGetParameter(idSide.substring(0,idSide.length-1)+String(Number(idSide.substring(idSide.length-1,idSide.length))-1));
-				if (filename) {
-					f=selectFile(ordered,filename);
-					if (f) {
-						$("#codetypeselector").val(f.code);
-						$(".selector .codetype").trigger("change");
-						$("#sizeselector").val(f.framesize);
-						$(".selector .size").trigger("change");
-						$("#"+idSide+f.id).click();
-						$("#delete"+idSide.substring(idSide.length-1,idSide.length)+" .close").click();
+				let f=selectFile(ordered,filename);
+				if (f) {
+					$("#codetypeselector").val(f.code);
+					$(".selector .codetype").trigger("change");
+					$("#sizeselector").val(f.framesize);
+					$(".selector .size").trigger("change");
+					$("#"+idSide+f.id).click();
+				}
+				else {
+					filename=findGetParameter(idSide.substring(0,idSide.length-1)+String(Number(idSide.substring(idSide.length-1,idSide.length))-1));
+					if (filename) {
+						f=selectFile(ordered,filename);
+						if (f) {
+							$("#codetypeselector").val(f.code);
+							$(".selector .codetype").trigger("change");
+							$("#sizeselector").val(f.framesize);
+							$(".selector .size").trigger("change");
+							$("#"+idSide+f.id).click();
+							$("#delete"+idSide.substring(idSide.length-1,idSide.length)+" .close").click();
+						}
 					}
 				}
 			}
