@@ -539,7 +539,7 @@ function subAddClick(a, files, framesize, input) {
 				uri=uri+"&curve"+String(i)+"="+cval[i];
 			}
 			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),a.filename);
-			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(compressToEncodedURIComponent(a.file)));
+			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.file)));
 			window.history.replaceState({},"aff3ct.github.io",uri);
 		//}
 		Curves.addCurve(a);
@@ -760,6 +760,8 @@ function displayFrameSizes(code,files) {
 	else {
 		$("#selector .bers #accordion").empty();
 		$("#"+Curves.curveId()+"modalsSelector").empty();
+		$("#selector .size").empty();
+		$("#selector .size").append("<option>Select size</option>");
 	}
 }
 
@@ -791,8 +793,10 @@ function drawCurvesFromURI(ordered) {
 	Curves.names.forEach(function(idSide) {
 		let filename=findGetParameter(idSide);
 		if (filename) {
-			if (filename.slice(1,10)=="metadata") {
-				console.log("ok");
+			if (filename.slice(0,4)=="NoWw") {
+				filename=LZString.decompressFromEncodedURIComponent(filename);
+				let o=parseFile(filename, reader.result);
+				addClick(o, file, o.framesize, 1);
 			}
 			else {
 				let f=selectFile(ordered,filename);
