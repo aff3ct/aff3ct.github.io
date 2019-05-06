@@ -795,7 +795,8 @@ function drawCurvesFromURI(ordered) {
 		if (filename) {
 			if (filename.slice(0,4)=="NoWw") {
 				filename=LZString.decompressFromEncodedURIComponent(filename);
-				let o=parseFile(filename, reader.result);
+				let file=filename;
+				let o=parseFile("My Curve", file);
 				addClick(o, file, o.framesize, 1);
 			}
 			else {
