@@ -316,27 +316,9 @@ function parseFile(filename, result) {//Return data ready-to-plot
 var ID=0;
 var curFile=0;
 var nFiles=0;
-/**
-function loadFile(file) {
+function loadFile(result, name) {//Last parsing
 	var d=$.Deferred();
-	setMIME("text/plain");
-	var filename = encodeURIComponent(file);
-	ajaxLoad(GITLAB+"files/"+filename+"/raw?ref="+BRANCH).done(function(result) {
-		let o=parseFile(filename, result);
-		d.resolve(o);
-		ID=ID+1;
-		// Progress bar
-		curFile=curFile+1;
-		let percentage=Math.round(((curFile)/nFiles)*100);
-		$("#loader .progress-bar").html(percentage+"%");
-		$('#loader .progress-bar').attr('aria-valuenow', percentage).css('width',percentage+"%");
-	});
-	return d.promise();
-}**/
-
-function loadFile(result) {
-	var d=$.Deferred();
-	var filename = encodeURIComponent(result);
+	var filename = encodeURIComponent(name);
 	//console.log("filename="+filename);
 	let o=parseFile(filename, result);
 	d.resolve(o);
@@ -392,16 +374,24 @@ function loadDatabase() {//Return String that include the whole file
 }
 
 function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** This function return an array with all files as String.
+	//.\/error_rate_references\-master\/([A-Za-z_0-9\/\-]+\.txt:)\n\nStart_File+/g;
 	let filesTab=[];
 	let file2=txtFile;
 	let strStart="Start_File";
 	let strEnd="End_File";
-	let toto=0;
+	let strTxt=".txt";
+	//let root="./error_rate_references-master/";
+	let filenameRegex=/.\/error_rate_references\-master\/([A-Za-z_0-9\/\-]+\.txt:)+/g;
+	let filename=[];
+	console.log(file2.indexOf(strTxt));
+	console.log(file2.indexOf(strStart));
 	while (file2.indexOf(strStart)>=0) {
 		let start=file2.indexOf(strStart);
 		let end=file2.indexOf(strEnd);
 		let data=file2.slice(start+strStart.length+1, end);
 		filesTab.push(data);
+		filenameRegex.test(file2.slice(0,file2.indexOf(strTxt)+strTxt.length+1));
+		filename.push(RegExp.$1);
 		/**
 		/title=([a-z0-9A-Z.\-,\/=\s;\+:()]+)\n/mg.test(data);
 		let title=RegExp.$1.replace(/url[a-z0-9\n.\s=\/\-_:]+/, '');
@@ -410,9 +400,9 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 		**/
 		data=file2.slice(start, end+strEnd.length);
 		file2=file2.replace(data, "DZ");
-		toto++;
+		file2=file2.replace(filename, "213");
 	}
-	return filesTab;
+	return [filesTab, filename];
 }
 
 function displaySelector() {
@@ -893,7 +883,9 @@ $(document).ready(function() {
 			'margin-top': (40 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'
 		}).node();
 	});
-	let files=parseDatabase(loadDatabase());
+	let blabla=parseDatabase(loadDatabase());
+	let files=blabla[0];
+	let filename=blabla[1];
 	nFiles=files.length;
 	$.when.apply(this,files.map(x=>loadFile(x))).done(function() {
 		var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
