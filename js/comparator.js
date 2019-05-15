@@ -384,6 +384,7 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 	let filename=[];
 	console.log(file2.indexOf(strTxt));
 	console.log(file2.indexOf(strStart));
+	let i=0;
 	while (file2.indexOf(strStart)>=0) {
 		let start=file2.indexOf(strStart);
 		let end=file2.indexOf(strEnd);
@@ -399,8 +400,10 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 		**/
 		data=file2.slice(start, end+strEnd.length);
 		file2=file2.replace(data, "DZ");
-		file2=file2.replace(filename, "213");
+		file2=file2.replace(filename[i], "213");
+		i++;
 	}
+	console.log(file2);
 	return [filesTab, filename];
 }
 
@@ -864,14 +867,6 @@ function drawCurvesFromURI(ordered) {
 	});
 }
 
-function multipleMap(file, name) {
-	let len=file.length;
-	if (name.length>len) len=name.length;
-	for(let i=0; i<len; i++) {
-		loadFile(file[i], name[i]);
-	}
-}
-
 //main
 $(document).ready(function() {
 	Curves.initialization();
@@ -899,6 +894,7 @@ $(document).ready(function() {
 	}
 	nFiles=files.length;
 	$.when.apply(this,count.map(x=>loadFile(files[x],filenames[x]))).done(function() {
+		console.log(filenames);
 		var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
 		var ordered=orderFiles(files);
 		displayCodeTypes(ordered);
