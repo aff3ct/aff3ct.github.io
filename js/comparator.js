@@ -20,15 +20,15 @@ const Curves = {
 	toolTipsSelected: [],
 	initialization() {
 		for (let i=0; i<this.max; i++) {
-		this.values.push({ber:[],fer:[]/*,thr:[],befe:[]*/});
-		this.names.push("curve"+String(i));
-		this.id.push(-1);
-		this.disponibility.push(1);
-		this.plotOrder.push(-1);
-		this.toolTipsSelected.push("");
-		this.hidden.push(0);
-	}
-},
+			this.values.push({ber:[],fer:[]});
+			this.names.push("curve"+String(i));
+			this.id.push(-1);
+			this.disponibility.push(1);
+			this.plotOrder.push(-1);
+			this.toolTipsSelected.push("");
+			this.hidden.push(0);
+		}
+	},
 	firstSideAvailable() {//return the id of the first free curve according to the disponibility tab, 4 if it's full
 	if (this.length<=4) return String(this.colorsOrder[this.length]);
 	else return String(this.colorsOrder[this.max-1]);
@@ -209,16 +209,6 @@ function ajaxLoad(url) {
 			}}));
 }
 
-// Changes the way the file is loaded/decoded
-function setMIME(mime) {
-	$.ajaxSetup({
-		beforeSend: function(xhr){
-			if (xhr.overrideMimeType) xhr.overrideMimeType(mime);
-		},
-		isLocal:true
-	});
-}
-
 function parseINIString(data) {
 	var regex = {
 		section: /^\s*\[\s*([^\]]*)\s*\]\s*$/,
@@ -326,6 +316,7 @@ function parseFile(filename, result) {//Return data ready-to-plot
 var ID=0;
 var curFile=0;
 var nFiles=0;
+/**
 function loadFile(file) {
 	var d=$.Deferred();
 	setMIME("text/plain");
@@ -341,10 +332,25 @@ function loadFile(file) {
 		$('#loader .progress-bar').attr('aria-valuenow', percentage).css('width',percentage+"%");
 	});
 	return d.promise();
-}
+}**/
+
+function loadFile(result) {
+	var d=$.Deferred();
+	var filename = encodeURIComponent(result);
+	//console.log("filename="+filename);
+	let o=parseFile(filename, result);
+	d.resolve(o);
+	ID=ID+1;
+		// Progress bar
+		curFile=curFile+1;
+		let percentage=Math.round(((curFile)/nFiles)*100);
+		$("#loader .progress-bar").html(percentage+"%");
+		$('#loader .progress-bar').attr('aria-valuenow', percentage).css('width',percentage+"%");
+		return d.promise();
+	}
 
 // Get the list of files (no dir) of the gitlab repo. Uses multiple requests if number of files exceeds 100.
-function loadFileList(page,maxperpage) {
+/**function loadFileList(page,maxperpage) {
 	var dirlist=$.Deferred();
 	ajaxLoad(
 		GITLAB+"tree?ref="+BRANCH+"&recursive=true&per_page="+maxperpage+"&page="+page
@@ -365,6 +371,48 @@ function loadFileList(page,maxperpage) {
 			});
 	});
 	return dirlist.promise();
+}**/
+
+function loadDatabase() {//Return String that include the whole file
+	const req = new XMLHttpRequest();
+	req.onreadystatechange = function(event) {
+        // XMLHttpRequest.DONE === 4
+        if (this.readyState === XMLHttpRequest.DONE) {
+        	if (this.status === 200) {
+        		console.log("Réponse reçue");//: %s", this.responseText);
+        	} else {
+        		console.log("Status de la réponse: %d (%s)", this.status, this.statusText);
+        	}
+        }
+    };
+
+    req.open('GET', './database/result.txt', false);
+    req.send(null);
+    return req.responseText;
+}
+
+function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** This function return an array with all files as String.
+	let filesTab=[];
+	let file2=txtFile;
+	let strStart="Start_File";
+	let strEnd="End_File";
+	let toto=0;
+	while (file2.indexOf(strStart)>=0) {
+		let start=file2.indexOf(strStart);
+		let end=file2.indexOf(strEnd);
+		let data=file2.slice(start+strStart.length+1, end);
+		filesTab.push(data);
+		/**
+		/title=([a-z0-9A-Z.\-,\/=\s;\+:()]+)\n/mg.test(data);
+		let title=RegExp.$1.replace(/url[a-z0-9\n.\s=\/\-_:]+/, '');
+		title=title.replace(/doi[A-Za-z0-9\n.,\s=\/\-_:]+/, '');
+		title=title.replace(/ci[A-Za-z0-9\n.,\s=\/\-_:]+/, '');
+		**/
+		data=file2.slice(start, end+strEnd.length);
+		file2=file2.replace(data, "DZ");
+		toto++;
+	}
+	return filesTab;
 }
 
 function displaySelector() {
@@ -845,20 +893,18 @@ $(document).ready(function() {
 			'margin-top': (40 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'
 		}).node();
 	});
-	setMIME("application/json");
-	loadFileList(1,100).done(function(files) {
-		nFiles=files.length;
-		$.when.apply(this,files.map(x=>loadFile(x))).done(function() {
-			var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
-			var ordered=orderFiles(files);
-			displayCodeTypes(ordered);
-			document.getElementById("loader").style.display = "none";
-			document.getElementById("curvesTip").style.display = "block";
-			document.getElementById("tips").style.display = "block";
-			document.getElementById("selector").style.display = "block";
-			document.getElementById("comparator").style.display = "block";
-			drawCurvesFromURI(ordered);
-		});
+	let files=parseDatabase(loadDatabase());
+	nFiles=files.length;
+	$.when.apply(this,files.map(x=>loadFile(x))).done(function() {
+		var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
+		var ordered=orderFiles(files);
+		displayCodeTypes(ordered);
+		document.getElementById("loader").style.display = "none";
+		document.getElementById("curvesTip").style.display = "block";
+		document.getElementById("tips").style.display = "block";
+		document.getElementById("selector").style.display = "block";
+		document.getElementById("comparator").style.display = "block";
+		drawCurvesFromURI(ordered);
 	});
 });
 
