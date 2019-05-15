@@ -865,6 +865,14 @@ function drawCurvesFromURI(ordered) {
 	});
 }
 
+function multipleMap(file, name) {
+	let len=file.length;
+	if (name.length>len) len=name.length;
+	for(let i=0; i<len; i++) {
+		loadFile(file[i], name[i]);
+	}
+}
+
 //main
 $(document).ready(function() {
 	Curves.initialization();
@@ -885,9 +893,9 @@ $(document).ready(function() {
 	});
 	let blabla=parseDatabase(loadDatabase());
 	let files=blabla[0];
-	let filename=blabla[1];
+	let filenames=blabla[1];
 	nFiles=files.length;
-	$.when.apply(this,files.map(x=>loadFile(x))).done(function() {
+	$.when.apply(this,multipleMap(files, filenames)).done(function() {
 		var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
 		var ordered=orderFiles(files);
 		displayCodeTypes(ordered);
