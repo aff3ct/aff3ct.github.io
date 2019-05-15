@@ -367,7 +367,6 @@ function loadDatabase() {//Return String that include the whole file
         	}
         }
     };
-
     req.open('GET', './database/result.txt', false);
     req.send(null);
     return req.responseText;
@@ -892,10 +891,14 @@ $(document).ready(function() {
 		}).node();
 	});
 	let blabla=parseDatabase(loadDatabase());
+	let count=[];
 	let files=blabla[0];
 	let filenames=blabla[1];
+	for(let i=0; i<files.length; i++) {
+		count.push(i);
+	}
 	nFiles=files.length;
-	$.when.apply(this,multipleMap(files, filenames)).done(function() {
+	$.when.apply(this,count.map(x=>loadFile(files[x],filenames[x]))).done(function() {
 		var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
 		var ordered=orderFiles(files);
 		displayCodeTypes(ordered);
