@@ -379,7 +379,7 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 function displaySelector() {
 	var selectorTemplate = $('#selectorTemplate').html();
 	Mustache.parse(selectorTemplate);
-	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: ""});
+	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: "", percent: String(80-((120/$("#scurve").height())*100))});
 	$("#comparator #comparatorNext").prepend(selectorRendered);
 }
 
@@ -649,6 +649,7 @@ function hideCurve(idSide) {
 }
 
 function deleteClick(divId, idSide) {
+	//delete a selected curve
 	const plots=["ber","fer"];
 	for (let i=0; i<Curves.max; i++) {
 		if (Curves.hidden[i]==1) showCurve(i);
@@ -688,8 +689,6 @@ function deleteClick(divId, idSide) {
 	}
 }
 window.onload = function() {
-//function importFile() {
-
 	const plots=["ber","fer"/*,"befe","thr"*/];
 	var fileInput = document.getElementById('fileInput');
 	fileInput.addEventListener('change', function(e)
@@ -743,6 +742,7 @@ window.onresize = function() {
 	Plotly.Plots.resize(GD.fer);
     // Plotly.Plots.resize(GD.befe);
     // Plotly.Plots.resize(GD.thr);
+    document.getElementById('id_element').style.height = String(80-((115/$("#scurve").height())*100))+"vh";
 };
 
 function displayFrameSizes(code,files) {
