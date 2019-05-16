@@ -379,7 +379,7 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 function displaySelector() {
 	var selectorTemplate = $('#selectorTemplate').html();
 	Mustache.parse(selectorTemplate);
-	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: "", percent: String(80-((120/$("#scurve").height())*100))});
+	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: "", percent: String(80-((110/$("#scurve").height())*100))});
 	$("#comparator #comparatorNext").prepend(selectorRendered);
 }
 
@@ -392,11 +392,18 @@ function displayFiles(files,framesize) {
 	$("#"+Curves.curveId()+"modalsSelector").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
+		/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(a.ini.metadata.title);
+		console.log(RegExp.$1+"\n"+RegExp.$2+"OK");
 		var metadataTitle=a.ini.metadata.title;
 		var metadataTitleShort=a.ini.metadata.title;
+		var titleEnd="";
 		var codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="", tooltipParam="";
 		if (a.ini.metadata.title.length > 23) {
-			metadataTitleShort=a.ini.metadata.title.substring(0,22)+'... ';
+			if (RegExp.$1=="" || RegExp.$2=="") metadataTitleShort=a.ini.metadata.title.substring(0,22)+'... ';
+			else {
+				metadataTitleShort=RegExp.$1;
+				titleEnd=RegExp.$2;
+			}
 			let nb=Curves.toolTips.length;
 			tooltipParam="id='toolTip"+String(nb)+"' data-tippy-content='"+String(metadataTitle)+"'";
 			Curves.toolTips.push('#toolTip'+String(nb));
@@ -427,6 +434,7 @@ function displayFiles(files,framesize) {
 			tooltip: tooltipParam,
 			aTitleShort: metadataTitleShort,
 			aTitle: metadataTitle,
+			aTitleEnd: titleEnd,
 			aFramesize: a.framesize,
 			filesCodeword: codeWord,
 			aCoderate: a.coderate,
@@ -742,7 +750,7 @@ window.onresize = function() {
 	Plotly.Plots.resize(GD.fer);
     // Plotly.Plots.resize(GD.befe);
     // Plotly.Plots.resize(GD.thr);
-    document.getElementById('id_element').style.height = String(80-((115/$("#scurve").height())*100))+"vh";
+    document.getElementById('subSelector').style.height = String(80-((110/$("#scurve").height())*100))+"vh";
 };
 
 function displayFrameSizes(code,files) {
