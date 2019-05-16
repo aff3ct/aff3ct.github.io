@@ -319,7 +319,6 @@ var nFiles=0;
 function loadFile(result, name) {//Last parsing
 	var d=$.Deferred();
 	var filename = encodeURIComponent(name);
-	//console.log("filename="+filename);
 	let o=parseFile(filename, result);
 	d.resolve(o);
 	ID=ID+1;
@@ -378,20 +377,18 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 	let file2=txtFile;
 	let strStart="Start_File";
 	let strEnd="End_File";
-	let strTxt=".txt";
+	let strTxt=".txt:";
 	//let root="./error_rate_references-master/";
-	let filenameRegex=/.\/error_rate_references\-master\/([A-Za-z_0-9\/\-]+\.txt:)+/g;
 	let filename=[];
-	console.log(file2.indexOf(strTxt));
-	console.log(file2.indexOf(strStart));
-	let i=0;
+	let toto=0;
 	while (file2.indexOf(strStart)>=0) {
 		let start=file2.indexOf(strStart);
 		let end=file2.indexOf(strEnd);
 		let data=file2.slice(start+strStart.length+1, end);
 		filesTab.push(data);
-		filenameRegex.test(file2.slice(0,file2.indexOf(strTxt)+strTxt.length+1));
-		filename.push(RegExp.$1);
+		/.\/error_rate_references\-master\/([A-Za-z_0-9\/\-\+]+[\.txt]+)+:/gm.exec(file2.slice(0,file2.indexOf(strTxt)+strTxt.length+1));
+		let azerty=RegExp.$1;
+		filename.push(azerty);
 		/**
 		/title=([a-z0-9A-Z.\-,\/=\s;\+:()]+)\n/mg.test(data);
 		let title=RegExp.$1.replace(/url[a-z0-9\n.\s=\/\-_:]+/, '');
@@ -400,10 +397,9 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 		**/
 		data=file2.slice(start, end+strEnd.length);
 		file2=file2.replace(data, "DZ");
-		file2=file2.replace(filename[i], "213");
-		i++;
+		file2=file2.replace(azerty+":", "213");
+		toto++;
 	}
-	console.log(file2);
 	return [filesTab, filename];
 }
 
@@ -722,9 +718,7 @@ window.onload = function() {
 //function importFile() {
 
 	const plots=["ber","fer"/*,"befe","thr"*/];
-	var fileInput = document.getElementById('fileInput');/**
-	console.log(fileInput.files[0].type);
-	console.log(fileInput.files[0].name);**/
+	var fileInput = document.getElementById('fileInput');
 	fileInput.addEventListener('change', function(e)
 	{
 		var file = fileInput.files[0];
@@ -894,7 +888,6 @@ $(document).ready(function() {
 	}
 	nFiles=files.length;
 	$.when.apply(this,count.map(x=>loadFile(files[x],filenames[x]))).done(function() {
-		console.log(filenames);
 		var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
 		var ordered=orderFiles(files);
 		displayCodeTypes(ordered);
