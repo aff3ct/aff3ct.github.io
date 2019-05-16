@@ -29,88 +29,90 @@ const Curves = {
 			this.hidden.push(0);
 		}
 	},
-	firstSideAvailable() {//return the id of the first free curve according to the disponibility tab, 4 if it's full
-	if (this.length<=4) return String(this.colorsOrder[this.length]);
-	else return String(this.colorsOrder[this.max-1]);
-},
-firstIndexAvailable() {
-	let i=0;
-	let result=-1;
-	while (i<this.max) {
-		if (this.plotOrder[i]==-1) {
-			result=i;
-			i=this.max;
-		}
-		else {
-			i++;
-		}
-	}
-	return result;
-},
-	displayed(i) {//return the curve name of the i^(th) displayed curve (% Curves.max), "null" if it's empty 
-	if (this.length==0) {
-		return "null";
-	}
-	i=i%this.max;
-	let j=0, k=0;
-	while (k<i) {
-		if (this.disponibility[j]==0) k++;
-		j++;
-		j=j%this.max;
-	}
-	return this.names[(j-1)%this.max];
-},
-addCurve(a) {
-	let i=this.firstSideAvailable();
-	this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
-	this.id[i]=a.id;
-	this.plots.forEach(x => this.values[i][x]=a[x]);
-	if (this.length<this.max) this.length++;
-	this.disponibility[i]=0;
-	this.hidden[i]=0;
-},
-deleteCurve(nb) {
-	if (nb<=this.max) {
-		if (this.disponibility[nb]==0) {
-			let a=this.plotOrder[this.plotOrder.indexOf(Number(nb))];
-			let col=this.colors[this.plotOrder.indexOf(Number(nb))];
-			let colIndex=this.colorsOrder[this.plotOrder.indexOf(Number(nb))];
-			this.colors.splice(this.plotOrder.indexOf(Number(nb)),1);
-			this.referenceColors.splice(this.plotOrder.indexOf(Number(nb)),1);
-			this.colorsOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
-			this.colors.push(col);
-			this.referenceColors.push(col);
-			this.colorsOrder.push(colIndex);
-			this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
-			this.plotOrder.push(-1);
-			this.id[nb]=-1;
-			this.hidden[nb];
-			this.length--;
-			this.values[nb]={ber:[],fer:[]};
-			this.disponibility[nb]=1;
-		}
-		else {
-			console.log("Curve"+String(nb)+" is already available.");
-		}
-	}
-	else {
-		console.log(String(nb)+" > Curves.max (Curves.max = "+String(this.max));
-	}
-},
-curveId() {
-	return "curve"+this.firstSideAvailable();
-},
-updateAddButtons() {
-	Curves.id.forEach(function(x) {
-		Curves.names.forEach(function(y) {
-			if (x!=-1)	{
-				$('#'+y+x).prop('disabled', true);
-				$('#'+y+x).empty();
-				$('#'+y+x).append("-");
+	firstSideAvailable() {
+		//return the id of the first free curve according to the disponibility tab, 4 if it's full
+		if (this.length<=4) return String(this.colorsOrder[this.length]);
+		else return String(this.colorsOrder[this.max-1]);
+	},
+	firstIndexAvailable() {
+		let i=0;
+		let result=-1;
+		while (i<this.max) {
+			if (this.plotOrder[i]==-1) {
+				result=i;
+				i=this.max;
 			}
+			else {
+				i++;
+			}
+		}
+		return result;
+	},
+	displayed(i) {
+		//return the curve name of the i^(th) displayed curve (% Curves.max), "null" if it's empty 
+		if (this.length==0) {
+			return "null";
+		}
+		i=i%this.max;
+		let j=0, k=0;
+		while (k<i) {
+			if (this.disponibility[j]==0) k++;
+			j++;
+			j=j%this.max;
+		}
+		return this.names[(j-1)%this.max];
+	},
+	addCurve(a) {
+		let i=this.firstSideAvailable();
+		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
+		this.id[i]=a.id;
+		this.plots.forEach(x => this.values[i][x]=a[x]);
+		if (this.length<this.max) this.length++;
+		this.disponibility[i]=0;
+		this.hidden[i]=0;
+	},
+	deleteCurve(nb) {
+		if (nb<=this.max) {
+			if (this.disponibility[nb]==0) {
+				let a=this.plotOrder[this.plotOrder.indexOf(Number(nb))];
+				let col=this.colors[this.plotOrder.indexOf(Number(nb))];
+				let colIndex=this.colorsOrder[this.plotOrder.indexOf(Number(nb))];
+				this.colors.splice(this.plotOrder.indexOf(Number(nb)),1);
+				this.referenceColors.splice(this.plotOrder.indexOf(Number(nb)),1);
+				this.colorsOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
+				this.colors.push(col);
+				this.referenceColors.push(col);
+				this.colorsOrder.push(colIndex);
+				this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
+				this.plotOrder.push(-1);
+				this.id[nb]=-1;
+				this.hidden[nb];
+				this.length--;
+				this.values[nb]={ber:[],fer:[]};
+				this.disponibility[nb]=1;
+			}
+			else {
+				console.log("Curve"+String(nb)+" is already available.");
+			}
+		}
+		else {
+			console.log(String(nb)+" > Curves.max (Curves.max = "+String(this.max));
+		}
+	},
+	curveId() {
+		return "curve"+this.firstSideAvailable();
+	},
+	updateAddButtons() {
+		Curves.id.forEach(function(x) {
+			Curves.names.forEach(function(y) {
+				if (x!=-1)	{
+					$('#'+y+x).prop('disabled', true);
+					$('#'+y+x).empty();
+					$('#'+y+x).append("-");
+				}
+			});
 		});
-	});
-}
+	}
 };
 // axis/legend of the 2 plots
 const LT = {
@@ -135,12 +137,6 @@ const LAYOUT= {
 };
 
 var GD={};
-
-// function replaceQueryParam(param, search, newval) {
-//     var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
-//     var query = search.replace(regex, "$1").replace(/&$/, '');
-//     return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
-// }
 
 function updateURLParameter(url, param, paramVal)
 {
@@ -316,43 +312,20 @@ function parseFile(filename, result) {//Return data ready-to-plot
 var ID=0;
 var curFile=0;
 var nFiles=0;
-function loadFile(result, name) {//Last parsing
+function loadFile(result, name) {
+	//Last parsing
 	var d=$.Deferred();
 	var filename = encodeURIComponent(name);
 	let o=parseFile(filename, result);
 	d.resolve(o);
 	ID=ID+1;
-		// Progress bar
-		curFile=curFile+1;
-		let percentage=Math.round(((curFile)/nFiles)*100);
-		$("#loader .progress-bar").html(percentage+"%");
-		$('#loader .progress-bar').attr('aria-valuenow', percentage).css('width',percentage+"%");
-		return d.promise();
-	}
-
-// Get the list of files (no dir) of the gitlab repo. Uses multiple requests if number of files exceeds 100.
-/**function loadFileList(page,maxperpage) {
-	var dirlist=$.Deferred();
-	ajaxLoad(
-		GITLAB+"tree?ref="+BRANCH+"&recursive=true&per_page="+maxperpage+"&page="+page
-	//GITHUB+"git/trees/"+BRANCH+"?recursive=1"
-	).done(function(result) {
-		var dirs=result.filter(x=>x.type=="blob").map(x=>x.path);
-		var supported_ext = ["data", "perf", "dat", "txt"];
-		dirs = dirs.filter(function(x){
-			var filename = encodeURIComponent(x);
-			var ext = filename.split('.').pop();
-			return supported_ext.indexOf(ext) > -1;
-		});
-		if (result.length<maxperpage)
-			dirlist.resolve(dirs);
-		else
-			loadFileList(page+1,maxperpage).done(function(d) {
-				dirlist.resolve(dirs.concat(d));
-			});
-	});
-	return dirlist.promise();
-}**/
+	// Progress bar
+	curFile=curFile+1;
+	let percentage=Math.round(((curFile)/nFiles)*100);
+	$("#loader .progress-bar").html(percentage+"%");
+	$('#loader .progress-bar').attr('aria-valuenow', percentage).css('width',percentage+"%");
+	return d.promise();
+}
 
 function loadDatabase() {//Return String that include the whole file
 	const req = new XMLHttpRequest();
@@ -899,4 +872,3 @@ $(document).ready(function() {
 		drawCurvesFromURI(ordered);
 	});
 });
-
