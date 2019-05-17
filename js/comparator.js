@@ -322,7 +322,7 @@ var curFile=0;
 var nFiles=0;
 function loadFile(result, name) {
 	//Last parsing
-	sleep(10);
+	//sleep(10);
 	var d=$.Deferred();
 	var filename = encodeURIComponent(name);
 	let o=parseFile(filename, result);
@@ -553,7 +553,7 @@ function subAddClick(a, files, framesize, input) {
 	const plots=["ber","fer"/*,"befe","thr"*/];
 	$("#selector .bers .active").removeClass("active");
 	$(this).addClass("active");
-	if (Curves.length==5) console.log("Maximum quantity of curves reached!");
+	if (Curves.length==Curves.max) console.log("Maximum quantity of curves reached!");
 	else {
 		$('#'+Curves.curveId()+a.id).prop('disabled', true);
 		displaySelectedCurve(a);
