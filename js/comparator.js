@@ -2,15 +2,15 @@ const GITLAB="https://gitlab.com/api/v4/projects/10354484/repository/";
 const BRANCH="development";
 
 const Curves = {
-	max: 5,//Colors are defined for only 5 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for more than 5 curves. Sincerely, Me.
+	max: 10,//Colors are defined for only 5 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for more than 5 curves. Sincerely, Me.
 	length: 0,//number of displayed curves
 	disponibility: [],//index==id! disponibility[id]=1 => available && disponibility[id]=0 => unavailable
 	hidden: [],
 	id: [],
 	names: [],//names[id]=name_of_the_curve
 	values: [],//where values of the curve are
-	referenceColors: ['#1f77b4', '#ff7f0e', '#2ea12e', '#d62728', '#9467bd'], // Do not modify this tab!!! Use it as a reference
-	colors: ['#1f77b4', '#ff7f0e', '#2ea12e', '#d62728', '#9467bd'], // Blue, Orange, Green, Red, Purple
+	referenceColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // Do not modify this tab!!! Use it as a reference
+	colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // muted blue //safety orange // cooked asparagus green // brick red // muted purple // chestnut brown // raspberry yogurt pink // middle gray // curry yellow-green // blue-teal
 	colorsOrder: [0, 1, 2, 3, 4], // 0:blue, 1:orange, 2:green, 3:red, 4:purple;
 	plots: ["ber","fer"/*,"befe","thr"*/],
 	currentFile: "",
