@@ -612,11 +612,13 @@ function showCurve(idSide) {
 	const plots=["ber","fer"];
 	Curves.colors.splice(Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]),1);
 	let nb=Curves.plotOrder.indexOf(Number(idSide));
+	let ind=0;
 	for(let i=0; i<=nb; i++) {
 		if (Curves.hidden[i]==1 && (i!=Curves.plotOrder.indexOf(Number(idSide)))) {
-			nb--;
+			ind++;
 		}
 	}
+	nb=nb-ind;
 	Curves.colors.splice(nb,0,Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]);
 	plots.forEach(function(x) {
 		const CURVESBIS=[];
