@@ -2,7 +2,7 @@ const GITLAB="https://gitlab.com/api/v4/projects/10354484/repository/";
 const BRANCH="development";
 
 const Curves = {
-	max: 10,//Colors are defined for only 5 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for more than 5 curves. Sincerely, Me.
+	max: 10,//Colors are defined for only 10 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for more than 10 curves. Sincerely, Me.
 	length: 0,//number of displayed curves
 	disponibility: [],//index==id! disponibility[id]=1 => available && disponibility[id]=0 => unavailable
 	hidden: [],
@@ -32,7 +32,7 @@ const Curves = {
 	},
 	firstSideAvailable() {
 		//return the id of the first free curve according to the disponibility tab, 4 if it's full
-		if (this.length<=4) return String(this.colorsOrder[this.length]);
+		if (this.length<this.max) return String(this.colorsOrder[this.length]);
 		else return String(this.colorsOrder[this.max-1]);
 	},
 	firstIndexAvailable() {
