@@ -307,13 +307,21 @@ function parseFile(filename, result) {//Return data ready-to-plot
 		/*befe:BEFE,thr:THR,*/code:code,file:result,filename:filename};
 		return o;
 	}
-
+	function sleep(milliseconds) {
+		var start = new Date().getTime();
+		for (var i = 0; i < 1e7; i++) {
+			if ((new Date().getTime() - start) > milliseconds){
+				break;
+			}
+		}
+	}
 // Reads and stores one file. Returns the content of the file.
 var ID=0;
 var curFile=0;
 var nFiles=0;
 function loadFile(result, name) {
 	//Last parsing
+	sleep(10);
 	var d=$.Deferred();
 	var filename = encodeURIComponent(name);
 	let o=parseFile(filename, result);
@@ -322,8 +330,11 @@ function loadFile(result, name) {
 	// Progress bar
 	curFile=curFile+1;
 	let percentage=Math.round(((curFile)/nFiles)*100);
+
 	$("#loader .progress-bar").html(percentage+"%");
 	$('#loader .progress-bar').attr('aria-valuenow', percentage).css('width',percentage+"%");
+	document.getElementById("loader").style.display = "none";
+	document.getElementById("loader").style.display = "block";
 	return d.promise();
 }
 
@@ -393,7 +404,6 @@ function displayFiles(files,framesize) {
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
 		/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(a.ini.metadata.title);
-		console.log(RegExp.$1+"\n"+RegExp.$2+"OK");
 		var metadataTitle=a.ini.metadata.title;
 		var metadataTitleShort=a.ini.metadata.title;
 		var titleEnd="";

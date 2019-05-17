@@ -50,17 +50,18 @@
        <div class="card-header p-2" id="heading{{sideNumber}}{{filesI}}">
          <h5 class="mb-0">
            <div class="mb-0 mx-0 form-group row">
-            <div class="col-md-auto px-0">
+            <div class="col-md-auto px-0" style="margin-top:auto;margin-bottom:auto">
               <button type="button" id="{{side}}{{aId}}" class="btn btn-primary">
                 <b>+</b>
               </button>
             </div>
             <div class="col-md-10 px-0">
-              <button class="btn btn-link pr-0" data-toggle="collapse" data-target="#collapse{{sideNumber}}{{filesI}}" aria-expanded="true" aria-controls="collapse{{sideNumber}}{{filesI}}" {{{tooltip}}}>
+              <button class="btn btn-link pr-0 pl-3" data-toggle="collapse" data-target="#collapse{{sideNumber}}{{filesI}}" aria-expanded="true" aria-controls="collapse{{sideNumber}}{{filesI}}" {{{tooltip}}}>
                 {{aTitleShort}}
               </button>
+              <br>
+              <div class="pl-3"><FONT size="2pt">{{aTitleEnd}}</FONT></div>
             </div>
-            <FONT size="3pt">{{aTitleEnd}}</FONT>
           </div>
         </h5>
       </div>
@@ -88,7 +89,7 @@
   </div>
 </div>
 </script>
-
+<!--<FONT size="3pt">{{aTitleEnd}}</FONT>-->
 <script id="cmdSelectorTemplate" type="x-tmpl-mustache">
   <div class="modal fade" id="modalInfoCmd_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
