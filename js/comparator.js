@@ -11,7 +11,7 @@ const Curves = {
 	values: [],//where values of the curve are
 	referenceColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // Do not modify this tab!!! Use it as a reference
 	colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // muted blue //safety orange // cooked asparagus green // brick red // muted purple // chestnut brown // raspberry yogurt pink // middle gray // curry yellow-green // blue-teal
-	colorsOrder: [0, 1, 2, 3, 4], // 0:blue, 1:orange, 2:green, 3:red, 4:purple;
+	colorsOrder: [], // From 0 to 9
 	plots: ["ber","fer"/*,"befe","thr"*/],
 	currentFile: "",
 	currentFrameSize: "",
@@ -23,6 +23,7 @@ const Curves = {
 			this.values.push({ber:[],fer:[]});
 			this.names.push("curve"+String(i));
 			this.id.push(-1);
+			this.colorsOrder.push(i);
 			this.disponibility.push(1);
 			this.plotOrder.push(-1);
 			this.toolTipsSelected.push("");
