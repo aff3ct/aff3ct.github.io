@@ -2,10 +2,10 @@ const GITLAB="https://gitlab.com/api/v4/projects/10354484/repository/";
 const BRANCH="development";
 
 const Curves = {
-	max: 10,//Colors are defined for only 10 curves in this order: Blue,Orange,Green,Red,Purple. I'm not responsible for more than 10 curves. Sincerely, Me.
+	max: 10,//Colors are defined for only 10 curves. I'm not responsible for more curves. Sincerely, Me.
 	length: 0,//number of displayed curves
 	disponibility: [],//index==id! disponibility[id]=1 => available && disponibility[id]=0 => unavailable
-	hidden: [],
+	hidden: [],//1 if hidden else 0
 	id: [],
 	names: [],//names[id]=name_of_the_curve
 	values: [],//where values of the curve are
@@ -322,7 +322,6 @@ var curFile=0;
 var nFiles=0;
 function loadFile(result, name) {
 	//Last parsing
-	//sleep(10);
 	var d=$.Deferred();
 	var filename = encodeURIComponent(name);
 	let o=parseFile(filename, result);
@@ -340,22 +339,37 @@ function loadFile(result, name) {
 }
 
 function loadDatabase() {//Return String that include the whole file
-	const req = new XMLHttpRequest();
-	req.onreadystatechange = function(event) {
-        // XMLHttpRequest.DONE === 4
-        if (this.readyState === XMLHttpRequest.DONE) {
-        	if (this.status === 200) {
-        		console.log("Réponse reçue");//: %s", this.responseText);
-        	} else {
-        		console.log("Status de la réponse: %d (%s)", this.status, this.statusText);
-        	}
-        }
-    };
-    req.open('GET', './database/result.txt', false);
-    req.send(null);
-    return req.responseText;
-}
 
+	$.ajaxSetup({
+		beforeSend: function(xhr){
+			if (xhr.overrideMimeType) xhr.overrideMimeType("text/plain");
+		},
+		isLocal:true
+	});
+	$.ajax("./database/result.txt",{error:function(xhr,status,error) {
+		logger("**Error loading ./database/result.txt\n"+status+" "+error);
+	}}).done(function(data) {
+		let dataFiles=parseDatabase(data);
+		let count=[];
+		let files=dataFiles[0];
+		let filenames=dataFiles[1];
+		for(let i=0; i<files.length; i++) {
+			count.push(i);
+		}
+		nFiles=files.length;
+		$.when.apply(this,count.map(x=>loadFile(files[x],filenames[x]))).done(function() {
+			var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
+			var ordered=orderFiles(files);
+			displayCodeTypes(ordered);
+			document.getElementById("loader").style.display = "none";
+			document.getElementById("curvesTip").style.display = "block";
+			document.getElementById("tips").style.display = "block";
+			document.getElementById("selector").style.display = "block";
+			document.getElementById("comparator").style.display = "block";
+			drawCurvesFromURI(ordered);
+		});
+	});
+}
 function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** This function return an array with all files as String.
 	//.\/error_rate_references\-master\/([A-Za-z_0-9\/\-]+\.txt:)\n\nStart_File+/g;
 	let filesTab=[];
@@ -395,7 +409,7 @@ function displaySelector() {
 	$("#comparator #comparatorNext").prepend(selectorRendered);
 }
 
-function displayFiles(files,framesize) {
+function displayFiles(files,framesize) {//Display files that can be selected
 	Curves.currentFile=files;
 	Curves.toolTips=[];
 	Curves.currentFrameSize=framesize;
@@ -477,7 +491,7 @@ function displayFiles(files,framesize) {
 	$('[data-toggle="tooltip"]').tooltip();
 }
 
-function displaySelectedCurve(a) {
+function displaySelectedCurve(a) {//Display the current selected curve on the right
 	var metadataTitle=a.ini.metadata.title;
 	var codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="", metadataTitleShort=a.ini.metadata.title, nb=-1, allFunc="";
 	//Curves.names.forEach(x => allFunc+="deleteClick('delete', '"+x+"'),");
@@ -588,16 +602,16 @@ function subAddClick(a, files, framesize, input) {
 }
 
 // Click listener for curves list
-function addClick(a, files, framesize, input) {
+function addClick(a, files, framesize, input) {//Plot the curve
 	$('#'+Curves.curveId()+a.id).on('click', function() {
 		subAddClick(a, files, framesize, 0);
 		// track the click with Google Analytics
-		/**ga('send', {
+		ga('send', {
 			hitType:       'event',
 			eventCategory: 'BER/FER Comparator',
 			eventAction:   'click',
 			eventLabel:    decodeURIComponent(a.filename)
-		});**/
+		});
 	});
 	if (input==1) {
 		subAddClick(a, files, framesize, input);
@@ -669,7 +683,7 @@ function hideCurve(idSide) {
 	$("#delete"+String(idSide)).append(showRendered);
 }
 
-function deleteClick(divId, idSide) {
+function deleteClick(divId, idSide) {//unplot a curve
 	//delete a selected curve
 	const plots=["ber","fer"];
 	for (let i=0; i<Curves.max; i++) {
@@ -695,9 +709,8 @@ function deleteClick(divId, idSide) {
 		}
 		uri = updateURLParameter(uri,idSide,"");
 		window.history.replaceState({},"aff3ct.github.io",uri);
-		displayFiles(Curves.currentFile,Curves.currentFrameSize);
 		Curves.updateAddButtons();
-		$("#ss"+idSide).remove();
+		$("#s"+idSide).remove();
 		plots.forEach(function(x) {
 			const CURVESBIS=[];
 			for (let l=0; l<Curves.max; l++) {
@@ -709,12 +722,10 @@ function deleteClick(divId, idSide) {
 		});
 	}
 }
-window.onload = function() {
-	const plots=["ber","fer"/*,"befe","thr"*/];
-	var fileInput = document.getElementById('fileInput');
-	fileInput.addEventListener('change', function(e)
-	{
-		var file = fileInput.files[0];
+
+function loadUniqueFile(fileInput, i) {//Load a file from input
+	if (i<fileInput.files.length) {
+		var file = fileInput.files[i];
 		if (file.type=="text/plain")
 		{
 			$("#fileDisplayArea").empty();
@@ -726,16 +737,27 @@ window.onload = function() {
 					var filename = encodeURIComponent(file);
 					let o=parseFile(filename, reader.result);
 					addClick(o, file, o.framesize, 1);
+					loadUniqueFile(fileInput, i+1);
 				};
 			}
 			else {
-				$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">Too many curves displayed</span>');//.<br>Please Remove one of them<br>and try again.</span>');
+				$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">Too many curves displayed</span>');
 			}
 		}
 		else
 		{
 			$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">File not supported!</span>');
+			loadUniqueFile(fileInput, i+1);
 		}
+	}
+}
+
+window.onload = function() {
+	const plots=["ber","fer"/*,"befe","thr"*/];
+	var fileInput = document.getElementById('fileInput');
+	fileInput.addEventListener('change', function(e)
+	{
+		loadUniqueFile(fileInput, 0);
 	});
 }
 
@@ -873,23 +895,5 @@ $(document).ready(function() {
 			'margin-top': (40 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'
 		}).node();
 	});
-	let blabla=parseDatabase(loadDatabase());
-	let count=[];
-	let files=blabla[0];
-	let filenames=blabla[1];
-	for(let i=0; i<files.length; i++) {
-		count.push(i);
-	}
-	nFiles=files.length;
-	$.when.apply(this,count.map(x=>loadFile(files[x],filenames[x]))).done(function() {
-		var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
-		var ordered=orderFiles(files);
-		displayCodeTypes(ordered);
-		document.getElementById("loader").style.display = "none";
-		document.getElementById("curvesTip").style.display = "block";
-		document.getElementById("tips").style.display = "block";
-		document.getElementById("selector").style.display = "block";
-		document.getElementById("comparator").style.display = "block";
-		drawCurvesFromURI(ordered);
-	});
+	loadDatabase();
 });
