@@ -709,7 +709,7 @@ function deleteClick(divId, idSide) {//unplot a curve
 		}
 		uri = updateURLParameter(uri,idSide,"");
 		window.history.replaceState({},"aff3ct.github.io",uri);
-		displayFiles(Curves.currentFile, Curves.currentFrameSize); 
+		if (Curves.currentFile!= "") displayFiles(Curves.currentFile, Curves.currentFrameSize); 
 		Curves.updateAddButtons();
 		$("#s"+idSide).remove();
 		plots.forEach(function(x) {
