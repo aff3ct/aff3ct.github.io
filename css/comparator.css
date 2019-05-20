@@ -1,41 +1,100 @@
-.right .bers .list-group-item.active {
+/**.scurve .card:nth-of-type(5)
+{
+  background-color:#9467BD;
+  border-color:#9467BD;
+  color:#fff !important;
+}
+
+.scurve .card:nth-of-type(4)
+{
+  background-color:#D62728;
+  border-color:#D62728;
+  color:#fff !important;
+}
+
+.scurve .card:nth-of-type(3)
+{
+  background-color:#2EA12E;
+  border-color:#2EA12E;
+  color:#fff !important;
+}
+
+.scurve .card:nth-of-type(2)
+{
   background-color:#FF7F0E;
   border-color:#FF7F0E;
-}
-
-.right .list-group-item.active .text-muted
-{
   color:#fff !important;
 }
 
-.right .list-group-item.active a
+.scurve .card:nth-of-type(1)
 {
+  background-color:#1F77B4;
+  border-color:#1F77B4;
+  color:#fff !important;
+}**/
+#scurve9 :nth-child(0n+1)
+{
+  background-color:#17BECF;
   color:#fff !important;
 }
 
-.right .list-group-item.active a:hover
+#scurve8 :nth-child(0n+1)
 {
-  color:#ddd !important;
-}
-
-.left .list-group-item.active .text-muted
-{
+  background-color:#BCBD22;
   color:#fff !important;
 }
 
-.left .list-group-item.active a
+#scurve7 :nth-child(0n+1)
 {
+  background-color:#7F7F7F;
   color:#fff !important;
 }
 
-.left .list-group-item.active a:hover
+#scurve6 :nth-child(0n+1)
 {
-  color:#ddd !important;
+  background-color:#E377C2;
+  color:#fff !important;
+}
+
+#scurve5 :nth-child(0n+1)
+{
+  background-color:#8C564B;
+  color:#fff !important;
+}
+
+#scurve4 :nth-child(0n+1)
+{
+  background-color:#9467BD;
+  color:#fff !important;
+}
+
+#scurve3 :nth-child(0n+1)
+{
+  background-color:#D62728;
+  color:#fff !important;
+}
+
+#scurve2 :nth-child(0n+1)
+{
+  background-color:#2CA02C;
+  color:#fff !important;
+}
+
+#scurve1 :nth-child(0n+1)
+{
+  background-color:#FF7F0E;
+  color:#fff !important;
+}
+
+#scurve0 :nth-child(0n+1)
+{
+  background-color:#1F77B4;
+  color:#fff !important;
 }
 
 .tt
 {
-  border-bottom: 1px dotted #aaa;
+  border-bottom: 1px dotted #ccc;
   display: inline-block;
 }
 
@@ -93,6 +152,32 @@
 
 .curveIcon {
   margin-left: 10px;
+}
+
+/* Selector */
+
+.selector-group > .row {
+  overflow-x: auto;
+  white-space: nowrap;
+  display: block;
+  flex-wrap: nowrap;
+}
+
+.selector-group > .row > .col-3 {
+  display: inline-block;
+  float: none;
+}
+
+.comparator-group > .row {
+  overflow-x: hidden;
+  white-space: nowrap;
+  display: block;
+  flex-wrap: nowrap;
+}
+
+.comparator-group > .row > .col-6 {
+  display: inline-block;
+  float: none;
 }
 
 /* ----------------------------------------------------------------- Terminal */
