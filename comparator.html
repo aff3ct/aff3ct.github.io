@@ -19,6 +19,7 @@
   <script src="./js/lib/plotly-1.37.1.min.js"></script>
   <script src="./js/lib/mustache-3.0.1.js"></script>
   <script src="./js/lib/tippy-4.2.1.min.js"></script>
+  <!--
   <script> /* Google Analytics */
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -26,9 +27,9 @@
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-78973823-1', 'auto');
   ga('send', 'pageview');
-</script>
+</script>-->
 <script>
-      /**
+      /*
       * Function that tracks a click on an outbound link in Analytics.
       * This function takes a valid URL string as an argument, and uses that URL string
       * as the event label. Setting the transport method to 'beacon' lets the hit be sent
@@ -183,20 +184,35 @@
     <div class="form-group row">
       <label for="codetype{{selectorCurveId}}" class="col-sm-6">Type of code</label>
       <div class="col-sm-6">
-        <select class="form-control codetype" id="codetype{{selectorCurveId}}">
-          <option>Select code</option>
-        </select>
+        <div class="dropdown" id="codetype{{selectorCurveId}}">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select code
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
+            <form class="px-3 py-2" style="height:30vh;overflow-x:hidden;overflow-y:auto">
+              <div class="form-check codetype"></div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-group row">
       <label for="size{{selectorCurveId}}" class="col-sm-6">Frame size (N)</label>
       <div class="col-sm-6">
-        <select class="form-control size" id="size{{selectorCurveId}}">
-          <option>Select size</option>
-        </select>
+        <div class="dropdown" id="size{{selectorCurveId}}">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownSizeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select size
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownSizeButton">
+            <form class="px-3 py-2">
+              <div class="form-check size" style="height:30vh;overflow-x:hidden;overflow-y:auto"></div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="applySelections()">Apply selections</button>
   <div class="mb-4"></div>
   <div id="subSelector" class="p-3 mb-3 bg-white rounded" style="height:{{percent}}vh;overflow-x:hidden;overflow-y:auto;padding:0rem !important">
     <ul class="list-group bers">
@@ -220,7 +236,7 @@
             <button type="button" class="close" aria-label="Close" onclick="deleteClick('delete', '{{side}}')">
               <span aria-hidden="true">&times;</span>
             </button>
-            <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-sm" onclick="hideCurve('{{sideNumber}}')">
+            <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-md pl-0" onclick="hideCurve('{{sideNumber}}')">
               <i class="fas fa-eye-slash"></i>
             </button> 
           </div>
@@ -260,13 +276,13 @@
 </script>
 
 <script id="showTemplate" type="x-tmpl-mustache">
-  <button id="show{{sideNumber}}" type="button" class="btn btn-sm btn-link" onclick="showCurve('{{sideNumber}}')">
+  <button id="show{{sideNumber}}" type="button" class="btn btn-md btn-link pl-0" onclick="showCurve('{{sideNumber}}')">
     <i class="fas fa-eye"></i>
   </button> 
 </script>
 
 <script id="hideTemplate" type="x-tmpl-mustache">
-  <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-sm" onclick="hideCurve('{{sideNumber}}')">
+  <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-md pl-0" onclick="hideCurve('{{sideNumber}}')">
     <i class="fas fa-eye-slash"></i>
   </button> 
 </script>
@@ -316,31 +332,31 @@
         <div class="progress">
           <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
         </div>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="container marketing" id="comparator" style="height:80vh;overflow-y:hidden;display:none;">
-  <div class="row" id="comparatorNext">
-    <div class="col-6 p-0">
-      <div id="curvesTip" style="display:none">
-       <p id="tips" class="text-center">
-         <strong>Please select up to 10 curves<br/>on the left blue buttons<br/>and delete them on the right.<br/>You can plot your own curve<br/>by loading your Aff3ct text file.</strong>
-       </p>
+  <div class="container marketing" id="comparator" style="height:80vh;overflow-y:hidden;display:none;">
+    <div class="row" id="comparatorNext">
+      <div class="col-6 p-0">
+        <div id="curvesTip" style="display:none">
+         <p id="tips" class="text-center">
+           <strong>Please select up to 10 curves<br/>on the left blue buttons<br/>and delete them on the right.<br/>You can plot your own curve<br/>by loading your AFF3CT text file.</strong>
+         </p>
+       </div>
+       <div id="plotber"></div>
+       <div id="plotfer"></div><!-- <div class="col-3 p-0"><div id="plotber"></div><div id="plotbefe"></div></div><div class="col-3 p-0"><div id="plotfer"></div><div id="plotthr"></div></div> -->
      </div>
-     <div id="plotber"></div>
-     <div id="plotfer"></div><!-- <div class="col-3 p-0"><div id="plotber"></div><div id="plotbefe"></div></div><div class="col-3 p-0"><div id="plotfer"></div><div id="plotthr"></div></div> -->
-   </div>
 
 
-   <div class="col-3 p-1 scurve" id="scurve" style="height:80vh;overflow-y:auto;overflow-x:hidden">
-    <div id="sAccordion"></div>
-    <div id="input">
-      <input id="fileInput" multiple="multiple" type="file">
-      <span id="fileDisplayArea"></span>
+     <div class="col-3 p-1 scurve" id="scurve" style="height:80vh;overflow-y:auto;overflow-x:hidden">
+      <div id="sAccordion"></div>
+      <div id="input">
+        <input id="fileInput" multiple="multiple" type="file">
+        <span id="fileDisplayArea"></span>
+      </div>
     </div>
   </div>
-</div>
 </div>
 <div id="curve0modals"></div>
 <div id="curve1modals"></div>

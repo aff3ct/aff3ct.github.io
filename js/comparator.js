@@ -18,6 +18,9 @@ const Curves = {
 	plotOrder: [],
 	toolTips: [],
 	toolTipsSelected: [],
+	selectedCodes: [],
+	selectedSizes: [],
+	files: [],
 	initialization() {
 		for (let i=0; i<this.max; i++) {
 			this.values.push({ber:[],fer:[]});
@@ -359,14 +362,15 @@ function loadDatabase() {//Return String that include the whole file
 		nFiles=files.length;
 		$.when.apply(this,count.map(x=>loadFile(files[x],filenames[x]))).done(function() {
 			var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
-			var ordered=orderFiles(files);
-			displayCodeTypes(ordered);
+			Curves.files=orderFiles(files);
+			displayCodeTypes();
+			displayFrameSizes();
 			document.getElementById("loader").style.display = "none";
 			document.getElementById("curvesTip").style.display = "block";
 			document.getElementById("tips").style.display = "block";
 			document.getElementById("selector").style.display = "block";
 			document.getElementById("comparator").style.display = "block";
-			drawCurvesFromURI(ordered);
+			drawCurvesFromURI();
 		});
 	});
 }
@@ -405,16 +409,17 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 function displaySelector() {
 	var selectorTemplate = $('#selectorTemplate').html();
 	Mustache.parse(selectorTemplate);
-	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: "", percent: String(80-((110/$("#scurve").height())*100))});
+	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: "", percent: String(80-((158/$("#scurve").height())*100))});
 	$("#comparator #comparatorNext").prepend(selectorRendered);
 }
 
-function displayFiles(files,framesize) {//Display files that can be selected
-	Curves.currentFile=files;
+function displayFiles(code,framesize) {//Display files that can be selected
+	let files=Curves.files[code];
+	Curves.currentFile=code;
 	Curves.toolTips=[];
 	Curves.currentFrameSize=framesize;
 	var f=files.filter(x=>x.framesize==framesize);
-	$("#selector .bers #accordion").empty();
+	//$("#selector .bers #accordion").empty();
 	$("#"+Curves.curveId()+"modalsSelector").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
@@ -486,7 +491,7 @@ function displayFiles(files,framesize) {//Display files that can be selected
 			});
 			$("#curvemodalsSelector").append(fileRendered1);
 		}
-		addClick(a,files,framesize,0);
+		addClick(a,code,framesize,0);
 	}
 	$('[data-toggle="tooltip"]').tooltip();
 }
@@ -555,7 +560,8 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 	}
 }
 
-function subAddClick(a, files, framesize, input) {
+function subAddClick(a, code, framesize, input) {
+	let files=Curves.files[code];
 	if (Curves.length==0) {
 		var deleteAllTemplate = $('#deleteAllTemplate').html();
 		Mustache.parse(deleteAllTemplate);
@@ -582,12 +588,13 @@ function subAddClick(a, files, framesize, input) {
 			}
 			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),a.filename);
 			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.file)));
-			window.history.replaceState({},"aff3ct.github.io",uri);
+			//window.history.replaceState({},"aff3ct.github.io",uri);
 		//}
 		Curves.addCurve(a);
 		if (input==0) {
 			Curves.updateAddButtons();
-			displayFiles(files,framesize);
+			$("#selector .bers #accordion").empty();
+			applySelections();
 		}
 		plots.forEach(function(x) {
 			const CURVESBIS=[];
@@ -602,19 +609,19 @@ function subAddClick(a, files, framesize, input) {
 }
 
 // Click listener for curves list
-function addClick(a, files, framesize, input) {//Plot the curve
+function addClick(a, code, framesize, input) {//Plot the curve
 	$('#'+Curves.curveId()+a.id).on('click', function() {
-		subAddClick(a, files, framesize, 0);
+		subAddClick(a, code, framesize, 0);
 		// track the click with Google Analytics
-		ga('send', {
+		/**ga('send', {
 			hitType:       'event',
 			eventCategory: 'BER/FER Comparator',
 			eventAction:   'click',
 			eventLabel:    decodeURIComponent(a.filename)
-		});
+		});**/
 	});
 	if (input==1) {
-		subAddClick(a, files, framesize, input);
+		subAddClick(a, code, framesize, input);
 	}
 }
 
@@ -708,8 +715,11 @@ function deleteClick(divId, idSide) {//unplot a curve
 			else uri=uri+"&curve"+String(i)+"="+cval[i];
 		}
 		uri = updateURLParameter(uri,idSide,"");
-		window.history.replaceState({},"aff3ct.github.io",uri);
-		if (Curves.currentFile!= "") displayFiles(Curves.currentFile, Curves.currentFrameSize); 
+		//window.history.replaceState({},"aff3ct.github.io",uri);
+		if (Curves.currentFile!= "") {
+			$("#selector .bers #accordion").empty();
+			applySelections();
+		} 
 		Curves.updateAddButtons();
 		$("#s"+idSide).remove();
 		plots.forEach(function(x) {
@@ -762,23 +772,76 @@ window.onload = function() {
 	});
 }
 
-/* Interaction with the form */
-function displayCodeTypes(files) {
-	$(".codetype").empty();
-	let selected="selected='selected'";
-	$(".codetype").append("<option " + selected + ">Select code</option>");
-	displayFrameSizes("Select code",files);
-	var j=0;
-	for (var i in files)
-	{
-		$(".codetype").append("<option>"+i+"</option>");
-		j++;
+function applySelections() {
+	$("#accordion").empty();
+	if (Curves.selectedSizes.length==0 && Curves.selectedCodes.length==0) {
+		for (var code in Curves.files) {
+			let p={};
+			for (var i=0;i<(Curves.files[code]).length;i++) {
+				var f=Curves.files[code][i];
+				p[f.framesize]=true;
+			}
+			for (var framesize in p) {
+				displayFiles(code, framesize);
+			}
+		}
 	}
+	else if (Curves.selectedSizes.length==0) {
+		Curves.selectedCodes.forEach(function (code) {
+			let p={};
+			for (var i=0;i<(Curves.files[code]).length;i++) {
+				var f=Curves.files[code][i];
+				p[f.framesize]=true;
+			}
+			for (var framesize in p) {
+				displayFiles(code, framesize);
+			}
+		});
+	}
+	else if (Curves.selectedCodes.length==0) {
+		for (var code in Curves.files) {
+			Curves.selectedSizes.forEach(framesize => displayFiles(code, framesize));
+		}
+	}
+	else {
+		Curves.selectedCodes.forEach(code => Curves.selectedSizes.forEach(framesize => displayFiles(code, framesize)));
+	}
+}
 
-	$(".codetype").off();
-	$(".selector .codetype").change(function() {
-		displayFrameSizes($(this).val(),files);
-	});
+function updateSelectedCodes(str) {
+	if (document.getElementById(str.title).checked == true) {
+		Curves.selectedCodes.push(str.title);
+	}
+	else {
+		Curves.selectedCodes.splice(Curves.selectedCodes.indexOf(str.title), 1);
+	}
+	displayFrameSizes();
+	/**
+	if (Curves.selectedCodes.length==0) {
+		$("#accordion").empty();
+		displayFrameSizes("Select code");
+	}
+	else {
+		$("#selector .bers #accordion").empty();
+		Curves.selectedCodes.forEach(x => displayFrameSizes(x));
+	}**/
+}
+
+function updateSelectedSizes(str) {
+	if (document.getElementById(String(str)).checked == true) {
+		Curves.selectedSizes.push(str);
+	}
+	else {
+		Curves.selectedSizes.splice(Curves.selectedSizes.indexOf(str), 1);
+	}/**
+	if (Curves.selectedSizes.length==0) {
+		$("#accordion").empty();
+		//displayFrameSizes("Select code");
+	}
+	else {
+		$("#selector .bers #accordion").empty();
+		Curves.selectedCodes.forEach(x => Curves.selectedSizes.forEach(y => displayFiles(x,y)));
+	}**/
 }
 
 window.onresize = function() {
@@ -786,34 +849,64 @@ window.onresize = function() {
 	Plotly.Plots.resize(GD.fer);
     // Plotly.Plots.resize(GD.befe);
     // Plotly.Plots.resize(GD.thr);
-    document.getElementById('subSelector').style.height = String(80-((110/$("#scurve").height())*100))+"vh";
+    document.getElementById('subSelector').style.height = String(80-((158/$("#scurve").height())*100))+"vh";
 };
 
-function displayFrameSizes(code,files) {
-	if (code!="Select code") {
-		var p={};
-		var j=0;
+/* Interaction with the form */
+function displayCodeTypes() {
+	let files=Curves.files;
+	$(".codetype").empty();
+	var j=0;
+	for (var i in files)
+	{
+		if (j!=0) $(".codetype").append('<br>');
+		$(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'">'+i+' ('+files[i].length+')'+'</label>');
+		j++;
+	}
+	$(".codetype").off();/**
+	$(".selector .codetype").change(function() {
+		displayFrameSizes($(this).val());
+	});**/
+}
+
+function displayFrameSizes() {
+	let files=Curves.files;
+	var p={};
+	var j=0;
+	for (var code in files) {
 		for (var i=0;i<(files[code]).length;i++) {
 			var f=files[code][i];
-			p[f.framesize]=true;
+			if (p[f.framesize]>=0) p[f.framesize]++;
+			else p[f.framesize]=1;
 		}
-		$("#selector .size").empty();
-		for (var i in p){
-			if (j==0) j=i;
-			$("#selector .size").append("<option>"+i+"</option>");
-		}
-		displayFiles(files[code],j);
-		$("#selector .size").off();
-		$("#selector .size").change(function() {
-			displayFiles(files[code],$(this).val());
-		});
 	}
-	else {
+	$("#selector .size").empty();
+	for (var i in p){
+		if (j!=0) $(".size").append('<br>');
+		else j=i;
+		let indicator=0;
+		if (Curves.selectedCodes.length!=0) {
+			Curves.selectedCodes.forEach(function(y) {
+				let f=files[y].filter(x=>x.framesize==i);
+				if (f.length>0) indicator++;
+			});
+		}/**
+		else indicator=1;
+		if (indicator==0) $("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')" disabled><label class="form-check-label" for="'+i+'" title="'+i+'" disabled>'+i+' (0)'+'</label>');
+		else **/$("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'">'+i+' ('+p[i]+')'+'</label>');
+
+	}
+	$("#selector .size").off();
+		/**$("#selector .size").change(function() {
+			displayFiles(code,$(this).val());
+		});**/
+
+	/**else {
 		$("#selector .bers #accordion").empty();
 		$("#"+Curves.curveId()+"modalsSelector").empty();
 		$("#selector .size").empty();
 		$("#selector .size").append("<option>Select size</option>");
-	}
+	}**/
 }
 
 // files: array of files.
@@ -840,7 +933,8 @@ function selectFile(files,filename)
 	return null;
 }
 
-function drawCurvesFromURI(ordered) {
+function drawCurvesFromURI() {
+	let ordered=Curves.files;
 	Curves.names.forEach(function(idSide) {
 		let filename=findGetParameter(idSide);
 		if (filename) {
