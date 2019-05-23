@@ -414,7 +414,7 @@ function displaySelector() {
 
 	var stepSlider = document.getElementById('slider-step');
 	noUiSlider.create(stepSlider, {
-		start: [0.25,0.75],
+		start: [0,1],
 		connect: true,
 		step: 0.01,
 		range: {
@@ -425,19 +425,11 @@ function displaySelector() {
 	$("#slider-step").append("<div class='my-3'><span id='slider-step-value'></span></div>")
 	var stepSliderValueElement = document.getElementById('slider-step-value');
 	stepSlider.noUiSlider.on('update', function (values) {
+		displayFrameSizes();
+		displayCodeTypes();
 		stepSliderValueElement.innerHTML = "Values: ";
 		stepSliderValueElement.innerHTML += values.join(' - ');
 	});
-
-
-/**
-	var stepSliderValueElement = document.getElementById('slider-step-value');
-
-	stepSlider.noUiSlider.on('update', function (values, handle) {
-		stepSliderValueElement.innerHTML = values[handle];
-	});
-	**/
-
 }
 
 function displayFiles(code,framesize) {//Display files that can be selected
@@ -619,7 +611,7 @@ function subAddClick(a, code, framesize, input) {
 			}
 			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),a.filename);
 			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.file)));
-			//window.history.replaceState({},"aff3ct.github.io",uri);
+			window.history.replaceState({},"aff3ct.github.io",uri);
 		//}
 		Curves.addCurve(a);
 		if (input==0) {
@@ -746,7 +738,7 @@ function deleteClick(divId, idSide) {//unplot a curve
 			else uri=uri+"&curve"+String(i)+"="+cval[i];
 		}
 		uri = updateURLParameter(uri,idSide,"");
-		//window.history.replaceState({},"aff3ct.github.io",uri);
+		window.history.replaceState({},"aff3ct.github.io",uri);
 		if (Curves.currentFile!= "") {
 			$("#selector .bers #accordion").empty();
 			applySelections();
@@ -847,15 +839,6 @@ function updateSelectedCodes(str) {
 		Curves.selectedCodes.splice(Curves.selectedCodes.indexOf(str.title), 1);
 	}
 	displayFrameSizes();
-	/**
-	if (Curves.selectedCodes.length==0) {
-		$("#accordion").empty();
-		displayFrameSizes("Select code");
-	}
-	else {
-		$("#selector .bers #accordion").empty();
-		Curves.selectedCodes.forEach(x => displayFrameSizes(x));
-	}**/
 }
 
 function updateSelectedSizes(str) {
@@ -866,14 +849,6 @@ function updateSelectedSizes(str) {
 		Curves.selectedSizes.splice(Curves.selectedSizes.indexOf(str), 1);
 	}
 	displayCodeTypes();
-	/**if (Curves.selectedSizes.length==0) {
-		$("#accordion").empty();
-		//displayFrameSizes("Select code");
-	}
-	else {
-		$("#selector .bers #accordion").empty();
-		Curves.selectedCodes.forEach(x => Curves.selectedSizes.forEach(y => displayFiles(x,y)));
-	}**/
 }
 
 window.onresize = function() {
@@ -893,10 +868,12 @@ function displayCodeTypes() {
 	{
 		if (j!=0) $(".codetype").append('<br>');
 		let indicator=0;
+		let stepSlider = document.getElementById('slider-step');
+		let coderate=stepSlider.noUiSlider.get();
 		if (Curves.selectedSizes.length!=0) {
 			Curves.selectedSizes.forEach(function(x) {
 				files[i].forEach(function(z) {
-					if (z.framesize==x) {
+					if (z.framesize==x && coderate[0]<=z.coderate && z.coderate<=coderate[1]) {
 						indicator++;
 					}
 				});
@@ -904,7 +881,8 @@ function displayCodeTypes() {
 		}
 		else indicator=1;
 		if (indicator==0) $(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')" disabled><label class="form-check-label" for="'+i+'" title="'+i+'" disabled>'+i+' ('+files[i].length+')'+'</label>');
-		else $(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+files[i].length+')'+'</font></label>');
+		else if (Curves.selectedSizes.length==0) $(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+files[i].length+')'+'</font></label>');
+		else $(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+indicator+')'+'</font></label>');
 		j++;
 	}
 	$(".codetype").off();
@@ -912,9 +890,6 @@ function displayCodeTypes() {
 		if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
 		else document.getElementById(x).checked = false;
 	});
-	/**$(".selector .codetype").change(function() {
-		displayFrameSizes($(this).val());
-	});**/
 }
 
 function displayFrameSizes() {
@@ -933,31 +908,30 @@ function displayFrameSizes() {
 		if (j!=0) $(".size").append('<br>');
 		else j=i;
 		let indicator=0;
+		let stepSlider = document.getElementById('slider-step');
+		let coderate=stepSlider.noUiSlider.get();
 		if (Curves.selectedCodes.length!=0) {
 			Curves.selectedCodes.forEach(function(y) {
 				let f=files[y].filter(x=>x.framesize==i);
-				if (f.length>0) indicator++;
+				if (f.length>0) {
+					f.forEach(function(z) {
+						if (coderate[0]<=z.coderate && z.coderate<=coderate[1]) {
+							indicator++;
+						}
+					});
+				}
 			});
 		}
 		else indicator=1;
 		if (indicator==0) $("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')" disabled><label class="form-check-label" for="'+i+'" title="'+i+'" disabled>'+i+' (0)'+'</label>');
-		else $("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+p[i]+')'+'</font></label>');
+		else if (Curves.selectedCodes.length==0) $("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+p[i]+')'+'</font></label>');
+		else $("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+indicator+')'+'</font></label>');
 	}
 	Curves.selectedSizes.forEach(function(x) {
 		if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
 		else document.getElementById(x).checked = false;
 	});
 	$("#selector .size").off();
-		/**$("#selector .size").change(function() {
-			displayFiles(code,$(this).val());
-		});**/
-
-	/**else {
-		$("#selector .bers #accordion").empty();
-		$("#"+Curves.curveId()+"modalsSelector").empty();
-		$("#selector .size").empty();
-		$("#selector .size").append("<option>Select size</option>");
-	}**/
 }
 
 // files: array of files.
