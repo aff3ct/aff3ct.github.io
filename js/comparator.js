@@ -409,8 +409,35 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 function displaySelector() {
 	var selectorTemplate = $('#selectorTemplate').html();
 	Mustache.parse(selectorTemplate);
-	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: "", percent: String(80-((158/$("#scurve").height())*100))});
+	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: "", percent: String(80-(((300)/$("#scurve").height())*100))});
 	$("#comparator #comparatorNext").prepend(selectorRendered);
+
+	var stepSlider = document.getElementById('slider-step');
+	noUiSlider.create(stepSlider, {
+		start: [0.25,0.75],
+		connect: true,
+		step: 0.01,
+		range: {
+			'min': [0],
+			'max': [1]
+		}
+	});
+	$("#slider-step").append("<div class='my-3'><span id='slider-step-value'></span></div>")
+	var stepSliderValueElement = document.getElementById('slider-step-value');
+	stepSlider.noUiSlider.on('update', function (values) {
+		stepSliderValueElement.innerHTML = "Values: ";
+		stepSliderValueElement.innerHTML += values.join(' - ');
+	});
+
+
+/**
+	var stepSliderValueElement = document.getElementById('slider-step-value');
+
+	stepSlider.noUiSlider.on('update', function (values, handle) {
+		stepSliderValueElement.innerHTML = values[handle];
+	});
+	**/
+
 }
 
 function displayFiles(code,framesize) {//Display files that can be selected
@@ -422,76 +449,80 @@ function displayFiles(code,framesize) {//Display files that can be selected
 	//$("#selector .bers #accordion").empty();
 	$("#"+Curves.curveId()+"modalsSelector").empty();
 	for (var i=0;i<f.length;i++) {
+		let stepSlider = document.getElementById('slider-step');
+		let coderate=stepSlider.noUiSlider.get();
 		var a=f[i];
-		/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(a.ini.metadata.title);
-		var metadataTitle=a.ini.metadata.title;
-		var metadataTitleShort=a.ini.metadata.title;
-		var titleEnd="";
-		var codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="", tooltipParam="";
-		if (a.ini.metadata.title.length > 23) {
-			if (RegExp.$1=="" || RegExp.$2=="") metadataTitleShort=a.ini.metadata.title.substring(0,22)+'... ';
-			else {
-				metadataTitleShort=RegExp.$1;
-				titleEnd=RegExp.$2;
+		if (coderate[0]<=a.coderate && a.coderate<=coderate[1]) {
+			/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(a.ini.metadata.title);
+			var metadataTitle=a.ini.metadata.title;
+			var metadataTitleShort=a.ini.metadata.title;
+			var titleEnd="";
+			var codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="", tooltipParam="";
+			if (a.ini.metadata.title.length > 23) {
+				if (RegExp.$1=="" || RegExp.$2=="") metadataTitleShort=a.ini.metadata.title.substring(0,22)+'... ';
+				else {
+					metadataTitleShort=RegExp.$1;
+					titleEnd=RegExp.$2;
+				}
+				let nb=Curves.toolTips.length;
+				tooltipParam="id='toolTip"+String(nb)+"' data-tippy-content='"+String(metadataTitle)+"'";
+				Curves.toolTips.push('#toolTip'+String(nb));
 			}
-			let nb=Curves.toolTips.length;
-			tooltipParam="id='toolTip"+String(nb)+"' data-tippy-content='"+String(metadataTitle)+"'";
-			Curves.toolTips.push('#toolTip'+String(nb));
-		}
-		if (a.codeword > a.framesize)
-			codeWord="<b>Codeword</b>: "+a.codeword+"<br/>";
-		for (var j in a.info) {
-			var tooltip2 = "";
-			if (tooltips.get(a.info[j]))
-				tooltip2 = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.info[j]) + "'";
-			if (a.info[j] == "BP_HORIZONTAL_LAYERED") a.info[j] = "BP_HLAYERED";
-			if (a.info[j] == "BP_VERTICAL_LAYERED") a.info[j] = "BP_VLAYERED";
-			tooltip+="<br/><b>"+j+"</b>: "+"<span" + tooltip2 + ">" + a.info[j] + "</span>";
-		}
-		if (a.ini.metadata.doi)
-			metadataDoi="  <span class='curveIcon'><a href='https://doi.org/"+a.ini.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.ini.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>";
-		if (a.ini.metadata.url)
-			metadataUrl="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
-		if (a.ini.metadata.command)
-			metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
-		var filesTemplate = $('#filesTemplate').html();
-		Mustache.parse(filesTemplate);
-		var filesRendered=Mustache.render(filesTemplate, {
-			filesI: String(i),
-			sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
-			side: Curves.curveId(),
-			aId: a.id,
-			tooltip: tooltipParam,
-			aTitleShort: metadataTitleShort,
-			aTitle: metadataTitle,
-			aTitleEnd: titleEnd,
-			aFramesize: a.framesize,
-			filesCodeword: codeWord,
-			aCoderate: a.coderate,
-			filesTooltip: tooltip,
-			filesDoi: metadataDoi,
-			filesUrl: metadataUrl,
-			filesCommand: metadataCommand
-		});
-		$("#selector .bers #accordion").append(filesRendered);
-		tippy(Curves.toolTips[Curves.toolTips.length-1], {
-			arrow: true,
-			arrowType: 'sharp',
-			animation: 'fade',
-		});
-		Curves.updateAddButtons();
-		if (a.ini.metadata.command) {
-			var cmdSelectorTemplate = $('#cmdSelectorTemplate').html();
-			Mustache.parse(cmdSelectorTemplate);
-			var fileRendered1=Mustache.render(cmdSelectorTemplate, 	{side: Curves.curveId(),
+			if (a.codeword > a.framesize)
+				codeWord="<b>Codeword</b>: "+a.codeword+"<br/>";
+			for (var j in a.info) {
+				var tooltip2 = "";
+				if (tooltips.get(a.info[j]))
+					tooltip2 = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.info[j]) + "'";
+				if (a.info[j] == "BP_HORIZONTAL_LAYERED") a.info[j] = "BP_HLAYERED";
+				if (a.info[j] == "BP_VERTICAL_LAYERED") a.info[j] = "BP_VLAYERED";
+				tooltip+="<br/><b>"+j+"</b>: "+"<span" + tooltip2 + ">" + a.info[j] + "</span>";
+			}
+			if (a.ini.metadata.doi)
+				metadataDoi="  <span class='curveIcon'><a href='https://doi.org/"+a.ini.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.ini.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>";
+			if (a.ini.metadata.url)
+				metadataUrl="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
+			if (a.ini.metadata.command)
+				metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
+			var filesTemplate = $('#filesTemplate').html();
+			Mustache.parse(filesTemplate);
+			var filesRendered=Mustache.render(filesTemplate, {
+				filesI: String(i),
+				sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
+				side: Curves.curveId(),
 				aId: a.id,
+				tooltip: tooltipParam,
+				aTitleShort: metadataTitleShort,
 				aTitle: metadataTitle,
-				aCommand: String(a.ini.metadata.command),
-				aFile: String(a.file),
+				aTitleEnd: titleEnd,
+				aFramesize: a.framesize,
+				filesCodeword: codeWord,
+				aCoderate: a.coderate,
+				filesTooltip: tooltip,
+				filesDoi: metadataDoi,
+				filesUrl: metadataUrl,
+				filesCommand: metadataCommand
 			});
-			$("#curvemodalsSelector").append(fileRendered1);
+			$("#selector .bers #accordion").append(filesRendered);
+			tippy(Curves.toolTips[Curves.toolTips.length-1], {
+				arrow: true,
+				arrowType: 'sharp',
+				animation: 'fade',
+			});
+			Curves.updateAddButtons();
+			if (a.ini.metadata.command) {
+				var cmdSelectorTemplate = $('#cmdSelectorTemplate').html();
+				Mustache.parse(cmdSelectorTemplate);
+				var fileRendered1=Mustache.render(cmdSelectorTemplate, 	{side: Curves.curveId(),
+					aId: a.id,
+					aTitle: metadataTitle,
+					aCommand: String(a.ini.metadata.command),
+					aFile: String(a.file),
+				});
+				$("#curvemodalsSelector").append(fileRendered1);
+			}
+			addClick(a,code,framesize,0);
 		}
-		addClick(a,code,framesize,0);
 	}
 	$('[data-toggle="tooltip"]').tooltip();
 }
@@ -850,7 +881,7 @@ window.onresize = function() {
 	Plotly.Plots.resize(GD.fer);
     // Plotly.Plots.resize(GD.befe);
     // Plotly.Plots.resize(GD.thr);
-    document.getElementById('subSelector').style.height = String(80-((158/$("#scurve").height())*100))+"vh";
+    document.getElementById('subSelector').style.height = String(80-((300/$("#scurve").height())*100))+"vh";
 };
 
 /* Interaction with the form */

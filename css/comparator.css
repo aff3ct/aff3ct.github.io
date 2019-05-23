@@ -32,6 +32,11 @@
   border-color:#1F77B4;
   color:#fff !important;
 }**/
+
+#slider-step .noUi-connect {
+  background: #6C757D;
+}
+
 #scurve9 :nth-child(0n+1)
 {
   background-color:#17BECF;
