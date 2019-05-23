@@ -833,8 +833,9 @@ function updateSelectedSizes(str) {
 	}
 	else {
 		Curves.selectedSizes.splice(Curves.selectedSizes.indexOf(str), 1);
-	}/**
-	if (Curves.selectedSizes.length==0) {
+	}
+	displayCodeTypes();
+	/**if (Curves.selectedSizes.length==0) {
 		$("#accordion").empty();
 		//displayFrameSizes("Select code");
 	}
@@ -860,11 +861,27 @@ function displayCodeTypes() {
 	for (var i in files)
 	{
 		if (j!=0) $(".codetype").append('<br>');
-		$(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'">'+i+' ('+files[i].length+')'+'</label>');
+		let indicator=0;
+		if (Curves.selectedSizes.length!=0) {
+			Curves.selectedSizes.forEach(function(x) {
+				files[i].forEach(function(z) {
+					if (z.framesize==x) {
+						indicator++;
+					}
+				});
+			});
+		}
+		else indicator=1;
+		if (indicator==0) $(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')" disabled><label class="form-check-label" for="'+i+'" title="'+i+'" disabled>'+i+' ('+files[i].length+')'+'</label>');
+		else $(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+files[i].length+')'+'</font></label>');
 		j++;
 	}
-	$(".codetype").off();/**
-	$(".selector .codetype").change(function() {
+	$(".codetype").off();
+	Curves.selectedCodes.forEach(function(x) {
+		if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
+		else document.getElementById(x).checked = false;
+	});
+	/**$(".selector .codetype").change(function() {
 		displayFrameSizes($(this).val());
 	});**/
 }
@@ -890,12 +907,15 @@ function displayFrameSizes() {
 				let f=files[y].filter(x=>x.framesize==i);
 				if (f.length>0) indicator++;
 			});
-		}/**
+		}
 		else indicator=1;
 		if (indicator==0) $("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')" disabled><label class="form-check-label" for="'+i+'" title="'+i+'" disabled>'+i+' (0)'+'</label>');
-		else **/$("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'">'+i+' ('+p[i]+')'+'</label>');
-
+		else $("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+p[i]+')'+'</font></label>');
 	}
+	Curves.selectedSizes.forEach(function(x) {
+		if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
+		else document.getElementById(x).checked = false;
+	});
 	$("#selector .size").off();
 		/**$("#selector .size").change(function() {
 			displayFiles(code,$(this).val());
