@@ -1,4 +1,4 @@
-const GITLAB="https://gitlab.com/api/v4/projects/10354484/repository/";
+const GITLAB="https://gitlab.com/api/v4/projects/10354484/";
 const BRANCH="development";
 
 const Curves = {
@@ -50,7 +50,7 @@ const Curves = {
 		return result;
 	},
 	displayed(i) {
-		//return the curve name of the i^(th) displayed curve (% Curves.max), "null" if it's empty 
+		//return the curve name of the i^(th) displayed curve (% Curves.max), "null" if it's empty
 		if (this.length==0) {
 			return "null";
 		}
@@ -340,14 +340,16 @@ function loadFile(result, name) {
 
 function loadDatabase() {//Return String that include the whole file
 
+	let databaseURL = GITLAB + "jobs/artifacts/development/raw/database.txt?job=deploy-database";
+
 	$.ajaxSetup({
 		beforeSend: function(xhr){
 			if (xhr.overrideMimeType) xhr.overrideMimeType("text/plain");
 		},
-		isLocal:true
+		isLocal:false
 	});
-	$.ajax("./database/result.txt",{error:function(xhr,status,error) {
-		logger("**Error loading ./database/result.txt\n"+status+" "+error);
+	$.ajax(databaseURL,{error:function(xhr,status,error) {
+		logger("**Error loading \"" + databaseURL + "\"\n"+status+" "+error);
 	}}).done(function(data) {
 		let dataFiles=parseDatabase(data);
 		let count=[];
@@ -385,7 +387,7 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 		let end=file2.indexOf(strEnd);
 		let data=file2.slice(start+strStart.length+1, end);
 		filesTab.push(data);
-		/.\/error_rate_references\-master\/([A-Za-z_0-9\/\-\+]+[\.txt]+)+:/gm.exec(file2.slice(0,file2.indexOf(strTxt)+strTxt.length+1));
+		/.\/([A-Za-z_0-9\/\-\+]+[\.txt]+)+:/gm.exec(file2.slice(0,file2.indexOf(strTxt)+strTxt.length+1));
 		let azerty=RegExp.$1;
 		filename.push(azerty);
 		/**
@@ -651,7 +653,7 @@ function showCurve(idSide) {
 	var hideTemplate = $('#hideTemplate').html();
 	Mustache.parse(hideTemplate);
 	var hideRendered=Mustache.render(hideTemplate, {
-		sideNumber: String(idSide) 
+		sideNumber: String(idSide)
 	});
 	$("#delete"+String(idSide)).append(hideRendered);
 }
@@ -678,7 +680,7 @@ function hideCurve(idSide) {
 	var showTemplate = $('#showTemplate').html();
 	Mustache.parse(showTemplate);
 	var showRendered=Mustache.render(showTemplate, {
-		sideNumber: String(idSide) 
+		sideNumber: String(idSide)
 	});
 	$("#delete"+String(idSide)).append(showRendered);
 }
@@ -709,7 +711,7 @@ function deleteClick(divId, idSide) {//unplot a curve
 		}
 		uri = updateURLParameter(uri,idSide,"");
 		window.history.replaceState({},"aff3ct.github.io",uri);
-		if (Curves.currentFile!= "") displayFiles(Curves.currentFile, Curves.currentFrameSize); 
+		if (Curves.currentFile!= "") displayFiles(Curves.currentFile, Curves.currentFrameSize);
 		Curves.updateAddButtons();
 		$("#s"+idSide).remove();
 		plots.forEach(function(x) {
