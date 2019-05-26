@@ -340,7 +340,7 @@ function loadFile(result, name) {
 
 function loadDatabase() {//Return String that include the whole file
 
-	let databaseURL = GITLAB + "jobs/artifacts/development/raw/database.txt?job=deploy-database";
+	let databaseURL = GITLAB + "jobs/artifacts/" + BRANCH + "/raw/database.txt?job=deploy-database-txt";
 
 	$.ajaxSetup({
 		beforeSend: function(xhr){
