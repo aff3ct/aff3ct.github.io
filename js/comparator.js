@@ -318,8 +318,6 @@ function parseFile(filename, result) {//Return data ready-to-plot
 	}
 // Reads and stores one file. Returns the content of the file.
 var ID=0;
-var curFile=0;
-var nFiles=0;
 function loadFile(result, name) {
 	//Last parsing
 	var d=$.Deferred();
@@ -327,17 +325,11 @@ function loadFile(result, name) {
 	let o=parseFile(filename, result);
 	d.resolve(o);
 	ID=ID+1;
-	// Progress bar
-	curFile=curFile+1;
-	let percentage=Math.round(((curFile)/nFiles)*100);
-
-	$("#loader .progress-bar").html(percentage+"%");
-	$('#loader .progress-bar').attr('aria-valuenow', percentage).css('width',percentage+"%");
-	document.getElementById("loader").style.display = "none";
-	document.getElementById("loader").style.display = "block";
 	return d.promise();
 }
 
+// size of the compressed Gitlab refs database in bytes
+var EVT_TOTAL = 553904;
 function loadDatabase() {//Return String that include the whole file
 
 	let databaseURL = GITLAB + "jobs/artifacts/" + BRANCH + "/raw/database.txt?job=deploy-database-txt";
@@ -348,9 +340,23 @@ function loadDatabase() {//Return String that include the whole file
 		},
 		isLocal:false
 	});
-	$.ajax(databaseURL,{error:function(xhr,status,error) {
-		logger("**Error loading \"" + databaseURL + "\"\n"+status+" "+error);
-	}}).done(function(data) {
+	$.ajax(databaseURL, {
+		error: function(xhr,status,error){
+			logger("**Error loading \"" + databaseURL + "\"\n"+status+" "+error);
+		},
+		xhr: function (){
+			var xhr = new window.XMLHttpRequest();
+			xhr.addEventListener("progress", function (evt) {
+				let evt_total;
+				if (evt.lengthComputable) evt_total = evt.total;
+				else evt_total = EVT_TOTAL;
+				let percentComplete = Math.round((evt.loaded / evt_total) * 100);
+				$("#loader .progress-bar").html(percentComplete+"%");
+				$('#loader .progress-bar').attr('aria-valuenow', percentComplete).css('width',percentComplete+"%");
+			}, false);
+			return xhr;
+		}
+	}).done(function(data) {
 		let dataFiles=parseDatabase(data);
 		let count=[];
 		let files=dataFiles[0];
@@ -358,7 +364,6 @@ function loadDatabase() {//Return String that include the whole file
 		for(let i=0; i<files.length; i++) {
 			count.push(i);
 		}
-		nFiles=files.length;
 		$.when.apply(this,count.map(x=>loadFile(files[x],filenames[x]))).done(function() {
 			var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
 			var ordered=orderFiles(files);
