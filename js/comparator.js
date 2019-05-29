@@ -368,11 +368,11 @@ function loadDatabase() {//Return String that include the whole file
 			var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
 			var ordered=orderFiles(files);
 			displayCodeTypes(ordered);
-			document.getElementById("loader").style.display = "none";
-			document.getElementById("curvesTip").style.display = "block";
-			document.getElementById("tips").style.display = "block";
-			document.getElementById("selector").style.display = "block";
-			document.getElementById("comparator").style.display = "block";
+			$("#loader").css("display", "none");
+			$("#curvesTip").css("display", "block");
+			$("#tips").css("display", "block");
+			$("#selector").css("display", "block");
+			$("#comparator").css("display", "block");
 			drawCurvesFromURI(ordered);
 		});
 	});
@@ -386,7 +386,6 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 	let strTxt=".txt:";
 	//let root="./error_rate_references-master/";
 	let filename=[];
-	let toto=0;
 	while (file2.indexOf(strStart)>=0) {
 		let start=file2.indexOf(strStart);
 		let end=file2.indexOf(strEnd);
@@ -404,16 +403,8 @@ function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** T
 		data=file2.slice(start, end+strEnd.length);
 		file2=file2.replace(data, "DZ");
 		file2=file2.replace(azerty+":", "213");
-		toto++;
 	}
 	return [filesTab, filename];
-}
-
-function displaySelector() {
-	var selectorTemplate = $('#selectorTemplate').html();
-	Mustache.parse(selectorTemplate);
-	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: "", percent: String(80-((110/$("#scurve").height())*100))});
-	$("#comparator #comparatorNext").prepend(selectorRendered);
 }
 
 function displayFiles(files,framesize) {//Display files that can be selected
@@ -421,7 +412,7 @@ function displayFiles(files,framesize) {//Display files that can be selected
 	Curves.toolTips=[];
 	Curves.currentFrameSize=framesize;
 	var f=files.filter(x=>x.framesize==framesize);
-	$("#selector .bers #accordion").empty();
+	$("#refsList #accordion").empty();
 	$("#"+Curves.curveId()+"modalsSelector").empty();
 	for (var i=0;i<f.length;i++) {
 		var a=f[i];
@@ -475,7 +466,7 @@ function displayFiles(files,framesize) {//Display files that can be selected
 			filesUrl: metadataUrl,
 			filesCommand: metadataCommand
 		});
-		$("#selector .bers #accordion").append(filesRendered);
+		$("#refsList #accordion").append(filesRendered);
 		tippy(Curves.toolTips[Curves.toolTips.length-1], {
 			arrow: true,
 			arrowType: 'sharp',
@@ -566,11 +557,11 @@ function subAddClick(a, files, framesize, input) {
 	if (Curves.length==0) {
 		var deleteAllTemplate = $('#deleteAllTemplate').html();
 		Mustache.parse(deleteAllTemplate);
-		$("#scurve").prepend(deleteAllTemplate);
-		document.getElementById("plotber").style.display = "inline";
-		document.getElementById("plotfer").style.display = "inline";
+		$("#sAccordion").append(deleteAllTemplate);
+		$("#plotber").css("display", "inline");
+		$("#plotfer").css("display", "inline");
 	}
-	document.getElementById("tips").style.display = "none";
+	$("#tips").css("display", "none");
 	const plots=["ber","fer"/*,"befe","thr"*/];
 	$("#selector .bers .active").removeClass("active");
 	$(this).addClass("active");
@@ -703,9 +694,9 @@ function deleteClick(divId, idSide) {//unplot a curve
 		Curves.deleteCurve(idSide.substring(5, idSide.length));
 		if (Curves.length==0) {
 			$("#closeAll").remove();
-			document.getElementById("tips").style.display = "inline";
-			document.getElementById("plotber").style.display = "none";
-			document.getElementById("plotfer").style.display = "none";
+			$("#tips").css("display", "inline");
+			$("#plotber").css("display", "none");
+			$("#plotfer").css("display", "none");
 		}
 		let cval=[];
 		var uri  = "/comparator.html?curve0=";
@@ -762,8 +753,7 @@ function loadUniqueFile(fileInput, i) {//Load a file from input
 
 window.onload = function() {
 	const plots=["ber","fer"/*,"befe","thr"*/];
-	var fileInput = document.getElementById('fileInput');
-	fileInput.addEventListener('change', function(e)
+	$("#fileInput").on('change', function(e)
 	{
 		loadUniqueFile(fileInput, 0);
 	});
@@ -771,19 +761,19 @@ window.onload = function() {
 
 /* Interaction with the form */
 function displayCodeTypes(files) {
-	$(".codetype").empty();
+	$("#selectorCodetype").empty();
 	let selected="selected='selected'";
-	$(".codetype").append("<option " + selected + ">Select code</option>");
+	$("#selectorCodetype").append("<option " + selected + ">Select code</option>");
 	displayFrameSizes("Select code",files);
 	var j=0;
 	for (var i in files)
 	{
-		$(".codetype").append("<option>"+i+"</option>");
+		$("#selectorCodetype").append("<option>"+i+"</option>");
 		j++;
 	}
 
-	$(".codetype").off();
-	$(".selector .codetype").change(function() {
+	$("#selectorCodetype").off();
+	$("#selectorCodetype").change(function() {
 		displayFrameSizes($(this).val(),files);
 	});
 }
@@ -793,7 +783,6 @@ window.onresize = function() {
 	Plotly.Plots.resize(GD.fer);
     // Plotly.Plots.resize(GD.befe);
     // Plotly.Plots.resize(GD.thr);
-    document.getElementById('subSelector').style.height = String(80-((110/$("#scurve").height())*100))+"vh";
 };
 
 function displayFrameSizes(code,files) {
@@ -804,22 +793,22 @@ function displayFrameSizes(code,files) {
 			var f=files[code][i];
 			p[f.framesize]=true;
 		}
-		$("#selector .size").empty();
+		$("#selectorSize").empty();
 		for (var i in p){
 			if (j==0) j=i;
-			$("#selector .size").append("<option>"+i+"</option>");
+			$("#selectorSize").append("<option>"+i+"</option>");
 		}
 		displayFiles(files[code],j);
-		$("#selector .size").off();
-		$("#selector .size").change(function() {
+		$("#selectorSize").off();
+		$("#selectorSize").change(function() {
 			displayFiles(files[code],$(this).val());
 		});
 	}
 	else {
-		$("#selector .bers #accordion").empty();
+		$("#refsList #accordion").empty();
 		$("#"+Curves.curveId()+"modalsSelector").empty();
-		$("#selector .size").empty();
-		$("#selector .size").append("<option>Select size</option>");
+		$("#selectorSize").empty();
+		$("#selectorSize").append("<option>Select size</option>");
 	}
 }
 
@@ -860,10 +849,10 @@ function drawCurvesFromURI(ordered) {
 			else {
 				let f=selectFile(ordered,filename);
 				if (f) {
-					$("#codetypeselector").val(f.code);
-					$(".selector .codetype").trigger("change");
-					$("#sizeselector").val(f.framesize);
-					$(".selector .size").trigger("change");
+					$("#selectorCodetype").val(f.code);
+					$("#selectorCodetype").trigger("change");
+					$("#selectorSize").val(f.framesize);
+					$("#selectorSize").trigger("change");
 					$("#"+idSide+f.id).click();
 				}
 				else {
@@ -871,10 +860,10 @@ function drawCurvesFromURI(ordered) {
 					if (filename) {
 						f=selectFile(ordered,filename);
 						if (f) {
-							$("#codetypeselector").val(f.code);
-							$(".selector .codetype").trigger("change");
-							$("#sizeselector").val(f.framesize);
-							$(".selector .size").trigger("change");
+							$("#selectorCodetype").val(f.code);
+							$("#selectorCodetype").trigger("change");
+							$("#selectorSize").val(f.framesize);
+							$("#selectorSize").trigger("change");
 							$("#"+idSide+f.id).click();
 							$("#delete"+idSide.substring(idSide.length-1,idSide.length)+" .close").click();
 						}
@@ -888,7 +877,6 @@ function drawCurvesFromURI(ordered) {
 //main
 $(document).ready(function() {
 	Curves.initialization();
-	displaySelector();
 	var d3 = Plotly.d3;
 	var WIDTH_IN_PERCENT_OF_PARENT = 100,
 	HEIGHT_IN_PERCENT_OF_PARENT = 40;
