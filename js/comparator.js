@@ -7,6 +7,7 @@ const Curves = {
 	disponibility: [],//index==id! disponibility[id]=1 => available && disponibility[id]=0 => unavailable
 	hidden: [],//1 if hidden else 0
 	id: [],
+	input: [],//input[nb-curve]= -1:no_curve||0:intern_curve||1:uploaded_curve 
 	names: [],//names[id]=name_of_the_curve
 	values: [],//where values of the curves are
 	referenceColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // Do not modify this tab!!! Use it as a reference
@@ -21,6 +22,7 @@ const Curves = {
 	selectedSizes: [],
 	selectedModems: [],
 	selectedChannels: [],
+	inputCurves: [],
 	files: [],
 	initialization() {
 		for (let i=0; i<this.max; i++) {
@@ -30,6 +32,7 @@ const Curves = {
 			this.colorsOrder.push(i);
 			this.disponibility.push(1);
 			this.plotOrder.push(-1);
+			this.input.push(-1);
 			this.toolTipsSelected.push("");
 			this.hidden.push(0);
 		}
@@ -68,16 +71,26 @@ const Curves = {
 		return this.names[(j-1)%this.max];
 	},
 	addInputCurve(a) {
-		let i=this.firstSideAvailable();
+		/**let i=this.firstSideAvailable();
 		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
 		this.id[i]=a.id;
 		this.plots.forEach(x => this.values[i][x]=a[x]);
 		if (this.length<this.max) this.length++;
 		this.disponibility[i]=0;
+		this.hidden[i]=0;**/
+		let i=this.firstSideAvailable();
+		this.input[i]=1;
+		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
+		this.id[i]=getId(a);
+		this.plots.forEach(x => this.values[i][x]={name: this.PLOTS[x], type: "scatter", x: a.contents["Eb/N0"], y: a.contents[this.PLOTS[x]]});
+		if (this.length<this.max) this.length++;
+		this.disponibility[i]=0;
 		this.hidden[i]=0;
+		this.inputCurves.push(a);
 	},
 	addCurve(a) {
 		let i=this.firstSideAvailable();
+		this.input[i]=0;
 		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
 		this.id[i]=getId(a);
 		this.plots.forEach(x => this.values[i][x]={name: this.PLOTS[x], type: "scatter", x: a.contents["Eb/N0"], y: a.contents[this.PLOTS[x]]});
@@ -98,6 +111,7 @@ const Curves = {
 				this.colors.push(col);
 				this.referenceColors.push(col);
 				this.colorsOrder.push(colIndex);
+				this.input[nb]=-1;
 				this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
 				this.plotOrder.push(-1);
 				this.updateAddButton(false, "+", nb);
@@ -446,7 +460,7 @@ function displayFiles(files) {//Display files that can be selected
 				});
 				$("#curvemodalsSelector").append(fileRendered1);
 			}
-			addClick(a,code,a.headers.Codec["Frame size (N)"],0);
+			addClick(a, 0);
 		}
 		$('[data-toggle="tooltip"]').tooltip();
 	}
@@ -583,7 +597,8 @@ function displayInputCurve(a) {
 	}
 }
 
-function subAddClick(a, code, framesize, input) {
+function subAddClick(a, input) {
+	let code=a.headers.Codec.Type;
 	let files=Curves.files[code];
 	if (Curves.length==0) {
 		var deleteAllTemplate = $('#deleteAllTemplate').html();
@@ -598,12 +613,11 @@ function subAddClick(a, code, framesize, input) {
 	$(this).addClass("active");
 	if (Curves.length==Curves.max) console.log("Maximum quantity of curves reached!");
 	else {
+		displaySelectedCurve(a);
 		if (input==0) {
-			displaySelectedCurve(a);
 			Curves.addCurve(a);
 		}
 		else {
-			displayInputCurve(a);
 			Curves.addInputCurve(a);
 		}
 		//if (input==0) {
@@ -617,7 +631,7 @@ function subAddClick(a, code, framesize, input) {
 			}
 			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),a.filename);
 			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.trace)));
-			//window.history.replaceState({},"aff3ct.github.io",uri);
+			window.history.replaceState({},"aff3ct.github.io",uri);
 		//}
 		plots.forEach(function(x) {
 			const CURVESBIS=[];
@@ -632,13 +646,13 @@ function subAddClick(a, code, framesize, input) {
 }
 
 // Click listener for curves list
-function addClick(a, code, framesize, input) {//Plot the curve
+function addClick(a, input) {//Plot the curve
 	if (input==1) {
-		subAddClick(a, code, framesize, input);
+		subAddClick(a, input);
 	}
 	else {
 		$('#'+Curves.curveId()+getId(a)).on('click', function() {
-			subAddClick(a, code, framesize, 0);
+			subAddClick(a, 0);
 			// track the click with Google Analytics
 			/**ga('send', {
 			hitType:       'event',
@@ -652,6 +666,45 @@ function addClick(a, code, framesize, input) {//Plot the curve
 
 function deleteAll() {
 	Curves.names.forEach(x => deleteClick('delete', x));
+}
+
+function deleteClick(divId, idSide) {//unplot a curve
+	//delete a selected curve
+	const plots=["ber","fer"];
+	for (let i=0; i<Curves.max; i++) {
+		if (Curves.hidden[i]==1) showCurve(i);
+	}
+	$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).prop('disabled', false);
+	if (Curves.length !== 0) {
+		$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).empty();
+		$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).append("+");
+		Curves.deleteCurve(idSide.substring(5, idSide.length));
+		if (Curves.length==0) {
+			$("#closeAll").remove();
+			document.getElementById("tips").style.display = "inline";
+			document.getElementById("plotber").style.display = "none";
+			document.getElementById("plotfer").style.display = "none";
+		}
+		let cval=[];
+		var uri  = "/comparator.html?curve0=";
+		for (let i=0; i<Curves.max; i++) {
+			cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
+			if (i==0) uri+=cval[0];
+			else uri=uri+"&curve"+String(i)+"="+cval[i];
+		}
+		uri = updateURLParameter(uri,idSide,"");
+		window.history.replaceState({},"aff3ct.github.io",uri);
+		$("#s"+idSide).remove();
+		plots.forEach(function(x) {
+			const CURVESBIS=[];
+			for (let l=0; l<Curves.max; l++) {
+				if ((Curves.plotOrder[l]!=-1) && (l!=Curves.plotOrder.indexOf(Number(idSide.substring(5,idSide.length))))) {
+					CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
+				}
+			}
+			Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
+		});
+	}
 }
 
 function showCurve(idSide) {
@@ -715,43 +768,174 @@ function hideCurve(idSide) {
 	$("#delete"+String(idSide)).append(showRendered);
 }
 
-function deleteClick(divId, idSide) {//unplot a curve
-	//delete a selected curve
-	const plots=["ber","fer"];
-	for (let i=0; i<Curves.max; i++) {
-		if (Curves.hidden[i]==1) showCurve(i);
-	}
-	$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).prop('disabled', false);
-	if (Curves.length !== 0) {
-		$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).empty();
-		$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).append("+");
-		Curves.deleteCurve(idSide.substring(5, idSide.length));
-		if (Curves.length==0) {
-			$("#closeAll").remove();
-			document.getElementById("tips").style.display = "inline";
-			document.getElementById("plotber").style.display = "none";
-			document.getElementById("plotfer").style.display = "none";
+function text2json(txt, filename = "")
+{
+	let isTrace = false;
+	let isLegend = false;
+	let legends = [];
+	let contents = {};
+	let metadata = {};
+	let titleSection = "";
+	let headers = {};
+	let section = {};
+
+	let lines = txt.split("\n");
+	for (let ln = 0; ln < lines.length; ln++)
+	{
+		let l = lines[ln];
+
+		if (ln == 0 && l != "[metadata]")
+			isTrace = true;
+
+		if (l == "[trace]")
+		{
+			isTrace = true;
+			continue;
 		}
-		let cval=[];
-		var uri  = "/comparator.html?curve0=";
-		for (let i=0; i<Curves.max; i++) {
-			cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
-			if (i==0) uri+=cval[0];
-			else uri=uri+"&curve"+String(i)+"="+cval[i];
+
+		if (!isTrace)
+		{
+			ls = l.split("=");
+			if (ls.length >= 2)
+			{
+				let key = ls[0];
+				let val = ls[1];
+
+				for (let i = 2; i < ls.length; i++)
+					val += "=" + ls[i];
+
+				if (val == "on")
+					metadata[key] = true;
+				else if (val == "off")
+					metadata[key] = false;
+				else
+					metadata[key] = val;
+			}
 		}
-		uri = updateURLParameter(uri,idSide,"");
-		//window.history.replaceState({},"aff3ct.github.io",uri);
-		$("#s"+idSide).remove();
-		plots.forEach(function(x) {
-			const CURVESBIS=[];
-			for (let l=0; l<Curves.max; l++) {
-				if ((Curves.plotOrder[l]!=-1) && (l!=Curves.plotOrder.indexOf(Number(idSide.substring(5,idSide.length))))) {
-					CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
+		else
+		{
+			if (l.startsWith("# *"))
+			{
+				if (titleSection != "")
+				{
+					headers[titleSection] = section;
+					section = {};
+				}
+				titleSection = l.substring(4).split(" -")[0];
+			}
+			else if (l.startsWith("#    **"))
+			{
+				cleanL = l.substring(8);
+				splitL = cleanL.split(" = ");
+				if (splitL.length >= 2)
+				{
+					key = $.trim(splitL[0]);
+					val = splitL[1];
+
+					for (let i = 2; i < splitL.length; i++)
+						val += " = " + splitL[i];
+
+					if (["Code rate", "Bit rate", "Multi-threading (t)"].includes(key))
+						val = val.split(" ")[0];
+					if (["yes", "on"].includes(val))
+						section[key] = true;
+					else if (["no", "off"].includes(val))
+						section[key] = false;
+					else
+					{
+						let valInt = parseInt(val);
+						if (isNaN(valInt))
+							section[key] = val;
+						else
+						{
+							let valFloat = parseFloat(val);
+							if (valFloat - valInt == 0)
+								section[key] = valInt;
+							else
+								section[key] = valFloat;
+						}
+					}
 				}
 			}
-			Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
-		});
+			else if (l.startsWith("# The simulation is running..."))
+			{
+				if (titleSection != "")
+				{
+					headers[titleSection] = section;
+					section = {};
+					titleSection = "";
+				}
+			}
+
+			if (!l.startsWith("#"))
+			{
+				if (!isLegend)
+				{
+					isLegend = true;
+					if (ln >= 3)
+					{
+						leg = lines[ln -3];
+						leg = leg.replace("#", "");
+						legends = leg.split("|");
+					}
+				}
+
+				let cols = l.split("|");
+				if (cols.length == legends.length)
+				{
+					for (let c = 0; c < cols.length; c++)
+					{
+						key = $.trim(legends[c]);
+						if (key != "")
+						{
+							val = $.trim(cols[c]).split(" ")[0];
+
+							if (key == "ET/RT")
+							{
+								newVal = parseInt(val.split("'")[1]);
+								newVal += parseInt(val.split("'")[0].split("h")[1]) * 60;
+								newVal += parseInt(val.split("'")[0].split("h")[0]) * 3600;
+								val = newVal;
+							}
+
+							let li = parseInt(val);
+							if (isNaN(li))
+								li = val;
+							else
+							{
+								let li2 = parseFloat(val);
+								if (li - li2 != 0)
+									li = li2;
+							}
+
+							if (key in contents)
+								contents[key].push(li);
+							else
+								contents[key] = [li];
+						}
+					}
+				}
+			}
+		}
 	}
+
+	let hashMaker = sha1.create();
+	hashMaker.update(txt);
+	hashMaker.hex();
+	hash = {"type" : "sha1", "value" : hashMaker.hex()};
+
+	let dict = {};
+	if (filename != ""            ) dict["filename"] = filename;
+	if (!$.isEmptyObject(metadata)) dict["metadata"] = metadata;
+	if (!$.isEmptyObject(headers )) dict["headers" ] = headers;
+	if (!$.isEmptyObject(contents)) dict["contents"] = contents;
+	dict["trace"   ] = txt;
+	dict["hash"    ] = hash;
+
+	let o = /**{};
+	o[hashMaker.hex().substring(0,7)] = **/dict;
+
+	return o;
 }
 
 function loadUniqueFile(fileInput, i) {//Load a file from input
@@ -765,9 +949,10 @@ function loadUniqueFile(fileInput, i) {//Load a file from input
 				reader.readAsText(file);
 				reader.onloadend = function(e)
 				{
-					var filename = encodeURIComponent(file);
-					let o=parseFile(filename, reader.result);
-					addClick(o, file, o.framesize, 1);
+					let o=text2json(reader.result, file.name);
+					console.log(o);
+					let filename = encodeURIComponent(getId(o));
+					addClick(o, 1);
 					loadUniqueFile(fileInput, i+1);
 				};
 			}
@@ -1160,7 +1345,7 @@ function drawCurvesFromURI() {
 				filename=LZString.decompressFromEncodedURIComponent(filename);
 				let file=filename;
 				let o=parseFile("My Curve", file);
-				addClick(o, file, o.headers.Codec["Frame size (N)"], 1);
+				addClick(o, 1);
 			}
 			else {
 				let f=selectFile(ordered,filename);
