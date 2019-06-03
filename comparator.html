@@ -71,26 +71,27 @@
       <div id="collapse{{sideNumber}}{{aId}}" class="collapse" aria-labelledby="heading{{sideNumber}}{{aId}}" data-parent="#accordion{{sideNumber}}">
        <div class="card-body">
          <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
-           <div class="text-muted twoColumns"><small><b>Frame size</b>: {{aFramesize}}<br/>
-            {{{filesCodeword}}}
-            <b>Coderate</b>: {{aCoderate}}
-            {{{filesTooltip}}}
-          </small>
-        </div>
-        <div class="curveIcons">
-          {{{filesDoi}}}
-          {{{filesUrl}}}
-          {{{filesCommand}}}
-          <span class="curveIcon">
-            <a href="#" data-toggle="modal" data-target="#modalInfoFile_{{aId}}" title="Original output text file">
-              <i class="fas fa-file-alt"></i>
-            </a>
-          </span>
-        </div>
-      </li>
+           <div class="text-muted twoColumns">
+            <small><b>Frame size</b>: {{aFramesize}}<br/>
+              {{{filesCodeword}}}
+              <b>Coderate</b>: {{aCoderate}}
+              {{{filesTooltip}}}
+            </small>
+          </div>
+          <div class="curveIcons">
+            {{{filesDoi}}}
+            {{{filesUrl}}}
+            {{{filesCommand}}}
+            <span class="curveIcon">
+              <a href="#" data-toggle="modal" data-target="#modalInfoFile_{{aId}}" title="Original output text file">
+                <i class="fas fa-file-alt"></i>
+              </a>
+            </span>
+          </div>
+        </li>
+      </div>
     </div>
   </div>
-</div>
 </script>
 <script id="cmdSelectorTemplate" type="x-tmpl-mustache">
   <div class="modal fade" id="modalInfoCmd_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -181,17 +182,17 @@
 </script>
 
 <script id="selectorTemplate" type="x-tmpl-mustache">
-  <div class="col-3 p-1 {{selectorCurveId}}" id="{{selectorCurveId}}" style="height:80vh;{{displayNone}}">
+  <div class="col-3 p-1 {{selectorCurveId}}" id="{{selectorCurveId}}" style="height:80vh;overflow-x:hidden;overflow-y:auto;{{displayNone}}">
    <div class="container">
     <div class="form-group row">
       <label for="codetype{{selectorCurveId}}" class="col-sm-6">Type of code</label>
       <div class="col-sm-6">
         <div class="dropdown" id="codetype{{selectorCurveId}}">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Select code
+          <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Code
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
-            <form class="px-3 py-2" style="height:30vh;overflow-x:hidden;overflow-y:auto">
+            <form class="px-3 py-2" style="max-height:30vh;overflow-x:hidden;overflow-y:auto">
               <div class="form-check codetype"></div>
             </form>
           </div>
@@ -202,12 +203,42 @@
       <label for="size{{selectorCurveId}}" class="col-sm-6">Frame size (N)</label>
       <div class="col-sm-6">
         <div class="dropdown" id="size{{selectorCurveId}}">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownSizeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Select size
+          <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownSizeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Size
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownSizeButton">
             <form class="px-3 py-2">
-              <div class="form-check size" style="height:30vh;overflow-x:hidden;overflow-y:auto"></div>
+              <div class="form-check size" style="max-height:30vh;overflow-x:hidden;overflow-y:auto"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="modem{{selectorCurveId}}" class="col-sm-6">Type of modem</label>
+      <div class="col-sm-6">
+        <div class="dropdown" id="modem{{selectorCurveId}}">
+          <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Modem
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
+            <form class="px-3 py-2" style="max-height:30vh;overflow-x:hidden;overflow-y:auto">
+              <div class="form-check modem"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="channel{{selectorCurveId}}" class="col-sm-6">Type of channel</label>
+      <div class="col-sm-6">
+        <div class="dropdown" id="channel{{selectorCurveId}}">
+          <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownchannelButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Channel
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownchannelButton">
+            <form class="px-3 py-2" style="max-height:30vh;overflow-x:hidden;overflow-y:auto">
+              <div class="form-check channel"></div>
             </form>
           </div>
         </div>
@@ -215,14 +246,14 @@
     </div>
     <hr class="separator">
     <div class="form-group row">
-      <label for="coderate{{selectorCurveId}}" class="col-sm-6">Code rate</label>
+      <label for="coderate{{selectorCurveId}}" class="col-sm-6">Code rate (R)</label>
       <div id="slider-step" class="mb-5 col-sm-12"></div>
     </div>
     <hr class="separator">
   </div>
   <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="applySelections()">Apply selections</button>
   <div class="mb-4"></div>
-  <div id="subSelector" class="p-3 mb-3 bg-white rounded" style="height:{{percent}}vh;overflow-x:hidden;overflow-y:auto;padding:0rem !important">
+  <div id="subSelector" class="p-3 mb-3 bg-white rounded" style="padding:0rem !important">
     <ul class="list-group bers">
      <div id="accordion"></div>
    </ul>
@@ -295,6 +326,9 @@
   </button> 
 </script>
 
+<script id="checkboxTemplate" type="x-tmpl-mustache">
+  <input type="checkbox" class="form-check-input" id="{{element}}" title="{{element}}" onclick="{{function}}{{element}})" {{disabled}}><label class="form-check-label" for="{{element}}" title="{{element}}">{{{startBlackFont}}}{{element}} ({{length}}){{{endBlackFont}}}</label>
+</script>
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">

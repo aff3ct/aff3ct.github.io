@@ -1,4 +1,4 @@
-const GITLAB="https://gitlab.com/api/v4/projects/10354484/repository/";
+const GITLAB="https://gitlab.com/api/v4/projects/10354484/";
 const BRANCH="development";
 
 const Curves = {
@@ -8,18 +8,19 @@ const Curves = {
 	hidden: [],//1 if hidden else 0
 	id: [],
 	names: [],//names[id]=name_of_the_curve
-	values: [],//where values of the curve are
+	values: [],//where values of the curves are
 	referenceColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // Do not modify this tab!!! Use it as a reference
 	colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // muted blue //safety orange // cooked asparagus green // brick red // muted purple // chestnut brown // raspberry yogurt pink // middle gray // curry yellow-green // blue-teal
 	colorsOrder: [], // From 0 to 9
 	plots: ["ber","fer"/*,"befe","thr"*/],
-	currentFile: "",
-	currentFrameSize: "",
+	PLOTS: {ber: "BER", fer: "FER"},
 	plotOrder: [],
 	toolTips: [],
 	toolTipsSelected: [],
 	selectedCodes: [],
 	selectedSizes: [],
+	selectedModems: [],
+	selectedChannels: [],
 	files: [],
 	initialization() {
 		for (let i=0; i<this.max; i++) {
@@ -66,7 +67,7 @@ const Curves = {
 		}
 		return this.names[(j-1)%this.max];
 	},
-	addCurve(a) {
+	addInputCurve(a) {
 		let i=this.firstSideAvailable();
 		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
 		this.id[i]=a.id;
@@ -74,6 +75,16 @@ const Curves = {
 		if (this.length<this.max) this.length++;
 		this.disponibility[i]=0;
 		this.hidden[i]=0;
+	},
+	addCurve(a) {
+		let i=this.firstSideAvailable();
+		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
+		this.id[i]=getId(a);
+		this.plots.forEach(x => this.values[i][x]={name: this.PLOTS[x], type: "scatter", x: a.contents["Eb/N0"], y: a.contents[this.PLOTS[x]]});
+		if (this.length<this.max) this.length++;
+		this.disponibility[i]=0;
+		this.hidden[i]=0;
+		this.updateAddButton(true, "-", i);
 	},
 	deleteCurve(nb) {
 		if (nb<=this.max) {
@@ -89,6 +100,7 @@ const Curves = {
 				this.colorsOrder.push(colIndex);
 				this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
 				this.plotOrder.push(-1);
+				this.updateAddButton(false, "+", nb);
 				this.id[nb]=-1;
 				this.hidden[nb];
 				this.length--;
@@ -106,16 +118,10 @@ const Curves = {
 	curveId() {
 		return "curve"+this.firstSideAvailable();
 	},
-	updateAddButtons() {
-		Curves.id.forEach(function(x) {
-			Curves.names.forEach(function(y) {
-				if (x!=-1)	{
-					$('#'+y+x).prop('disabled', true);
-					$('#'+y+x).empty();
-					$('#'+y+x).append("-");
-				}
-			});
-		});
+	updateAddButton(bool, string, nb) {
+		$('#'+"curve0"+this.id[nb]).prop('disabled', bool);
+		$('#'+"curve0"+this.id[nb]).empty();
+		$('#'+"curve0"+this.id[nb]).append(string);
 	}
 };
 // axis/legend of the 2 plots
@@ -200,15 +206,6 @@ function findGetParameter(parameterName) {
 	return result;
 }
 
-// Macro for handling async file loading
-function ajaxLoad(url) {
-	return $.when(
-		$.ajax(url,
-			{error:function(xhr,status,error) {
-				console.error("**Error "+url+"\n"+status+" "+error);
-			}}));
-}
-
 function parseINIString(data) {
 	var regex = {
 		section: /^\s*\[\s*([^\]]*)\s*\]\s*$/,
@@ -247,8 +244,8 @@ function parseINIString(data) {
 	return value;
 }
 
-function parseFile(filename, result) {//Return data ready-to-plot
-	var ini = parseINIString(result);
+function parseFile(hashId, result) {//Return data ready-to-plot
+	let ini=parseINIString(result);
 	ini.metadata.command=ini.metadata.command.replace(/"([^ ,:;]*)"/g, "$1");
 	ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ "([^]*)"/g, "");
 	ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ ([^ ]*)/g, "");
@@ -263,7 +260,7 @@ function parseFile(filename, result) {//Return data ready-to-plot
 		if (lines[startLine] == "[trace]")
 			break;
 		lines.splice(0,startLine+1);
-	// var name=ini.metadata.title;
+	// var name=result.metadata.title;
 	var coderate=0,framesize=0,infobits=0,codeword=0;
 	var BER={x:[],y:[],type:'scatter',name:'BER'};
 	var FER={x:[],y:[],type:'scatter',name:'FER'};
@@ -271,35 +268,39 @@ function parseFile(filename, result) {//Return data ready-to-plot
 	// var THR={x:[],y:[],type:'scatter',name:'Mb/s'};
 	var info={};
 	for (var i=0;i<lines.length;i++)
-		if (lines[i].startsWith("# * ")&&lines[i+1].indexOf("Type")>-1)
-			info[lines[i].substring(4,lines[i].indexOf("-")).trim()] =
-		lines[i+1].split("=")[1].trim();
-		var code=info.Code;
-		if (typeof code=="undefined") code=info.Codec;
-		for (var i=0;i<lines.length;i++)
-			if (lines[i].indexOf("=")>-1) {
-				var val=lines[i].split("=")[1].trim();
-				if (lines[i].indexOf("Code rate")>-1)
-					coderate=Math.round(parseFloat(val)*100)/100;
-				else if (lines[i].indexOf("Frame size")>-1)
-					framesize=parseInt(val,10);
-				else if (lines[i].indexOf("Codeword size")>-1)
-					codeword=parseInt(val,10);
-				else if (lines[i].indexOf("Info. bits")>-1)
-					infobits=parseFloat(val);
-			}
-			if (framesize==0) framesize=codeword;
-			if (codeword==0) codeword=framesize;
+		if (lines[i].startsWith("# * ")&&lines[i+1].indexOf("Type")>-1) {
+			info[lines[i].substring(4,lines[i].indexOf("-")).trim()] = lines[i+1].split("=")[1].trim();
+		}
+	//
+	var code=info.Code;
+	let modem1=info.Modem;
+	let channel1=info.Channel;
+	if (typeof code=="undefined") code=info.Codec;
+	for (var i=0;i<lines.length;i++)
+		if (lines[i].indexOf("=")>-1) {
+			var val=lines[i].split("=")[1].trim();
+			if (lines[i].indexOf("Code rate")>-1)
+				coderate=Math.round(parseFloat(val)*100)/100;
+			else if (lines[i].indexOf("Frame size")>-1)
+				framesize=parseInt(val,10);
+			else if (lines[i].indexOf("Codeword size")>-1)
+				codeword=parseInt(val,10);
+			else if (lines[i].indexOf("Info. bits")>-1)
+				infobits=parseFloat(val);
+		}
+	//
+	if (framesize==0) framesize=codeword;
+	if (codeword==0) codeword=framesize;
 
-			if (coderate==0&&framesize!=0&&infobits!=0) coderate=Math.round(infobits/framesize*100)/100;
-			for (var i=4;i<lines.length;i++) {
-				if (lines[i].startsWith("#")||lines[i].length==0) continue;
-				lines[i]=lines[i].replace(/\|\|/g,"|");
-				var fields = lines[i].split(/\|/);
-				var x=parseFloat(fields[1]);
-				if (x=="NaN") continue;
-				BER.x.push(x);
-				FER.x.push(x);
+	if (coderate==0&&framesize!=0&&infobits!=0) coderate=Math.round(infobits/framesize*100)/100;
+	for (var i=4;i<lines.length;i++) {
+		if (lines[i].startsWith("#")||lines[i].length==0) continue;
+		lines[i]=lines[i].replace(/\|\|/g,"|");
+		var fields = lines[i].split(/\|/);
+		var x=parseFloat(fields[1]);
+		if (x=="NaN") continue;
+		BER.x.push(x);
+		FER.x.push(x);
 	    // BEFE.x.push(x);
 	    // THR.x.push(x);
 	    BER.y.push(parseFloat(fields[5]));
@@ -307,111 +308,44 @@ function parseFile(filename, result) {//Return data ready-to-plot
 	    // BEFE.y.push(parseFloat(fields[3])/parseFloat(fields[4]));
 	    // THR.y.push(parseFloat(fields[9]));
 	}
-	var o={id:ID,ini:ini,info:info,coderate:coderate,framesize:framesize,codeword:codeword,ber:BER,fer:FER,
-		/*befe:BEFE,thr:THR,*/code:code,file:result,filename:filename};
-		return o;
-	}
-	function sleep(milliseconds) {
-		var start = new Date().getTime();
-		for (var i = 0; i < 1e7; i++) {
-			if ((new Date().getTime() - start) > milliseconds){
-				break;
-			}
-		}
-	}
-// Reads and stores one file. Returns the content of the file.
-var ID=0;
-var curFile=0;
-var nFiles=0;
-function loadFile(result, name) {
-	//Last parsing
-	var d=$.Deferred();
-	var filename = encodeURIComponent(name);
-	let o=parseFile(filename, result);
-	d.resolve(o);
-	ID=ID+1;
-	// Progress bar
-	curFile=curFile+1;
-	let percentage=Math.round(((curFile)/nFiles)*100);
-
-	$("#loader .progress-bar").html(percentage+"%");
-	$('#loader .progress-bar').attr('aria-valuenow', percentage).css('width',percentage+"%");
-	document.getElementById("loader").style.display = "none";
-	document.getElementById("loader").style.display = "block";
-	return d.promise();
+	var o={id:Curves.firstSideAvailable(),ini:ini,info:info,coderate:coderate,framesize:framesize,codeword:codeword,ber:BER,fer:FER,/*befe:BEFE,thr:THR,*/code:code,file:result,filename:hashId,modem:modem1,channel:channel1};
+	//console.log("***"+roughSizeOfObject(o));
+	return o;
 }
 
-function loadDatabase() {//Return String that include the whole file
 
+
+function loadDatabase() {//Return String that include the whole file
+	let databaseURL = GITLAB + "jobs/artifacts/" + BRANCH + "/raw/database.json?job=deploy-database-json";
 	$.ajaxSetup({
 		beforeSend: function(xhr){
 			if (xhr.overrideMimeType) xhr.overrideMimeType("text/plain");
 		},
 		isLocal:true
 	});
-	$.ajax("./database/result.txt",{error:function(xhr,status,error) {
-		logger("**Error loading ./database/result.txt\n"+status+" "+error);
+	$.ajax(databaseURL,{error:function(xhr,status,error) {
+		logger("**Error loading \"" + databaseURL + "\"\n"+status+" "+error);
 	}}).done(function(data) {
-		let dataFiles=parseDatabase(data);
-		let count=[];
-		let files=dataFiles[0];
-		let filenames=dataFiles[1];
-		for(let i=0; i<files.length; i++) {
-			count.push(i);
-		}
-		nFiles=files.length;
-		$.when.apply(this,count.map(x=>loadFile(files[x],filenames[x]))).done(function() {
-			var files=Array.from(arguments).reduce((acc,val)=>acc.concat(val),[]);
-			Curves.files=orderFiles(files);
-			displayCodeTypes();
-			displayFrameSizes();
-			document.getElementById("loader").style.display = "none";
-			document.getElementById("curvesTip").style.display = "block";
-			document.getElementById("tips").style.display = "block";
-			document.getElementById("selector").style.display = "block";
-			document.getElementById("comparator").style.display = "block";
-			drawCurvesFromURI();
-		});
+		let dataTab=JSON.parse(data);
+		Curves.files=orderFiles(dataTab);
+		displayCodeTypes();
+		displayFrameSizes();
+		displayModems();
+		displayChannels();
+		document.getElementById("loader").style.display = "none";
+		document.getElementById("curvesTip").style.display = "block";
+		document.getElementById("tips").style.display = "block";
+		document.getElementById("selector").style.display = "block";
+		document.getElementById("comparator").style.display = "block";
+		drawCurvesFromURI();
 	});
-}
-function parseDatabase(txtFile) {//txtFile is the return of loadDatabase ***** This function return an array with all files as String.
-	//.\/error_rate_references\-master\/([A-Za-z_0-9\/\-]+\.txt:)\n\nStart_File+/g;
-	let filesTab=[];
-	let file2=txtFile;
-	let strStart="Start_File";
-	let strEnd="End_File";
-	let strTxt=".txt:";
-	//let root="./error_rate_references-master/";
-	let filename=[];
-	let toto=0;
-	while (file2.indexOf(strStart)>=0) {
-		let start=file2.indexOf(strStart);
-		let end=file2.indexOf(strEnd);
-		let data=file2.slice(start+strStart.length+1, end);
-		filesTab.push(data);
-		/.\/error_rate_references\-master\/([A-Za-z_0-9\/\-\+]+[\.txt]+)+:/gm.exec(file2.slice(0,file2.indexOf(strTxt)+strTxt.length+1));
-		let azerty=RegExp.$1;
-		filename.push(azerty);
-		/**
-		/title=([a-z0-9A-Z.\-,\/=\s;\+:()]+)\n/mg.test(data);
-		let title=RegExp.$1.replace(/url[a-z0-9\n.\s=\/\-_:]+/, '');
-		title=title.replace(/doi[A-Za-z0-9\n.,\s=\/\-_:]+/, '');
-		title=title.replace(/ci[A-Za-z0-9\n.,\s=\/\-_:]+/, '');
-		**/
-		data=file2.slice(start, end+strEnd.length);
-		file2=file2.replace(data, "DZ");
-		file2=file2.replace(azerty+":", "213");
-		toto++;
-	}
-	return [filesTab, filename];
 }
 
 function displaySelector() {
 	var selectorTemplate = $('#selectorTemplate').html();
 	Mustache.parse(selectorTemplate);
-	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: "", percent: String(80-(((300)/$("#scurve").height())*100))});
+	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: ""});
 	$("#comparator #comparatorNext").prepend(selectorRendered);
-
 	var stepSlider = document.getElementById('slider-step');
 	noUiSlider.create(stepSlider, {
 		start: [0,1],
@@ -432,26 +366,24 @@ function displaySelector() {
 	});
 }
 
-function displayFiles(code,framesize) {//Display files that can be selected
-	let files=Curves.files[code];
-	Curves.currentFile=code;
+function getId(file) {
+	return file.hash.value.substring(0,7);
+}
+
+function displayFiles(files) {//Display files that can be selected
+	$("#accordion").empty();
 	Curves.toolTips=[];
-	Curves.currentFrameSize=framesize;
-	var f=files.filter(x=>x.framesize==framesize);
-	//$("#selector .bers #accordion").empty();
 	$("#"+Curves.curveId()+"modalsSelector").empty();
-	for (var i=0;i<f.length;i++) {
-		let stepSlider = document.getElementById('slider-step');
-		let coderate=stepSlider.noUiSlider.get();
-		var a=f[i];
-		if (coderate[0]<=a.coderate && a.coderate<=coderate[1]) {
-			/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(a.ini.metadata.title);
-			var metadataTitle=a.ini.metadata.title;
-			var metadataTitleShort=a.ini.metadata.title;
+	for (var code in files) {
+		for (let i=0; i<files[code].length; i++) {
+			var a=files[code][i];
+			/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(a.metadata.title);
+			var metadataTitle=a.metadata.title;
+			var metadataTitleShort=a.metadata.title;
 			var titleEnd="";
 			var codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="", tooltipParam="";
-			if (a.ini.metadata.title.length > 23) {
-				if (RegExp.$1=="" || RegExp.$2=="") metadataTitleShort=a.ini.metadata.title.substring(0,22)+'... ';
+			if (a.metadata.title.length > 23) {
+				if (RegExp.$1=="" || RegExp.$2=="") metadataTitleShort=a.metadata.title.substring(0,22)+'... ';
 				else {
 					metadataTitleShort=RegExp.$1;
 					titleEnd=RegExp.$2;
@@ -460,36 +392,38 @@ function displayFiles(code,framesize) {//Display files that can be selected
 				tooltipParam="id='toolTip"+String(nb)+"' data-tippy-content='"+String(metadataTitle)+"'";
 				Curves.toolTips.push('#toolTip'+String(nb));
 			}
-			if (a.codeword > a.framesize)
-				codeWord="<b>Codeword</b>: "+a.codeword+"<br/>";
-			for (var j in a.info) {
-				var tooltip2 = "";
-				if (tooltips.get(a.info[j]))
-					tooltip2 = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.info[j]) + "'";
-				if (a.info[j] == "BP_HORIZONTAL_LAYERED") a.info[j] = "BP_HLAYERED";
-				if (a.info[j] == "BP_VERTICAL_LAYERED") a.info[j] = "BP_VLAYERED";
-				tooltip+="<br/><b>"+j+"</b>: "+"<span" + tooltip2 + ">" + a.info[j] + "</span>";
+			if (a.headers.Codec["Codeword size (N_cw)"] > a.headers.Codec["Frame size (N)"])
+				codeWord="<b>Codeword</b>: "+a.headers.Codec["Codeword size (N_cw)"]+"<br/>";
+			for (var j in a.headers) {
+				if (a.headers[j].Type) {
+					var tooltip2 = "";
+					if (tooltips.get(a.headers[j].Type))
+						tooltip2 = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.headers[j].Type) + "'";
+					if (a.headers[j].Type == "BP_HORIZONTAL_LAYERED") a.headers[j].Type = "BP_HLAYERED";
+					if (a.headers[j].Type == "BP_VERTICAL_LAYERED") a.headers[j].Type = "BP_VLAYERED";
+					tooltip+="<br/><b>"+j+"</b>: "+"<span" + tooltip2 + ">" + a.headers[j].Type + "</span>";
+				}
 			}
-			if (a.ini.metadata.doi)
-				metadataDoi="  <span class='curveIcon'><a href='https://doi.org/"+a.ini.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.ini.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>";
-			if (a.ini.metadata.url)
-				metadataUrl="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
-			if (a.ini.metadata.command)
-				metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
+			if (a.metadata.doi)
+				metadataDoi="  <span class='curveIcon'><a href='https://doi.org/"+a.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>";
+			if (a.metadata.url)
+				metadataUrl="  <span class='curveIcon'><a href='"+a.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
+			if (a.metadata.command)
+				metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+"_"+getId(a)+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
 			var filesTemplate = $('#filesTemplate').html();
 			Mustache.parse(filesTemplate);
 			var filesRendered=Mustache.render(filesTemplate, {
 				filesI: String(i),
 				sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
 				side: Curves.curveId(),
-				aId: a.id,
+				aId: getId(a),
 				tooltip: tooltipParam,
 				aTitleShort: metadataTitleShort,
 				aTitle: metadataTitle,
 				aTitleEnd: titleEnd,
-				aFramesize: a.framesize,
+				aFramesize: a.headers.Codec["Frame size (N)"],
 				filesCodeword: codeWord,
-				aCoderate: a.coderate,
+				aCoderate: a.headers.Codec["Code rate"],
 				filesTooltip: tooltip,
 				filesDoi: metadataDoi,
 				filesUrl: metadataUrl,
@@ -501,25 +435,91 @@ function displayFiles(code,framesize) {//Display files that can be selected
 				arrowType: 'sharp',
 				animation: 'fade',
 			});
-			Curves.updateAddButtons();
-			if (a.ini.metadata.command) {
+			if (a.metadata.command) {
 				var cmdSelectorTemplate = $('#cmdSelectorTemplate').html();
 				Mustache.parse(cmdSelectorTemplate);
 				var fileRendered1=Mustache.render(cmdSelectorTemplate, 	{side: Curves.curveId(),
-					aId: a.id,
+					aId: getId(a),
 					aTitle: metadataTitle,
-					aCommand: String(a.ini.metadata.command),
-					aFile: String(a.file),
+					aCommand: String(a.metadata.command),
+					aFile: String(a.trace),
 				});
 				$("#curvemodalsSelector").append(fileRendered1);
 			}
-			addClick(a,code,framesize,0);
+			addClick(a,code,a.headers.Codec["Frame size (N)"],0);
 		}
+		$('[data-toggle="tooltip"]').tooltip();
 	}
-	$('[data-toggle="tooltip"]').tooltip();
 }
 
 function displaySelectedCurve(a) {//Display the current selected curve on the right
+	var metadataTitle=a.metadata.title;
+	var codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="", metadataTitleShort=a.metadata.title, nb=-1, allFunc="";
+	//Curves.names.forEach(x => allFunc+="deleteClick('delete', '"+x+"'),");
+	if (a.metadata.title.length > 21) {
+		nb=Curves.curveId().substring(5, Curves.curveId().length);
+		tooltip1="id='TooltipCurve"+nb+"' data-tippy-content='"+String(metadataTitle)+"'>";
+		Curves.toolTipsSelected[Number(nb)]='#TooltipCurve'+nb;
+		metadataTitleShort=a.metadata.title.substring(0,20)+"... ";
+	}
+	if (a.headers.Codec["Codeword size (N_cw)"] > a.headers.Codec["Frame size (N)"])
+		codeWord="<b>Codeword</b>: "+a.headers.Codec["Codeword size (N_cw)"]+"<br/>";
+	for (var j in a.headers) {
+		if (a.headers[j].Type) {
+			var tooltip = "";
+			if (tooltips.get(a.headers[j].Type))
+				tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.headers[j].Type) + "'";
+			if (a.headers[j].Type == "BP_HORIZONTAL_LAYERED") a.headers[j].Type = "BP_HLAYERED";
+			if (a.headers[j].Type == "BP_VERTICAL_LAYERED") a.headers[j].Type = "BP_VLAYERED";
+			tooltip2+="<br/><b>"+j+"</b>: "+"<span" + tooltip + ">" + a.headers[j].Type + "</span>";
+		}
+	}
+	if (a.metadata.doi)
+		metadataDoi="  <span class='curveIcon'><a href='https://doi.org/"+a.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>"
+	if (a.metadata.url)
+		metadataUrl="  <span class='curveIcon'><a href='"+a.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>"
+	if (a.metadata.command)
+		metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+Curves.curveId()+"_"+getId(a)+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
+	var selectedTemplate = $('#selectedTemplate').html();
+	Mustache.parse(selectedTemplate);
+	var selectedRendered=Mustache.render(selectedTemplate, {
+		sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
+		side: Curves.curveId(),
+		//allFunctions: allFunc,
+		aId: getId(a),
+		aTitle: metadataTitle,
+		aTitleShort: metadataTitleShort,
+		aFramesize: a.headers.Codec["Frame size (N)"],
+		filesCodeword: codeWord,
+		aCoderate: a.headers.Codec["Code rate"],
+		filesTooltip1: tooltip1,
+		filesTooltip2: tooltip2,
+		filesDoi: metadataDoi,
+		filesUrl: metadataUrl,
+		filesCommand: metadataCommand
+	});
+	$("#scurve #sAccordion").append(selectedRendered);
+	tippy(Curves.toolTipsSelected[nb], {
+		arrow: true,
+		arrowType: 'sharp',
+		animation: 'fade',
+	});
+	//$('#'+Curves.curveId()+getId(a)).on('click', function() {
+		if (a.metadata.command) {
+			var cmdSelectedTemplate = $('#cmdSelectedTemplate').html();
+			Mustache.parse(cmdSelectedTemplate);
+			var fileRendered1=Mustache.render(cmdSelectedTemplate, 	{side: Curves.curveId(),
+				aId: getId(a),
+				aTitle: metadataTitle,
+				aCommand: String(a.metadata.command),
+				aFile: String(a.trace),
+			});
+			$("#"+Curves.curveId()+"modals").append(fileRendered1);
+		}
+	//});
+}
+
+function displayInputCurve(a) {
 	var metadataTitle=a.ini.metadata.title;
 	var codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="", metadataTitleShort=a.ini.metadata.title, nb=-1, allFunc="";
 	//Curves.names.forEach(x => allFunc+="deleteClick('delete', '"+x+"'),");
@@ -598,8 +598,14 @@ function subAddClick(a, code, framesize, input) {
 	$(this).addClass("active");
 	if (Curves.length==Curves.max) console.log("Maximum quantity of curves reached!");
 	else {
-		$('#'+Curves.curveId()+a.id).prop('disabled', true);
-		displaySelectedCurve(a);
+		if (input==0) {
+			displaySelectedCurve(a);
+			Curves.addCurve(a);
+		}
+		else {
+			displayInputCurve(a);
+			Curves.addInputCurve(a);
+		}
 		//if (input==0) {
 			let cval=[];
 			for (let i=0; i<Curves.max; i++) {
@@ -610,15 +616,9 @@ function subAddClick(a, code, framesize, input) {
 				uri=uri+"&curve"+String(i)+"="+cval[i];
 			}
 			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),a.filename);
-			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.file)));
-			window.history.replaceState({},"aff3ct.github.io",uri);
+			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.trace)));
+			//window.history.replaceState({},"aff3ct.github.io",uri);
 		//}
-		Curves.addCurve(a);
-		if (input==0) {
-			Curves.updateAddButtons();
-			$("#selector .bers #accordion").empty();
-			applySelections();
-		}
 		plots.forEach(function(x) {
 			const CURVESBIS=[];
 			for (let l=0; l<Curves.max; l++) {
@@ -633,18 +633,20 @@ function subAddClick(a, code, framesize, input) {
 
 // Click listener for curves list
 function addClick(a, code, framesize, input) {//Plot the curve
-	$('#'+Curves.curveId()+a.id).on('click', function() {
-		subAddClick(a, code, framesize, 0);
-		// track the click with Google Analytics
-		/**ga('send', {
+	if (input==1) {
+		subAddClick(a, code, framesize, input);
+	}
+	else {
+		$('#'+Curves.curveId()+getId(a)).on('click', function() {
+			subAddClick(a, code, framesize, 0);
+			// track the click with Google Analytics
+			/**ga('send', {
 			hitType:       'event',
 			eventCategory: 'BER/FER Comparator',
 			eventAction:   'click',
 			eventLabel:    decodeURIComponent(a.filename)
 		});**/
 	});
-	if (input==1) {
-		subAddClick(a, code, framesize, input);
 	}
 }
 
@@ -738,12 +740,7 @@ function deleteClick(divId, idSide) {//unplot a curve
 			else uri=uri+"&curve"+String(i)+"="+cval[i];
 		}
 		uri = updateURLParameter(uri,idSide,"");
-		window.history.replaceState({},"aff3ct.github.io",uri);
-		if (Curves.currentFile!= "") {
-			$("#selector .bers #accordion").empty();
-			applySelections();
-		} 
-		Curves.updateAddButtons();
+		//window.history.replaceState({},"aff3ct.github.io",uri);
 		$("#s"+idSide).remove();
 		plots.forEach(function(x) {
 			const CURVESBIS=[];
@@ -796,39 +793,7 @@ window.onload = function() {
 }
 
 function applySelections() {
-	$("#accordion").empty();
-	if (Curves.selectedSizes.length==0 && Curves.selectedCodes.length==0) {
-		for (var code in Curves.files) {
-			let p={};
-			for (var i=0;i<(Curves.files[code]).length;i++) {
-				var f=Curves.files[code][i];
-				p[f.framesize]=true;
-			}
-			for (var framesize in p) {
-				displayFiles(code, framesize);
-			}
-		}
-	}
-	else if (Curves.selectedSizes.length==0) {
-		Curves.selectedCodes.forEach(function (code) {
-			let p={};
-			for (var i=0;i<(Curves.files[code]).length;i++) {
-				var f=Curves.files[code][i];
-				p[f.framesize]=true;
-			}
-			for (var framesize in p) {
-				displayFiles(code, framesize);
-			}
-		});
-	}
-	else if (Curves.selectedCodes.length==0) {
-		for (var code in Curves.files) {
-			Curves.selectedSizes.forEach(framesize => displayFiles(code, framesize));
-		}
-	}
-	else {
-		Curves.selectedCodes.forEach(code => Curves.selectedSizes.forEach(framesize => displayFiles(code, framesize)));
-	}
+	displayFiles(filters(Curves.files, -1));
 }
 
 function updateSelectedCodes(str) {
@@ -838,7 +803,12 @@ function updateSelectedCodes(str) {
 	else {
 		Curves.selectedCodes.splice(Curves.selectedCodes.indexOf(str.title), 1);
 	}
-	displayFrameSizes();
+	if (Curves.selectedCodes.length==0) displayAll();
+	else {
+		displayFrameSizes();
+		displayModems();
+		displayChannels();
+	}
 }
 
 function updateSelectedSizes(str) {
@@ -848,103 +818,326 @@ function updateSelectedSizes(str) {
 	else {
 		Curves.selectedSizes.splice(Curves.selectedSizes.indexOf(str), 1);
 	}
-	displayCodeTypes();
+	if (Curves.selectedSizes.length==0) displayAll();
+	else {
+		displayCodeTypes();
+		displayModems();
+		displayChannels();
+	}
 }
 
+function updateSelectedModems(str) {
+	if (document.getElementById(String(str.title)).checked == true) {
+		Curves.selectedModems.push(str.title);
+	}
+	else {
+		Curves.selectedModems.splice(Curves.selectedModems.indexOf(str.title), 1);
+	}
+	if (Curves.selectedModems.length==0) displayAll();
+	else {
+		displayCodeTypes();
+		displayFrameSizes();
+		displayChannels();
+	}
+}
+
+function updateSelectedChannels(str) {
+	if (document.getElementById(String(str.title)).checked == true) {
+		Curves.selectedChannels.push(str.title);
+	}
+	else {
+		Curves.selectedChannels.splice(Curves.selectedChannels.indexOf(str.title), 1);
+	}
+	if (Curves.selectedChannels.length==0) displayAll();
+	else {
+		displayCodeTypes();
+		displayFrameSizes();
+		displayModems();
+	}
+}
 window.onresize = function() {
 	Plotly.Plots.resize(GD.ber);
 	Plotly.Plots.resize(GD.fer);
     // Plotly.Plots.resize(GD.befe);
     // Plotly.Plots.resize(GD.thr);
-    document.getElementById('subSelector').style.height = String(80-((300/$("#scurve").height())*100))+"vh";
 };
 
-/* Interaction with the form */
-function displayCodeTypes() {
-	let files=Curves.files;
-	$(".codetype").empty();
-	var j=0;
-	for (var i in files)
-	{
-		if (j!=0) $(".codetype").append('<br>');
-		let indicator=0;
-		let stepSlider = document.getElementById('slider-step');
-		let coderate=stepSlider.noUiSlider.get();
-		if (Curves.selectedSizes.length!=0) {
-			Curves.selectedSizes.forEach(function(x) {
-				files[i].forEach(function(z) {
-					if (z.framesize==x && coderate[0]<=z.coderate && z.coderate<=coderate[1]) {
-						indicator++;
+function filterByCodeTypes(files) {//files: Array of files ---> Array of files
+	let p={};
+	if (Curves.selectedCodes.length!=0 && files.length!=0) {
+		Curves.selectedCodes.forEach(function(x) { if (files[x]) {
+			files[x].forEach(function(y) {
+				if (!p[x]) {
+					p[x]=[];
+				}
+				p[x].push(y);
+			})}
+			//else Curves.selectedCodes.splice(Curves.selectedCodes.indexOf(x),1);
+		});
+		return p;
+	}
+	else return files;
+}
+//files ==> refs 
+function filterByFrameSizes(files) {//files: Array of files ---> Array of files
+	let p={};
+	if (Curves.selectedSizes.length!=0 && files.length!=0) {
+		for(var i in files) {
+			files[i].forEach(function(x) {
+				Curves.selectedSizes.forEach(function(y) {
+					if (x.headers.Codec["Frame size (N)"]==y) {
+						if (!p[i]) {
+							p[i]=[];
+						}
+						p[i].push(x);
 					}
 				});
 			});
 		}
-		else indicator=1;
-		if (indicator==0) $(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')" disabled><label class="form-check-label" for="'+i+'" title="'+i+'" disabled>'+i+' ('+files[i].length+')'+'</label>');
-		else if (Curves.selectedSizes.length==0) $(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+files[i].length+')'+'</font></label>');
-		else $(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+indicator+')'+'</font></label>');
+		return p;
+	}
+	else return files;
+}
+function filterByCodeRates(files) {//files: Array of files ---> Array of files
+	let p={};
+	let stepSlider = document.getElementById('slider-step');
+	let coderate=stepSlider.noUiSlider.get();
+	if (coderate[0]==0 && coderate[1]==1) return files;
+	else {
+		for(var i in files) {
+			files[i].forEach(function(z) {
+				if (coderate[0]<=z.headers.Codec["Code rate"] && z.headers.Codec["Code rate"]<=coderate[1]) {
+					if (!p[i]) {
+						p[i]=[];
+					}
+					p[i].push(z);
+				}
+			});
+		}
+		return p;
+	}
+}
+
+function filterByModems(files) {//files: Array of files ---> Array of files
+	let p={};
+	if (Curves.selectedModems.length!=0) {
+		for(var i in files) {
+			files[i].forEach(function(x) { Curves.selectedModems.forEach(function(y){
+				if (x.headers.Modem.Type==y) {
+					if (!p[i]) {
+						p[i]=[];
+					}
+					p[i].push(x);
+				}
+			})});
+		}
+		return p;
+	}
+	else return files;
+}
+
+function filterByChannels(files) {//files: Array of files ---> Array of files
+	let p={};
+	if (Curves.selectedChannels.length!=0) {
+		for(var i in files) {
+			files[i].forEach(function(x) { Curves.selectedChannels.forEach(function(y){
+				if (x.headers.Channel.Type==y) {
+					if (!p[i]) {
+						p[i]=[];
+					}
+					p[i].push(x);
+				}
+			})});
+		}
+		return p;
+	}
+	else return files;
+}
+
+function filters(files, nb) {//nb is the indicator linked to a specific fiter to avoid
+	//0: Code type
+	//1: Frame size 
+	//2: Modem
+	//3: Channel
+	if (nb==-1) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(files)))));
+	if (nb==0) return filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(files))));
+	if (nb==1) return filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(files))));
+	if (nb==2) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(files))));
+	if (nb==3) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(files))));
+}
+
+function displayAll() {
+	displayCodeTypes();
+	displayFrameSizes();
+	displayModems();
+	displayChannels();
+}
+
+function displayCheckbox(length, font, endFont, disabled, fonction, i, div) {
+	let checkboxTemplate = $('#checkboxTemplate').html();
+	Mustache.parse(checkboxTemplate);
+	let checkboxRendered=Mustache.render(checkboxTemplate, {
+		element: i,
+		disabled: disabled,
+		startBlackFont: font,
+		endBlackFont: endFont,
+		length: length,
+		function: fonction
+	});
+	$(div).append(checkboxRendered);
+}
+
+function displayCodeTypes() {
+	let files=Curves.files;
+	let filteredFiles=filters(Curves.files, 0);
+	var j=0;
+	$(".codetype").empty();
+	for (var i in files)
+	{
+		if (j!=0) $(".codetype").append('<br>');
+		let number=0;
+		let black='';
+		let disabled='';
+		let endBlack='';
+		let fonction='updateSelectedCodes(';
+		if (filteredFiles[i]) {
+			//$(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+filteredFiles[i].length+')'+'</font></label>');
+			black='<font color="black">';
+			endBlack='</font>';
+			number=filteredFiles[i].length;
+			displayCheckbox(number, black, endBlack, disabled, fonction, i, ".codetype");
+		}
+		else if (Curves.selectedCodes.indexOf(i)>-1) {
+			//$(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' (0)'+'</font></label>');
+			black='<font color="black">';
+			endBlack='</font>';
+			displayCheckbox(number, black, endBlack, disabled, fonction, i, ".codetype");
+		}
+		else {
+			//$(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')" disabled><label class="form-check-label" for="'+i+'" title="'+i+'">'+i+' (0)'+'</label>');
+			disabled='disabled';
+			displayCheckbox(number, black, endBlack, disabled, fonction, i, ".codetype");
+		}
 		j++;
 	}
 	$(".codetype").off();
 	Curves.selectedCodes.forEach(function(x) {
-		if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
-		else document.getElementById(x).checked = false;
+		if (document.getElementById(x)!=null) {
+			if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
+			else document.getElementById(x).checked = false;
+		}
 	});
 }
 
 function displayFrameSizes() {
-	let files=Curves.files;
+	let files=filters(Curves.files, 1);
 	var p={};
 	var j=0;
 	for (var code in files) {
 		for (var i=0;i<(files[code]).length;i++) {
 			var f=files[code][i];
-			if (p[f.framesize]>=0) p[f.framesize]++;
-			else p[f.framesize]=1;
+			if (p[f.headers.Codec["Frame size (N)"]]>=0) p[f.headers.Codec["Frame size (N)"]]++;
+			else p[f.headers.Codec["Frame size (N)"]]=1;
 		}
 	}
 	$("#selector .size").empty();
 	for (var i in p){
 		if (j!=0) $(".size").append('<br>');
-		else j=i;
-		let indicator=0;
-		let stepSlider = document.getElementById('slider-step');
-		let coderate=stepSlider.noUiSlider.get();
-		if (Curves.selectedCodes.length!=0) {
-			Curves.selectedCodes.forEach(function(y) {
-				let f=files[y].filter(x=>x.framesize==i);
-				if (f.length>0) {
-					f.forEach(function(z) {
-						if (coderate[0]<=z.coderate && z.coderate<=coderate[1]) {
-							indicator++;
-						}
-					});
-				}
-			});
-		}
-		else indicator=1;
-		if (indicator==0) $("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')" disabled><label class="form-check-label" for="'+i+'" title="'+i+'" disabled>'+i+' (0)'+'</label>');
-		else if (Curves.selectedCodes.length==0) $("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+p[i]+')'+'</font></label>');
-		else $("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+indicator+')'+'</font></label>');
+		let number=p[i];
+		let black='<font color="black">';
+		let disabled='';
+		let endBlack='</font>';
+		let fonction='updateSelectedSizes(';
+		j++;
+		displayCheckbox(number, black, endBlack, disabled, fonction, i, "#selector .size");
+		//$("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+p[i]+')'+'</font></label>');
 	}
 	Curves.selectedSizes.forEach(function(x) {
-		if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
-		else document.getElementById(x).checked = false;
+		if (document.getElementById(x)!=null) {
+			if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
+			else document.getElementById(x).checked = false;
+		}
 	});
 	$("#selector .size").off();
+}
+
+function displayModems() {
+	let files=filters(Curves.files, 2);
+	var p={};
+	var j=0;
+	for (var code in files) {
+		for (var i=0;i<(files[code]).length;i++) {
+			var f=files[code][i];
+			if (p[f.headers.Modem.Type]>=0) p[f.headers.Modem.Type]++;
+			else p[f.headers.Modem.Type]=1;
+		}
+	}
+	$("#selector .modem").empty();
+	for (var i in p){
+		if (j!=0) $(".modem").append('<br>');
+		else j++;
+		let number=p[i];
+		let black='<font color="black">';
+		let disabled='';
+		let endBlack='</font>';
+		let fonction='updateSelectedModems(';
+		//$("#selector .modem").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedModems('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+p[i]+')'+'</font></label>');	
+		displayCheckbox(number, black, endBlack, disabled, fonction, i, "#selector .modem");
+	}
+	Curves.selectedModems.forEach(function(x) {
+		if (document.getElementById(x)!=null) {
+			if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
+			else document.getElementById(x).checked = false;
+		}
+	});
+	$("#selector .modem").off();
+}
+
+function displayChannels() {
+	let files=filters(Curves.files, 3);
+	var p={};
+	var j=0;
+	for (var code in files) {
+		for (var i=0;i<(files[code]).length;i++) {
+			var f=files[code][i];
+			if (p[f.headers.Channel.Type]>=0) p[f.headers.Channel.Type]++;
+			else p[f.headers.Channel.Type]=1;
+		}
+	}
+	$("#selector .channel").empty();
+	for (var i in p){
+		if (j!=0) $(".channel").append('<br>');
+		else j++;
+		let number=p[i];
+		let black='<font color="black">';
+		let disabled='';
+		let endBlack='</font>';
+		let fonction='updateSelectedChannels(';
+		//$("#selector .channel").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedChannels('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+p[i]+')'+'</font></label>');
+		displayCheckbox(number, black, endBlack, disabled, fonction, i, "#selector .channel");
+	}
+	Curves.selectedChannels.forEach(function(x) {
+		if (document.getElementById(x)!=null) {
+			if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
+			else document.getElementById(x).checked = false;
+		}
+	});
+	$("#selector .channel").off();
 }
 
 // files: array of files.
 // ordered: files are first sorted by code type, then by wordsize.
 function orderFiles(files) {
 	var ordered={};
-	for (var i=0;i<files.length;i++){
+	for (var i in files){
 		var f=files[i];
-		if (typeof ordered[f.code]=="undefined") ordered[f.code]=[];
-		ordered[f.code].push(f);
+		if (f.headers.Simulation) {
+			if (typeof ordered[f.headers.Simulation["Code type (C)"]]=="undefined") ordered[f.headers.Simulation["Code type (C)"]]=[];
+			ordered[f.headers.Simulation["Code type (C)"]].push(f);
+		}
 	}
 	for (var i in ordered)
-		ordered[i].sort((a,b)=> a.coderate<b.coderate);
+		ordered[i].sort((a,b)=> b.headers.Codec["Frame size (N)"]<a.headers.Codec["Frame size (N)"]);
 	return ordered;
 }
 
@@ -967,27 +1160,27 @@ function drawCurvesFromURI() {
 				filename=LZString.decompressFromEncodedURIComponent(filename);
 				let file=filename;
 				let o=parseFile("My Curve", file);
-				addClick(o, file, o.framesize, 1);
+				addClick(o, file, o.headers.Codec["Frame size (N)"], 1);
 			}
 			else {
 				let f=selectFile(ordered,filename);
 				if (f) {
-					$("#codetypeselector").val(f.code);
+					$("#codetypeselector").val(f.headers.Simulation["Code type (C)"]);
 					$(".selector .codetype").trigger("change");
-					$("#sizeselector").val(f.framesize);
+					$("#sizeselector").val(f.headers.Codec["Frame size (N)"]);
 					$(".selector .size").trigger("change");
-					$("#"+idSide+f.id).click();
+					$("#"+idSide+getId(f)).click();
 				}
 				else {
 					filename=findGetParameter(idSide.substring(0,idSide.length-1)+String(Number(idSide.substring(idSide.length-1,idSide.length))-1));
 					if (filename) {
 						f=selectFile(ordered,filename);
 						if (f) {
-							$("#codetypeselector").val(f.code);
+							$("#codetypeselector").val(f.headers.Simulation["Code type (C)"]);
 							$(".selector .codetype").trigger("change");
-							$("#sizeselector").val(f.framesize);
+							$("#sizeselector").val(f.headers.Codec["Frame size (N)"]);
 							$(".selector .size").trigger("change");
-							$("#"+idSide+f.id).click();
+							$("#"+idSide+getId(f)).click();
 							$("#delete"+idSide.substring(idSide.length-1,idSide.length)+" .close").click();
 						}
 					}
