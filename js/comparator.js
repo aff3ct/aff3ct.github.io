@@ -1342,15 +1342,15 @@ function drawCurvesFromURI() {
 		if (id) {
 			if (id.slice(0,4)=="NoWw") {
 				let o=LZString.decompressFromEncodedURIComponent(text2json(id));
-				addClick(o, 1);
+				subAddClick(o, 1);
 			}
 			else {
 				let f=selectFile(id);
 				if (f) {
-					addClick(f, 0);
+					subAddClick(f, 0);
 				}
 				else {
-					addClick(Curves.files["BCH"][0], 0);
+					subAddClick(Curves.files["BCH"][0], 0);
 					deleteClick('delete', idSide);
 				}
 			}
