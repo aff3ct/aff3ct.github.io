@@ -1341,7 +1341,7 @@ function drawCurvesFromURI() {
 		let id=findGetParameter(idSide);
 		if (id) {
 			if (id.slice(0,4)=="NoWw") {
-				let o=LZString.decompressFromEncodedURIComponent(text2json(id));
+				let o=text2json(LZString.decompressFromEncodedURIComponent(id));
 				subAddClick(o, 1);
 			}
 			else {
