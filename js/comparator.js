@@ -614,12 +614,6 @@ function subAddClick(a, input) {
 	if (Curves.length==Curves.max) console.log("Maximum quantity of curves reached!");
 	else {
 		displaySelectedCurve(a);
-		if (input==0) {
-			Curves.addCurve(a);
-		}
-		else {
-			Curves.addInputCurve(a);
-		}
 		//if (input==0) {
 			let cval=[];
 			for (let i=0; i<Curves.max; i++) {
@@ -632,6 +626,12 @@ function subAddClick(a, input) {
 			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),a.filename);
 			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.trace)));
 			window.history.replaceState({},"aff3ct.github.io",uri);
+			if (input==0) {
+				Curves.addCurve(a);
+			}
+			else {
+				Curves.addInputCurve(a);
+			}
 		//}
 		plots.forEach(function(x) {
 			const CURVESBIS=[];
