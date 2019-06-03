@@ -623,7 +623,7 @@ function subAddClick(a, input) {
 			for (let i=1; i<Curves.max; i++) {
 				uri=uri+"&curve"+String(i)+"="+cval[i];
 			}
-			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),a.filename);
+			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),getId(a));
 			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.trace)));
 			window.history.replaceState({},"aff3ct.github.io",uri);
 			if (input==0) {
@@ -1326,49 +1326,32 @@ function orderFiles(files) {
 	return ordered;
 }
 
-function selectFile(files,filename)
+function selectFile(hashId)
 {
-	for (var code in files) {
-		for (var f=0;f<files[code].length;f++) {
-			if (decodeURIComponent(files[code][f].filename) == filename) return files[code][f];
+	for (var code in Curves.files) {
+		for (var f=0;f<Curves.files[code].length;f++) {
+			if (getId(Curves.files[code][f]) == hashId) return Curves.files[code][f];
 		}
 	}
 	return null;
 }
 
 function drawCurvesFromURI() {
-	let ordered=Curves.files;
 	Curves.names.forEach(function(idSide) {
-		let filename=findGetParameter(idSide);
-		if (filename) {
-			if (filename.slice(0,4)=="NoWw") {
-				filename=LZString.decompressFromEncodedURIComponent(filename);
-				let file=filename;
-				let o=parseFile("My Curve", file);
+		let id=findGetParameter(idSide);
+		if (id) {
+			if (id.slice(0,4)=="NoWw") {
+				let o=LZString.decompressFromEncodedURIComponent(text2json(id));
 				addClick(o, 1);
 			}
 			else {
-				let f=selectFile(ordered,filename);
+				let f=selectFile(id);
 				if (f) {
-					$("#codetypeselector").val(f.headers.Simulation["Code type (C)"]);
-					$(".selector .codetype").trigger("change");
-					$("#sizeselector").val(f.headers.Codec["Frame size (N)"]);
-					$(".selector .size").trigger("change");
-					$("#"+idSide+getId(f)).click();
+					addClick(f, 0);
 				}
 				else {
-					filename=findGetParameter(idSide.substring(0,idSide.length-1)+String(Number(idSide.substring(idSide.length-1,idSide.length))-1));
-					if (filename) {
-						f=selectFile(ordered,filename);
-						if (f) {
-							$("#codetypeselector").val(f.headers.Simulation["Code type (C)"]);
-							$(".selector .codetype").trigger("change");
-							$("#sizeselector").val(f.headers.Codec["Frame size (N)"]);
-							$(".selector .size").trigger("change");
-							$("#"+idSide+getId(f)).click();
-							$("#delete"+idSide.substring(idSide.length-1,idSide.length)+" .close").click();
-						}
-					}
+					addClick(Curves.files["BCH"][0], 0);
+					deleteClick('delete', idSide);
 				}
 			}
 		}
