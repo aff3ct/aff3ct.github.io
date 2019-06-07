@@ -497,7 +497,7 @@ function subAddClick(a, input) {
 			}
 			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),getId(a));
 			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.trace)));
-			//window.history.replaceState({},"aff3ct.github.io",uri);
+			window.history.replaceState({},"aff3ct.github.io",uri);
 			if (input==0) {
 				Curves.addCurve(a);
 			}
@@ -565,7 +565,7 @@ function deleteClick(divId, idSide) {//unplot a curve
 			else uri=uri+"&curve"+String(i)+"="+cval[i];
 		}
 		uri = updateURLParameter(uri,idSide,"");
-		//window.history.replaceState({},"aff3ct.github.io",uri);
+		window.history.replaceState({},"aff3ct.github.io",uri);
 		$("#s"+idSide).remove();
 		plots.forEach(function(x) {
 			const CURVESBIS=[];
