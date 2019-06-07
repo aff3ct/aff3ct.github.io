@@ -23,7 +23,7 @@ const Curves = {
 	selectedModems: [],
 	selectedChannels: [],
 	inputCurves: [],
-	files: [],
+	refs: [],
 	initialization() {
 		for (let i=0; i<this.max; i++) {
 			this.values.push({ber:[],fer:[]});
@@ -56,28 +56,7 @@ const Curves = {
 		}
 		return result;
 	},
-	displayed(i) {
-		//return the curve name of the i^(th) displayed curve (% Curves.max), "null" if it's empty
-		if (this.length==0) {
-			return "null";
-		}
-		i=i%this.max;
-		let j=0, k=0;
-		while (k<i) {
-			if (this.disponibility[j]==0) k++;
-			j++;
-			j=j%this.max;
-		}
-		return this.names[(j-1)%this.max];
-	},
 	addInputCurve(a) {
-		/**let i=this.firstSideAvailable();
-		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
-		this.id[i]=a.id;
-		this.plots.forEach(x => this.values[i][x]=a[x]);
-		if (this.length<this.max) this.length++;
-		this.disponibility[i]=0;
-		this.hidden[i]=0;**/
 		let i=this.firstSideAvailable();
 		this.input[i]=1;
 		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
@@ -160,28 +139,28 @@ const LAYOUT= {
     // thr: Object.assign({ yaxis: { autorange: true, hoverformat: '.2e',title: 'Throughput (Mb/s)'}},LT)
 };
 
-var GD={};
+let GD={};
 
 function updateURLParameter(url, param, paramVal)
 {
-	var TheAnchor = null;
-	var newAdditionalURL = "";
-	var tempArray = url.split("?");
-	var baseURL = tempArray[0];
-	var additionalURL = tempArray[1];
-	var temp = "";
+	let TheAnchor = null;
+	let newAdditionalURL = "";
+	let tempArray = url.split("?");
+	let baseURL = tempArray[0];
+	let additionalURL = tempArray[1];
+	let temp = "";
 
 	if (additionalURL)
 	{
-		var tmpAnchor = additionalURL.split("#");
-		var TheParams = tmpAnchor[0];
+		let tmpAnchor = additionalURL.split("#");
+		let TheParams = tmpAnchor[0];
 		TheAnchor = tmpAnchor[1];
 		if(TheAnchor)
 			additionalURL = TheParams;
 
 		tempArray = additionalURL.split("&");
 
-		for (var i=0; i<tempArray.length; i++)
+		for (let i=0; i<tempArray.length; i++)
 		{
 			if(tempArray[i].split('=')[0] != param)
 			{
@@ -192,8 +171,8 @@ function updateURLParameter(url, param, paramVal)
 	}
 	else
 	{
-		var tmpAnchor = baseURL.split("#");
-		var TheParams = tmpAnchor[0];
+		let tmpAnchor = baseURL.split("#");
+		let TheParams = tmpAnchor[0];
 		TheAnchor = tmpAnchor[1];
 
 		if(TheParams)
@@ -203,12 +182,12 @@ function updateURLParameter(url, param, paramVal)
 	if(TheAnchor)
 		paramVal += "#" + TheAnchor;
 	if (paramVal=="") paramVal="null";
-	var rows_txt = temp + "" + param + "=" + paramVal;
+	let rows_txt = temp + "" + param + "=" + paramVal;
 	return baseURL + "?" + newAdditionalURL + rows_txt;
 }
 
 function findGetParameter(parameterName) {
-	var result = null,
+	let result = null,
 	tmp = [];
 	window.location.search
 	.substr(1)
@@ -221,7 +200,7 @@ function findGetParameter(parameterName) {
 }
 
 // size of the compressed Gitlab refs database in bytes
-var EVT_TOTAL = 1279262;
+let EVT_TOTAL = 1279262;
 function loadDatabase() {//Return String that include the whole file
 	let databaseURL = GITLAB + "jobs/artifacts/" + BRANCH + "/raw/database.json?job=deploy-database-json";
 	$.ajaxSetup({
@@ -235,7 +214,7 @@ function loadDatabase() {//Return String that include the whole file
 			logger("**Error loading \"" + databaseURL + "\"\n"+status+" "+error);
 		},
 		xhr: function (){
-			var xhr = new window.XMLHttpRequest();
+			let xhr = new window.XMLHttpRequest();
 			xhr.addEventListener("progress", function (evt) {
 				let evt_total;
 				if (evt.lengthComputable) evt_total = evt.total;
@@ -249,7 +228,7 @@ function loadDatabase() {//Return String that include the whole file
 		}
 	}).done(function(data) {
 		let dataTab=JSON.parse(data);
-		Curves.files=orderFiles(dataTab);
+		Curves.refs=orderFiles(dataTab);
 		displaySlider();
 		displayCodeTypes();
 		displayFrameSizes();
@@ -265,7 +244,7 @@ function loadDatabase() {//Return String that include the whole file
 }
 
 function displaySlider() {
-	var stepSlider = document.getElementById('slider-step');
+	let stepSlider = $('#slider-step')[0];
 	noUiSlider.create(stepSlider, {
 		start: [0,1],
 		connect: true,
@@ -276,7 +255,7 @@ function displaySlider() {
 		}
 	});
 	$("#slider-step").append("<div class='my-3'><span id='slider-step-value'></span></div>")
-	var stepSliderValueElement = document.getElementById('slider-step-value');
+	let stepSliderValueElement = $('#slider-step-value')[0];
 	stepSlider.noUiSlider.on('update', function (values) {
 		displayAll();
 		stepSliderValueElement.innerHTML = "Values: ";
@@ -284,51 +263,60 @@ function displaySlider() {
 	});
 }
 
-function getId(file) {
-	return file.hash.value.substring(0,7);
+function getId(ref) {
+	return ref.hash.value.substring(0,7);
 }
 
-function sortFiles(files) {
-	for (var code in files) {
-		files[code].sort(function(a,b) {
+function sortFiles(refs) {
+	let sizes={};
+	for (let code in refs) {
+		refs[code].sort(function(a,b) {
 			a.headers.Codec["Frame size (N)"]>b.headers.Codec["Frame size (N)"];
 			//if (a.headers.Codec["Frame size (N)"]==b.headers.Codec["Frame size (N)"]) a.headers.Codec["Code rate"]>b.headers.Codec["Code rate"];
 		});
+		refs[code].forEach(function(x){
+			if (!sizes[code]) 
+				sizes[code]=[x.headers.Codec["Frame size (N)"]];
+			else if (sizes[code].indexOf(x.headers.Codec["Frame size (N)"])<0)
+				sizes[code].push(x.headers.Codec["Frame size (N)"]);
+		});
 	}
-	for (var code in files) {
-		let start=0;
-		let end=0;
-		while (start<=files[code].length-1) {
-			console.log("code: "+code+" *** start: "+start+" *** ");
-			console.log(files[code][start].headers);
-			let framesize=files[code][start].headers.Codec["Frame size (N)"];
-			if (files[code][end+1].headers.Codec["Frame size (N)"]!=files[code][end].headers.Codec["Frame size (N)"]) {
-				let arr=files[code].slice(start, end+1);
-				arr.forEach(function(x) {
-					files[code].splice(start, 1, x);
-					start++;
-				});
-				start=end;
+	for (let code in refs) {
+		let arr2=[];
+		sizes[code].forEach(function(x) {
+			let arr=[];
+			refs[code].forEach(function(y) {
+				if (y.headers.Codec["Frame size (N)"]==x)
+					arr.push(y);
+				else {
+					arr.sort((a,b) => a.headers.Codec["Code rate"]<b.headers.Codec["Code rate"]);
+					arr.forEach(z => arr2.push(z));
+					arr=[];
+				}
+			});
+			if (arr.length!=0) {
+				arr.sort((a,b) => a.headers.Codec["Code rate"]<b.headers.Codec["Code rate"]);
+				arr.forEach(z => arr2.push(z));
 			}
-			else end++;
-		}
+		});
+		if (arr2.length>0)
+			refs[code]=arr2;
 	}
 }
 
-function displayFiles(files) {//Display files that can be selected
-	//sortFiles(files);
+function displayFiles(refs) {//Display refs that can be selected
+	sortFiles(refs);
 	$("#refsList #accordion").empty();
 	Curves.toolTips=[];
 	$("#"+Curves.curveId()+"modalsSelector").empty();
-	for (var code in files) {
-		files[code].sort((a,b) => a.headers.Codec["Frame size (N)"]>b.headers.Codec["Frame size (N)"]);
-		for (let i=0; i<files[code].length; i++) {
-			var a=files[code][i];
+	for (let code in refs) {
+		for (let i=0; i<refs[code].length; i++) {
+			let a=refs[code][i];
 			/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(a.metadata.title);
-			var metadataTitle=a.metadata.title;
-			var metadataTitleShort=a.metadata.title;
-			var titleEnd="";
-			var codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="", tooltipParam="";
+			let metadataTitle=a.metadata.title;
+			let metadataTitleShort=a.metadata.title;
+			let titleEnd="";
+			let codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="", tooltipParam="";
 			if (a.metadata.title.length > 23) {
 				if (RegExp.$1=="" || RegExp.$2=="") metadataTitleShort=a.metadata.title.substring(0,19)+'... ';
 				else {
@@ -341,9 +329,9 @@ function displayFiles(files) {//Display files that can be selected
 			}
 			if (a.headers.Codec["Codeword size (N_cw)"] > a.headers.Codec["Frame size (N)"])
 				codeWord="<b>Codeword</b>: "+a.headers.Codec["Codeword size (N_cw)"]+"<br/>";
-			for (var j in a.headers) {
+			for (let j in a.headers) {
 				if (a.headers[j].Type) {
-					var tooltip2 = "";
+					let tooltip2 = "";
 					if (tooltips.get(a.headers[j].Type))
 						tooltip2 = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.headers[j].Type) + "'";
 					if (a.headers[j].Type == "BP_HORIZONTAL_LAYERED") a.headers[j].Type = "BP_HLAYERED";
@@ -357,10 +345,10 @@ function displayFiles(files) {//Display files that can be selected
 				metadataUrl="  <span class='curveIcon'><a href='"+a.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
 			if (a.metadata.command)
 				metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+"_"+getId(a)+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
-			var filesTemplate = $('#filesTemplate').html();
-			Mustache.parse(filesTemplate);
-			var filesRendered=Mustache.render(filesTemplate, {
-				filesI: String(i),
+			let refsTemplate = $('#refsTemplate').html();
+			Mustache.parse(refsTemplate);
+			let refsRendered=Mustache.render(refsTemplate, {
+				refsI: String(i),
 				sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
 				side: Curves.curveId(),
 				aId: getId(a),
@@ -369,29 +357,29 @@ function displayFiles(files) {//Display files that can be selected
 				aTitle: metadataTitle,
 				aTitleEnd: titleEnd,
 				aFramesize: a.headers.Codec["Frame size (N)"],
-				filesCodeword: codeWord,
+				refsCodeword: codeWord,
 				aCoderate: a.headers.Codec["Code rate"],
-				filesTooltip: tooltip,
-				filesDoi: metadataDoi,
-				filesUrl: metadataUrl,
-				filesCommand: metadataCommand
+				refsTooltip: tooltip,
+				refsDoi: metadataDoi,
+				refsUrl: metadataUrl,
+				refsCommand: metadataCommand
 			});
-			$("#refsList #accordion").append(filesRendered);
+			$("#refsList #accordion").append(refsRendered);
 			tippy(Curves.toolTips[Curves.toolTips.length-1], {
 				arrow: true,
 				arrowType: 'sharp',
 				animation: 'fade',
 			});
 			if (a.metadata.command) {
-				var cmdSelectorTemplate = $('#cmdSelectorTemplate').html();
+				let cmdSelectorTemplate = $('#cmdSelectorTemplate').html();
 				Mustache.parse(cmdSelectorTemplate);
-				var fileRendered1=Mustache.render(cmdSelectorTemplate, 	{side: Curves.curveId(),
+				let refRendered1=Mustache.render(cmdSelectorTemplate, 	{side: Curves.curveId(),
 					aId: getId(a),
 					aTitle: metadataTitle,
 					aCommand: String(a.metadata.command),
 					aFile: String(a.trace),
 				});
-				$("#curvemodalsSelector").append(fileRendered1);
+				$("#curvemodalsSelector").append(refRendered1);
 			}
 			addClick(a, 0);
 		}
@@ -400,9 +388,8 @@ function displayFiles(files) {//Display files that can be selected
 }
 
 function displaySelectedCurve(a) {//Display the current selected curve on the right
-	var metadataTitle=a.metadata.title;
-	var codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="", metadataTitleShort=a.metadata.title, nb=-1, allFunc="";
-	//Curves.names.forEach(x => allFunc+="deleteClick('delete', '"+x+"'),");
+	let metadataTitle=a.metadata.title;
+	let codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="", metadataTitleShort=a.metadata.title, nb=-1, allFunc="";
 	if (a.metadata.title.length > 21) {
 		nb=Curves.curveId().substring(5, Curves.curveId().length);
 		tooltip1="id='TooltipCurve"+nb+"' data-tippy-content='"+String(metadataTitle)+"'>";
@@ -411,9 +398,9 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 	}
 	if (a.headers.Codec["Codeword size (N_cw)"] > a.headers.Codec["Frame size (N)"])
 		codeWord="<b>Codeword</b>: "+a.headers.Codec["Codeword size (N_cw)"]+"<br/>";
-	for (var j in a.headers) {
+	for (let j in a.headers) {
 		if (a.headers[j].Type) {
-			var tooltip = "";
+			let tooltip = "";
 			if (tooltips.get(a.headers[j].Type))
 				tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.headers[j].Type) + "'";
 			if (a.headers[j].Type == "BP_HORIZONTAL_LAYERED") a.headers[j].Type = "BP_HLAYERED";
@@ -427,23 +414,22 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 		metadataUrl="  <span class='curveIcon'><a href='"+a.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>"
 	if (a.metadata.command)
 		metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+Curves.curveId()+"_"+getId(a)+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
-	var selectedTemplate = $('#selectedTemplate').html();
+	let selectedTemplate = $('#selectedTemplate').html();
 	Mustache.parse(selectedTemplate);
-	var selectedRendered=Mustache.render(selectedTemplate, {
+	let selectedRendered=Mustache.render(selectedTemplate, {
 		sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
 		side: Curves.curveId(),
-		//allFunctions: allFunc,
 		aId: getId(a),
 		aTitle: metadataTitle,
 		aTitleShort: metadataTitleShort,
 		aFramesize: a.headers.Codec["Frame size (N)"],
-		filesCodeword: codeWord,
+		refsCodeword: codeWord,
 		aCoderate: a.headers.Codec["Code rate"],
-		filesTooltip1: tooltip1,
-		filesTooltip2: tooltip2,
-		filesDoi: metadataDoi,
-		filesUrl: metadataUrl,
-		filesCommand: metadataCommand
+		refsTooltip1: tooltip1,
+		refsTooltip2: tooltip2,
+		refsDoi: metadataDoi,
+		refsUrl: metadataUrl,
+		refsCommand: metadataCommand
 	});
 	$("#scurve #sAccordion").append(selectedRendered);
 	tippy(Curves.toolTipsSelected[nb], {
@@ -451,47 +437,43 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 		arrowType: 'sharp',
 		animation: 'fade',
 	});
-	//$('#'+Curves.curveId()+getId(a)).on('click', function() {
-		if (a.metadata.command) {
-			var cmdSelectedTemplate = $('#cmdSelectedTemplate').html();
-			Mustache.parse(cmdSelectedTemplate);
-			var fileRendered1=Mustache.render(cmdSelectedTemplate, 	{side: Curves.curveId(),
-				aId: getId(a),
-				aTitle: metadataTitle,
-				aCommand: String(a.metadata.command),
-				aFile: String(a.trace),
-			});
-			$("#"+Curves.curveId()+"modals").append(fileRendered1);
-		}
-	//});
-}
+	if (a.metadata.command) {
+		let cmdSelectedTemplate = $('#cmdSelectedTemplate').html();
+		Mustache.parse(cmdSelectedTemplate);
+		let refRendered1=Mustache.render(cmdSelectedTemplate, 	{side: Curves.curveId(),
+			aId: getId(a),
+			aTitle: metadataTitle,
+			aCommand: String(a.metadata.command),
+			aFile: String(a.trace),
+		});
+		$("#"+Curves.curveId()+"modals").append(refRendered1);
+	}}
 
-function subAddClick(a, input) {
-	let code=a.headers.Codec.Type;
-	let files=Curves.files[code];
-	if (Curves.length==0) {
-		var deleteAllTemplate = $('#deleteAllTemplate').html();
-		Mustache.parse(deleteAllTemplate);
-		$("#sAccordion").append(deleteAllTemplate);
-		$("#plotber").css("display", "inline");
-		$("#plotfer").css("display", "inline");
-	}
-	$("#tips").css("display", "none");
-	const plots=["ber","fer"/*,"befe","thr"*/];
-	$("#selector .bers .active").removeClass("active");
-	$(this).addClass("active");
-	if (Curves.length==Curves.max) {
-		console.log("Maximum quantity of curves reached!");
-		alert("For readability, you can not display more than 10 curves.");
-	}
-	else {
-		displaySelectedCurve(a);
-		//if (input==0) {
+	function subAddClick(a, input) {
+		let code=a.headers.Codec.Type;
+		let refs=Curves.refs[code];
+		if (Curves.length==0) {
+			let deleteAllTemplate = $('#deleteAllTemplate').html();
+			Mustache.parse(deleteAllTemplate);
+			$("#sAccordion").append(deleteAllTemplate);
+			$("#plotber").css("display", "inline");
+			$("#plotfer").css("display", "inline");
+		}
+		$("#tips").css("display", "none");
+		const plots=["ber","fer"/*,"befe","thr"*/];
+		$("#selector .bers .active").removeClass("active");
+		$(this).addClass("active");
+		if (Curves.length==Curves.max) {
+			console.log("Maximum quantity of curves reached!");
+			alert("For readability, you can not display more than 10 curves.");
+		}
+		else {
+			displaySelectedCurve(a);
 			let cval=[];
 			for (let i=0; i<Curves.max; i++) {
 				cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
 			}
-			var uri  = "/comparator.html?curve0="+cval[0];
+			let uri  = "/comparator.html?curve0="+cval[0];
 			for (let i=1; i<Curves.max; i++) {
 				uri=uri+"&curve"+String(i)+"="+cval[i];
 			}
@@ -504,18 +486,17 @@ function subAddClick(a, input) {
 			else {
 				Curves.addInputCurve(a);
 			}
-		//}
-		plots.forEach(function(x) {
-			const CURVESBIS=[];
-			for (let l=0; l<Curves.max; l++) {
-				if (Curves.plotOrder[l]!=-1) {
-					CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
+			plots.forEach(function(x) {
+				const CURVESBIS=[];
+				for (let l=0; l<Curves.max; l++) {
+					if (Curves.plotOrder[l]!=-1) {
+						CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
+					}
 				}
-			}
-			Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
-		});
+				Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
+			});
+		}
 	}
-}
 
 // Click listener for curves list
 function addClick(a, input) {//Plot the curve
@@ -553,12 +534,12 @@ function deleteClick(divId, idSide) {//unplot a curve
 		Curves.deleteCurve(idSide.substring(5, idSide.length));
 		if (Curves.length==0) {
 			$("#closeAll").remove();
-			document.getElementById("tips").style.display = "inline";
-			document.getElementById("plotber").style.display = "none";
-			document.getElementById("plotfer").style.display = "none";
+			$("#tips").css("display", "inline");
+			$("#plotber").css("display", "none");
+			$("#plotfer").css("display", "none");
 		}
 		let cval=[];
-		var uri  = "/comparator.html?curve0=";
+		let uri  = "/comparator.html?curve0=";
 		for (let i=0; i<Curves.max; i++) {
 			cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
 			if (i==0) uri+=cval[0];
@@ -605,9 +586,9 @@ function showCurve(idSide) {
 	});
 	$("#scurve"+String(idSide)).fadeTo("fast", 1);
 	$("#show"+String(idSide)).remove();
-	var hideTemplate = $('#hideTemplate').html();
+	let hideTemplate = $('#hideTemplate').html();
 	Mustache.parse(hideTemplate);
-	var hideRendered=Mustache.render(hideTemplate, {
+	let hideRendered=Mustache.render(hideTemplate, {
 		sideNumber: String(idSide)
 	});
 	$("#delete"+String(idSide)).append(hideRendered);
@@ -632,9 +613,9 @@ function hideCurve(idSide) {
 	});
 	$("#scurve"+String(idSide)).fadeTo("slow", 0.33);
 	$("#hide"+String(idSide)).remove();
-	var showTemplate = $('#showTemplate').html();
+	let showTemplate = $('#showTemplate').html();
 	Mustache.parse(showTemplate);
-	var showRendered=Mustache.render(showTemplate, {
+	let showRendered=Mustache.render(showTemplate, {
 		sideNumber: String(idSide)
 	});
 	$("#delete"+String(idSide)).append(showRendered);
@@ -644,17 +625,16 @@ function hideCurve(idSide) {
 
 function loadUniqueFile(fileInput, i) {//Load a file from input
 	if (i<fileInput.files.length) {
-		var file = fileInput.files[i];
+		let file = fileInput.files[i];
 		if (file.type=="text/plain")
 		{
 			$("#fileDisplayArea").empty();
 			if (Curves.length<Curves.max) {
-				var reader = new FileReader();
+				let reader = new FileReader();
 				reader.readAsText(file);
 				reader.onloadend = function(e)
 				{
 					let o=text2json(reader.result, file.name);
-					console.log(o);
 					let filename = encodeURIComponent(getId(o));
 					addClick(o, 1);
 					loadUniqueFile(fileInput, i+1);
@@ -681,8 +661,8 @@ window.onload = function() {
 }
 
 function applySelections() {
-	displayFiles(filters(Curves.files, -1));
-	for (var i in Curves.disponibility) {
+	displayFiles(filters(Curves.refs, -1));
+	for (let i in Curves.disponibility) {
 		if (Curves.disponibility[i]==0) Curves.updateAddButton(true, "-", i);
 	}
 }
@@ -752,28 +732,26 @@ window.onresize = function() {
     // Plotly.Plots.resize(GD.thr);
 };
 
-function filterByCodeTypes(files) {//files: Array of files ---> Array of files
+function filterByCodeTypes(refs) {//refs: Array of refs ---> Array of refs
 	let p={};
-	if (Curves.selectedCodes.length!=0 && files.length!=0) {
-		Curves.selectedCodes.forEach(function(x) { if (files[x]) {
-			files[x].forEach(function(y) {
+	if (Curves.selectedCodes.length!=0 && refs.length!=0) {
+		Curves.selectedCodes.forEach(function(x) { if (refs[x]) {
+			refs[x].forEach(function(y) {
 				if (!p[x]) {
 					p[x]=[];
 				}
 				p[x].push(y);
 			})}
-			//else Curves.selectedCodes.splice(Curves.selectedCodes.indexOf(x),1);
 		});
 		return p;
 	}
-	else return files;
+	else return refs;
 }
-//files ==> refs 
-function filterByFrameSizes(files) {//files: Array of files ---> Array of files
+function filterByFrameSizes(refs) {//refs: Array of refs ---> Array of refs
 	let p={};
-	if (Curves.selectedSizes.length!=0 && files.length!=0) {
-		for(var i in files) {
-			files[i].forEach(function(x) {
+	if (Curves.selectedSizes.length!=0 && refs.length!=0) {
+		for(let i in refs) {
+			refs[i].forEach(function(x) {
 				Curves.selectedSizes.forEach(function(y) {
 					if (x.headers.Codec["Frame size (N)"]==y) {
 						if (!p[i]) {
@@ -786,16 +764,16 @@ function filterByFrameSizes(files) {//files: Array of files ---> Array of files
 		}
 		return p;
 	}
-	else return files;
+	else return refs;
 }
-function filterByCodeRates(files) {//files: Array of files ---> Array of files
+function filterByCodeRates(refs) {//refs: Array of refs ---> Array of refs
 	let p={};
-	let stepSlider = document.getElementById('slider-step');
+	let stepSlider = $('#slider-step')[0];
 	let coderate=stepSlider.noUiSlider.get();
-	if (coderate[0]==0 && coderate[1]==1) return files;
+	if (coderate[0]==0 && coderate[1]==1) return refs;
 	else {
-		for(var i in files) {
-			files[i].forEach(function(z) {
+		for(let i in refs) {
+			refs[i].forEach(function(z) {
 				if (coderate[0]<=z.headers.Codec["Code rate"] && z.headers.Codec["Code rate"]<=coderate[1]) {
 					if (!p[i]) {
 						p[i]=[];
@@ -808,11 +786,11 @@ function filterByCodeRates(files) {//files: Array of files ---> Array of files
 	}
 }
 
-function filterByModems(files) {//files: Array of files ---> Array of files
+function filterByModems(refs) {//refs: Array of refs ---> Array of refs
 	let p={};
 	if (Curves.selectedModems.length!=0) {
-		for(var i in files) {
-			files[i].forEach(function(x) { Curves.selectedModems.forEach(function(y){
+		for(let i in refs) {
+			refs[i].forEach(function(x) { Curves.selectedModems.forEach(function(y){
 				if (x.headers.Modem.Type==y) {
 					if (!p[i]) {
 						p[i]=[];
@@ -823,14 +801,14 @@ function filterByModems(files) {//files: Array of files ---> Array of files
 		}
 		return p;
 	}
-	else return files;
+	else return refs;
 }
 
-function filterByChannels(files) {//files: Array of files ---> Array of files
+function filterByChannels(refs) {//refs: Array of refs ---> Array of refs
 	let p={};
 	if (Curves.selectedChannels.length!=0) {
-		for(var i in files) {
-			files[i].forEach(function(x) { Curves.selectedChannels.forEach(function(y){
+		for(let i in refs) {
+			refs[i].forEach(function(x) { Curves.selectedChannels.forEach(function(y){
 				if (x.headers.Channel.Type==y) {
 					if (!p[i]) {
 						p[i]=[];
@@ -841,19 +819,21 @@ function filterByChannels(files) {//files: Array of files ---> Array of files
 		}
 		return p;
 	}
-	else return files;
+	else return refs;
 }
 
-function filters(files, nb) {//nb is the indicator linked to a specific fiter to avoid
+function filters(refs, nb) {//nb is the indicator linked to a specific fiter to avoid
 	//0: Code type
 	//1: Frame size 
 	//2: Modem
 	//3: Channel
-	if (nb==-1) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(files)))));
-	if (nb==0) return filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(files))));
-	if (nb==1) return filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(files))));
-	if (nb==2) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(files))));
-	if (nb==3) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(files))));
+	//4: Code rate
+	if (nb==-1) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(refs)))));
+	if (nb==0) return filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(refs))));
+	if (nb==1) return filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(refs))));
+	if (nb==2) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(refs))));
+	if (nb==3) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(refs))));
+	if (nb==4) return filterByCodeTypes(filterByFrameSizes(filterByChannels(filterByModems(refs))));
 }
 
 function displayAll() {
@@ -878,11 +858,11 @@ function displayCheckbox(length, font, endFont, disabled, fonction, i, div) {
 }
 
 function displayCodeTypes() {
-	let files=Curves.files;
-	let filteredFiles=filters(Curves.files, 0);
-	var j=0;
+	let refs=Curves.refs;
+	let filteredFiles=filters(Curves.refs, 0);
+	let j=0;
 	$(".codetype").empty();
-	for (var i in files)
+	for (let i in refs)
 	{
 		if (j!=0) $(".codetype").append('<br>');
 		let number=0;
@@ -891,20 +871,17 @@ function displayCodeTypes() {
 		let endBlack='';
 		let fonction='updateSelectedCodes(';
 		if (filteredFiles[i]) {
-			//$(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+filteredFiles[i].length+')'+'</font></label>');
 			black='<font color="black">';
 			endBlack='</font>';
 			number=filteredFiles[i].length;
 			displayCheckbox(number, black, endBlack, disabled, fonction, i, ".codetype");
 		}
 		else if (Curves.selectedCodes.indexOf(i)>-1) {
-			//$(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' (0)'+'</font></label>');
 			black='<font color="black">';
 			endBlack='</font>';
 			displayCheckbox(number, black, endBlack, disabled, fonction, i, ".codetype");
 		}
 		else {
-			//$(".codetype").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedCodes('+i+')" disabled><label class="form-check-label" for="'+i+'" title="'+i+'">'+i+' (0)'+'</label>');
 			disabled='disabled';
 			displayCheckbox(number, black, endBlack, disabled, fonction, i, ".codetype");
 		}
@@ -920,18 +897,18 @@ function displayCodeTypes() {
 }
 
 function displayFrameSizes() {
-	let files=filters(Curves.files, 1);
-	var p={};
-	var j=0;
-	for (var code in files) {
-		for (var i=0;i<(files[code]).length;i++) {
-			var f=files[code][i];
+	let refs=filters(Curves.refs, 1);
+	let p={};
+	let j=0;
+	for (let code in refs) {
+		for (let i=0;i<(refs[code]).length;i++) {
+			let f=refs[code][i];
 			if (p[f.headers.Codec["Frame size (N)"]]>=0) p[f.headers.Codec["Frame size (N)"]]++;
 			else p[f.headers.Codec["Frame size (N)"]]=1;
 		}
 	}
 	$("#selector .size").empty();
-	for (var i in p){
+	for (let i in p){
 		if (j!=0) $(".size").append('<br>');
 		let number=p[i];
 		let black='<font color="black">';
@@ -940,7 +917,6 @@ function displayFrameSizes() {
 		let fonction='updateSelectedSizes(';
 		j++;
 		displayCheckbox(number, black, endBlack, disabled, fonction, i, "#selector .size");
-		//$("#selector .size").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedSizes('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+p[i]+')'+'</font></label>');
 	}
 	Curves.selectedSizes.forEach(function(x) {
 		if (document.getElementById(x)!=null) {
@@ -952,18 +928,18 @@ function displayFrameSizes() {
 }
 
 function displayModems() {
-	let files=filters(Curves.files, 2);
-	var p={};
-	var j=0;
-	for (var code in files) {
-		for (var i=0;i<(files[code]).length;i++) {
-			var f=files[code][i];
+	let refs=filters(Curves.refs, 2);
+	let p={};
+	let j=0;
+	for (let code in refs) {
+		for (let i=0;i<(refs[code]).length;i++) {
+			let f=refs[code][i];
 			if (p[f.headers.Modem.Type]>=0) p[f.headers.Modem.Type]++;
 			else p[f.headers.Modem.Type]=1;
 		}
 	}
 	$("#selector .modem").empty();
-	for (var i in p){
+	for (let i in p){
 		if (j!=0) $(".modem").append('<br>');
 		else j++;
 		let number=p[i];
@@ -971,7 +947,6 @@ function displayModems() {
 		let disabled='';
 		let endBlack='</font>';
 		let fonction='updateSelectedModems(';
-		//$("#selector .modem").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedModems('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+p[i]+')'+'</font></label>');	
 		displayCheckbox(number, black, endBlack, disabled, fonction, i, "#selector .modem");
 	}
 	Curves.selectedModems.forEach(function(x) {
@@ -984,18 +959,18 @@ function displayModems() {
 }
 
 function displayChannels() {
-	let files=filters(Curves.files, 3);
-	var p={};
-	var j=0;
-	for (var code in files) {
-		for (var i=0;i<(files[code]).length;i++) {
-			var f=files[code][i];
+	let refs=filters(Curves.refs, 3);
+	let p={};
+	let j=0;
+	for (let code in refs) {
+		for (let i=0;i<(refs[code]).length;i++) {
+			let f=refs[code][i];
 			if (p[f.headers.Channel.Type]>=0) p[f.headers.Channel.Type]++;
 			else p[f.headers.Channel.Type]=1;
 		}
 	}
 	$("#selector .channel").empty();
-	for (var i in p){
+	for (let i in p){
 		if (j!=0) $(".channel").append('<br>');
 		else j++;
 		let number=p[i];
@@ -1003,7 +978,6 @@ function displayChannels() {
 		let disabled='';
 		let endBlack='</font>';
 		let fonction='updateSelectedChannels(';
-		//$("#selector .channel").append('<input type="checkbox" class="form-check-input" id="'+i+'" title="'+i+'" onclick="updateSelectedChannels('+i+')"><label class="form-check-label" for="'+i+'" title="'+i+'"><font color="black">'+i+' ('+p[i]+')'+'</font></label>');
 		displayCheckbox(number, black, endBlack, disabled, fonction, i, "#selector .channel");
 	}
 	Curves.selectedChannels.forEach(function(x) {
@@ -1015,27 +989,27 @@ function displayChannels() {
 	$("#selector .channel").off();
 }
 
-// files: array of files.
-// ordered: files are first sorted by code type, then by wordsize.
-function orderFiles(files) {
-	var ordered={};
-	for (var i in files){
-		var f=files[i];
+// refs: array of refs.
+// ordered: refs are first sorted by code type, then by framesize.
+function orderFiles(refs) {
+	let ordered={};
+	for (let i in refs){
+		let f=refs[i];
 		if (f.headers.Simulation) {
 			if (typeof ordered[f.headers.Simulation["Code type (C)"]]=="undefined") ordered[f.headers.Simulation["Code type (C)"]]=[];
 			ordered[f.headers.Simulation["Code type (C)"]].push(f);
 		}
 	}
-	for (var i in ordered)
+	for (let i in ordered)
 		ordered[i].sort((a,b)=> b.headers.Codec["Frame size (N)"]<a.headers.Codec["Frame size (N)"]);
 	return ordered;
 }
 
 function selectFile(hashId)
 {
-	for (var code in Curves.files) {
-		for (var f=0;f<Curves.files[code].length;f++) {
-			if (getId(Curves.files[code][f]) == hashId) return Curves.files[code][f];
+	for (let code in Curves.refs) {
+		for (let f=0;f<Curves.refs[code].length;f++) {
+			if (getId(Curves.refs[code][f]) == hashId) return Curves.refs[code][f];
 		}
 	}
 	return null;
@@ -1055,7 +1029,7 @@ function drawCurvesFromURI() {
 					subAddClick(f, 0);
 				}
 				else {
-					subAddClick(Curves.files["BCH"][0], 0);
+					subAddClick(Curves.refs["BCH"][0], 0);
 					deleteClick('delete', idSide);
 				}
 			}
@@ -1066,10 +1040,10 @@ function drawCurvesFromURI() {
 //main
 $(document).ready(function() {
 	Curves.initialization();
-	var d3 = Plotly.d3;
-	var WIDTH_IN_PERCENT_OF_PARENT = 100,
+	let d3 = Plotly.d3;
+	let WIDTH_IN_PERCENT_OF_PARENT = 100,
 	HEIGHT_IN_PERCENT_OF_PARENT = 40;
-	var plots=["ber","fer"/*,"befe","thr"*/];
+	let plots=["ber","fer"/*,"befe","thr"*/];
 	plots.forEach(function(e) {
 		GD[e] = d3.select("#plot"+e)
 		.append('div')

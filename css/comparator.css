@@ -23,13 +23,6 @@
   overflow-x:hidden;
 }
 
-.scurve .card:nth-of-type(1)
-{
-  background-color:#1F77B4;
-  border-color:#1F77B4;
-  color:#fff !important;
-}
-
 #slider-step .noUi-connect {
   background: #6C757D;
 }

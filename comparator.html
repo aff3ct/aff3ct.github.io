@@ -51,7 +51,7 @@
       return isExternal;
     }
   </script>
-  <script id="filesTemplate" type="x-tmpl-mustache">
+  <script id="refsTemplate" type="x-tmpl-mustache">
     <div class="card card{{aId}}">
       <div class="card-header p-2" id="heading{{sideNumber}}{{aId}}">
         <h5 class="mb-0">
@@ -77,15 +77,15 @@
             <div class="text-muted twoColumns">
               <small>
                 <b>Frame size</b>: {{aFramesize}}<br/>
-                {{{filesCodeword}}}
+                {{{refsCodeword}}}
                 <b>Coderate</b>: {{aCoderate}}
-                {{{filesTooltip}}}
+                {{{refsTooltip}}}
               </small>
             </div>
             <div class="curveIcons">
-              {{{filesDoi}}}
-              {{{filesUrl}}}
-              {{{filesCommand}}}
+              {{{refsDoi}}}
+              {{{refsUrl}}}
+              {{{refsCommand}}}
               <span class="curveIcon">
                 <a href="#" data-toggle="modal" data-target="#modalInfoFile_{{aId}}" title="Original output text file">
                   <i class="fas fa-file-alt"></i>
@@ -192,7 +192,7 @@
           <h5 class="mb-0">
             <div class="mb-0 form-group row">
               <div class="col-sm-9" data-toggle="collapse" data-target="#scollapse{{sideNumber}}" aria-expanded="true" aria-controls="scollapse{{sideNumber}}">
-                <button class="btn btn-block btn-link text-left" {{{filesTooltip1}}}{{aTitleShort}}
+                <button class="btn btn-block btn-link text-left" {{{refsTooltip1}}}{{aTitleShort}}
               </button>
             </div>
             <div id="delete{{sideNumber}}" class="col-0">
@@ -211,15 +211,15 @@
           <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
             <div class="text-muted twoColumns">
               <small><b>Frame size</b>: {{aFramesize}}<br/>
-                {{{filesCodeword}}}
+                {{{refsCodeword}}}
                 <b>Coderate</b>: {{aCoderate}}
-                {{{filesTooltip2}}}
+                {{{refsTooltip2}}}
               </small>
             </div>
             <div class="curveIcons">
-              {{{filesDoi}}}
-              {{{filesUrl}}}
-              {{{filesCommand}}}
+              {{{refsDoi}}}
+              {{{refsUrl}}}
+              {{{refsCommand}}}
               <span class="curveIcon">
                 <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
                   <i class="fas fa-file-alt"></i>
@@ -369,6 +369,7 @@
           <hr class="separator">
         </div>
         <div id="input">
+          Upload a file or a group of files:
           <input id="fileInput" multiple="multiple" type="file">
           <span id="fileDisplayArea"></span>
         </div>
@@ -386,7 +387,7 @@
         <div class="container">
           <div id="curvesTip">
             <p id="tips" class="text-center">
-              <strong>Please select up to 10 curves<br/>on the left blue buttons<br/>and delete them on the right.<br/>You can plot your own curve<br/>by loading your Aff3ct text file.</strong>
+              <strong>Please select up to 10 curves<br/>on the left blue buttons<br/>and delete them on the right.<br/>You can plot your own curve(s)<br/>by loading your Aff3ct text file(s).</strong>
             </p>
           </div>
           <div id="plotber"></div>
