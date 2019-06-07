@@ -27,6 +27,12 @@
   background: #6C757D;
 }
 
+#selector .dropdown-menu .form-check {
+  max-height:40vh;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
 #scurve9 :nth-child(0n+1)
 {
   background-color:#17BECF;

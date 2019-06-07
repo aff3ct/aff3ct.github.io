@@ -7,7 +7,7 @@ const Curves = {
 	disponibility: [],//index==id! disponibility[id]=1 => available && disponibility[id]=0 => unavailable
 	hidden: [],//1 if hidden else 0
 	id: [],
-	input: [],//input[nb-curve]= -1:no_curve||0:intern_curve||1:uploaded_curve 
+	input: [],//input[nb-curve]= -1:no_curve||0:intern_curve||1:uploaded_curve
 	names: [],//names[id]=name_of_the_curve
 	values: [],//where values of the curves are
 	referenceColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // Do not modify this tab!!! Use it as a reference
@@ -276,7 +276,7 @@ function sortFiles(refs) {
 			//if (a.headers.Codec["Frame size (N)"]==b.headers.Codec["Frame size (N)"]) a.headers.Codec["Code rate"]>b.headers.Codec["Code rate"];
 		});
 		refs[code].forEach(function(x){
-			if (!sizes[code]) 
+			if (!sizes[code])
 				sizes[code]=[x.headers.Codec["Frame size (N)"]];
 			else if (sizes[code].indexOf(x.headers.Codec["Frame size (N)"])<0)
 				sizes[code].push(x.headers.Codec["Frame size (N)"]);
@@ -480,7 +480,7 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 			}
 			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),getId(a));
 			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.trace)));
-			window.history.replaceState({},"aff3ct.github.io",uri);
+			// window.history.replaceState({},"aff3ct.github.io",uri);
 			if (input==0) {
 				Curves.addCurve(a);
 			}
@@ -547,7 +547,7 @@ function deleteClick(divId, idSide) {//unplot a curve
 			else uri=uri+"&curve"+String(i)+"="+cval[i];
 		}
 		uri = updateURLParameter(uri,idSide,"");
-		window.history.replaceState({},"aff3ct.github.io",uri);
+		// window.history.replaceState({},"aff3ct.github.io",uri);
 		$("#s"+idSide).remove();
 		plots.forEach(function(x) {
 			const CURVESBIS=[];
@@ -825,7 +825,7 @@ function filterByChannels(refs) {//refs: Array of refs ---> Array of refs
 
 function filters(refs, nb) {//nb is the indicator linked to a specific fiter to avoid
 	//0: Code type
-	//1: Frame size 
+	//1: Frame size
 	//2: Modem
 	//3: Channel
 	//4: Code rate
@@ -1056,4 +1056,8 @@ $(document).ready(function() {
 		}).node();
 	});
 	loadDatabase();
+
+	$('#applySelections').on('click', function() {
+		applySelections();
+	});
 });
