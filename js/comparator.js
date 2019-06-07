@@ -57,7 +57,7 @@ const Curves = {
 		return result;
 	},
 	displayed(i) {
-		//return the curve name of the i^(th) displayed curve (% Curves.max), "null" if it's empty 
+		//return the curve name of the i^(th) displayed curve (% Curves.max), "null" if it's empty
 		if (this.length==0) {
 			return "null";
 		}
@@ -133,9 +133,9 @@ const Curves = {
 		return "curve"+this.firstSideAvailable();
 	},
 	updateAddButton(bool, string, nb) {
-		$('#'+"curve0"+this.id[nb]).prop('disabled', bool);
-		$('#'+"curve0"+this.id[nb]).empty();
-		$('#'+"curve0"+this.id[nb]).append(string);
+		$('#'+"curve"+this.id[nb]).prop('disabled', bool);
+		$('#'+"curve"+this.id[nb]).empty();
+		$('#'+"curve"+this.id[nb]).append(string);
 	}
 };
 // axis/legend of the 2 plots
@@ -220,146 +220,51 @@ function findGetParameter(parameterName) {
 	return result;
 }
 
-function parseINIString(data) {
-	var regex = {
-		section: /^\s*\[\s*([^\]]*)\s*\]\s*$/,
-		param: /^\s*([^=]+?)\s*=\s*(.*?)\s*$/,
-		comment: /^\s*;.*$/
-	};
-	var value = {};
-	var lines = data.split(/[\r\n]+/);
-	var section = null;
-	var over = false;
-	lines.forEach(function(line){
-		if (!over){
-			if(regex.comment.test(line)){
-				return;
-			}else if(regex.param.test(line)){
-				var match = line.match(regex.param);
-				if(section){
-					value[section][match[1]] = match[2];
-				}else{
-					value[match[1]] = match[2];
-				}
-			}else if(regex.section.test(line)){
-				var match = line.match(regex.section);
-				if (match[1] == "trace")
-				{
-					over = true;
-					return;
-				}
-				value[match[1]] = {};
-				section = match[1];
-			}else if(line.length == 0 && section){
-				section = null;
-			};
-		}
-	});
-	return value;
-}
-
-function parseFile(hashId, result) {//Return data ready-to-plot
-	let ini=parseINIString(result);
-	ini.metadata.command=ini.metadata.command.replace(/"([^ ,:;]*)"/g, "$1");
-	ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ "([^]*)"/g, "");
-	ini.metadata.command=ini.metadata.command.replace(/\-\-sim\-meta\ ([^ ]*)/g, "");
-	ini.metadata.command=ini.metadata.command.replace(/"\.\.\/conf\/([^ ]*)"/g, "../conf/$1");
-	ini.metadata.command=ini.metadata.command.replace(/\.\.\/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1' onclick='return trackOutboundLink(\"https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1\");'>conf/$1</a>");
-	ini.metadata.command=ini.metadata.command.replace(/"conf\/([^ ]*)"/g, "conf/$1");
-	ini.metadata.command=ini.metadata.command.replace(/conf\/([^ ]*)/g,"<a target='_blank' href='https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1' onclick='return trackOutboundLink(\"https://github.com/aff3ct/configuration_files/blob/"+BRANCH+"/$1\");'>conf/$1</a>");
-	ini.metadata.command=ini.metadata.command.replace(/\.\/bin\/aff3ct/g,"aff3ct");
-	var lines=result.split("\n");
-	var startLine;
-	for (startLine=0;startLine<lines.length;startLine++)
-		if (lines[startLine] == "[trace]")
-			break;
-		lines.splice(0,startLine+1);
-	// var name=result.metadata.title;
-	var coderate=0,framesize=0,infobits=0,codeword=0;
-	var BER={x:[],y:[],type:'scatter',name:'BER'};
-	var FER={x:[],y:[],type:'scatter',name:'FER'};
-	// var BEFE={x:[],y:[],type:'scatter',name:'BE/FE'};
-	// var THR={x:[],y:[],type:'scatter',name:'Mb/s'};
-	var info={};
-	for (var i=0;i<lines.length;i++)
-		if (lines[i].startsWith("# * ")&&lines[i+1].indexOf("Type")>-1) {
-			info[lines[i].substring(4,lines[i].indexOf("-")).trim()] = lines[i+1].split("=")[1].trim();
-		}
-	//
-	var code=info.Code;
-	let modem1=info.Modem;
-	let channel1=info.Channel;
-	if (typeof code=="undefined") code=info.Codec;
-	for (var i=0;i<lines.length;i++)
-		if (lines[i].indexOf("=")>-1) {
-			var val=lines[i].split("=")[1].trim();
-			if (lines[i].indexOf("Code rate")>-1)
-				coderate=Math.round(parseFloat(val)*100)/100;
-			else if (lines[i].indexOf("Frame size")>-1)
-				framesize=parseInt(val,10);
-			else if (lines[i].indexOf("Codeword size")>-1)
-				codeword=parseInt(val,10);
-			else if (lines[i].indexOf("Info. bits")>-1)
-				infobits=parseFloat(val);
-		}
-	//
-	if (framesize==0) framesize=codeword;
-	if (codeword==0) codeword=framesize;
-
-	if (coderate==0&&framesize!=0&&infobits!=0) coderate=Math.round(infobits/framesize*100)/100;
-	for (var i=4;i<lines.length;i++) {
-		if (lines[i].startsWith("#")||lines[i].length==0) continue;
-		lines[i]=lines[i].replace(/\|\|/g,"|");
-		var fields = lines[i].split(/\|/);
-		var x=parseFloat(fields[1]);
-		if (x=="NaN") continue;
-		BER.x.push(x);
-		FER.x.push(x);
-	    // BEFE.x.push(x);
-	    // THR.x.push(x);
-	    BER.y.push(parseFloat(fields[5]));
-	    FER.y.push(parseFloat(fields[6]));
-	    // BEFE.y.push(parseFloat(fields[3])/parseFloat(fields[4]));
-	    // THR.y.push(parseFloat(fields[9]));
-	}
-	var o={id:Curves.firstSideAvailable(),ini:ini,info:info,coderate:coderate,framesize:framesize,codeword:codeword,ber:BER,fer:FER,/*befe:BEFE,thr:THR,*/code:code,file:result,filename:hashId,modem:modem1,channel:channel1};
-	//console.log("***"+roughSizeOfObject(o));
-	return o;
-}
-
-
-
+// size of the compressed Gitlab refs database in bytes
+var EVT_TOTAL = 1279262;
 function loadDatabase() {//Return String that include the whole file
 	let databaseURL = GITLAB + "jobs/artifacts/" + BRANCH + "/raw/database.json?job=deploy-database-json";
 	$.ajaxSetup({
-		beforeSend: function(xhr){
+		beforeSend: function(xhr) {
 			if (xhr.overrideMimeType) xhr.overrideMimeType("text/plain");
 		},
-		isLocal:true
+		isLocal:false
 	});
-	$.ajax(databaseURL,{error:function(xhr,status,error) {
-		logger("**Error loading \"" + databaseURL + "\"\n"+status+" "+error);
-	}}).done(function(data) {
+	$.ajax(databaseURL,
+		{error:function(xhr,status,error) {
+			logger("**Error loading \"" + databaseURL + "\"\n"+status+" "+error);
+		},
+		xhr: function (){
+			var xhr = new window.XMLHttpRequest();
+			xhr.addEventListener("progress", function (evt) {
+				let evt_total;
+				if (evt.lengthComputable) evt_total = evt.total;
+				else evt_total = EVT_TOTAL;
+				if (evt_total<=evt.loaded) evt_total=evt.loaded*101/100;
+				let percentComplete = Math.round((evt.loaded / evt_total) * 100);
+				$("#loader .progress-bar").html(percentComplete+"%");
+				$('#loader .progress-bar').attr('aria-valuenow', percentComplete).css('width',percentComplete+"%");
+			}, false);
+			return xhr;
+		}
+	}).done(function(data) {
 		let dataTab=JSON.parse(data);
 		Curves.files=orderFiles(dataTab);
+		displaySlider();
 		displayCodeTypes();
 		displayFrameSizes();
 		displayModems();
 		displayChannels();
-		document.getElementById("loader").style.display = "none";
-		document.getElementById("curvesTip").style.display = "block";
-		document.getElementById("tips").style.display = "block";
-		document.getElementById("selector").style.display = "block";
-		document.getElementById("comparator").style.display = "block";
+		$("#loader").css("display", "none");
+		$("#curvesTip").css("display", "block");
+		$("#tips").css("display", "block");
+		$("#selector").css("display", "block");
+		$("#comparator").css("display", "block");
 		drawCurvesFromURI();
 	});
 }
 
-function displaySelector() {
-	var selectorTemplate = $('#selectorTemplate').html();
-	Mustache.parse(selectorTemplate);
-	var selectorRendered=Mustache.render(selectorTemplate, {selectorCurveId: "selector", displayNone: ""});
-	$("#comparator #comparatorNext").prepend(selectorRendered);
+function displaySlider() {
 	var stepSlider = document.getElementById('slider-step');
 	noUiSlider.create(stepSlider, {
 		start: [0,1],
@@ -373,8 +278,7 @@ function displaySelector() {
 	$("#slider-step").append("<div class='my-3'><span id='slider-step-value'></span></div>")
 	var stepSliderValueElement = document.getElementById('slider-step-value');
 	stepSlider.noUiSlider.on('update', function (values) {
-		displayFrameSizes();
-		displayCodeTypes();
+		displayAll();
 		stepSliderValueElement.innerHTML = "Values: ";
 		stepSliderValueElement.innerHTML += values.join(' - ');
 	});
@@ -384,11 +288,40 @@ function getId(file) {
 	return file.hash.value.substring(0,7);
 }
 
+function sortFiles(files) {
+	for (var code in files) {
+		files[code].sort(function(a,b) {
+			a.headers.Codec["Frame size (N)"]>b.headers.Codec["Frame size (N)"];
+			//if (a.headers.Codec["Frame size (N)"]==b.headers.Codec["Frame size (N)"]) a.headers.Codec["Code rate"]>b.headers.Codec["Code rate"];
+		});
+	}
+	for (var code in files) {
+		let start=0;
+		let end=0;
+		while (start<=files[code].length-1) {
+			console.log("code: "+code+" *** start: "+start+" *** ");
+			console.log(files[code][start].headers);
+			let framesize=files[code][start].headers.Codec["Frame size (N)"];
+			if (files[code][end+1].headers.Codec["Frame size (N)"]!=files[code][end].headers.Codec["Frame size (N)"]) {
+				let arr=files[code].slice(start, end+1);
+				arr.forEach(function(x) {
+					files[code].splice(start, 1, x);
+					start++;
+				});
+				start=end;
+			}
+			else end++;
+		}
+	}
+}
+
 function displayFiles(files) {//Display files that can be selected
-	$("#accordion").empty();
+	//sortFiles(files);
+	$("#refsList #accordion").empty();
 	Curves.toolTips=[];
 	$("#"+Curves.curveId()+"modalsSelector").empty();
 	for (var code in files) {
+		files[code].sort((a,b) => a.headers.Codec["Frame size (N)"]>b.headers.Codec["Frame size (N)"]);
 		for (let i=0; i<files[code].length; i++) {
 			var a=files[code][i];
 			/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(a.metadata.title);
@@ -397,7 +330,7 @@ function displayFiles(files) {//Display files that can be selected
 			var titleEnd="";
 			var codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="", tooltipParam="";
 			if (a.metadata.title.length > 23) {
-				if (RegExp.$1=="" || RegExp.$2=="") metadataTitleShort=a.metadata.title.substring(0,22)+'... ';
+				if (RegExp.$1=="" || RegExp.$2=="") metadataTitleShort=a.metadata.title.substring(0,19)+'... ';
 				else {
 					metadataTitleShort=RegExp.$1;
 					titleEnd=RegExp.$2;
@@ -443,7 +376,7 @@ function displayFiles(files) {//Display files that can be selected
 				filesUrl: metadataUrl,
 				filesCommand: metadataCommand
 			});
-			$("#selector .bers #accordion").append(filesRendered);
+			$("#refsList #accordion").append(filesRendered);
 			tippy(Curves.toolTips[Curves.toolTips.length-1], {
 				arrow: true,
 				arrowType: 'sharp',
@@ -533,85 +466,24 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 	//});
 }
 
-function displayInputCurve(a) {
-	var metadataTitle=a.ini.metadata.title;
-	var codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="", metadataTitleShort=a.ini.metadata.title, nb=-1, allFunc="";
-	//Curves.names.forEach(x => allFunc+="deleteClick('delete', '"+x+"'),");
-	if (a.ini.metadata.title.length > 21) {
-		nb=Curves.curveId().substring(5, Curves.curveId().length);
-		tooltip1="id='TooltipCurve"+nb+"' data-tippy-content='"+String(metadataTitle)+"'>";
-		Curves.toolTipsSelected[Number(nb)]='#TooltipCurve'+nb;
-		metadataTitleShort=a.ini.metadata.title.substring(0,20)+"... ";
-	}
-	if (a.codeword > a.framesize)
-		codeWord="<b>Codeword</b>: "+a.codeword+"<br/>";
-	for (var j in a.info)
-	{
-		var tooltip = "";
-		if (tooltips.get(a.info[j]))
-			tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.info[j]) + "'";
-		if (a.info[j] == "BP_HORIZONTAL_LAYERED") a.info[j] = "BP_HLAYERED";
-		if (a.info[j] == "BP_VERTICAL_LAYERED") a.info[j] = "BP_VLAYERED";
-		tooltip2+="<br/><b>"+j+"</b>: "+"<span" + tooltip + ">" + a.info[j] + "</span>";
-	}
-	if (a.ini.metadata.doi)
-		metadataDoi="  <span class='curveIcon'><a href='https://doi.org/"+a.ini.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.ini.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>"
-	if (a.ini.metadata.url)
-		metadataUrl="  <span class='curveIcon'><a href='"+a.ini.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.ini.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>"
-	if (a.ini.metadata.command)
-		metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+Curves.curveId()+"_"+a.id+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
-	var selectedTemplate = $('#selectedTemplate').html();
-	Mustache.parse(selectedTemplate);
-	var selectedRendered=Mustache.render(selectedTemplate, {
-		sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
-		side: Curves.curveId(),
-		//allFunctions: allFunc,
-		aId: a.id,
-		aTitle: metadataTitle,
-		aTitleShort: metadataTitleShort,
-		aFramesize: a.framesize,
-		filesCodeword: codeWord,
-		aCoderate: a.coderate,
-		filesTooltip1: tooltip1,
-		filesTooltip2: tooltip2,
-		filesDoi: metadataDoi,
-		filesUrl: metadataUrl,
-		filesCommand: metadataCommand
-	});
-	$("#scurve #sAccordion").append(selectedRendered);
-	tippy(Curves.toolTipsSelected[nb], {
-		arrow: true,
-		arrowType: 'sharp',
-		animation: 'fade',
-	});
-	if (a.ini.metadata.command) {
-		var cmdSelectedTemplate = $('#cmdSelectedTemplate').html();
-		Mustache.parse(cmdSelectedTemplate);
-		var fileRendered1=Mustache.render(cmdSelectedTemplate, 	{side: Curves.curveId(),
-			aId: a.id,
-			aTitle: metadataTitle,
-			aCommand: String(a.ini.metadata.command),
-			aFile: String(a.file),
-		});
-		$("#"+Curves.curveId()+"modals").append(fileRendered1);
-	}
-}
-
 function subAddClick(a, input) {
 	let code=a.headers.Codec.Type;
 	let files=Curves.files[code];
 	if (Curves.length==0) {
 		var deleteAllTemplate = $('#deleteAllTemplate').html();
 		Mustache.parse(deleteAllTemplate);
-		$("#scurve").prepend(deleteAllTemplate);
-		document.getElementById("plotber").style.display = "inline";
-		document.getElementById("plotfer").style.display = "inline";
+		$("#sAccordion").append(deleteAllTemplate);
+		$("#plotber").css("display", "inline");
+		$("#plotfer").css("display", "inline");
 	}
-	document.getElementById("tips").style.display = "none";
+	$("#tips").css("display", "none");
 	const plots=["ber","fer"/*,"befe","thr"*/];
 	$("#selector .bers .active").removeClass("active");
 	$(this).addClass("active");
-	if (Curves.length==Curves.max) console.log("Maximum quantity of curves reached!");
+	if (Curves.length==Curves.max) {
+		console.log("Maximum quantity of curves reached!");
+		alert("For readability, you can not display more than 10 curves.");
+	}
 	else {
 		displaySelectedCurve(a);
 		//if (input==0) {
@@ -625,7 +497,7 @@ function subAddClick(a, input) {
 			}
 			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),getId(a));
 			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.trace)));
-			window.history.replaceState({},"aff3ct.github.io",uri);
+			//window.history.replaceState({},"aff3ct.github.io",uri);
 			if (input==0) {
 				Curves.addCurve(a);
 			}
@@ -651,7 +523,7 @@ function addClick(a, input) {//Plot the curve
 		subAddClick(a, input);
 	}
 	else {
-		$('#'+Curves.curveId()+getId(a)).on('click', function() {
+		$('#curve'+getId(a)).on('click', function() {
 			subAddClick(a, 0);
 			// track the click with Google Analytics
 			/**ga('send', {
@@ -693,7 +565,7 @@ function deleteClick(divId, idSide) {//unplot a curve
 			else uri=uri+"&curve"+String(i)+"="+cval[i];
 		}
 		uri = updateURLParameter(uri,idSide,"");
-		window.history.replaceState({},"aff3ct.github.io",uri);
+		//window.history.replaceState({},"aff3ct.github.io",uri);
 		$("#s"+idSide).remove();
 		plots.forEach(function(x) {
 			const CURVESBIS=[];
@@ -736,7 +608,7 @@ function showCurve(idSide) {
 	var hideTemplate = $('#hideTemplate').html();
 	Mustache.parse(hideTemplate);
 	var hideRendered=Mustache.render(hideTemplate, {
-		sideNumber: String(idSide) 
+		sideNumber: String(idSide)
 	});
 	$("#delete"+String(idSide)).append(hideRendered);
 }
@@ -763,180 +635,12 @@ function hideCurve(idSide) {
 	var showTemplate = $('#showTemplate').html();
 	Mustache.parse(showTemplate);
 	var showRendered=Mustache.render(showTemplate, {
-		sideNumber: String(idSide) 
+		sideNumber: String(idSide)
 	});
 	$("#delete"+String(idSide)).append(showRendered);
 }
 
-function text2json(txt, filename = "")
-{
-	let isTrace = false;
-	let isLegend = false;
-	let legends = [];
-	let contents = {};
-	let metadata = {};
-	let titleSection = "";
-	let headers = {};
-	let section = {};
 
-	let lines = txt.split("\n");
-	for (let ln = 0; ln < lines.length; ln++)
-	{
-		let l = lines[ln];
-
-		if (ln == 0 && l != "[metadata]")
-			isTrace = true;
-
-		if (l == "[trace]")
-		{
-			isTrace = true;
-			continue;
-		}
-
-		if (!isTrace)
-		{
-			ls = l.split("=");
-			if (ls.length >= 2)
-			{
-				let key = ls[0];
-				let val = ls[1];
-
-				for (let i = 2; i < ls.length; i++)
-					val += "=" + ls[i];
-
-				if (val == "on")
-					metadata[key] = true;
-				else if (val == "off")
-					metadata[key] = false;
-				else
-					metadata[key] = val;
-			}
-		}
-		else
-		{
-			if (l.startsWith("# *"))
-			{
-				if (titleSection != "")
-				{
-					headers[titleSection] = section;
-					section = {};
-				}
-				titleSection = l.substring(4).split(" -")[0];
-			}
-			else if (l.startsWith("#    **"))
-			{
-				cleanL = l.substring(8);
-				splitL = cleanL.split(" = ");
-				if (splitL.length >= 2)
-				{
-					key = $.trim(splitL[0]);
-					val = splitL[1];
-
-					for (let i = 2; i < splitL.length; i++)
-						val += " = " + splitL[i];
-
-					if (["Code rate", "Bit rate", "Multi-threading (t)"].includes(key))
-						val = val.split(" ")[0];
-					if (["yes", "on"].includes(val))
-						section[key] = true;
-					else if (["no", "off"].includes(val))
-						section[key] = false;
-					else
-					{
-						let valInt = parseInt(val);
-						if (isNaN(valInt))
-							section[key] = val;
-						else
-						{
-							let valFloat = parseFloat(val);
-							if (valFloat - valInt == 0)
-								section[key] = valInt;
-							else
-								section[key] = valFloat;
-						}
-					}
-				}
-			}
-			else if (l.startsWith("# The simulation is running..."))
-			{
-				if (titleSection != "")
-				{
-					headers[titleSection] = section;
-					section = {};
-					titleSection = "";
-				}
-			}
-
-			if (!l.startsWith("#"))
-			{
-				if (!isLegend)
-				{
-					isLegend = true;
-					if (ln >= 3)
-					{
-						leg = lines[ln -3];
-						leg = leg.replace("#", "");
-						legends = leg.split("|");
-					}
-				}
-
-				let cols = l.split("|");
-				if (cols.length == legends.length)
-				{
-					for (let c = 0; c < cols.length; c++)
-					{
-						key = $.trim(legends[c]);
-						if (key != "")
-						{
-							val = $.trim(cols[c]).split(" ")[0];
-
-							if (key == "ET/RT")
-							{
-								newVal = parseInt(val.split("'")[1]);
-								newVal += parseInt(val.split("'")[0].split("h")[1]) * 60;
-								newVal += parseInt(val.split("'")[0].split("h")[0]) * 3600;
-								val = newVal;
-							}
-
-							let li = parseInt(val);
-							if (isNaN(li))
-								li = val;
-							else
-							{
-								let li2 = parseFloat(val);
-								if (li - li2 != 0)
-									li = li2;
-							}
-
-							if (key in contents)
-								contents[key].push(li);
-							else
-								contents[key] = [li];
-						}
-					}
-				}
-			}
-		}
-	}
-
-	let hashMaker = sha1.create();
-	hashMaker.update(txt);
-	hashMaker.hex();
-	hash = {"type" : "sha1", "value" : hashMaker.hex()};
-
-	let dict = {};
-	if (filename != ""            ) dict["filename"] = filename;
-	if (!$.isEmptyObject(metadata)) dict["metadata"] = metadata;
-	if (!$.isEmptyObject(headers )) dict["headers" ] = headers;
-	if (!$.isEmptyObject(contents)) dict["contents"] = contents;
-	dict["trace"   ] = txt;
-	dict["hash"    ] = hash;
-
-	let o = /**{};
-	o[hashMaker.hex().substring(0,7)] = **/dict;
-
-	return o;
-}
 
 function loadUniqueFile(fileInput, i) {//Load a file from input
 	if (i<fileInput.files.length) {
@@ -970,8 +674,7 @@ function loadUniqueFile(fileInput, i) {//Load a file from input
 
 window.onload = function() {
 	const plots=["ber","fer"/*,"befe","thr"*/];
-	var fileInput = document.getElementById('fileInput');
-	fileInput.addEventListener('change', function(e)
+	$("#fileInput").on('change', function(e)
 	{
 		loadUniqueFile(fileInput, 0);
 	});
@@ -979,8 +682,10 @@ window.onload = function() {
 
 function applySelections() {
 	displayFiles(filters(Curves.files, -1));
+	for (var i in Curves.disponibility) {
+		if (Curves.disponibility[i]==0) Curves.updateAddButton(true, "-", i);
+	}
 }
-
 function updateSelectedCodes(str) {
 	if (document.getElementById(str.title).checked == true) {
 		Curves.selectedCodes.push(str.title);
@@ -1361,7 +1066,6 @@ function drawCurvesFromURI() {
 //main
 $(document).ready(function() {
 	Curves.initialization();
-	displaySelector();
 	var d3 = Plotly.d3;
 	var WIDTH_IN_PERCENT_OF_PARENT = 100,
 	HEIGHT_IN_PERCENT_OF_PARENT = 40;

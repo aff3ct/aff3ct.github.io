@@ -21,7 +21,8 @@
   <script src="./js/lib/mustache-3.0.1.js"></script>
   <script src="./js/lib/tippy-4.2.1.min.js"></script>
   <script src="./js/lib/nouislider-13.1.5.min.js"></script>
-  <script src="./text2json/js/lib/sha1-0.6.0.min.js"></script>
+  <script src="./js/lib/sha1-0.6.0.min.js"></script>
+  <script src="./js/comparator_text2json.js"></script>
   <!--
   <script> /* Google Analytics */
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -30,32 +31,33 @@
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-78973823-1', 'auto');
   ga('send', 'pageview');
-</script>-->
-<script>
-      /*
-      * Function that tracks a click on an outbound link in Analytics.
-      * This function takes a valid URL string as an argument, and uses that URL string
-      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
-      * using 'navigator.sendBeacon' in browser that support it.
-      */
-      var trackOutboundLink = function(url, isExternal = true) {
-        var params = {};
-        if (!isExternal) {
-          params.hitCallback = function () {
-            document.location = url;
-          }
+  </script>
+  <-->
+  <script>
+    /*
+    * Function that tracks a click on an outbound link in Analytics.
+    * This function takes a valid URL string as an argument, and uses that URL string
+    * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+    * using 'navigator.sendBeacon' in browser that support it.
+    */
+    var trackOutboundLink = function(url, isExternal = true) {
+      var params = {};
+      if (!isExternal) {
+        params.hitCallback = function () {
+          document.location = url;
         }
-        ga('send', 'event', 'outbound', 'click', url, params);
-        return isExternal;
       }
-    </script>
-    <script id="filesTemplate" type="x-tmpl-mustache">
-      <div class="card card{{aId}}">
-       <div class="card-header p-2" id="heading{{sideNumber}}{{aId}}">
-         <h5 class="mb-0">
-           <div class="mb-0 mx-0 form-group row">
+      ga('send', 'event', 'outbound', 'click', url, params);
+      return isExternal;
+    }
+  </script>
+  <script id="filesTemplate" type="x-tmpl-mustache">
+    <div class="card card{{aId}}">
+      <div class="card-header p-2" id="heading{{sideNumber}}{{aId}}">
+        <h5 class="mb-0">
+          <div class="mb-0 mx-0 form-group row">
             <div class="col-md-auto px-0" style="margin-top:auto;margin-bottom:auto">
-              <button type="button" id="{{side}}{{aId}}" class="btn btn-primary">
+              <button type="button" id="curve{{aId}}" class="btn btn-primary">
                 <b>+</b>
               </button>
             </div>
@@ -70,266 +72,183 @@
         </h5>
       </div>
       <div id="collapse{{sideNumber}}{{aId}}" class="collapse" aria-labelledby="heading{{sideNumber}}{{aId}}" data-parent="#accordion{{sideNumber}}">
-       <div class="card-body">
-         <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
-           <div class="text-muted twoColumns">
-            <small><b>Frame size</b>: {{aFramesize}}<br/>
-              {{{filesCodeword}}}
-              <b>Coderate</b>: {{aCoderate}}
-              {{{filesTooltip}}}
-            </small>
-          </div>
-          <div class="curveIcons">
-            {{{filesDoi}}}
-            {{{filesUrl}}}
-            {{{filesCommand}}}
-            <span class="curveIcon">
-              <a href="#" data-toggle="modal" data-target="#modalInfoFile_{{aId}}" title="Original output text file">
-                <i class="fas fa-file-alt"></i>
-              </a>
-            </span>
-          </div>
-        </li>
-      </div>
-    </div>
-  </div>
-</script>
-<script id="cmdSelectorTemplate" type="x-tmpl-mustache">
-  <div class="modal fade" id="modalInfoCmd_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-         </button>
-       </div>
-       <div class="modal-body">
-         <div class="shell-wrap">
-           <p class="shell-top-bar">AFF3CT command line</p>
-           <ul class="shell-body">
-            <li>{{{aCommand}}}</li>
-          </ul>
-        </div><br>
-        <p class="text-justify">
-          <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="modalInfoFile_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
- <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <pre>{{aFile}}</pre>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-  </div>
-</div>
-</div>
-</script>
-
-<script id="cmdSelectedTemplate" type="x-tmpl-mustache">
-  <div class="modal fade" id="modalInfoCmd{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-         </button>
-       </div>
-       <div class="modal-body">
-         <div class="shell-wrap">
-           <p class="shell-top-bar">AFF3CT command line</p>
-           <ul class="shell-body">
-            <li>{{{aCommand}}}</li>
-          </ul>
-        </div><br>
-        <p class="text-justify">
-          <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="modalInfoFile{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
- <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <pre>{{aFile}}</pre>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-  </div>
-</div>
-</div>
-</script>
-
-<script id="selectorTemplate" type="x-tmpl-mustache">
-  <div class="col-3 p-1 {{selectorCurveId}}" id="{{selectorCurveId}}" style="height:80vh;overflow-x:hidden;overflow-y:auto;{{displayNone}}">
-   <div class="container">
-    <div class="form-group row">
-      <label for="codetype{{selectorCurveId}}" class="col-sm-6">Type of code</label>
-      <div class="col-sm-6">
-        <div class="dropdown" id="codetype{{selectorCurveId}}">
-          <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Code
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
-            <form class="px-3 py-2" style="max-height:30vh;overflow-x:hidden;overflow-y:auto">
-              <div class="form-check codetype"></div>
-            </form>
-          </div>
+        <div class="card-body">
+          <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
+            <div class="text-muted twoColumns">
+              <small>
+                <b>Frame size</b>: {{aFramesize}}<br/>
+                {{{filesCodeword}}}
+                <b>Coderate</b>: {{aCoderate}}
+                {{{filesTooltip}}}
+              </small>
+            </div>
+            <div class="curveIcons">
+              {{{filesDoi}}}
+              {{{filesUrl}}}
+              {{{filesCommand}}}
+              <span class="curveIcon">
+                <a href="#" data-toggle="modal" data-target="#modalInfoFile_{{aId}}" title="Original output text file">
+                  <i class="fas fa-file-alt"></i>
+                </a>
+              </span>
+            </div>
+          </li>
         </div>
       </div>
     </div>
-    <div class="form-group row">
-      <label for="size{{selectorCurveId}}" class="col-sm-6">Frame size (N)</label>
-      <div class="col-sm-6">
-        <div class="dropdown" id="size{{selectorCurveId}}">
-          <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownSizeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Size
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownSizeButton">
-            <form class="px-3 py-2">
-              <div class="form-check size" style="max-height:30vh;overflow-x:hidden;overflow-y:auto"></div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="modem{{selectorCurveId}}" class="col-sm-6">Type of modem</label>
-      <div class="col-sm-6">
-        <div class="dropdown" id="modem{{selectorCurveId}}">
-          <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Modem
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
-            <form class="px-3 py-2" style="max-height:30vh;overflow-x:hidden;overflow-y:auto">
-              <div class="form-check modem"></div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="channel{{selectorCurveId}}" class="col-sm-6">Type of channel</label>
-      <div class="col-sm-6">
-        <div class="dropdown" id="channel{{selectorCurveId}}">
-          <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownchannelButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Channel
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownchannelButton">
-            <form class="px-3 py-2" style="max-height:30vh;overflow-x:hidden;overflow-y:auto">
-              <div class="form-check channel"></div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr class="separator">
-    <div class="form-group row">
-      <label for="coderate{{selectorCurveId}}" class="col-sm-6">Code rate (R)</label>
-      <div id="slider-step" class="mb-5 col-sm-12"></div>
-    </div>
-    <hr class="separator">
-  </div>
-  <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="applySelections()">Apply selections</button>
-  <div class="mb-4"></div>
-  <div id="subSelector" class="p-3 mb-3 bg-white rounded" style="padding:0rem !important">
-    <ul class="list-group bers">
-     <div id="accordion"></div>
-   </ul>
- </div>
-</div>
-</script>
-
-<script id="selectedTemplate" type="x-tmpl-mustache">
-  <div id="scurve{{sideNumber}}">
-    <div class="card" id="ss{{side}}">
-      <div class="card-header" id="sheading{{sideNumber}}">
-        <h5 class="mb-0">
-          <div class="mb-0 form-group row">
-            <div class="col-sm-9" data-toggle="collapse" data-target="#scollapse{{sideNumber}}" aria-expanded="true" aria-controls="scollapse{{sideNumber}}">
-              <button class="btn btn-block btn-link text-left" {{{filesTooltip1}}}{{aTitleShort}}
-            </button>
-          </div>
-          <div id="delete{{sideNumber}}" class="col-0">
-            <button type="button" class="close" aria-label="Close" onclick="deleteClick('delete', '{{side}}')">
+  </script>
+  <script id="cmdSelectorTemplate" type="x-tmpl-mustache">
+    <div class="modal fade" id="modalInfoCmd_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-md pl-0" onclick="hideCurve('{{sideNumber}}')">
-              <i class="fas fa-eye-slash"></i>
-            </button> 
           </div>
-        </div>  
-      </h5>
-    </div>
-    <div id="scollapse{{sideNumber}}" class="collapse" aria-labelledby="sheading{{sideNumber}}" data-parent="#sAccordion">
-      <div class="card-body">
-        <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
-          <div class="text-muted twoColumns">
-            <small><b>Frame size</b>: {{aFramesize}}<br/>
-              {{{filesCodeword}}}
-              <b>Coderate</b>: {{aCoderate}}
-              {{{filesTooltip2}}}
-            </small>
+          <div class="modal-body">
+            <div class="shell-wrap">
+              <p class="shell-top-bar">AFF3CT command line</p>
+              <ul class="shell-body">
+                <li>{{{aCommand}}}</li>
+              </ul>
+            </div>
+            <br>
+            <p class="text-justify">
+              <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
+            </p>
           </div>
-          <div class="curveIcons">
-            {{{filesDoi}}}
-            {{{filesUrl}}}
-            {{{filesCommand}}}
-            <span class="curveIcon">
-              <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
-                <i class="fas fa-file-alt"></i>
-              </a>
-            </span>
-          </div>
-        </li>
+        </div>
       </div>
     </div>
-  </div>
-</script>
-
-<script id="deleteAllTemplate" type="x-tmpl-mustache">
-  <div id="closeAll">
-    <button type="button" class="btn btn-secondary" onclick="deleteAll()">Delete All</button>
-  </div>
-</script>
-
-<script id="showTemplate" type="x-tmpl-mustache">
-  <button id="show{{sideNumber}}" type="button" class="btn btn-md btn-link pl-0" onclick="showCurve('{{sideNumber}}')">
-    <i class="fas fa-eye"></i>
-  </button> 
-</script>
-
-<script id="hideTemplate" type="x-tmpl-mustache">
-  <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-md pl-0" onclick="hideCurve('{{sideNumber}}')">
-    <i class="fas fa-eye-slash"></i>
-  </button> 
-</script>
-
-<script id="checkboxTemplate" type="x-tmpl-mustache">
-  <input type="checkbox" class="form-check-input" id="{{element}}" title="{{element}}" onclick="{{function}}{{element}})" {{disabled}}><label class="form-check-label" for="{{element}}" title="{{element}}">{{{startBlackFont}}}{{element}} ({{length}}){{{endBlackFont}}}</label>
-</script>
+    <div class="modal fade" id="modalInfoFile_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <pre>{{aFile}}</pre>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+  <script id="cmdSelectedTemplate" type="x-tmpl-mustache">
+    <div class="modal fade" id="modalInfoCmd{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="shell-wrap">
+              <p class="shell-top-bar">AFF3CT command line</p>
+              <ul class="shell-body">
+                <li>{{{aCommand}}}</li>
+              </ul>
+            </div>
+            <br>
+            <p class="text-justify">
+              <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="modalInfoFile{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <pre>{{aFile}}</pre>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+  <script id="selectedTemplate" type="x-tmpl-mustache">
+    <div id="scurve{{sideNumber}}">
+      <div class="card" id="ss{{side}}">
+        <div class="card-header" id="sheading{{sideNumber}}">
+          <h5 class="mb-0">
+            <div class="mb-0 form-group row">
+              <div class="col-sm-9" data-toggle="collapse" data-target="#scollapse{{sideNumber}}" aria-expanded="true" aria-controls="scollapse{{sideNumber}}">
+                <button class="btn btn-block btn-link text-left" {{{filesTooltip1}}}{{aTitleShort}}
+              </button>
+            </div>
+            <div id="delete{{sideNumber}}" class="col-0">
+              <button type="button" class="close" aria-label="Close" onclick="deleteClick('delete', '{{side}}')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-sm" onclick="hideCurve('{{sideNumber}}')">
+                <i class="fas fa-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+        </h5>
+      </div>
+      <div id="scollapse{{sideNumber}}" class="collapse" aria-labelledby="sheading{{sideNumber}}" data-parent="#sAccordion">
+        <div class="card-body">
+          <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
+            <div class="text-muted twoColumns">
+              <small><b>Frame size</b>: {{aFramesize}}<br/>
+                {{{filesCodeword}}}
+                <b>Coderate</b>: {{aCoderate}}
+                {{{filesTooltip2}}}
+              </small>
+            </div>
+            <div class="curveIcons">
+              {{{filesDoi}}}
+              {{{filesUrl}}}
+              {{{filesCommand}}}
+              <span class="curveIcon">
+                <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
+                  <i class="fas fa-file-alt"></i>
+                </a>
+              </span>
+            </div>
+          </li>
+        </div>
+      </div>
+    </div>
+  </script>
+  <script id="deleteAllTemplate" type="x-tmpl-mustache">
+    <div id="closeAll">
+      <button type="button" class="btn btn-secondary" onclick="deleteAll()">Delete All</button>
+    </div>
+  </script>
+  <script id="showTemplate" type="x-tmpl-mustache">
+    <button id="show{{sideNumber}}" type="button" class="btn btn-sm btn-link" onclick="showCurve('{{sideNumber}}')">
+      <i class="fas fa-eye"></i>
+    </button>
+  </script>
+  <script id="hideTemplate" type="x-tmpl-mustache">
+    <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-sm" onclick="hideCurve('{{sideNumber}}')">
+      <i class="fas fa-eye-slash"></i>
+    </button>
+  </script>
+  <script id="checkboxTemplate" type="x-tmpl-mustache">
+    <input type="checkbox" class="form-check-input" id="{{element}}" title="{{element}}" onclick="{{function}}{{element}})" {{disabled}}><label class="form-check-label" for="{{element}}" title="{{element}}">{{{startBlackFont}}}{{element}} ({{length}}){{{endBlackFont}}}</label>
+  </script>
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -378,56 +297,135 @@
       </div>
     </div>
   </div>
-
-  <div class="container marketing" id="comparator" style="height:80vh;overflow-y:hidden;display:none;">
+  <div id="comparator" class="shadow-lg p-3 mb-5 bg-white rounded">
     <div class="row" id="comparatorNext">
-      <div class="col-6 p-0">
-        <div id="curvesTip" style="display:none">
-         <p id="tips" class="text-center">
-           <strong>Please select up to 10 curves<br/>on the left blue buttons<br/>and delete them on the right.<br/>You can plot your own curve<br/>by loading your AFF3CT text file.</strong>
-         </p>
-       </div>
-       <div id="plotber"></div>
-       <div id="plotfer"></div><!-- <div class="col-3 p-0"><div id="plotber"></div><div id="plotbefe"></div></div><div class="col-3 p-0"><div id="plotfer"></div><div id="plotthr"></div></div> -->
-     </div>
-
-
-     <div class="col-3 p-1 scurve" id="scurve" style="height:80vh;overflow-y:auto;overflow-x:hidden">
-      <div id="sAccordion"></div>
-      <div id="input">
-        <input id="fileInput" multiple="multiple" type="file">
-        <span id="fileDisplayArea"></span>
+      <div class="col-2 p-1" id="selector">
+        <div class="container">
+          <div class="form-group row">
+            <label for="codetype{{selectorCurveId}}" class="col-sm-6">Type of code</label>
+            <div class="col-sm-6">
+              <div class="dropdown" id="codetype{{selectorCurveId}}">
+                <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Code
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
+                  <form class="px-3 py-2" style="max-height:30vh;overflow-x:hidden;overflow-y:auto">
+                    <div class="form-check codetype"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="size{{selectorCurveId}}" class="col-sm-6">Frame size (N)</label>
+            <div class="col-sm-6">
+              <div class="dropdown" id="size{{selectorCurveId}}">
+                <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownSizeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Size
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownSizeButton">
+                  <form class="px-3 py-2">
+                    <div class="form-check size" style="max-height:30vh;overflow-x:hidden;overflow-y:auto"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="modem{{selectorCurveId}}" class="col-sm-6">Type of modem</label>
+            <div class="col-sm-6">
+              <div class="dropdown" id="modem{{selectorCurveId}}">
+                <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Modem
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
+                  <form class="px-3 py-2" style="max-height:30vh;overflow-x:hidden;overflow-y:auto">
+                    <div class="form-check modem"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="channel{{selectorCurveId}}" class="col-sm-6">Type of channel</label>
+            <div class="col-sm-6">
+              <div class="dropdown" id="channel{{selectorCurveId}}">
+                <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownchannelButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Channel
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownchannelButton">
+                  <form class="px-3 py-2" style="max-height:30vh;overflow-x:hidden;overflow-y:auto">
+                    <div class="form-check channel"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="separator">
+          <div class="form-group row">
+            <label for="coderate{{selectorCurveId}}" class="col-sm-6">Code rate (R)</label>
+            <div id="slider-step" class="mb-5 col-sm-12"></div>
+          </div>
+          <hr class="separator">
+        </div>
+        <div id="input">
+          <input id="fileInput" multiple="multiple" type="file">
+          <span id="fileDisplayArea"></span>
+        </div>
+        <hr class="separator">
+        <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="applySelections()">Apply selections</button>
+      </div>
+      <div class="col-2 p-1" id="refsList">
+        <div class="p-3 mb-3 bg-white rounded container">
+          <ul class="list-group bers">
+            <div id="accordion"></div>
+          </ul>
+        </div>
+      </div>
+      <div class="col-6 p-0" id="curves">
+        <div class="container">
+          <div id="curvesTip">
+            <p id="tips" class="text-center">
+              <strong>Please select up to 10 curves<br/>on the left blue buttons<br/>and delete them on the right.<br/>You can plot your own curve<br/>by loading your Aff3ct text file.</strong>
+            </p>
+          </div>
+          <div id="plotber"></div>
+          <div id="plotfer"></div>
+        </div>
+      </div>
+      <div class="col-2 p-1" id="scurve">
+        <div class="container">
+          <div id="sAccordion"></div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div id="curve0modals"></div>
-<div id="curve1modals"></div>
-<div id="curve2modals"></div>
-<div id="curve3modals"></div>
-<div id="curve4modals"></div>
-<div id="curve5modals"></div>
-<div id="curve6modals"></div>
-<div id="curve7modals"></div>
-<div id="curve8modals"></div>
-<div id="curve9modals"></div>
-<div id="curvemodalsSelector"></div>
-<div class="container marketing">
-  <br/><br/>
-  <h2>More BER/FER references</h2>
-  <ul>
-    <li><a target="_blank" href="https://www.uni-kl.de/channel-codes/ml-simulation-results/" onclick="return trackOutboundLink('https://www.uni-kl.de/channel-codes/ml-simulation-results/');">Maximum Likelihood (ML) Simulation Results</a> - <i>University of Kaiserslautern</i></li>
-    <li><a target="_blank" href="http://pretty-good-codes.org" onclick="return trackOutboundLink('http://pretty-good-codes.org');">Online Library of Good Channel Codes</a> - <i>Pretty-good-codes.org</i></li>
-    <li><a target="_blank" href="http://www.inference.org.uk/mackay/codes/data.html" onclick="return trackOutboundLink('http://www.inference.org.uk/mackay/codes/data.html');">Encyclopedia of Sparse Graph Codes</a> - <i>David J.C. MacKay</i></li>
-  </ul>
-  <div class="mb-4"></div>
-  <hr>
-  <footer class="container">
-    <p class="float-right"><a href="#"><i class="fa fa-level-up-alt" aria-hidden="true">&nbsp;</i>Back to top</a></p>
-    <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="return trackOutboundLink('http://www.agence-nationale-recherche.fr/');">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="return trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="return trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
-  </footer>
-</div>
-<script src="./js/comparator_tooltips.js"></script>
-<script src="./js/comparator.js"></script>
+  <div id="curve0modals"></div>
+  <div id="curve1modals"></div>
+  <div id="curve2modals"></div>
+  <div id="curve3modals"></div>
+  <div id="curve4modals"></div>
+  <div id="curve5modals"></div>
+  <div id="curve6modals"></div>
+  <div id="curve7modals"></div>
+  <div id="curve8modals"></div>
+  <div id="curve9modals"></div>
+  <div id="curvemodalsSelector"></div>
+  <div class="container marketing">
+    <h2>More BER/FER references</h2>
+    <ul>
+      <li><a target="_blank" href="https://www.uni-kl.de/channel-codes/ml-simulation-results/" onclick="return trackOutboundLink('https://www.uni-kl.de/channel-codes/ml-simulation-results/');">Maximum Likelihood (ML) Simulation Results</a> - <i>University of Kaiserslautern</i></li>
+      <li><a target="_blank" href="http://pretty-good-codes.org" onclick="return trackOutboundLink('http://pretty-good-codes.org');">Online Library of Good Channel Codes</a> - <i>Pretty-good-codes.org</i></li>
+      <li><a target="_blank" href="http://www.inference.org.uk/mackay/codes/data.html" onclick="return trackOutboundLink('http://www.inference.org.uk/mackay/codes/data.html');">Encyclopedia of Sparse Graph Codes</a> - <i>David J.C. MacKay</i></li>
+    </ul>
+    <div class="mb-4"></div>
+    <hr>
+    <footer class="container">
+      <p class="float-right"><a href="#"><i class="fa fa-level-up-alt" aria-hidden="true">&nbsp;</i>Back to top</a></p>
+      <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="return trackOutboundLink('http://www.agence-nationale-recherche.fr/');">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="return trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="return trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
+    </footer>
+  </div>
+  <script src="./js/comparator_tooltips.js"></script>
+  <script src="./js/comparator.js"></script>
 </body>
 </html>

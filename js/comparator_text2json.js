@@ -165,30 +165,5 @@ function text2json(txt, filename = "")
 	let o = {};
 	o[hashMaker.hex().substring(0,7)] = dict;
 
-	return o;
-}
-
-function loadUniqueFile(fileInput) {
-	let file = fileInput.files[0];
-	if (file.type=="text/plain")
-	{
-		$("#fileDisplayArea").empty();
-		let reader = new FileReader();
-		reader.readAsText(file);
-		reader.onloadend = function(e)
-		{
-			console.log(text2json(reader.result, file.name));
-		};
-	}
-	else
-	{
-		$("#fileDisplayArea").html('<span class="alert alert-danger" role="alert">File not supported!</span>');
-	}
-}
-
-window.onload = function() {
-	$("#fileInput").on('change', function(e)
-	{
-		loadUniqueFile(fileInput);
-	});
+	return dict;
 }
