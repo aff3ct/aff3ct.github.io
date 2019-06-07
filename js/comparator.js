@@ -240,6 +240,7 @@ function loadDatabase() {//Return String that include the whole file
 		$("#selector").css("display", "block");
 		$("#comparator").css("display", "block");
 		drawCurvesFromURI();
+		displayFiles(Curves.refs);
 	});
 }
 
