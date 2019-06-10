@@ -17,8 +17,6 @@ const Curves = {
 	plots: ["ber","fer"],
 	PLOTS: {ber: "BER", fer: "FER"},
 	plotOrder: [],
-	toolTips: [],
-	toolTipsSelected: [],
 	selectors: {
 		codeType:    { selection: [], path: "headers/Codec/Type"           },
 		frameSize:   { selection: [], path: "headers/Codec/Frame size (N)" },
@@ -35,7 +33,6 @@ const Curves = {
 			this.disponibility.push(1);
 			this.plotOrder.push(-1);
 			this.input.push(-1);
-			this.toolTipsSelected.push("");
 			this.hidden.push(0);
 		}
 	},
@@ -78,7 +75,7 @@ const Curves = {
 		if (this.length<this.max) this.length++;
 		this.disponibility[i]=0;
 		this.hidden[i]=0;
-		this.updateAddButton(true, "-", i);
+		this.updateAddButton(true, '<i class="fas fa-minus"></i>', i);
 	},
 	deleteCurve(nb) {
 		if (nb<=this.max) {
@@ -95,7 +92,7 @@ const Curves = {
 				this.input[nb]=-1;
 				this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
 				this.plotOrder.push(-1);
-				this.updateAddButton(false, "+", nb);
+				this.updateAddButton(false, '<i class="fas fa-plus"></i>', nb);
 				this.id[nb]=-1;
 				this.hidden[nb];
 				this.length--;
@@ -270,80 +267,73 @@ function displayRefsList(refs) {//Display refs that can be selected
 		return Curves.db[a].metadata.title > Curves.db[b].metadata.title;
 	});
 	$("#refsList #accordion").empty();
-	Curves.toolTips=[];
 	$("#"+Curves.curveId()+"modalsSelector").empty();
-	refs.forEach(function(ref) {
-		let a=Curves.db[ref];
-		/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(a.metadata.title);
-		let metadataTitle=a.metadata.title;
-		let metadataTitleShort=a.metadata.title;
+	refs.forEach(function(id) {
+		let ref=Curves.db[id];
+		/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(ref.metadata.title);
+		let metaTitle=ref.metadata.title;
+		let metaTitleShort=ref.metadata.title;
 		let titleEnd="";
-		let codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="", tooltipParam="";
-		if (a.metadata.title.length > 23) {
-			if (RegExp.$1=="" || RegExp.$2=="") metadataTitleShort=a.metadata.title.substring(0,19)+'... ';
+		if (ref.metadata.title.length > 23) {
+			if (RegExp.$1=="" || RegExp.$2=="")
+				metaTitleShort=ref.metadata.title.substring(0,19)+'... ';
 			else {
-				metadataTitleShort=RegExp.$1;
+				metaTitleShort=RegExp.$1;
 				titleEnd=RegExp.$2;
 			}
-			let nb=Curves.toolTips.length;
-			tooltipParam="id='toolTip"+String(nb)+"' data-tippy-content='"+String(metadataTitle)+"'";
-			Curves.toolTips.push('#toolTip'+String(nb));
 		}
-		if (a.headers.Codec["Codeword size (N_cw)"] > a.headers.Codec["Frame size (N)"])
-			codeWord="<b>Codeword</b>: "+a.headers.Codec["Codeword size (N_cw)"]+"<br/>";
-		for (let j in a.headers) {
-			if (a.headers[j].Type) {
-				let tooltip2 = "";
-				if (tooltips.get(a.headers[j].Type))
-					tooltip2 = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.headers[j].Type) + "'";
-				if (a.headers[j].Type == "BP_HORIZONTAL_LAYERED") a.headers[j].Type = "BP_HLAYERED";
-				if (a.headers[j].Type == "BP_VERTICAL_LAYERED") a.headers[j].Type = "BP_VLAYERED";
-				tooltip+="<br/><b>"+j+"</b>: "+"<span" + tooltip2 + ">" + a.headers[j].Type + "</span>";
+		let codeWord=""
+		if (ref.headers.Codec["Codeword size (N_cw)"] > ref.headers.Codec["Frame size (N)"])
+			codeWord="<b>Codeword</b>: "+ref.headers.Codec["Codeword size (N_cw)"]+"<br/>";
+		let headersInfo="";
+		for (let j in ref.headers) {
+			if (ref.headers[j].Type) {
+				let tooltip = "";
+				if (tooltips.get(ref.headers[j].Type))
+					tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(ref.headers[j].Type) + "'";
+				headersInfo+="<br/><b>"+j+"</b>: "+"<span" + tooltip + ">" + ref.headers[j].Type + "</span>";
 			}
 		}
-		if (a.metadata.doi)
-			metadataDoi="  <span class='curveIcon'><a href='https://doi.org/"+a.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>";
-		if (a.metadata.url)
-			metadataUrl="  <span class='curveIcon'><a href='"+a.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
-		if (a.metadata.command)
-			metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+"_"+getId(a)+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
-		let refsTemplate = $('#refsTemplate').html();
-		Mustache.parse(refsTemplate);
-		let refsRendered=Mustache.render(refsTemplate, {
-			refsI: getId(a),
+		let metaDoi="";
+		if (ref.metadata.doi)
+			metaDoi="  <span class='curveIcon'><a href='https://doi.org/"+ref.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+ref.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>";
+		let metaUrl="";
+		if (ref.metadata.url)
+			metaUrl="  <span class='curveIcon'><a href='"+ref.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+ref.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
+		let metaCommand="";
+		if (ref.metadata.command)
+			metaCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+"_"+getId(ref)+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
+		let refTemplate = $('#refTemplate').html();
+		Mustache.parse(refTemplate);
+		let refRendered=Mustache.render(refTemplate, {
+			id:         getId(ref),
 			sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
-			side: Curves.curveId(),
-			aId: getId(a),
-			tooltip: tooltipParam,
-			aTitleShort: metadataTitleShort,
-			aTitle: metadataTitle,
-			aTitleEnd: titleEnd,
-			aFramesize: a.headers.Codec["Frame size (N)"],
-			refsCodeword: codeWord,
-			aCoderate: a.headers.Codec["Code rate"],
-			refsTooltip: tooltip,
-			refsDoi: metadataDoi,
-			refsUrl: metadataUrl,
-			refsCommand: metadataCommand
+			side:       Curves.curveId(),
+			titleShort: metaTitleShort,
+			title:      metaTitle,
+			titleEnd:   titleEnd,
+			frameSize:  ref.headers.Codec["Frame size (N)"],
+			codeWord:   codeWord,
+			codeRate:   ref.headers.Codec["Code rate"],
+			info:       headersInfo,
+			doi:        metaDoi,
+			url:        metaUrl,
+			command:    metaCommand
 		});
-		$("#refsList #accordion").append(refsRendered);
-		tippy(Curves.toolTips[Curves.toolTips.length-1], {
-			arrow: true,
-			arrowType: 'sharp',
-			animation: 'fade',
-		});
-		if (a.metadata.command) {
-			let cmdSelectorTemplate = $('#cmdSelectorTemplate').html();
-			Mustache.parse(cmdSelectorTemplate);
-			let refRendered1=Mustache.render(cmdSelectorTemplate, 	{side: Curves.curveId(),
-				aId: getId(a),
-				aTitle: metadataTitle,
-				aCommand: String(a.metadata.command),
-				aFile: String(a.trace),
+		$("#refsList #accordion").append(refRendered);
+		if (ref.metadata.command) {
+			let cmdModalTemplate = $('#cmdModalTemplate').html();
+			Mustache.parse(cmdModalTemplate);
+			let refRendered1=Mustache.render(cmdModalTemplate, {
+				side:     Curves.curveId(),
+				aId:      getId(ref),
+				aTitle:   metaTitle,
+				aCommand: String(ref.metadata.command),
+				aFile:    String(ref.trace),
 			});
 			$("#curvemodalsSelector").append(refRendered1);
 		}
-		addClick(a, 0);
+		addClick(ref, 0);
 	});
 	$('[data-toggle="tooltip"]').tooltip();
 }
@@ -352,9 +342,7 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 	let metadataTitle=a.metadata.title;
 	let codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="", metadataTitleShort=a.metadata.title, nb=-1, allFunc="";
 	if (a.metadata.title.length > 21) {
-		nb=Curves.curveId().substring(5, Curves.curveId().length);
-		tooltip1="id='TooltipCurve"+nb+"' data-tippy-content='"+String(metadataTitle)+"'>";
-		Curves.toolTipsSelected[Number(nb)]='#TooltipCurve'+nb;
+		tooltip1="id='TooltipCurve"+getId(a)+"' data-tippy-content='"+String(metadataTitle)+"'>";
 		metadataTitleShort=a.metadata.title.substring(0,20)+"... ";
 	}
 	if (a.headers.Codec["Codeword size (N_cw)"] > a.headers.Codec["Frame size (N)"])
@@ -378,22 +366,22 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 	let selectedTemplate = $('#selectedTemplate').html();
 	Mustache.parse(selectedTemplate);
 	let selectedRendered=Mustache.render(selectedTemplate, {
-		sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
-		side: Curves.curveId(),
-		aId: getId(a),
-		aTitle: metadataTitle,
-		aTitleShort: metadataTitleShort,
-		aFramesize: a.headers.Codec["Frame size (N)"],
+		sideNumber:   Curves.curveId().substring(5,Curves.curveId().length),
+		side:         Curves.curveId(),
+		aId:          getId(a),
+		aTitle:       metadataTitle,
+		aTitleShort:  metadataTitleShort,
+		aFramesize:   a.headers.Codec["Frame size (N)"],
 		refsCodeword: codeWord,
-		aCoderate: a.headers.Codec["Code rate"],
+		aCoderate:    a.headers.Codec["Code rate"],
 		refsTooltip1: tooltip1,
 		refsTooltip2: tooltip2,
-		refsDoi: metadataDoi,
-		refsUrl: metadataUrl,
-		refsCommand: metadataCommand
+		refsDoi:      metadataDoi,
+		refsUrl:      metadataUrl,
+		refsCommand:  metadataCommand
 	});
 	$("#scurve #sAccordion").append(selectedRendered);
-	tippy(Curves.toolTipsSelected[nb], {
+	tippy('#TooltipCurve'+getId(a), {
 		arrow: true,
 		arrowType: 'sharp',
 		animation: 'fade',
@@ -401,14 +389,16 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 	if (a.metadata.command) {
 		let cmdSelectedTemplate = $('#cmdSelectedTemplate').html();
 		Mustache.parse(cmdSelectedTemplate);
-		let refRendered1=Mustache.render(cmdSelectedTemplate, 	{side: Curves.curveId(),
-			aId: getId(a),
-			aTitle: metadataTitle,
+		let refRendered1=Mustache.render(cmdSelectedTemplate, {
+			side:     Curves.curveId(),
+			aId:      getId(a),
+			aTitle:   metadataTitle,
 			aCommand: String(a.metadata.command),
-			aFile: String(a.trace),
+			aFile:    String(a.trace),
 		});
 		$("#"+Curves.curveId()+"modals").append(refRendered1);
 	}
+	$('[data-toggle="tooltip"]').tooltip();
 }
 
 function subAddClick(a, input) {
@@ -610,7 +600,7 @@ function applySelections() {
 	displayRefsList(filters(Object.keys(Curves.db)));
 	for (let i in Curves.disponibility) {
 		if (Curves.disponibility[i]==0)
-			Curves.updateAddButton(true, "-", i);
+			Curves.updateAddButton(true, '<i class="fas fa-minus"></i>', i);
 	}
 }
 

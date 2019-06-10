@@ -100,6 +100,15 @@
   color:#fff !important;
 }
 
+#closeAll {
+  margin-bottom:5px;
+}
+
+.card .titleEnd {
+  font-size: 10pt;
+  padding-bottom: 6px;
+}
+
 .tt
 {
   border-bottom: 1px dotted #ccc;

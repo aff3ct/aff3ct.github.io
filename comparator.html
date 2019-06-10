@@ -50,43 +50,42 @@
       return isExternal;
     }
   </script>
-  <script id="refsTemplate" type="x-tmpl-mustache">
-    <div class="card card{{aId}}">
-      <div class="card-header p-2" id="heading{{sideNumber}}{{aId}}">
+  <script id="refTemplate" type="x-tmpl-mustache">
+    <div class="card card{{id}}">
+      <div class="card-header p-2" id="heading{{sideNumber}}{{id}}">
         <h5 class="mb-0">
           <div class="mb-0 mx-0 form-group row">
             <div class="col-md-auto px-0" style="margin-top:auto;margin-bottom:auto">
-              <button type="button" id="curve{{aId}}" class="btn btn-primary">
-                <b>+</b>
+              <button type="button" id="curve{{id}}" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
               </button>
             </div>
             <div class="col-md-10 px-0">
-              <button class="btn btn-link pr-0 pl-3" data-toggle="collapse" data-target="#collapse{{sideNumber}}{{aId}}" aria-expanded="true" aria-controls="collapse{{sideNumber}}{{aId}}" {{{tooltip}}}>
-                {{aTitleShort}}
+              <button class="btn btn-link pr-0 pl-3" data-toggle="collapse" data-target="#collapse{{sideNumber}}{{id}}" aria-expanded="true" aria-controls="collapse{{sideNumber}}{{id}}">
+                {{titleShort}}
               </button>
-              <br>
-              <div class="pl-3"><FONT size="2pt">{{aTitleEnd}}</FONT></div>
+              <div class="pl-3 titleEnd">{{titleEnd}}</div>
             </div>
           </div>
         </h5>
       </div>
-      <div id="collapse{{sideNumber}}{{aId}}" class="collapse" aria-labelledby="heading{{sideNumber}}{{aId}}" data-parent="#accordion{{sideNumber}}">
+      <div id="collapse{{sideNumber}}{{id}}" class="collapse" aria-labelledby="heading{{sideNumber}}{{id}}" data-parent="#accordion{{sideNumber}}">
         <div class="card-body">
-          <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
+          <li class="g{{id}} list-group-item list-group-item-action align-item-start">
             <div class="text-muted twoColumns">
               <small>
-                <b>Frame size</b>: {{aFramesize}}<br/>
-                {{{refsCodeword}}}
-                <b>Coderate</b>: {{aCoderate}}
-                {{{refsTooltip}}}
+                <b>Frame size</b>: {{frameSize}}<br/>
+                {{{codeWord}}}
+                <b>Coderate</b>: {{codeRate}}
+                {{{info}}}
               </small>
             </div>
             <div class="curveIcons">
-              {{{refsDoi}}}
-              {{{refsUrl}}}
-              {{{refsCommand}}}
+              {{{doi}}}
+              {{{url}}}
+              {{{command}}}
               <span class="curveIcon">
-                <a href="#" data-toggle="modal" data-target="#modalInfoFile_{{aId}}" title="Original output text file">
+                <a href="#" data-toggle="modal" data-target="#modalInfoFile_{{id}}" title="Original output text file">
                   <i class="fas fa-file-alt"></i>
                 </a>
               </span>
@@ -96,7 +95,7 @@
       </div>
     </div>
   </script>
-  <script id="cmdSelectorTemplate" type="x-tmpl-mustache">
+  <script id="cmdModalTemplate" type="x-tmpl-mustache">
     <div class="modal fade" id="modalInfoCmd_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -232,7 +231,7 @@
   </script>
   <script id="deleteAllTemplate" type="x-tmpl-mustache">
     <div id="closeAll">
-      <button type="button" class="btn btn-secondary" onclick="deleteAll()">Delete All</button>
+      <button type="button" class="btn btn-danger" onclick="deleteAll()"><i class="fas fa-trash"></i> Delete All</button>
     </div>
   </script>
   <script id="showTemplate" type="x-tmpl-mustache">
