@@ -14,7 +14,7 @@ const Curves = {
 	referenceColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // Do not modify this tab!!! Use it as a reference
 	colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // muted blue //safety orange // cooked asparagus green // brick red // muted purple // chestnut brown // raspberry yogurt pink // middle gray // curry yellow-green // blue-teal
 	colorsOrder: [], // From 0 to 9
-	plots: ["ber","fer"/*,"befe","thr"*/],
+	plots: ["ber","fer"],
 	PLOTS: {ber: "BER", fer: "FER"},
 	plotOrder: [],
 	toolTips: [],
@@ -135,8 +135,6 @@ const LT = {
 const LAYOUT= {
 	ber: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Bit Error Rate (BER)'} },LT),
 	fer: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Frame Error Rate (FER)'}},LT),
-    // befe: Object.assign({yaxis: { autorange: true, hoverformat: '.2e',title: 'BE/FE'}},LT),
-    // thr: Object.assign({ yaxis: { autorange: true, hoverformat: '.2e',title: 'Throughput (Mb/s)'}},LT)
 };
 
 let GD={};
@@ -229,17 +227,14 @@ function loadDatabase() {//Return String that include the whole file
 	}).done(function(database) {
 		Curves.db = database;
 		displaySlider();
-		displayCodeTypes();
-		displayFrameSizes();
-		displayModems();
-		displayChannels();
-		$("#loader").css("display", "none");
-		$("#curvesTip").css("display", "block");
-		$("#tips").css("display", "block");
-		$("#selector").css("display", "block");
+		displaySelectors();
+		$("#loader"    ).css("display", "none" );
+		$("#curvesTip" ).css("display", "block");
+		$("#tips"      ).css("display", "block");
+		$("#selector"  ).css("display", "block");
 		$("#comparator").css("display", "block");
 		drawCurvesFromURI();
-		displayFiles(Object.keys(Curves.db));
+		displayRefsList(Object.keys(Curves.db));
 	});
 }
 
@@ -257,7 +252,7 @@ function displaySlider() {
 	$("#codeRate").append("<div class='my-3'><span id='codeRateVal'></span></div>")
 	let stepSliderValueElement = $('#codeRateVal')[0];
 	stepSlider.noUiSlider.on('update', function (values) {
-		displayAll();
+		displaySelectors();
 		stepSliderValueElement.innerHTML = "Values: ";
 		stepSliderValueElement.innerHTML += values.join(' - ');
 	});
@@ -267,7 +262,7 @@ function getId(ref) {
 	return ref.hash.value.substring(0,7);
 }
 
-function displayFiles(refs) {//Display refs that can be selected
+function displayRefsList(refs) {//Display refs that can be selected
 	// sort refs by curve title (lexicographical order)
 	refs.sort(function(a,b) {
 		return Curves.db[a].metadata.title > Curves.db[b].metadata.title;
@@ -579,7 +574,7 @@ function hideCurve(idSide) {
 	$("#delete"+String(idSide)).append(showRendered);
 }
 
-function loadUniqueFile(fileInput, i) {//Load a file from input
+function loadFilesRecursive(fileInput, i) {//Load a file from input
 	if (i<fileInput.files.length) {
 		let file = fileInput.files[i];
 		if (file.type=="text/plain")
@@ -593,7 +588,7 @@ function loadUniqueFile(fileInput, i) {//Load a file from input
 					let o=text2json(reader.result, file.name);
 					let filename = encodeURIComponent(getId(o));
 					addClick(o, 1);
-					loadUniqueFile(fileInput, i+1);
+					loadFilesRecursive(fileInput, i+1);
 				};
 			}
 			else {
@@ -603,74 +598,15 @@ function loadUniqueFile(fileInput, i) {//Load a file from input
 		else
 		{
 			$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">File not supported!</span>');
-			loadUniqueFile(fileInput, i+1);
+			loadFilesRecursive(fileInput, i+1);
 		}
 	}
 }
 
 function applySelections() {
-	displayFiles(filters(Object.keys(Curves.db)));
+	displayRefsList(filters(Object.keys(Curves.db)));
 	for (let i in Curves.disponibility) {
 		if (Curves.disponibility[i]==0) Curves.updateAddButton(true, "-", i);
-	}
-}
-function updateSelectedCodes(val) {
-	if ($("#"+val).is(":checked")) {
-		Curves.selectedCodes.push(val);
-	} else {
-		Curves.selectedCodes.splice(Curves.selectedCodes.indexOf(val), 1);
-	}
-	if (Curves.selectedCodes.length==0)
-		displayAll();
-	else {
-		displayFrameSizes();
-		displayModems();
-		displayChannels();
-	}
-}
-
-function updateSelectedSizes(val) {
-	if ($("#"+val).is(":checked")) {
-		Curves.selectedSizes.push(val);
-	} else {
-		Curves.selectedSizes.splice(Curves.selectedSizes.indexOf(val), 1);
-	}
-	if (Curves.selectedSizes.length==0)
-		displayAll();
-	else {
-		displayCodeTypes();
-		displayModems();
-		displayChannels();
-	}
-}
-
-function updateSelectedModems(val) {
-	if ($("#"+val).is(":checked")) {
-		Curves.selectedModems.push(val);
-	} else {
-		Curves.selectedModems.splice(Curves.selectedModems.indexOf(val), 1);
-	}
-	if (Curves.selectedModems.length==0)
-		displayAll();
-	else {
-		displayCodeTypes();
-		displayFrameSizes();
-		displayChannels();
-	}
-}
-
-function updateSelectedChannels(val) {
-	if ($("#"+val).is(":checked")) {
-		Curves.selectedChannels.push(val);
-	} else {
-		Curves.selectedChannels.splice(Curves.selectedChannels.indexOf(val), 1);
-	}
-	if (Curves.selectedChannels.length==0)
-		displayAll();
-	else {
-		displayCodeTypes();
-		displayFrameSizes();
-		displayModems();
 	}
 }
 
@@ -706,7 +642,6 @@ function filterByChannels(refs) {
 	return filterByGeneric(refs, Curves.selectedChannels, "Channel", "Type");
 }
 
-
 function filterByCodeRates(refs) {
 	let p=[];
 	let codeRateRange=$('#codeRate')[0].noUiSlider.get();
@@ -737,14 +672,16 @@ function filters(refs, type = "") {
 	}
 }
 
-function displayAll() {
-	displayCodeTypes();
-	displayFrameSizes();
-	displayModems();
-	displayChannels();
+function updateSelected(val, selectedList, id) {
+	if ($("#"+val).is(":checked")) {
+		selectedList.push(val);
+	} else {
+		selectedList.splice(selectedList.indexOf(val), 1);
+	}
+	displaySelectors(selectedList.length ? id : "");
 }
 
-function displayCheckbox(length, font, endFont, disabled, callback, element, div) {
+function displayCheckbox(length, font, endFont, disabled, selectedList, element, id) {
 	let checkboxTemplate = $('#checkboxTemplate').html();
 	Mustache.parse(checkboxTemplate);
 	let checkboxRendered=Mustache.render(checkboxTemplate, {
@@ -754,13 +691,13 @@ function displayCheckbox(length, font, endFont, disabled, callback, element, div
 		endBlackFont: endFont,
 		length: length
 	});
-	$(div).append(checkboxRendered);
+	$("#"+id).append(checkboxRendered);
 	$('#'+element).on('click', function() {
-		callback(element);
+		updateSelected(element, selectedList, id);
 	});
 }
 
-function displaySelectorGeneric(id, key1, key2, callback, selectedList, showZeros = false) {
+function displaySelector(id, key1, key2, selectedList, showZeros = false) {
 	let filteredRefs=filters(Object.keys(Curves.db), id);
 	let refsCounter={};
 	if (showZeros) {
@@ -801,7 +738,7 @@ function displaySelectorGeneric(id, key1, key2, callback, selectedList, showZero
 			else
 				disabled='disabled';
 		}
-		displayCheckbox(number, black, endBlack, disabled, callback, key, "#"+id);
+		displayCheckbox(number, black, endBlack, disabled, selectedList, key, id);
 		$("#"+id).append('</li>');
 	}
 	$("#"+id).append('</ul>');
@@ -816,20 +753,11 @@ function displaySelectorGeneric(id, key1, key2, callback, selectedList, showZero
 	});
 }
 
-function displayCodeTypes() {
-	displaySelectorGeneric("codeType", "Codec", "Type", updateSelectedCodes, Curves.selectedCodes, true);
-}
-
-function displayFrameSizes() {
-	displaySelectorGeneric("frameSize", "Codec", "Frame size (N)", updateSelectedSizes, Curves.selectedSizes);
-}
-
-function displayModems() {
-	displaySelectorGeneric("modemType", "Modem", "Type", updateSelectedModems, Curves.selectedModems);
-}
-
-function displayChannels() {
-	displaySelectorGeneric("channelType", "Channel", "Type", updateSelectedChannels, Curves.selectedChannels);
+function displaySelectors(except = "") {
+	if (except != "codeType"   ) displaySelector("codeType",    "Codec",   "Type",           Curves.selectedCodes, true);
+	if (except != "frameSize"  ) displaySelector("frameSize",   "Codec",   "Frame size (N)", Curves.selectedSizes      );
+	if (except != "modemType"  ) displaySelector("modemType",   "Modem",   "Type",           Curves.selectedModems     );
+	if (except != "ChannelType") displaySelector("channelType", "Channel", "Type",           Curves.selectedChannels   );
 }
 
 function drawCurvesFromURI() {
@@ -873,12 +801,10 @@ $(document).ready(function() {
 		applySelections();
 	});
 	$("#fileInput").on('change', function() {
-		loadUniqueFile(fileInput, 0);
+		loadFilesRecursive(fileInput, 0);
 	});
 	$(window).resize(function() {
 		Plotly.Plots.resize(GD.ber);
 		Plotly.Plots.resize(GD.fer);
-		// Plotly.Plots.resize(GD.befe);
-		// Plotly.Plots.resize(GD.thr);
 	});
 });
