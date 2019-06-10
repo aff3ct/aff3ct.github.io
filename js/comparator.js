@@ -2,6 +2,7 @@ const GITLAB="https://gitlab.com/api/v4/projects/10354484/";
 const BRANCH="development";
 
 const Curves = {
+	db: {},
 	max: 10,//Colors are defined for only 10 curves. I'm not responsible for more curves. Sincerely, Me.
 	length: 0,//number of displayed curves
 	disponibility: [],//index==id! disponibility[id]=1 => available && disponibility[id]=0 => unavailable
@@ -23,7 +24,6 @@ const Curves = {
 	selectedModems: [],
 	selectedChannels: [],
 	inputCurves: [],
-	refs: [],
 	initialization() {
 		for (let i=0; i<this.max; i++) {
 			this.values.push({ber:[],fer:[]});
@@ -205,7 +205,7 @@ function loadDatabase() {//Return String that include the whole file
 	let databaseURL = GITLAB + "jobs/artifacts/" + BRANCH + "/raw/database.json?job=deploy-database-json";
 	$.ajaxSetup({
 		beforeSend: function(xhr) {
-			if (xhr.overrideMimeType) xhr.overrideMimeType("text/plain");
+			if (xhr.overrideMimeType) xhr.overrideMimeType("application/json");
 		},
 		isLocal:false
 	});
@@ -226,9 +226,8 @@ function loadDatabase() {//Return String that include the whole file
 			}, false);
 			return xhr;
 		}
-	}).done(function(data) {
-		let dataTab=JSON.parse(data);
-		Curves.refs=orderFiles(dataTab);
+	}).done(function(database) {
+		Curves.db = database;
 		displaySlider();
 		displayCodeTypes();
 		displayFrameSizes();
@@ -240,7 +239,7 @@ function loadDatabase() {//Return String that include the whole file
 		$("#selector").css("display", "block");
 		$("#comparator").css("display", "block");
 		drawCurvesFromURI();
-		displayFiles(Curves.refs);
+		displayFiles(Object.keys(Curves.db));
 	});
 }
 
@@ -268,124 +267,88 @@ function getId(ref) {
 	return ref.hash.value.substring(0,7);
 }
 
-function sortFiles(refs) {
-	let sizes={};
-	for (let code in refs) {
-		refs[code].sort(function(a,b) {
-			a.headers.Codec["Frame size (N)"]>b.headers.Codec["Frame size (N)"];
-			//if (a.headers.Codec["Frame size (N)"]==b.headers.Codec["Frame size (N)"]) a.headers.Codec["Code rate"]>b.headers.Codec["Code rate"];
-		});
-		refs[code].forEach(function(x){
-			if (!sizes[code])
-				sizes[code]=[x.headers.Codec["Frame size (N)"]];
-			else if (sizes[code].indexOf(x.headers.Codec["Frame size (N)"])<0)
-				sizes[code].push(x.headers.Codec["Frame size (N)"]);
-		});
-	}
-	for (let code in refs) {
-		let arr2=[];
-		sizes[code].forEach(function(x) {
-			let arr=[];
-			refs[code].forEach(function(y) {
-				if (y.headers.Codec["Frame size (N)"]==x)
-					arr.push(y);
-				else {
-					arr.sort((a,b) => a.headers.Codec["Code rate"]<b.headers.Codec["Code rate"]);
-					arr.forEach(z => arr2.push(z));
-					arr=[];
-				}
-			});
-			if (arr.length!=0) {
-				arr.sort((a,b) => a.headers.Codec["Code rate"]<b.headers.Codec["Code rate"]);
-				arr.forEach(z => arr2.push(z));
-			}
-		});
-		if (arr2.length>0)
-			refs[code]=arr2;
-	}
-}
-
 function displayFiles(refs) {//Display refs that can be selected
-	sortFiles(refs);
+	// sort refs by curve title (lexicographical order)
+	refs.sort(function(a,b) {
+		return Curves.db[a].metadata.title > Curves.db[b].metadata.title;
+	});
 	$("#refsList #accordion").empty();
 	Curves.toolTips=[];
 	$("#"+Curves.curveId()+"modalsSelector").empty();
-	for (let code in refs) {
-		for (let i=0; i<refs[code].length; i++) {
-			let a=refs[code][i];
-			/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(a.metadata.title);
-			let metadataTitle=a.metadata.title;
-			let metadataTitleShort=a.metadata.title;
-			let titleEnd="";
-			let codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="", tooltipParam="";
-			if (a.metadata.title.length > 23) {
-				if (RegExp.$1=="" || RegExp.$2=="") metadataTitleShort=a.metadata.title.substring(0,19)+'... ';
-				else {
-					metadataTitleShort=RegExp.$1;
-					titleEnd=RegExp.$2;
-				}
-				let nb=Curves.toolTips.length;
-				tooltipParam="id='toolTip"+String(nb)+"' data-tippy-content='"+String(metadataTitle)+"'";
-				Curves.toolTips.push('#toolTip'+String(nb));
+	refs.forEach(function(ref) {
+		let a=Curves.db[ref];
+		/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(a.metadata.title);
+		let metadataTitle=a.metadata.title;
+		let metadataTitleShort=a.metadata.title;
+		let titleEnd="";
+		let codeWord="", metadataDoi="", metadataUrl="", metadataCommand="", tooltip="", tooltipParam="";
+		if (a.metadata.title.length > 23) {
+			if (RegExp.$1=="" || RegExp.$2=="") metadataTitleShort=a.metadata.title.substring(0,19)+'... ';
+			else {
+				metadataTitleShort=RegExp.$1;
+				titleEnd=RegExp.$2;
 			}
-			if (a.headers.Codec["Codeword size (N_cw)"] > a.headers.Codec["Frame size (N)"])
-				codeWord="<b>Codeword</b>: "+a.headers.Codec["Codeword size (N_cw)"]+"<br/>";
-			for (let j in a.headers) {
-				if (a.headers[j].Type) {
-					let tooltip2 = "";
-					if (tooltips.get(a.headers[j].Type))
-						tooltip2 = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.headers[j].Type) + "'";
-					if (a.headers[j].Type == "BP_HORIZONTAL_LAYERED") a.headers[j].Type = "BP_HLAYERED";
-					if (a.headers[j].Type == "BP_VERTICAL_LAYERED") a.headers[j].Type = "BP_VLAYERED";
-					tooltip+="<br/><b>"+j+"</b>: "+"<span" + tooltip2 + ">" + a.headers[j].Type + "</span>";
-				}
-			}
-			if (a.metadata.doi)
-				metadataDoi="  <span class='curveIcon'><a href='https://doi.org/"+a.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>";
-			if (a.metadata.url)
-				metadataUrl="  <span class='curveIcon'><a href='"+a.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
-			if (a.metadata.command)
-				metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+"_"+getId(a)+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
-			let refsTemplate = $('#refsTemplate').html();
-			Mustache.parse(refsTemplate);
-			let refsRendered=Mustache.render(refsTemplate, {
-				refsI: String(i),
-				sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
-				side: Curves.curveId(),
-				aId: getId(a),
-				tooltip: tooltipParam,
-				aTitleShort: metadataTitleShort,
-				aTitle: metadataTitle,
-				aTitleEnd: titleEnd,
-				aFramesize: a.headers.Codec["Frame size (N)"],
-				refsCodeword: codeWord,
-				aCoderate: a.headers.Codec["Code rate"],
-				refsTooltip: tooltip,
-				refsDoi: metadataDoi,
-				refsUrl: metadataUrl,
-				refsCommand: metadataCommand
-			});
-			$("#refsList #accordion").append(refsRendered);
-			tippy(Curves.toolTips[Curves.toolTips.length-1], {
-				arrow: true,
-				arrowType: 'sharp',
-				animation: 'fade',
-			});
-			if (a.metadata.command) {
-				let cmdSelectorTemplate = $('#cmdSelectorTemplate').html();
-				Mustache.parse(cmdSelectorTemplate);
-				let refRendered1=Mustache.render(cmdSelectorTemplate, 	{side: Curves.curveId(),
-					aId: getId(a),
-					aTitle: metadataTitle,
-					aCommand: String(a.metadata.command),
-					aFile: String(a.trace),
-				});
-				$("#curvemodalsSelector").append(refRendered1);
-			}
-			addClick(a, 0);
+			let nb=Curves.toolTips.length;
+			tooltipParam="id='toolTip"+String(nb)+"' data-tippy-content='"+String(metadataTitle)+"'";
+			Curves.toolTips.push('#toolTip'+String(nb));
 		}
-		$('[data-toggle="tooltip"]').tooltip();
-	}
+		if (a.headers.Codec["Codeword size (N_cw)"] > a.headers.Codec["Frame size (N)"])
+			codeWord="<b>Codeword</b>: "+a.headers.Codec["Codeword size (N_cw)"]+"<br/>";
+		for (let j in a.headers) {
+			if (a.headers[j].Type) {
+				let tooltip2 = "";
+				if (tooltips.get(a.headers[j].Type))
+					tooltip2 = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.headers[j].Type) + "'";
+				if (a.headers[j].Type == "BP_HORIZONTAL_LAYERED") a.headers[j].Type = "BP_HLAYERED";
+				if (a.headers[j].Type == "BP_VERTICAL_LAYERED") a.headers[j].Type = "BP_VLAYERED";
+				tooltip+="<br/><b>"+j+"</b>: "+"<span" + tooltip2 + ">" + a.headers[j].Type + "</span>";
+			}
+		}
+		if (a.metadata.doi)
+			metadataDoi="  <span class='curveIcon'><a href='https://doi.org/"+a.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>";
+		if (a.metadata.url)
+			metadataUrl="  <span class='curveIcon'><a href='"+a.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
+		if (a.metadata.command)
+			metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+"_"+getId(a)+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
+		let refsTemplate = $('#refsTemplate').html();
+		Mustache.parse(refsTemplate);
+		let refsRendered=Mustache.render(refsTemplate, {
+			refsI: getId(a),
+			sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
+			side: Curves.curveId(),
+			aId: getId(a),
+			tooltip: tooltipParam,
+			aTitleShort: metadataTitleShort,
+			aTitle: metadataTitle,
+			aTitleEnd: titleEnd,
+			aFramesize: a.headers.Codec["Frame size (N)"],
+			refsCodeword: codeWord,
+			aCoderate: a.headers.Codec["Code rate"],
+			refsTooltip: tooltip,
+			refsDoi: metadataDoi,
+			refsUrl: metadataUrl,
+			refsCommand: metadataCommand
+		});
+		$("#refsList #accordion").append(refsRendered);
+		tippy(Curves.toolTips[Curves.toolTips.length-1], {
+			arrow: true,
+			arrowType: 'sharp',
+			animation: 'fade',
+		});
+		if (a.metadata.command) {
+			let cmdSelectorTemplate = $('#cmdSelectorTemplate').html();
+			Mustache.parse(cmdSelectorTemplate);
+			let refRendered1=Mustache.render(cmdSelectorTemplate, 	{side: Curves.curveId(),
+				aId: getId(a),
+				aTitle: metadataTitle,
+				aCommand: String(a.metadata.command),
+				aFile: String(a.trace),
+			});
+			$("#curvemodalsSelector").append(refRendered1);
+		}
+		addClick(a, 0);
+	});
+	$('[data-toggle="tooltip"]').tooltip();
 }
 
 function displaySelectedCurve(a) {//Display the current selected curve on the right
@@ -451,8 +414,6 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 	}}
 
 	function subAddClick(a, input) {
-		let code=a.headers.Codec.Type;
-		let refs=Curves.refs[code];
 		if (Curves.length==0) {
 			let deleteAllTemplate = $('#deleteAllTemplate').html();
 			Mustache.parse(deleteAllTemplate);
@@ -461,7 +422,6 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 			$("#plotfer").css("display", "inline");
 		}
 		$("#tips").css("display", "none");
-		const plots=["ber","fer"/*,"befe","thr"*/];
 		$("#selector .bers .active").removeClass("active");
 		$(this).addClass("active");
 		if (Curves.length==Curves.max) {
@@ -487,7 +447,7 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 			else {
 				Curves.addInputCurve(a);
 			}
-			plots.forEach(function(x) {
+			Curves.plots.forEach(function(x) {
 				const CURVESBIS=[];
 				for (let l=0; l<Curves.max; l++) {
 					if (Curves.plotOrder[l]!=-1) {
@@ -524,7 +484,6 @@ function deleteAll() {
 
 function deleteClick(divId, idSide) {//unplot a curve
 	//delete a selected curve
-	const plots=["ber","fer"];
 	for (let i=0; i<Curves.max; i++) {
 		if (Curves.hidden[i]==1) showCurve(i);
 	}
@@ -549,7 +508,7 @@ function deleteClick(divId, idSide) {//unplot a curve
 		uri = updateURLParameter(uri,idSide,"");
 		// window.history.replaceState({},"aff3ct.github.io",uri);
 		$("#s"+idSide).remove();
-		plots.forEach(function(x) {
+		Curves.plots.forEach(function(x) {
 			const CURVESBIS=[];
 			for (let l=0; l<Curves.max; l++) {
 				if ((Curves.plotOrder[l]!=-1) && (l!=Curves.plotOrder.indexOf(Number(idSide.substring(5,idSide.length))))) {
@@ -562,7 +521,6 @@ function deleteClick(divId, idSide) {//unplot a curve
 }
 
 function showCurve(idSide) {
-	const plots=["ber","fer"];
 	Curves.colors.splice(Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]),1);
 	let nb=Curves.plotOrder.indexOf(Number(idSide));
 	let ind=0;
@@ -573,7 +531,7 @@ function showCurve(idSide) {
 	}
 	nb=nb-ind;
 	Curves.colors.splice(nb,0,Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]);
-	plots.forEach(function(x) {
+	Curves.plots.forEach(function(x) {
 		const CURVESBIS=[];
 		for (let l=0; l<Curves.max; l++) {
 			if (l==Curves.plotOrder.indexOf(Number(idSide))) {
@@ -596,11 +554,10 @@ function showCurve(idSide) {
 }
 
 function hideCurve(idSide) {
-	const plots=["ber","fer"];
 	let a=Curves.colors[Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))])];
 	Curves.colors.splice(Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]),1);
 	Curves.colors.push(a);
-	plots.forEach(function(x) {
+	Curves.plots.forEach(function(x) {
 		const CURVESBIS=[];
 		for (let l=0; l<Curves.max; l++) {
 			if (l==Curves.plotOrder.indexOf(Number(idSide))) {
@@ -621,8 +578,6 @@ function hideCurve(idSide) {
 	});
 	$("#delete"+String(idSide)).append(showRendered);
 }
-
-
 
 function loadUniqueFile(fileInput, i) {//Load a file from input
 	if (i<fileInput.files.length) {
@@ -653,16 +608,8 @@ function loadUniqueFile(fileInput, i) {//Load a file from input
 	}
 }
 
-window.onload = function() {
-	const plots=["ber","fer"/*,"befe","thr"*/];
-	$("#fileInput").on('change', function(e)
-	{
-		loadUniqueFile(fileInput, 0);
-	});
-}
-
 function applySelections() {
-	displayFiles(filters(Curves.refs, -1));
+	displayFiles(filters(Object.keys(Curves.db), -1));
 	for (let i in Curves.disponibility) {
 		if (Curves.disponibility[i]==0) Curves.updateAddButton(true, "-", i);
 	}
@@ -734,93 +681,82 @@ window.onresize = function() {
 };
 
 function filterByCodeTypes(refs) {//refs: Array of refs ---> Array of refs
-	let p={};
+	let p=[];
 	if (Curves.selectedCodes.length!=0 && refs.length!=0) {
-		Curves.selectedCodes.forEach(function(x) { if (refs[x]) {
-			refs[x].forEach(function(y) {
-				if (!p[x]) {
-					p[x]=[];
+		refs.forEach(function(ref) {
+			Curves.selectedCodes.forEach(function(selection) {
+				if (Curves.db[ref].headers.Codec.Type==selection) {
+					p.push(ref);
 				}
-				p[x].push(y);
-			})}
+			});
 		});
 		return p;
 	}
-	else return refs;
+	else
+		return refs;
 }
 function filterByFrameSizes(refs) {//refs: Array of refs ---> Array of refs
-	let p={};
+	let p=[];
 	if (Curves.selectedSizes.length!=0 && refs.length!=0) {
-		for(let i in refs) {
-			refs[i].forEach(function(x) {
-				Curves.selectedSizes.forEach(function(y) {
-					if (x.headers.Codec["Frame size (N)"]==y) {
-						if (!p[i]) {
-							p[i]=[];
-						}
-						p[i].push(x);
-					}
-				});
-			});
-		}
-		return p;
-	}
-	else return refs;
-}
-function filterByCodeRates(refs) {//refs: Array of refs ---> Array of refs
-	let p={};
-	let stepSlider = $('#slider-step')[0];
-	let coderate=stepSlider.noUiSlider.get();
-	if (coderate[0]==0 && coderate[1]==1) return refs;
-	else {
-		for(let i in refs) {
-			refs[i].forEach(function(z) {
-				if (coderate[0]<=z.headers.Codec["Code rate"] && z.headers.Codec["Code rate"]<=coderate[1]) {
-					if (!p[i]) {
-						p[i]=[];
-					}
-					p[i].push(z);
+		refs.forEach(function(ref) {
+			Curves.selectedSizes.forEach(function(selection) {
+				if (Curves.db[ref].headers.Codec["Frame size (N)"]==selection) {
+					p.push(ref);
 				}
 			});
-		}
+		});
+		return p;
+	}
+	else
+		return refs;
+}
+function filterByCodeRates(refs) {//refs: Array of refs ---> Array of refs
+	let p=[];
+	let stepSlider = $('#slider-step')[0];
+	let coderate=stepSlider.noUiSlider.get();
+	if (coderate[0]==0 && coderate[1]==1)
+		return refs;
+	else {
+		refs.forEach(function(ref) {
+			if (coderate[0]<=Curves.db[ref].headers.Codec["Code rate"] &&
+				coderate[1]>=Curves.db[ref].headers.Codec["Code rate"]) {
+				p.push(ref);
+			}
+		});
 		return p;
 	}
 }
 
 function filterByModems(refs) {//refs: Array of refs ---> Array of refs
-	let p={};
+	let p=[];
 	if (Curves.selectedModems.length!=0) {
-		for(let i in refs) {
-			refs[i].forEach(function(x) { Curves.selectedModems.forEach(function(y){
-				if (x.headers.Modem.Type==y) {
-					if (!p[i]) {
-						p[i]=[];
-					}
-					p[i].push(x);
+		refs.forEach(function(ref) {
+			Curves.selectedModems.forEach(function(selection) {
+				if (Curves.db[ref].headers.Modem.Type==selection) {
+					p.push(ref);
 				}
-			})});
-		}
+			});
+		});
 		return p;
 	}
-	else return refs;
+	else
+		return refs;
 }
 
 function filterByChannels(refs) {//refs: Array of refs ---> Array of refs
-	let p={};
+	let p=[];
 	if (Curves.selectedChannels.length!=0) {
-		for(let i in refs) {
-			refs[i].forEach(function(x) { Curves.selectedChannels.forEach(function(y){
-				if (x.headers.Channel.Type==y) {
-					if (!p[i]) {
-						p[i]=[];
-					}
-					p[i].push(x);
+		refs.forEach(function(ref) {
+			Curves.selectedChannels.forEach(function(selection){
+				if (Curves.db[ref].headers.Channel.Type==selection) {
+					p.push(ref);
 				}
-			})});
-		}
+			})
+		});
 		return p;
 	}
-	else return refs;
+	else
+		return refs;
 }
 
 function filters(refs, nb) {//nb is the indicator linked to a specific fiter to avoid
@@ -830,11 +766,11 @@ function filters(refs, nb) {//nb is the indicator linked to a specific fiter to 
 	//3: Channel
 	//4: Code rate
 	if (nb==-1) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(refs)))));
-	if (nb==0) return filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(refs))));
-	if (nb==1) return filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(refs))));
-	if (nb==2) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(refs))));
-	if (nb==3) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(refs))));
-	if (nb==4) return filterByCodeTypes(filterByFrameSizes(filterByChannels(filterByModems(refs))));
+	if (nb== 0) return filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(refs))));
+	if (nb== 1) return filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(refs))));
+	if (nb== 2) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(refs))));
+	if (nb== 3) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(refs))));
+	if (nb== 4) return filterByCodeTypes(filterByFrameSizes(filterByChannels(filterByModems(refs))));
 }
 
 function displayAll() {
@@ -859,152 +795,150 @@ function displayCheckbox(length, font, endFont, disabled, fonction, i, div) {
 }
 
 function displayCodeTypes() {
-	let refs=Curves.refs;
-	let filteredFiles=filters(Curves.refs, 0);
+	let filteredRefs=filters(Object.keys(Curves.db), 0);
+	let codeTypes={};
+	Object.keys(Curves.db).forEach(function(id) {
+		let codeType = Curves.db[id].headers.Codec.Type;
+		if (!codeTypes[codeType])
+			codeTypes[codeType] = 0;
+		filteredRefs.forEach(function(ref) {
+			if (id == ref)
+				codeTypes[codeType]++;
+		});
+	});
 	let j=0;
-	$(".codetype").empty();
-	for (let i in refs)
-	{
-		if (j!=0) $(".codetype").append('<br>');
+	$("#selector .codetype").empty();
+	for (let codeType in codeTypes) {
+		if (j!=0) $("#selector .codetype").append('<br>');
 		let number=0;
 		let black='';
 		let disabled='';
 		let endBlack='';
 		let fonction='updateSelectedCodes(';
-		if (filteredFiles[i]) {
+		if (codeTypes[codeType]) {
 			black='<font color="black">';
 			endBlack='</font>';
-			number=filteredFiles[i].length;
-			displayCheckbox(number, black, endBlack, disabled, fonction, i, ".codetype");
+			number=codeTypes[codeType];
+			displayCheckbox(number, black, endBlack, disabled, fonction, codeType, "#selector .codetype");
 		}
-		else if (Curves.selectedCodes.indexOf(i)>-1) {
+		else if (Curves.selectedCodes.indexOf(codeType)>-1) {
 			black='<font color="black">';
 			endBlack='</font>';
-			displayCheckbox(number, black, endBlack, disabled, fonction, i, ".codetype");
+			displayCheckbox(number, black, endBlack, disabled, fonction, codeType, "#selector .codetype");
 		}
 		else {
 			disabled='disabled';
-			displayCheckbox(number, black, endBlack, disabled, fonction, i, ".codetype");
+			displayCheckbox(number, black, endBlack, disabled, fonction, codeType, "#selector .codetype");
 		}
 		j++;
 	}
-	$(".codetype").off();
+	$("#selector .codetype").off();
 	Curves.selectedCodes.forEach(function(x) {
 		if (document.getElementById(x)!=null) {
-			if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
-			else document.getElementById(x).checked = false;
+			if (document.getElementById(x).disabled == false)
+				document.getElementById(x).checked = true;
+			else
+				document.getElementById(x).checked = false;
 		}
 	});
 }
 
 function displayFrameSizes() {
-	let refs=filters(Curves.refs, 1);
-	let p={};
+	let filteredRefs=filters(Object.keys(Curves.db), 1);
+	let frameSizes={};
+	filteredRefs.forEach(function(ref) {
+		let frameSize=Curves.db[ref].headers.Codec["Frame size (N)"];
+		if (!frameSizes[frameSize])
+			frameSizes[frameSize] = 0;
+		frameSizes[frameSize]++;
+	});
 	let j=0;
-	for (let code in refs) {
-		for (let i=0;i<(refs[code]).length;i++) {
-			let f=refs[code][i];
-			if (p[f.headers.Codec["Frame size (N)"]]>=0) p[f.headers.Codec["Frame size (N)"]]++;
-			else p[f.headers.Codec["Frame size (N)"]]=1;
-		}
-	}
 	$("#selector .size").empty();
-	for (let i in p){
-		if (j!=0) $(".size").append('<br>');
-		let number=p[i];
+	for (let frameSize in frameSizes){
+		if (j!=0) $("#selector .size").append('<br>');
+		let number=frameSizes[frameSize];
 		let black='<font color="black">';
 		let disabled='';
 		let endBlack='</font>';
 		let fonction='updateSelectedSizes(';
+		displayCheckbox(number, black, endBlack, disabled, fonction, frameSize, "#selector .size");
 		j++;
-		displayCheckbox(number, black, endBlack, disabled, fonction, i, "#selector .size");
 	}
+	$("#selector .size").off();
 	Curves.selectedSizes.forEach(function(x) {
 		if (document.getElementById(x)!=null) {
-			if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
-			else document.getElementById(x).checked = false;
+			if (document.getElementById(x).disabled == false)
+				document.getElementById(x).checked = true;
+			else
+				document.getElementById(x).checked = false;
 		}
 	});
-	$("#selector .size").off();
 }
 
 function displayModems() {
-	let refs=filters(Curves.refs, 2);
-	let p={};
-	let j=0;
-	for (let code in refs) {
-		for (let i=0;i<(refs[code]).length;i++) {
-			let f=refs[code][i];
-			if (p[f.headers.Modem.Type]>=0) p[f.headers.Modem.Type]++;
-			else p[f.headers.Modem.Type]=1;
-		}
-	}
+	let filteredRefs=filters(Object.keys(Curves.db), 2);
+	let modemTypes={};
+	filteredRefs.forEach(function(ref) {
+		let modemType=Curves.db[ref].headers.Modem.Type;
+		if (!modemTypes[modemType])
+			modemTypes[modemType] = 0;
+		modemTypes[modemType]++;
+	});
 	$("#selector .modem").empty();
-	for (let i in p){
-		if (j!=0) $(".modem").append('<br>');
-		else j++;
-		let number=p[i];
+	let j=0;
+	for (let modemType in modemTypes){
+		if (j!=0) $("#selector .modem").append('<br>');
+		let number=modemTypes[modemType];
 		let black='<font color="black">';
 		let disabled='';
 		let endBlack='</font>';
 		let fonction='updateSelectedModems(';
-		displayCheckbox(number, black, endBlack, disabled, fonction, i, "#selector .modem");
+		displayCheckbox(number, black, endBlack, disabled, fonction, modemType, "#selector .modem");
+		j++;
 	}
+	$("#selector .modem").off();
 	Curves.selectedModems.forEach(function(x) {
 		if (document.getElementById(x)!=null) {
-			if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
-			else document.getElementById(x).checked = false;
+			if (document.getElementById(x).disabled == false)
+				document.getElementById(x).checked = true;
+			else
+				document.getElementById(x).checked = false;
 		}
 	});
-	$("#selector .modem").off();
 }
 
 function displayChannels() {
-	let refs=filters(Curves.refs, 3);
-	let p={};
+	let filteredRefs=filters(Object.keys(Curves.db), 2);
+	let channelTypes={};
+	filteredRefs.forEach(function(ref) {
+		let channelType=Curves.db[ref].headers.Channel.Type;
+		if (!channelTypes[channelType])
+			channelTypes[channelType] = 0;
+		channelTypes[channelType]++;
+	});
 	let j=0;
-	for (let code in refs) {
-		for (let i=0;i<(refs[code]).length;i++) {
-			let f=refs[code][i];
-			if (p[f.headers.Channel.Type]>=0) p[f.headers.Channel.Type]++;
-			else p[f.headers.Channel.Type]=1;
-		}
-	}
 	$("#selector .channel").empty();
-	for (let i in p){
-		if (j!=0) $(".channel").append('<br>');
-		else j++;
-		let number=p[i];
+	for (let channelType in channelTypes){
+		if (j!=0) $("#selector .channel").append('<br>');
+		let number=channelTypes[channelType];
 		let black='<font color="black">';
 		let disabled='';
 		let endBlack='</font>';
 		let fonction='updateSelectedChannels(';
-		displayCheckbox(number, black, endBlack, disabled, fonction, i, "#selector .channel");
+		displayCheckbox(number, black, endBlack, disabled, fonction, channelType, "#selector .channel");
+		j++;
 	}
 	Curves.selectedChannels.forEach(function(x) {
 		if (document.getElementById(x)!=null) {
-			if (document.getElementById(x).disabled == false) document.getElementById(x).checked = true;
-			else document.getElementById(x).checked = false;
+			if (document.getElementById(x).disabled == false)
+				document.getElementById(x).checked = true;
+			else
+				document.getElementById(x).checked = false;
 		}
 	});
 	$("#selector .channel").off();
 }
 
-// refs: array of refs.
-// ordered: refs are first sorted by code type, then by framesize.
-function orderFiles(refs) {
-	let ordered={};
-	for (let i in refs){
-		let f=refs[i];
-		if (f.headers.Simulation) {
-			if (typeof ordered[f.headers.Simulation["Code type (C)"]]=="undefined") ordered[f.headers.Simulation["Code type (C)"]]=[];
-			ordered[f.headers.Simulation["Code type (C)"]].push(f);
-		}
-	}
-	for (let i in ordered)
-		ordered[i].sort((a,b)=> b.headers.Codec["Frame size (N)"]<a.headers.Codec["Frame size (N)"]);
-	return ordered;
-}
 
 function selectFile(hashId)
 {
@@ -1044,8 +978,7 @@ $(document).ready(function() {
 	let d3 = Plotly.d3;
 	let WIDTH_IN_PERCENT_OF_PARENT = 100,
 	HEIGHT_IN_PERCENT_OF_PARENT = 40;
-	let plots=["ber","fer"/*,"befe","thr"*/];
-	plots.forEach(function(e) {
+	Curves.plots.forEach(function(e) {
 		GD[e] = d3.select("#plot"+e)
 		.append('div')
 		.style({
@@ -1055,9 +988,14 @@ $(document).ready(function() {
 			'margin-top': (40 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'
 		}).node();
 	});
+
 	loadDatabase();
 
 	$('#applySelections').on('click', function() {
 		applySelections();
+	});
+
+	$("#fileInput").on('change', function() {
+		loadUniqueFile(fileInput, 0);
 	});
 });
