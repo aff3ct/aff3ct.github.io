@@ -19,10 +19,12 @@ const Curves = {
 	plotOrder: [],
 	toolTips: [],
 	toolTipsSelected: [],
-	selectedCodes: [],
-	selectedSizes: [],
-	selectedModems: [],
-	selectedChannels: [],
+	selectors: {
+		codeType:    { selection: [], path: "headers/Codec/Type"           },
+		frameSize:   { selection: [], path: "headers/Codec/Frame size (N)" },
+		modemType:   { selection: [], path: "headers/Modem/Type"           },
+		channelType: { selection: [], path: "headers/Channel/Type"         }
+	},
 	inputCurves: [],
 	initialization() {
 		for (let i=0; i<this.max; i++) {
@@ -141,7 +143,7 @@ let GD={};
 
 function updateURLParameter(url, param, paramVal)
 {
-	let TheAnchor = null;
+	let theAnchor = null;
 	let newAdditionalURL = "";
 	let tempArray = url.split("?");
 	let baseURL = tempArray[0];
@@ -151,10 +153,10 @@ function updateURLParameter(url, param, paramVal)
 	if (additionalURL)
 	{
 		let tmpAnchor = additionalURL.split("#");
-		let TheParams = tmpAnchor[0];
-		TheAnchor = tmpAnchor[1];
-		if(TheAnchor)
-			additionalURL = TheParams;
+		let theParams = tmpAnchor[0];
+		theAnchor = tmpAnchor[1];
+		if(theAnchor)
+			additionalURL = theParams;
 
 		tempArray = additionalURL.split("&");
 
@@ -170,15 +172,15 @@ function updateURLParameter(url, param, paramVal)
 	else
 	{
 		let tmpAnchor = baseURL.split("#");
-		let TheParams = tmpAnchor[0];
-		TheAnchor = tmpAnchor[1];
+		let theParams = tmpAnchor[0];
+		theAnchor = tmpAnchor[1];
 
-		if(TheParams)
-			baseURL = TheParams;
+		if(theParams)
+			baseURL = theParams;
 	}
 
-	if(TheAnchor)
-		paramVal += "#" + TheAnchor;
+	if(theAnchor)
+		paramVal += "#" + theAnchor;
 	if (paramVal=="") paramVal="null";
 	let rows_txt = temp + "" + param + "=" + paramVal;
 	return baseURL + "?" + newAdditionalURL + rows_txt;
@@ -406,53 +408,54 @@ function displaySelectedCurve(a) {//Display the current selected curve on the ri
 			aFile: String(a.trace),
 		});
 		$("#"+Curves.curveId()+"modals").append(refRendered1);
-	}}
+	}
+}
 
-	function subAddClick(a, input) {
-		if (Curves.length==0) {
-			let deleteAllTemplate = $('#deleteAllTemplate').html();
-			Mustache.parse(deleteAllTemplate);
-			$("#sAccordion").append(deleteAllTemplate);
-			$("#plotber").css("display", "inline");
-			$("#plotfer").css("display", "inline");
+function subAddClick(a, input) {
+	if (Curves.length==0) {
+		let deleteAllTemplate = $('#deleteAllTemplate').html();
+		Mustache.parse(deleteAllTemplate);
+		$("#sAccordion").append(deleteAllTemplate);
+		$("#plotber").css("display", "inline");
+		$("#plotfer").css("display", "inline");
+	}
+	$("#tips").css("display", "none");
+	$("#selector .bers .active").removeClass("active");
+	$(this).addClass("active");
+	if (Curves.length==Curves.max) {
+		console.log("Maximum quantity of curves reached!");
+		alert("For readability, you can not display more than 10 curves.");
+	}
+	else {
+		displaySelectedCurve(a);
+		let cval=[];
+		for (let i=0; i<Curves.max; i++) {
+			cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
 		}
-		$("#tips").css("display", "none");
-		$("#selector .bers .active").removeClass("active");
-		$(this).addClass("active");
-		if (Curves.length==Curves.max) {
-			console.log("Maximum quantity of curves reached!");
-			alert("For readability, you can not display more than 10 curves.");
+		let uri  = "/comparator.html?curve0="+cval[0];
+		for (let i=1; i<Curves.max; i++) {
+			uri=uri+"&curve"+String(i)+"="+cval[i];
+		}
+		if (input==0) uri = updateURLParameter(uri,Curves.curveId(),getId(a));
+		else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.trace)));
+		// window.history.replaceState({},"aff3ct.github.io",uri);
+		if (input==0) {
+			Curves.addCurve(a);
 		}
 		else {
-			displaySelectedCurve(a);
-			let cval=[];
-			for (let i=0; i<Curves.max; i++) {
-				cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
-			}
-			let uri  = "/comparator.html?curve0="+cval[0];
-			for (let i=1; i<Curves.max; i++) {
-				uri=uri+"&curve"+String(i)+"="+cval[i];
-			}
-			if (input==0) uri = updateURLParameter(uri,Curves.curveId(),getId(a));
-			else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.trace)));
-			// window.history.replaceState({},"aff3ct.github.io",uri);
-			if (input==0) {
-				Curves.addCurve(a);
-			}
-			else {
-				Curves.addInputCurve(a);
-			}
-			Curves.plots.forEach(function(x) {
-				const CURVESBIS=[];
-				for (let l=0; l<Curves.max; l++) {
-					if (Curves.plotOrder[l]!=-1) {
-						CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
-					}
-				}
-				Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
-			});
+			Curves.addInputCurve(a);
 		}
+		Curves.plots.forEach(function(x) {
+			const CURVESBIS=[];
+			for (let l=0; l<Curves.max; l++) {
+				if (Curves.plotOrder[l]!=-1) {
+					CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
+				}
+			}
+			Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
+		});
 	}
+}
 
 // Click listener for curves list
 function addClick(a, input) {//Plot the curve
@@ -489,9 +492,9 @@ function deleteClick(divId, idSide) {//unplot a curve
 		Curves.deleteCurve(idSide.substring(5, idSide.length));
 		if (Curves.length==0) {
 			$("#closeAll").remove();
-			$("#tips").css("display", "inline");
-			$("#plotber").css("display", "none");
-			$("#plotfer").css("display", "none");
+			$("#tips"   ).css("display", "inline");
+			$("#plotber").css("display", "none"  );
+			$("#plotfer").css("display", "none"  );
 		}
 		let cval=[];
 		let uri  = "/comparator.html?curve0=";
@@ -606,16 +609,18 @@ function loadFilesRecursive(fileInput, i) {//Load a file from input
 function applySelections() {
 	displayRefsList(filters(Object.keys(Curves.db)));
 	for (let i in Curves.disponibility) {
-		if (Curves.disponibility[i]==0) Curves.updateAddButton(true, "-", i);
+		if (Curves.disponibility[i]==0)
+			Curves.updateAddButton(true, "-", i);
 	}
 }
 
-function filterByGeneric(refs, selectedList, key1, key2) {
+function filterByGeneric(refs, selectorObj) {
+	let spath = selectorObj.path.split("/");
 	let p=[];
-	if (selectedList.length!=0 && refs.length!=0) {
+	if (selectorObj.selection.length!=0 && refs.length!=0) {
 		refs.forEach(function(ref) {
-			selectedList.forEach(function(selection) {
-				if (Curves.db[ref].headers[key1][key2]==selection) {
+			selectorObj.selection.forEach(function(selection) {
+				if (Curves.db[ref][spath[0]][spath[1]][spath[2]]==selection) {
 					p.push(ref);
 				}
 			});
@@ -627,19 +632,19 @@ function filterByGeneric(refs, selectedList, key1, key2) {
 }
 
 function filterByCodeTypes(refs) {
-	return filterByGeneric(refs, Curves.selectedCodes, "Codec", "Type");
+	return filterByGeneric(refs, Curves.selectors.codeType);
 }
 
 function filterByFrameSizes(refs) {
-	return filterByGeneric(refs, Curves.selectedSizes, "Codec", "Frame size (N)");
+	return filterByGeneric(refs, Curves.selectors.frameSize);
 }
 
 function filterByModems(refs) {
-	return filterByGeneric(refs, Curves.selectedModems, "Modem", "Type");
+	return filterByGeneric(refs, Curves.selectors.modemType);
 }
 
 function filterByChannels(refs) {
-	return filterByGeneric(refs, Curves.selectedChannels, "Channel", "Type");
+	return filterByGeneric(refs, Curves.selectors.channelType);
 }
 
 function filterByCodeRates(refs) {
@@ -672,16 +677,16 @@ function filters(refs, type = "") {
 	}
 }
 
-function updateSelected(val, selectedList, id) {
+function updateSelected(val, selectionList, id) {
 	if ($("#"+val).is(":checked")) {
-		selectedList.push(val);
+		selectionList.push(val);
 	} else {
-		selectedList.splice(selectedList.indexOf(val), 1);
+		selectionList.splice(selectionList.indexOf(val), 1);
 	}
-	displaySelectors(selectedList.length ? id : "");
+	displaySelectors(selectionList.length ? id : "");
 }
 
-function displayCheckbox(length, font, endFont, disabled, selectedList, element, id) {
+function displayCheckbox(length, font, endFont, disabled, selectionList, element, id) {
 	let checkboxTemplate = $('#checkboxTemplate').html();
 	Mustache.parse(checkboxTemplate);
 	let checkboxRendered=Mustache.render(checkboxTemplate, {
@@ -693,16 +698,17 @@ function displayCheckbox(length, font, endFont, disabled, selectedList, element,
 	});
 	$("#"+id).append(checkboxRendered);
 	$('#'+element).on('click', function() {
-		updateSelected(element, selectedList, id);
+		updateSelected(element, selectionList, id);
 	});
 }
 
-function displaySelector(id, key1, key2, selectedList, showZeros = false) {
+function displaySelector(id, selectorObj, showZeros = false) {
+	let spath = selectorObj.path.split("/");
 	let filteredRefs=filters(Object.keys(Curves.db), id);
 	let refsCounter={};
 	if (showZeros) {
 		Object.keys(Curves.db).forEach(function(id) {
-			let key = Curves.db[id].headers[key1][key2];
+			let key = Curves.db[id][spath[0]][spath[1]][spath[2]];
 			if (!refsCounter[key])
 				refsCounter[key] = 0;
 			filteredRefs.forEach(function(ref) {
@@ -712,7 +718,7 @@ function displaySelector(id, key1, key2, selectedList, showZeros = false) {
 		});
 	} else {
 		filteredRefs.forEach(function(ref) {
-			let key=Curves.db[ref].headers[key1][key2];
+			let key=Curves.db[ref][spath[0]][spath[1]][spath[2]];
 			if (!refsCounter[key])
 				refsCounter[key] = 0;
 			refsCounter[key]++;
@@ -731,19 +737,19 @@ function displaySelector(id, key1, key2, selectedList, showZeros = false) {
 				black='<font color="black">';
 				endBlack='</font>';
 			}
-			else if (selectedList.indexOf(key)>-1) {
+			else if (selectorObj.selection.indexOf(key)>-1) {
 				black='<font color="black">';
 				endBlack='</font>';
 			}
 			else
 				disabled='disabled';
 		}
-		displayCheckbox(number, black, endBlack, disabled, selectedList, key, id);
+		displayCheckbox(number, black, endBlack, disabled, selectorObj.selection, key, id);
 		$("#"+id).append('</li>');
 	}
 	$("#"+id).append('</ul>');
 	$("#"+id).off();
-	selectedList.forEach(function(x) {
+	selectorObj.selection.forEach(function(x) {
 		if ($("#"+x)) {
 			if (!$("#"+x).prop('disabled'))
 				$("#"+x).prop('checked', true);
@@ -754,10 +760,11 @@ function displaySelector(id, key1, key2, selectedList, showZeros = false) {
 }
 
 function displaySelectors(except = "") {
-	if (except != "codeType"   ) displaySelector("codeType",    "Codec",   "Type",           Curves.selectedCodes, true);
-	if (except != "frameSize"  ) displaySelector("frameSize",   "Codec",   "Frame size (N)", Curves.selectedSizes      );
-	if (except != "modemType"  ) displaySelector("modemType",   "Modem",   "Type",           Curves.selectedModems     );
-	if (except != "ChannelType") displaySelector("channelType", "Channel", "Type",           Curves.selectedChannels   );
+	Object.keys(Curves.selectors).forEach(function(key) {
+		let showZeros = key == "codeType" ? true : false;
+		if (except != key)
+			displaySelector(key, Curves.selectors[key], showZeros);
+	});
 }
 
 function drawCurvesFromURI() {
@@ -780,7 +787,7 @@ function drawCurvesFromURI() {
 	});
 }
 
-//main
+// main
 $(document).ready(function() {
 	Curves.initialization();
 	let d3 = Plotly.d3;
