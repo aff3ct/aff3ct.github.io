@@ -23,7 +23,7 @@
   overflow-x:hidden;
 }
 
-#slider-step .noUi-connect {
+#codeRate .noUi-connect {
   background: #6C757D;
 }
 
@@ -31,6 +31,13 @@
   max-height:40vh;
   overflow-x:hidden;
   overflow-y:auto;
+}
+
+#selector ul {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 #scurve9 :nth-child(0n+1)

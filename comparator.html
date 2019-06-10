@@ -246,7 +246,7 @@
     </button>
   </script>
   <script id="checkboxTemplate" type="x-tmpl-mustache">
-    <input type="checkbox" class="form-check-input" id="{{element}}" title="{{element}}" onclick="{{function}}{{element}})" {{disabled}}><label class="form-check-label" for="{{element}}" title="{{element}}">{{{startBlackFont}}}{{element}} ({{length}}){{{endBlackFont}}}</label>
+    <input type="checkbox" class="form-check-input" id="{{element}}" title="{{element}}" {{disabled}}><label class="form-check-label" for="{{element}}" title="{{element}}">{{{startBlackFont}}}{{element}} ({{length}}){{{endBlackFont}}}</label>
   </script>
 </head>
 <body>
@@ -301,49 +301,49 @@
       <div class="col-2 p-1" id="selector">
         <form class="container">
           <div class="form-group">
-            <div class="dropdown" id="codetype">
+            <div class="dropdown">
               <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Type of code
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
-                <div class="form-check codetype px-5 py-2"></div>
+                <div id="codeType" class="form-check px-5 py-2"></div>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <div class="dropdown" id="size">
+            <div class="dropdown">
               <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownSizeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Frame size (N)
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownSizeButton">
-                <div class="form-check size px-5 py-2"></div>
+                <div id="frameSize" class="form-check px-5 py-2"></div>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <div class="dropdown" id="modem">
+            <div class="dropdown">
               <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Type of modem
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
-                <div class="form-check modem px-5 py-2"></div>
+                <div id="modemType" class="form-check px-5 py-2"></div>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <div class="dropdown" id="channel">
+            <div class="dropdown">
               <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownchannelButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Type of channel
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownchannelButton">
-                <div class="form-check channel px-5 py-2"></div>
+                <div id="channelType" class="form-check px-5 py-2"></div>
               </div>
             </div>
           </div>
           <hr class="separator">
           <div class="form-group">
-            <label for="slider-step" class="col-sm-6">Code rate (R)</label>
-            <div id="slider-step" class="mb-5 col-sm-12"></div>
+            <label for="codeRate" class="col-sm-6">Code rate (R)</label>
+            <div id="codeRate" class="mb-5 col-sm-12"></div>
           </div>
           <hr class="separator">
           <div class="form-group" id="input">

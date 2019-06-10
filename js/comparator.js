@@ -244,7 +244,7 @@ function loadDatabase() {//Return String that include the whole file
 }
 
 function displaySlider() {
-	let stepSlider = $('#slider-step')[0];
+	let stepSlider = $('#codeRate')[0];
 	noUiSlider.create(stepSlider, {
 		start: [0,1],
 		connect: true,
@@ -254,8 +254,8 @@ function displaySlider() {
 			'max': [1]
 		}
 	});
-	$("#slider-step").append("<div class='my-3'><span id='slider-step-value'></span></div>")
-	let stepSliderValueElement = $('#slider-step-value')[0];
+	$("#codeRate").append("<div class='my-3'><span id='codeRateVal'></span></div>")
+	let stepSliderValueElement = $('#codeRateVal')[0];
 	stepSlider.noUiSlider.on('update', function (values) {
 		displayAll();
 		stepSliderValueElement.innerHTML = "Values: ";
@@ -609,19 +609,19 @@ function loadUniqueFile(fileInput, i) {//Load a file from input
 }
 
 function applySelections() {
-	displayFiles(filters(Object.keys(Curves.db), -1));
+	displayFiles(filters(Object.keys(Curves.db)));
 	for (let i in Curves.disponibility) {
 		if (Curves.disponibility[i]==0) Curves.updateAddButton(true, "-", i);
 	}
 }
-function updateSelectedCodes(str) {
-	if (document.getElementById(str.title).checked == true) {
-		Curves.selectedCodes.push(str.title);
+function updateSelectedCodes(val) {
+	if ($("#"+val).is(":checked")) {
+		Curves.selectedCodes.push(val);
+	} else {
+		Curves.selectedCodes.splice(Curves.selectedCodes.indexOf(val), 1);
 	}
-	else {
-		Curves.selectedCodes.splice(Curves.selectedCodes.indexOf(str.title), 1);
-	}
-	if (Curves.selectedCodes.length==0) displayAll();
+	if (Curves.selectedCodes.length==0)
+		displayAll();
 	else {
 		displayFrameSizes();
 		displayModems();
@@ -629,14 +629,14 @@ function updateSelectedCodes(str) {
 	}
 }
 
-function updateSelectedSizes(str) {
-	if (document.getElementById(String(str)).checked == true) {
-		Curves.selectedSizes.push(str);
+function updateSelectedSizes(val) {
+	if ($("#"+val).is(":checked")) {
+		Curves.selectedSizes.push(val);
+	} else {
+		Curves.selectedSizes.splice(Curves.selectedSizes.indexOf(val), 1);
 	}
-	else {
-		Curves.selectedSizes.splice(Curves.selectedSizes.indexOf(str), 1);
-	}
-	if (Curves.selectedSizes.length==0) displayAll();
+	if (Curves.selectedSizes.length==0)
+		displayAll();
 	else {
 		displayCodeTypes();
 		displayModems();
@@ -644,14 +644,14 @@ function updateSelectedSizes(str) {
 	}
 }
 
-function updateSelectedModems(str) {
-	if (document.getElementById(String(str.title)).checked == true) {
-		Curves.selectedModems.push(str.title);
+function updateSelectedModems(val) {
+	if ($("#"+val).is(":checked")) {
+		Curves.selectedModems.push(val);
+	} else {
+		Curves.selectedModems.splice(Curves.selectedModems.indexOf(val), 1);
 	}
-	else {
-		Curves.selectedModems.splice(Curves.selectedModems.indexOf(str.title), 1);
-	}
-	if (Curves.selectedModems.length==0) displayAll();
+	if (Curves.selectedModems.length==0)
+		displayAll();
 	else {
 		displayCodeTypes();
 		displayFrameSizes();
@@ -659,33 +659,27 @@ function updateSelectedModems(str) {
 	}
 }
 
-function updateSelectedChannels(str) {
-	if (document.getElementById(String(str.title)).checked == true) {
-		Curves.selectedChannels.push(str.title);
+function updateSelectedChannels(val) {
+	if ($("#"+val).is(":checked")) {
+		Curves.selectedChannels.push(val);
+	} else {
+		Curves.selectedChannels.splice(Curves.selectedChannels.indexOf(val), 1);
 	}
-	else {
-		Curves.selectedChannels.splice(Curves.selectedChannels.indexOf(str.title), 1);
-	}
-	if (Curves.selectedChannels.length==0) displayAll();
+	if (Curves.selectedChannels.length==0)
+		displayAll();
 	else {
 		displayCodeTypes();
 		displayFrameSizes();
 		displayModems();
 	}
 }
-window.onresize = function() {
-	Plotly.Plots.resize(GD.ber);
-	Plotly.Plots.resize(GD.fer);
-    // Plotly.Plots.resize(GD.befe);
-    // Plotly.Plots.resize(GD.thr);
-};
 
-function filterByCodeTypes(refs) {//refs: Array of refs ---> Array of refs
+function filterByGeneric(refs, selectedList, key1, key2) {
 	let p=[];
-	if (Curves.selectedCodes.length!=0 && refs.length!=0) {
+	if (selectedList.length!=0 && refs.length!=0) {
 		refs.forEach(function(ref) {
-			Curves.selectedCodes.forEach(function(selection) {
-				if (Curves.db[ref].headers.Codec.Type==selection) {
+			selectedList.forEach(function(selection) {
+				if (Curves.db[ref].headers[key1][key2]==selection) {
 					p.push(ref);
 				}
 			});
@@ -695,31 +689,35 @@ function filterByCodeTypes(refs) {//refs: Array of refs ---> Array of refs
 	else
 		return refs;
 }
-function filterByFrameSizes(refs) {//refs: Array of refs ---> Array of refs
-	let p=[];
-	if (Curves.selectedSizes.length!=0 && refs.length!=0) {
-		refs.forEach(function(ref) {
-			Curves.selectedSizes.forEach(function(selection) {
-				if (Curves.db[ref].headers.Codec["Frame size (N)"]==selection) {
-					p.push(ref);
-				}
-			});
-		});
-		return p;
-	}
-	else
-		return refs;
+
+function filterByCodeTypes(refs) {
+	return filterByGeneric(refs, Curves.selectedCodes, "Codec", "Type");
 }
-function filterByCodeRates(refs) {//refs: Array of refs ---> Array of refs
+
+function filterByFrameSizes(refs) {
+	return filterByGeneric(refs, Curves.selectedSizes, "Codec", "Frame size (N)");
+}
+
+function filterByModems(refs) {
+	return filterByGeneric(refs, Curves.selectedModems, "Modem", "Type");
+}
+
+function filterByChannels(refs) {
+	return filterByGeneric(refs, Curves.selectedChannels, "Channel", "Type");
+}
+
+
+function filterByCodeRates(refs) {
 	let p=[];
-	let stepSlider = $('#slider-step')[0];
-	let coderate=stepSlider.noUiSlider.get();
-	if (coderate[0]==0 && coderate[1]==1)
+	let codeRateRange=$('#codeRate')[0].noUiSlider.get();
+	let codeRateMin = codeRateRange[0];
+	let codeRateMax = codeRateRange[1];
+	if (codeRateMin==0 && codeRateMax==1)
 		return refs;
 	else {
 		refs.forEach(function(ref) {
-			if (coderate[0]<=Curves.db[ref].headers.Codec["Code rate"] &&
-				coderate[1]>=Curves.db[ref].headers.Codec["Code rate"]) {
+			if (codeRateMin<=Curves.db[ref].headers["Codec"]["Code rate"] &&
+				codeRateMax>=Curves.db[ref].headers["Codec"]["Code rate"]) {
 				p.push(ref);
 			}
 		});
@@ -727,50 +725,16 @@ function filterByCodeRates(refs) {//refs: Array of refs ---> Array of refs
 	}
 }
 
-function filterByModems(refs) {//refs: Array of refs ---> Array of refs
-	let p=[];
-	if (Curves.selectedModems.length!=0) {
-		refs.forEach(function(ref) {
-			Curves.selectedModems.forEach(function(selection) {
-				if (Curves.db[ref].headers.Modem.Type==selection) {
-					p.push(ref);
-				}
-			});
-		});
-		return p;
+function filters(refs, type = "") {
+	switch(type) {
+		case "codeType"   : return filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(refs))));
+		case "frameSize"  : return filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(refs))));
+		case "modemType"  : return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(refs))));
+		case "channelType": return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(refs))));
+		case "codeRate"   : return filterByCodeTypes(filterByFrameSizes(filterByChannels(filterByModems(refs))));
+		default:
+			return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(refs)))));
 	}
-	else
-		return refs;
-}
-
-function filterByChannels(refs) {//refs: Array of refs ---> Array of refs
-	let p=[];
-	if (Curves.selectedChannels.length!=0) {
-		refs.forEach(function(ref) {
-			Curves.selectedChannels.forEach(function(selection){
-				if (Curves.db[ref].headers.Channel.Type==selection) {
-					p.push(ref);
-				}
-			})
-		});
-		return p;
-	}
-	else
-		return refs;
-}
-
-function filters(refs, nb) {//nb is the indicator linked to a specific fiter to avoid
-	//0: Code type
-	//1: Frame size
-	//2: Modem
-	//3: Channel
-	//4: Code rate
-	if (nb==-1) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(refs)))));
-	if (nb== 0) return filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(refs))));
-	if (nb== 1) return filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(refs))));
-	if (nb== 2) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(refs))));
-	if (nb== 3) return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(refs))));
-	if (nb== 4) return filterByCodeTypes(filterByFrameSizes(filterByChannels(filterByModems(refs))));
 }
 
 function displayAll() {
@@ -780,192 +744,108 @@ function displayAll() {
 	displayChannels();
 }
 
-function displayCheckbox(length, font, endFont, disabled, fonction, i, div) {
+function displayCheckbox(length, font, endFont, disabled, callback, element, div) {
 	let checkboxTemplate = $('#checkboxTemplate').html();
 	Mustache.parse(checkboxTemplate);
 	let checkboxRendered=Mustache.render(checkboxTemplate, {
-		element: i,
+		element: element,
 		disabled: disabled,
 		startBlackFont: font,
 		endBlackFont: endFont,
-		length: length,
-		function: fonction
+		length: length
 	});
 	$(div).append(checkboxRendered);
+	$('#'+element).on('click', function() {
+		callback(element);
+	});
+}
+
+function displaySelectorGeneric(id, key1, key2, callback, selectedList, showZeros = false) {
+	let filteredRefs=filters(Object.keys(Curves.db), id);
+	let refsCounter={};
+	if (showZeros) {
+		Object.keys(Curves.db).forEach(function(id) {
+			let key = Curves.db[id].headers[key1][key2];
+			if (!refsCounter[key])
+				refsCounter[key] = 0;
+			filteredRefs.forEach(function(ref) {
+				if (id == ref)
+					refsCounter[key]++;
+			});
+		});
+	} else {
+		filteredRefs.forEach(function(ref) {
+			let key=Curves.db[ref].headers[key1][key2];
+			if (!refsCounter[key])
+				refsCounter[key] = 0;
+			refsCounter[key]++;
+		});
+	}
+	$("#"+id).empty();
+	$("#"+id).append('<ul>');
+	for (let key in refsCounter){
+		$("#"+id).append('<li>');
+		let number=refsCounter[key];
+		let black='<font color="black">';
+		let disabled='';
+		let endBlack='</font>';
+		if (showZeros) {
+			if (number) {
+				black='<font color="black">';
+				endBlack='</font>';
+			}
+			else if (selectedList.indexOf(key)>-1) {
+				black='<font color="black">';
+				endBlack='</font>';
+			}
+			else
+				disabled='disabled';
+		}
+		displayCheckbox(number, black, endBlack, disabled, callback, key, "#"+id);
+		$("#"+id).append('</li>');
+	}
+	$("#"+id).append('</ul>');
+	$("#"+id).off();
+	selectedList.forEach(function(x) {
+		if ($("#"+x)) {
+			if (!$("#"+x).prop('disabled'))
+				$("#"+x).prop('checked', true);
+			else
+				$("#"+x).prop('checked', false);
+		}
+	});
 }
 
 function displayCodeTypes() {
-	let filteredRefs=filters(Object.keys(Curves.db), 0);
-	let codeTypes={};
-	Object.keys(Curves.db).forEach(function(id) {
-		let codeType = Curves.db[id].headers.Codec.Type;
-		if (!codeTypes[codeType])
-			codeTypes[codeType] = 0;
-		filteredRefs.forEach(function(ref) {
-			if (id == ref)
-				codeTypes[codeType]++;
-		});
-	});
-	let j=0;
-	$("#selector .codetype").empty();
-	for (let codeType in codeTypes) {
-		if (j!=0) $("#selector .codetype").append('<br>');
-		let number=0;
-		let black='';
-		let disabled='';
-		let endBlack='';
-		let fonction='updateSelectedCodes(';
-		if (codeTypes[codeType]) {
-			black='<font color="black">';
-			endBlack='</font>';
-			number=codeTypes[codeType];
-			displayCheckbox(number, black, endBlack, disabled, fonction, codeType, "#selector .codetype");
-		}
-		else if (Curves.selectedCodes.indexOf(codeType)>-1) {
-			black='<font color="black">';
-			endBlack='</font>';
-			displayCheckbox(number, black, endBlack, disabled, fonction, codeType, "#selector .codetype");
-		}
-		else {
-			disabled='disabled';
-			displayCheckbox(number, black, endBlack, disabled, fonction, codeType, "#selector .codetype");
-		}
-		j++;
-	}
-	$("#selector .codetype").off();
-	Curves.selectedCodes.forEach(function(x) {
-		if (document.getElementById(x)!=null) {
-			if (document.getElementById(x).disabled == false)
-				document.getElementById(x).checked = true;
-			else
-				document.getElementById(x).checked = false;
-		}
-	});
+	displaySelectorGeneric("codeType", "Codec", "Type", updateSelectedCodes, Curves.selectedCodes, true);
 }
 
 function displayFrameSizes() {
-	let filteredRefs=filters(Object.keys(Curves.db), 1);
-	let frameSizes={};
-	filteredRefs.forEach(function(ref) {
-		let frameSize=Curves.db[ref].headers.Codec["Frame size (N)"];
-		if (!frameSizes[frameSize])
-			frameSizes[frameSize] = 0;
-		frameSizes[frameSize]++;
-	});
-	let j=0;
-	$("#selector .size").empty();
-	for (let frameSize in frameSizes){
-		if (j!=0) $("#selector .size").append('<br>');
-		let number=frameSizes[frameSize];
-		let black='<font color="black">';
-		let disabled='';
-		let endBlack='</font>';
-		let fonction='updateSelectedSizes(';
-		displayCheckbox(number, black, endBlack, disabled, fonction, frameSize, "#selector .size");
-		j++;
-	}
-	$("#selector .size").off();
-	Curves.selectedSizes.forEach(function(x) {
-		if (document.getElementById(x)!=null) {
-			if (document.getElementById(x).disabled == false)
-				document.getElementById(x).checked = true;
-			else
-				document.getElementById(x).checked = false;
-		}
-	});
+	displaySelectorGeneric("frameSize", "Codec", "Frame size (N)", updateSelectedSizes, Curves.selectedSizes);
 }
 
 function displayModems() {
-	let filteredRefs=filters(Object.keys(Curves.db), 2);
-	let modemTypes={};
-	filteredRefs.forEach(function(ref) {
-		let modemType=Curves.db[ref].headers.Modem.Type;
-		if (!modemTypes[modemType])
-			modemTypes[modemType] = 0;
-		modemTypes[modemType]++;
-	});
-	$("#selector .modem").empty();
-	let j=0;
-	for (let modemType in modemTypes){
-		if (j!=0) $("#selector .modem").append('<br>');
-		let number=modemTypes[modemType];
-		let black='<font color="black">';
-		let disabled='';
-		let endBlack='</font>';
-		let fonction='updateSelectedModems(';
-		displayCheckbox(number, black, endBlack, disabled, fonction, modemType, "#selector .modem");
-		j++;
-	}
-	$("#selector .modem").off();
-	Curves.selectedModems.forEach(function(x) {
-		if (document.getElementById(x)!=null) {
-			if (document.getElementById(x).disabled == false)
-				document.getElementById(x).checked = true;
-			else
-				document.getElementById(x).checked = false;
-		}
-	});
+	displaySelectorGeneric("modemType", "Modem", "Type", updateSelectedModems, Curves.selectedModems);
 }
 
 function displayChannels() {
-	let filteredRefs=filters(Object.keys(Curves.db), 2);
-	let channelTypes={};
-	filteredRefs.forEach(function(ref) {
-		let channelType=Curves.db[ref].headers.Channel.Type;
-		if (!channelTypes[channelType])
-			channelTypes[channelType] = 0;
-		channelTypes[channelType]++;
-	});
-	let j=0;
-	$("#selector .channel").empty();
-	for (let channelType in channelTypes){
-		if (j!=0) $("#selector .channel").append('<br>');
-		let number=channelTypes[channelType];
-		let black='<font color="black">';
-		let disabled='';
-		let endBlack='</font>';
-		let fonction='updateSelectedChannels(';
-		displayCheckbox(number, black, endBlack, disabled, fonction, channelType, "#selector .channel");
-		j++;
-	}
-	Curves.selectedChannels.forEach(function(x) {
-		if (document.getElementById(x)!=null) {
-			if (document.getElementById(x).disabled == false)
-				document.getElementById(x).checked = true;
-			else
-				document.getElementById(x).checked = false;
-		}
-	});
-	$("#selector .channel").off();
-}
-
-
-function selectFile(hashId)
-{
-	for (let code in Curves.refs) {
-		for (let f=0;f<Curves.refs[code].length;f++) {
-			if (getId(Curves.refs[code][f]) == hashId) return Curves.refs[code][f];
-		}
-	}
-	return null;
+	displaySelectorGeneric("channelType", "Channel", "Type", updateSelectedChannels, Curves.selectedChannels);
 }
 
 function drawCurvesFromURI() {
-	Curves.names.forEach(function(idSide) {
-		let id=findGetParameter(idSide);
-		if (id) {
-			if (id.slice(0,4)=="NoWw") {
-				let o=text2json(LZString.decompressFromEncodedURIComponent(id));
+	Curves.names.forEach(function(name) {
+		let val=findGetParameter(name);
+		if (val) {
+			if (val.slice(0,4)=="NoWw") {
+				let o=text2json(LZString.decompressFromEncodedURIComponent(val));
 				subAddClick(o, 1);
 			}
 			else {
-				let f=selectFile(id);
-				if (f) {
-					subAddClick(f, 0);
-				}
+				if (Curves.db[val])
+					subAddClick(Curves.db[val], 0);
 				else {
-					subAddClick(Curves.refs["BCH"][0], 0);
-					deleteClick('delete', idSide);
+					subAddClick(Curves.refs["BCH"][0], 0); // TODO: here is a bug
+					deleteClick('delete', name);
 				}
 			}
 		}
@@ -976,26 +856,29 @@ function drawCurvesFromURI() {
 $(document).ready(function() {
 	Curves.initialization();
 	let d3 = Plotly.d3;
-	let WIDTH_IN_PERCENT_OF_PARENT = 100,
-	HEIGHT_IN_PERCENT_OF_PARENT = 40;
+	let widthInPercentOfParent = 100;
+	let heightInPercentOfParent = 40;
 	Curves.plots.forEach(function(e) {
 		GD[e] = d3.select("#plot"+e)
 		.append('div')
 		.style({
-			width: WIDTH_IN_PERCENT_OF_PARENT + '%',
-			'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
-			height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
-			'margin-top': (40 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'
+			width: widthInPercentOfParent + '%',
+			'margin-left': (100 - widthInPercentOfParent) / 2 + '%',
+			height: heightInPercentOfParent + 'vh',
+			'margin-top': (40 - heightInPercentOfParent) / 2 + 'vh'
 		}).node();
 	});
-
 	loadDatabase();
-
 	$('#applySelections').on('click', function() {
 		applySelections();
 	});
-
 	$("#fileInput").on('change', function() {
 		loadUniqueFile(fileInput, 0);
+	});
+	$(window).resize(function() {
+		Plotly.Plots.resize(GD.ber);
+		Plotly.Plots.resize(GD.fer);
+		// Plotly.Plots.resize(GD.befe);
+		// Plotly.Plots.resize(GD.thr);
 	});
 });
