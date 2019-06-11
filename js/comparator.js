@@ -272,19 +272,17 @@ function getPermalink() {
 	let isFirst=true;
 	Curves.selectedRefs.forEach(function(id) {
 		let ref=Curves.db[id];
-		if (ref.local)
-		{
+		if (ref.local) {
+			ref.local=false;
 			// put a document on the CouchDB server
 			DB.put(
 				$.extend({_id: id}, ref)
 			).then(function (response) {
 				console.log("PouchDB: put success");
 				console.log(response);
-				ref.local=false;
 			}).catch(function (err) {
 				console.log("PouchDB: put fail");
 				console.log(err);
-				ref.local=false;
 			});
 		}
 		permalink+=(isFirst?"":"&")+"curve"+ref.color.id+"="+ref.hash.id;
