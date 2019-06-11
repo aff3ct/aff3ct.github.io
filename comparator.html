@@ -51,196 +51,154 @@
     }
   </script>
   <script id="refTemplate" type="x-tmpl-mustache">
-    <div class="card card{{id}}">
-      <div class="card-header p-2" id="heading{{sideNumber}}{{id}}">
+    <div class="card" id="card{{hash.id}}">
+      <div class="card-header p-2" id="heading{{hash.id}}">
         <h5 class="mb-0">
           <div class="mb-0 mx-0 form-group row">
             <div class="col-md-auto px-0" style="margin-top:auto;margin-bottom:auto">
-              <button type="button" id="curve{{id}}" class="btn btn-primary">
-                <i class="fas fa-plus"></i>
+              {{#color}}
+              <button type="button" id="curve{{hash.id}}" disabled="" class="btn btn-primary">
+                <i class="fas fa-minus"></i>
               </button>
+              {{/color}}
+              {{^color}}
+                <button type="button" id="curve{{hash.id}}" class="btn btn-primary">
+                  <i class="fas fa-plus"></i>
+                </button>
+              {{/color}}
             </div>
             <div class="col-md-10 px-0">
-              <button class="btn btn-link pr-0 pl-3" data-toggle="collapse" data-target="#collapse{{sideNumber}}{{id}}" aria-expanded="true" aria-controls="collapse{{sideNumber}}{{id}}">
-                {{titleShort}}
+              <button class="btn btn-link pr-0 pl-3" data-toggle="collapse" data-target="#collapse{{hash.id}}" aria-expanded="true" aria-controls="collapse{{hash.id}}">
+                {{metadata.bigtitle}}
               </button>
-              <div class="pl-3 titleEnd">{{titleEnd}}</div>
+              <div class="pl-3 subtitle">{{metadata.subtitle}}</div>
             </div>
           </div>
         </h5>
       </div>
-      <div id="collapse{{sideNumber}}{{id}}" class="collapse" aria-labelledby="heading{{sideNumber}}{{id}}" data-parent="#accordion{{sideNumber}}">
-        <div class="card-body">
-          <li class="g{{id}} list-group-item list-group-item-action align-item-start">
-            <div class="text-muted twoColumns">
-              <small>
-                <b>Frame size</b>: {{frameSize}}<br/>
-                {{{codeWord}}}
-                <b>Coderate</b>: {{codeRate}}
-                {{{info}}}
-              </small>
-            </div>
-            <div class="curveIcons">
-              {{{doi}}}
-              {{{url}}}
-              {{{command}}}
-              <span class="curveIcon">
-                <a href="#" data-toggle="modal" data-target="#modalInfoFile_{{id}}" title="Original output text file">
-                  <i class="fas fa-file-alt"></i>
-                </a>
-              </span>
-            </div>
-          </li>
-        </div>
-      </div>
     </div>
   </script>
-  <script id="cmdModalTemplate" type="x-tmpl-mustache">
-    <div class="modal fade" id="modalInfoCmd_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="shell-wrap">
-              <p class="shell-top-bar">AFF3CT command line</p>
-              <ul class="shell-body">
-                <li>{{{aCommand}}}</li>
-              </ul>
-            </div>
-            <br>
-            <p class="text-justify">
-              <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="modalInfoFile_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <pre>{{aFile}}</pre>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </script>
-  <script id="cmdSelectedTemplate" type="x-tmpl-mustache">
-    <div class="modal fade" id="modalInfoCmd{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="shell-wrap">
-              <p class="shell-top-bar">AFF3CT command line</p>
-              <ul class="shell-body">
-                <li>{{{aCommand}}}</li>
-              </ul>
-            </div>
-            <br>
-            <p class="text-justify">
-              <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="modalInfoFile{{side}}_{{aId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">{{aTitle}}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <pre>{{aFile}}</pre>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </script>
-  <script id="selectedTemplate" type="x-tmpl-mustache">
-    <div id="scurve{{sideNumber}}">
-      <div class="card" id="ss{{side}}">
-        <div class="card-header" id="sheading{{sideNumber}}">
+  <script id="refSelectedTemplate" type="x-tmpl-mustache">
+    <div id="scurve{{hash.id}}">
+      <div class="card" id="ss{{hash.id}}">
+        <div class="card-header" id="sheading{{hash.id}}">
           <h5 class="mb-0">
             <div class="mb-0 form-group row">
-              <div class="col-sm-9" data-toggle="collapse" data-target="#scollapse{{sideNumber}}" aria-expanded="true" aria-controls="scollapse{{sideNumber}}">
-                <button class="btn btn-block btn-link text-left" {{{refsTooltip1}}}{{aTitleShort}}
-              </button>
+              <div class="col-sm-9" data-toggle="collapse" data-target="#scollapse{{hash.id}}" aria-expanded="true" aria-controls="scollapse{{hash.id}}">
+                {{#metadata.subtitle}}
+                  <button class="btn btn-block btn-link text-left" id="tooltipCurve{{hash.id}}" data-tippy-content="{{metadata.title}}">{{metadata.bigtitle}}</button>
+                {{/metadata.subtitle}}
+                {{^metadata.subtitle}}
+                  <button class="btn btn-block btn-link text-left">{{metadata.title}}</button>
+                {{/metadata.subtitle}}
             </div>
-            <div id="delete{{sideNumber}}" class="col-0">
-              <button type="button" class="close" aria-label="Close" onclick="deleteClick('delete', '{{side}}')">
-                <span aria-hidden="true">&times;</span>
+            <div class="col-0">
+              <button id="delete{{hash.id}}" type="button" class="close" aria-label="Close">
+                <i class="fas fa-times"></i>
               </button>
-              <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-sm" onclick="hideCurve('{{sideNumber}}')">
+              <button id="hide{{hash.id}}" type="button" class="btn btn-link btn-sm">
                 <i class="fas fa-eye-slash"></i>
               </button>
             </div>
           </div>
         </h5>
       </div>
-      <div id="scollapse{{sideNumber}}" class="collapse" aria-labelledby="sheading{{sideNumber}}" data-parent="#sAccordion">
-        <div class="card-body">
-          <li class="g{{aId}} list-group-item list-group-item-action align-item-start">
-            <div class="text-muted twoColumns">
-              <small><b>Frame size</b>: {{aFramesize}}<br/>
-                {{{refsCodeword}}}
-                <b>Coderate</b>: {{aCoderate}}
-                {{{refsTooltip2}}}
-              </small>
+    </div>
+  </script>
+  <script id="refBodyTemplate" type="x-tmpl-mustache">
+    <div id="{{prefix}}collapse{{hash.id}}" class="collapse" aria-labelledby="heading{{hash.id}}" data-parent="#{{prefix}}accordion{{hash.id}}">
+      <div class="card-body">
+        <li class="g{{hash.id}} list-group-item list-group-item-action align-item-start">
+          <div class="text-muted twoColumns">
+            <small>
+              <ul class="typeList">
+              {{#headers.list}}
+                <li>
+                {{#tooltip}}
+                  <b>{{name}}</b>: <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{tooltip}}">{{value}}</span>
+                {{/tooltip}}
+                {{^tooltip}}
+                  <b>{{name}}</b>: <span>{{value}}</span>
+                {{/tooltip}}
+                </li>
+              {{/headers.list}}
+              </ul>
+            </small>
+          </div>
+          <div class="curveIcons">
+            {{#metadata.doi}}
+              <span class="curveIcon"><a href="https://doi.org/{{metadata.doi}}" target="_blank" title="DOI" onclick="return trackOutboundLink('https://doi.org/{{metadata.doi}}');""><i class="fas fa-book"></i></a></span>
+            {{/metadata.doi}}
+            {{#metadata.url}}
+              <span class="curveIcon"><a href="{{metadata.url}}" target="_blank" title="URL" onclick="return trackOutboundLink('{{metadata.url}}');"><i class="fas fa-globe"></i></a></span>
+            {{/metadata.url}}
+            {{#metadata.command}}
+              <span class="curveIcon"><a href="#" id="{{prefix}}displayCmdModal{{hash.id}}" data-toggle="modal" data-target="#cmdModal{{hash.id}}" title="Command line"><i class="fas fa-laptop"></i></a></span>
+            {{/metadata.command}}
+            {{#trace}}
+              <span class="curveIcon"><a href="#" id="{{prefix}}displayTraceModal{{hash.id}}" data-toggle="modal" data-target="#traceModal{{hash.id}}" title="Original output text file"><i class="fas fa-file-alt"></i></a></span>
+            {{/trace}}
+          </div>
+        </li>
+      </div>
+    </div>
+  </script>
+  <script id="cmdModalTemplate" type="x-tmpl-mustache">
+    <div class="modal fade" id="cmdModal{{hash.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{{metadata.title}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="shell-wrap">
+              <p class="shell-top-bar">AFF3CT command line</p>
+              <ul class="shell-body">
+                <li>{{{metadata.command}}}</li>
+              </ul>
             </div>
-            <div class="curveIcons">
-              {{{refsDoi}}}
-              {{{refsUrl}}}
-              {{{refsCommand}}}
-              <span class="curveIcon">
-                <a href="#" data-toggle="modal" data-target="#modalInfoFile{{side}}_{{aId}}" title="Original output text file">
-                  <i class="fas fa-file-alt"></i>
-                </a>
-              </span>
-            </div>
-          </li>
+            <br>
+            <p class="text-justify">
+              <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+  <script id="traceModalTemplate" type="x-tmpl-mustache">
+    <div class="modal fade" id="traceModal{{hash.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{{metadata.title}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <pre>{{trace}}</pre>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
   </script>
   <script id="deleteAllTemplate" type="x-tmpl-mustache">
-    <div id="closeAll">
-      <button type="button" class="btn btn-danger" onclick="deleteAll()"><i class="fas fa-trash"></i> Delete All</button>
-    </div>
+    <button id="closeAll" type="button" class="btn btn-danger"><i class="fas fa-trash"></i> Delete All</button>
   </script>
   <script id="showTemplate" type="x-tmpl-mustache">
-    <button id="show{{sideNumber}}" type="button" class="btn btn-sm btn-link" onclick="showCurve('{{sideNumber}}')">
+    <button id="show{{hash.id}}" type="button" class="btn btn-sm btn-link">
       <i class="fas fa-eye"></i>
     </button>
   </script>
   <script id="hideTemplate" type="x-tmpl-mustache">
-    <button id="hide{{sideNumber}}" type="button" class="btn btn-link btn-sm" onclick="hideCurve('{{sideNumber}}')">
+    <button id="hide{{hash.id}}" type="button" class="btn btn-link btn-sm">
       <i class="fas fa-eye-slash"></i>
     </button>
   </script>
@@ -380,22 +338,12 @@
       </div>
       <div class="col-2 p-1" id="scurve">
         <div class="container">
-          <div id="sAccordion"></div>
+          <div id="saccordion"></div>
         </div>
       </div>
     </div>
   </div>
-  <div id="curve0modals"></div>
-  <div id="curve1modals"></div>
-  <div id="curve2modals"></div>
-  <div id="curve3modals"></div>
-  <div id="curve4modals"></div>
-  <div id="curve5modals"></div>
-  <div id="curve6modals"></div>
-  <div id="curve7modals"></div>
-  <div id="curve8modals"></div>
-  <div id="curve9modals"></div>
-  <div id="curvemodalsSelector"></div>
+  <div id="curveModals"></div>
   <div class="container marketing">
     <h2>More BER/FER references</h2>
     <ul>

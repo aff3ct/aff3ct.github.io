@@ -104,9 +104,19 @@
   margin-bottom:5px;
 }
 
-.card .titleEnd {
+.card .subtitle {
   font-size: 10pt;
   padding-bottom: 6px;
+}
+
+.typeList {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  list-style: none;
+}
+
+.typeList li {
+  padding: 3px 0px 3px 0px;
 }
 
 .tt

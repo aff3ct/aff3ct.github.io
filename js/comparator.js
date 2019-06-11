@@ -1,121 +1,30 @@
 const GITLAB="https://gitlab.com/api/v4/projects/10354484/";
 const BRANCH="development";
 
-const Curves = {
+var Curves = {
 	db: {},
-	max: 10,//Colors are defined for only 10 curves. I'm not responsible for more curves. Sincerely, Me.
-	length: 0,//number of displayed curves
-	disponibility: [],//index==id! disponibility[id]=1 => available && disponibility[id]=0 => unavailable
-	hidden: [],//1 if hidden else 0
-	id: [],
-	input: [],//input[nb-curve]= -1:no_curve||0:intern_curve||1:uploaded_curve
-	names: [],//names[id]=name_of_the_curve
-	values: [],//where values of the curves are
-	referenceColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // Do not modify this tab!!! Use it as a reference
-	colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'], // muted blue //safety orange // cooked asparagus green // brick red // muted purple // chestnut brown // raspberry yogurt pink // middle gray // curry yellow-green // blue-teal
-	colorsOrder: [], // From 0 to 9
+	max: 10, // colors are defined for only 10 curves. I'm not responsible for more curves. Sincerely, Me.
+	colors: [{id: 9, value: '#17becf'},
+	         {id: 8, value: '#bcbd22'},
+	         {id: 7, value: '#7f7f7f'},
+	         {id: 6, value: '#e377c2'},
+	         {id: 5, value: '#8c564b'},
+	         {id: 4, value: '#9467bd'},
+	         {id: 3, value: '#d62728'},
+	         {id: 2, value: '#2ca02c'},
+	         {id: 1, value: '#ff7f0e'},
+	         {id: 0, value: '#1f77b4'}],
 	plots: ["ber","fer"],
 	PLOTS: {ber: "BER", fer: "FER"},
-	plotOrder: [],
 	selectors: {
 		codeType:    { selection: [], path: "headers/Codec/Type"           },
 		frameSize:   { selection: [], path: "headers/Codec/Frame size (N)" },
 		modemType:   { selection: [], path: "headers/Modem/Type"           },
 		channelType: { selection: [], path: "headers/Channel/Type"         }
 	},
-	inputCurves: [],
-	initialization() {
-		for (let i=0; i<this.max; i++) {
-			this.values.push({ber:[],fer:[]});
-			this.names.push("curve"+String(i));
-			this.id.push(-1);
-			this.colorsOrder.push(i);
-			this.disponibility.push(1);
-			this.plotOrder.push(-1);
-			this.input.push(-1);
-			this.hidden.push(0);
-		}
-	},
-	firstSideAvailable() {
-		//return the id of the first free curve according to the disponibility tab, 4 if it's full
-		if (this.length<this.max) return String(this.colorsOrder[this.length]);
-		else return String(this.colorsOrder[this.max-1]);
-	},
-	firstIndexAvailable() {
-		let i=0;
-		let result=-1;
-		while (i<this.max) {
-			if (this.plotOrder[i]==-1) {
-				result=i;
-				i=this.max;
-			}
-			else {
-				i++;
-			}
-		}
-		return result;
-	},
-	addInputCurve(a) {
-		let i=this.firstSideAvailable();
-		this.input[i]=1;
-		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
-		this.id[i]=getId(a);
-		this.plots.forEach(x => this.values[i][x]={name: this.PLOTS[x], type: "scatter", x: a.contents["Eb/N0"], y: a.contents[this.PLOTS[x]]});
-		if (this.length<this.max) this.length++;
-		this.disponibility[i]=0;
-		this.hidden[i]=0;
-		this.inputCurves.push(a);
-	},
-	addCurve(a) {
-		let i=this.firstSideAvailable();
-		this.input[i]=0;
-		this.plotOrder[this.firstIndexAvailable()]=Number(this.firstSideAvailable());
-		this.id[i]=getId(a);
-		this.plots.forEach(x => this.values[i][x]={name: this.PLOTS[x], type: "scatter", x: a.contents["Eb/N0"], y: a.contents[this.PLOTS[x]]});
-		if (this.length<this.max) this.length++;
-		this.disponibility[i]=0;
-		this.hidden[i]=0;
-		this.updateAddButton(true, '<i class="fas fa-minus"></i>', i);
-	},
-	deleteCurve(nb) {
-		if (nb<=this.max) {
-			if (this.disponibility[nb]==0) {
-				let a=this.plotOrder[this.plotOrder.indexOf(Number(nb))];
-				let col=this.colors[this.plotOrder.indexOf(Number(nb))];
-				let colIndex=this.colorsOrder[this.plotOrder.indexOf(Number(nb))];
-				this.colors.splice(this.plotOrder.indexOf(Number(nb)),1);
-				this.referenceColors.splice(this.plotOrder.indexOf(Number(nb)),1);
-				this.colorsOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
-				this.colors.push(col);
-				this.referenceColors.push(col);
-				this.colorsOrder.push(colIndex);
-				this.input[nb]=-1;
-				this.plotOrder.splice(this.plotOrder.indexOf(Number(nb)),1);
-				this.plotOrder.push(-1);
-				this.updateAddButton(false, '<i class="fas fa-plus"></i>', nb);
-				this.id[nb]=-1;
-				this.hidden[nb];
-				this.length--;
-				this.values[nb]={ber:[],fer:[]};
-				this.disponibility[nb]=1;
-			}
-			else {
-				console.log("Curve"+String(nb)+" is already available.");
-			}
-		}
-		else {
-			console.log(String(nb)+" > Curves.max (Curves.max = "+String(this.max));
-		}
-	},
-	curveId() {
-		return "curve"+this.firstSideAvailable();
-	},
-	updateAddButton(bool, string, nb) {
-		$('#'+"curve"+this.id[nb]).prop('disabled', bool);
-		$('#'+"curve"+this.id[nb]).empty();
-		$('#'+"curve"+this.id[nb]).append(string);
-	}
+	selectedRefs: [],
 };
+
 // axis/legend of the 2 plots
 const LT = {
 	showlegend:false,
@@ -127,7 +36,6 @@ const LT = {
 		t: 40,
 		pad: 4
 	},
-	colorway: Curves.colors,
 	hovermode: 'x',
 };
 
@@ -136,7 +44,7 @@ const LAYOUT= {
 	fer: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Frame Error Rate (FER)'}},LT),
 };
 
-let GD={};
+var GD={};
 
 function updateURLParameter(url, param, paramVal)
 {
@@ -196,6 +104,38 @@ function findGetParameter(parameterName) {
 	return result;
 }
 
+function precomputeData(id)
+{
+	let ref = Curves.db[id];
+	ref["hash"]["id"] = id;
+	/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(ref.metadata.title);
+	let bigtitle=ref.metadata.title;
+	let subtitle="";
+	if (ref.metadata.title.length > 23) {
+		if (RegExp.$1=="" || RegExp.$2=="")
+			bigtitle=ref.metadata.title.substring(0,19)+'... ';
+		else {
+			bigtitle=$.trim(RegExp.$1);
+			subtitle=$.trim(RegExp.$2);
+		}
+	}
+	ref["metadata"]["bigtitle"] = bigtitle;
+	ref["metadata"]["subtitle"] = subtitle;
+	ref["headers"]["list"] = [];
+	ref["headers"]["list"].push({"name": "Frame size", "value" : ref.headers.Codec["Frame size (N)"]});
+	if (ref.headers.Codec["Codeword size (N_cw)"] > ref.headers.Codec["Frame size (N)"])
+		ref["headers"]["list"].push({"name": "Codeword", "value" : ref.headers.Codec["Codeword size (N_cw)"]});
+	ref["headers"]["list"].push({"name": "Code rate", "value" : ref.headers.Codec["Code rate"]});
+	for (let j in ref.headers) {
+		if (ref.headers[j].Type) {
+			let obj = {"name": j, "value" : ref.headers[j].Type};
+			if (tooltips.get(ref.headers[j].Type))
+				obj["tooltip"] = tooltips.get(ref.headers[j].Type);
+			ref["headers"]["list"].push(obj);
+		}
+	}
+}
+
 // size of the compressed Gitlab refs database in bytes
 let EVT_TOTAL = 1279262;
 function loadDatabase() {//Return String that include the whole file
@@ -225,6 +165,9 @@ function loadDatabase() {//Return String that include the whole file
 		}
 	}).done(function(database) {
 		Curves.db = database;
+		Object.keys(Curves.db).forEach(function(key) {
+			precomputeData(key);
+		});
 		displaySlider();
 		displaySelectors();
 		$("#loader"    ).css("display", "none" );
@@ -257,8 +200,26 @@ function displaySlider() {
 	});
 }
 
-function getId(ref) {
-	return ref.hash.value.substring(0,7);
+function displayCommandModal(ref)
+{
+	if (!$("#cmdModal"+ref.hash.id).length)
+	{
+		let cmdModalTemplate = $('#cmdModalTemplate').html();
+		Mustache.parse(cmdModalTemplate);
+		let cmdModalRendered=Mustache.render(cmdModalTemplate, ref);
+		$("#curveModals").append(cmdModalRendered);
+	}
+}
+
+function displayTraceModal(ref)
+{
+	if (!$("#traceModal"+ref.hash.id).length)
+	{
+		let traceModalTemplate = $('#traceModalTemplate').html();
+		Mustache.parse(traceModalTemplate);
+		let traceModalRendered=Mustache.render(traceModalTemplate, ref);
+		$("#curveModals").append(traceModalRendered);
+	}
 }
 
 function displayRefsList(refs) {//Display refs that can be selected
@@ -267,304 +228,232 @@ function displayRefsList(refs) {//Display refs that can be selected
 		return Curves.db[a].metadata.title > Curves.db[b].metadata.title;
 	});
 	$("#refsList #accordion").empty();
-	$("#"+Curves.curveId()+"modalsSelector").empty();
 	refs.forEach(function(id) {
 		let ref=Curves.db[id];
-		/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(ref.metadata.title);
-		let metaTitle=ref.metadata.title;
-		let metaTitleShort=ref.metadata.title;
-		let titleEnd="";
-		if (ref.metadata.title.length > 23) {
-			if (RegExp.$1=="" || RegExp.$2=="")
-				metaTitleShort=ref.metadata.title.substring(0,19)+'... ';
-			else {
-				metaTitleShort=RegExp.$1;
-				titleEnd=RegExp.$2;
-			}
-		}
-		let codeWord=""
-		if (ref.headers.Codec["Codeword size (N_cw)"] > ref.headers.Codec["Frame size (N)"])
-			codeWord="<b>Codeword</b>: "+ref.headers.Codec["Codeword size (N_cw)"]+"<br/>";
-		let headersInfo="";
-		for (let j in ref.headers) {
-			if (ref.headers[j].Type) {
-				let tooltip = "";
-				if (tooltips.get(ref.headers[j].Type))
-					tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(ref.headers[j].Type) + "'";
-				headersInfo+="<br/><b>"+j+"</b>: "+"<span" + tooltip + ">" + ref.headers[j].Type + "</span>";
-			}
-		}
-		let metaDoi="";
-		if (ref.metadata.doi)
-			metaDoi="  <span class='curveIcon'><a href='https://doi.org/"+ref.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+ref.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>";
-		let metaUrl="";
-		if (ref.metadata.url)
-			metaUrl="  <span class='curveIcon'><a href='"+ref.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+ref.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>";
-		let metaCommand="";
-		if (ref.metadata.command)
-			metaCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+"_"+getId(ref)+"' title='Command line'><i class='fas fa-laptop'></i></a></span>";
+
 		let refTemplate = $('#refTemplate').html();
 		Mustache.parse(refTemplate);
-		let refRendered=Mustache.render(refTemplate, {
-			id:         getId(ref),
-			sideNumber: Curves.curveId().substring(5,Curves.curveId().length),
-			side:       Curves.curveId(),
-			titleShort: metaTitleShort,
-			title:      metaTitle,
-			titleEnd:   titleEnd,
-			frameSize:  ref.headers.Codec["Frame size (N)"],
-			codeWord:   codeWord,
-			codeRate:   ref.headers.Codec["Code rate"],
-			info:       headersInfo,
-			doi:        metaDoi,
-			url:        metaUrl,
-			command:    metaCommand
-		});
+		let refRendered=Mustache.render(refTemplate, ref);
 		$("#refsList #accordion").append(refRendered);
+
+		let refBodyTemplate = $('#refBodyTemplate').html();
+		Mustache.parse(refBodyTemplate);
+		let refBodyRendered=Mustache.render(refBodyTemplate, Object.assign(ref, {prefix: ""}));
+		$("#card"+ref.hash.id).append(refBodyRendered);
+
 		if (ref.metadata.command) {
-			let cmdModalTemplate = $('#cmdModalTemplate').html();
-			Mustache.parse(cmdModalTemplate);
-			let refRendered1=Mustache.render(cmdModalTemplate, {
-				side:     Curves.curveId(),
-				aId:      getId(ref),
-				aTitle:   metaTitle,
-				aCommand: String(ref.metadata.command),
-				aFile:    String(ref.trace),
+			$("#displayCmdModal"+ref.hash.id).on("click", function () {
+				displayCommandModal(ref);
 			});
-			$("#curvemodalsSelector").append(refRendered1);
+		}
+		if (ref.trace) {
+			$("#displayTraceModal"+ref.hash.id).on("click", function () {
+				displayTraceModal(ref);
+			});
 		}
 		addClick(ref, 0);
 	});
 	$('[data-toggle="tooltip"]').tooltip();
 }
 
-function displaySelectedCurve(a) {//Display the current selected curve on the right
-	let metadataTitle=a.metadata.title;
-	let codeWord="", tooltip1=">", tooltip2="", metadataDoi="", metadataUrl="", metadataCommand="", metadataTitleShort=a.metadata.title, nb=-1, allFunc="";
-	if (a.metadata.title.length > 21) {
-		tooltip1="id='TooltipCurve"+getId(a)+"' data-tippy-content='"+String(metadataTitle)+"'>";
-		metadataTitleShort=a.metadata.title.substring(0,20)+"... ";
+function displaySelectedRefs(ref) {//Display the current selected curve on the right
+	let refSelectedTemplate = $('#refSelectedTemplate').html();
+	Mustache.parse(refSelectedTemplate);
+	let refSelectedRendered=Mustache.render(refSelectedTemplate, ref);
+	$("#scurve #saccordion").append(refSelectedRendered);
+
+	let refBodyTemplate = $('#refBodyTemplate').html();
+	Mustache.parse(refBodyTemplate);
+	let refBodyRendered=Mustache.render(refBodyTemplate, Object.assign(ref, {prefix: "s"}));
+	$("#ss"+ref.hash.id).append(refBodyRendered);
+
+	if (ref.metadata.command) {
+		$("#sdisplayCmdModal"+ref.hash.id).on("click", function () {
+			displayCommandModal(ref);
+		});
 	}
-	if (a.headers.Codec["Codeword size (N_cw)"] > a.headers.Codec["Frame size (N)"])
-		codeWord="<b>Codeword</b>: "+a.headers.Codec["Codeword size (N_cw)"]+"<br/>";
-	for (let j in a.headers) {
-		if (a.headers[j].Type) {
-			let tooltip = "";
-			if (tooltips.get(a.headers[j].Type))
-				tooltip = " class='tt' data-toggle='tooltip' data-placement='top' data-html='true' title='" + tooltips.get(a.headers[j].Type) + "'";
-			if (a.headers[j].Type == "BP_HORIZONTAL_LAYERED") a.headers[j].Type = "BP_HLAYERED";
-			if (a.headers[j].Type == "BP_VERTICAL_LAYERED") a.headers[j].Type = "BP_VLAYERED";
-			tooltip2+="<br/><b>"+j+"</b>: "+"<span" + tooltip + ">" + a.headers[j].Type + "</span>";
-		}
+	if (ref.trace) {
+		$("#sdisplayTraceModal"+ref.hash.id).on("click", function () {
+			displayTraceModal(ref);
+		});
 	}
-	if (a.metadata.doi)
-		metadataDoi="  <span class='curveIcon'><a href='https://doi.org/"+a.metadata.doi+"' target='_blank' title='DOI' onclick='return trackOutboundLink(\"https://doi.org/"+a.metadata.doi+"\");'><i class='fas fa-book'></i></a></span>"
-	if (a.metadata.url)
-		metadataUrl="  <span class='curveIcon'><a href='"+a.metadata.url+"' target='_blank' title='URL' onclick='return trackOutboundLink(\""+a.metadata.url+"\");'><i class='fas fa-globe'></i></a></span>"
-	if (a.metadata.command)
-		metadataCommand="  <span class='curveIcon'><a href='#' data-toggle='modal' data-target='#modalInfoCmd"+Curves.curveId()+"_"+getId(a)+"' title='Command line'><i class='fas fa-laptop'></i></a></span>"
-	let selectedTemplate = $('#selectedTemplate').html();
-	Mustache.parse(selectedTemplate);
-	let selectedRendered=Mustache.render(selectedTemplate, {
-		sideNumber:   Curves.curveId().substring(5,Curves.curveId().length),
-		side:         Curves.curveId(),
-		aId:          getId(a),
-		aTitle:       metadataTitle,
-		aTitleShort:  metadataTitleShort,
-		aFramesize:   a.headers.Codec["Frame size (N)"],
-		refsCodeword: codeWord,
-		aCoderate:    a.headers.Codec["Code rate"],
-		refsTooltip1: tooltip1,
-		refsTooltip2: tooltip2,
-		refsDoi:      metadataDoi,
-		refsUrl:      metadataUrl,
-		refsCommand:  metadataCommand
+
+	$("#delete"+ref.hash.id).on("click", function () {
+		deleteClick(ref.hash.id);
 	});
-	$("#scurve #sAccordion").append(selectedRendered);
-	tippy('#TooltipCurve'+getId(a), {
+	$("#hide"+ref.hash.id).on("click", function () {
+		hidePlotRef(ref.hash.id);
+	});
+
+	$('[data-toggle="tooltip"]').tooltip();
+
+	tippy('#tooltipCurve'+ref.hash.id, {
 		arrow: true,
 		arrowType: 'sharp',
 		animation: 'fade',
 	});
-	if (a.metadata.command) {
-		let cmdSelectedTemplate = $('#cmdSelectedTemplate').html();
-		Mustache.parse(cmdSelectedTemplate);
-		let refRendered1=Mustache.render(cmdSelectedTemplate, {
-			side:     Curves.curveId(),
-			aId:      getId(a),
-			aTitle:   metadataTitle,
-			aCommand: String(a.metadata.command),
-			aFile:    String(a.trace),
-		});
-		$("#"+Curves.curveId()+"modals").append(refRendered1);
-	}
-	$('[data-toggle="tooltip"]').tooltip();
 }
 
-function subAddClick(a, input) {
-	if (Curves.length==0) {
+function updateAddButton(id, bool, contents) {
+	$("#curve"+id).prop('disabled', bool);
+	$("#curve"+id).empty();
+	$("#curve"+id).append(contents);
+}
+
+function plotSelectedRefs()
+{
+	let colorList=[];
+	Curves.selectedRefs.forEach(function(id) {
+		if (!Curves.db[id].hidden || Curves.db[id].hidden == false)
+			colorList.push(Curves.db[id].color.value);
+	});
+
+	Curves.plots.forEach(function(x) {
+		let data = [];
+		Curves.selectedRefs.forEach(function(id) {
+			if (!Curves.db[id].hidden || Curves.db[id].hidden == false)
+				data.push({x: Curves.db[id].contents["Eb/N0"],
+				           y: Curves.db[id].contents[Curves.PLOTS[x]],
+				           type: 'scatter'});
+		});
+		Plotly.newPlot(GD[x], data, Object.assign(LAYOUT[x], {colorway: colorList}), {displaylogo:false});
+	});
+}
+
+function subAddClick(ref, input) {
+	if (Curves.selectedRefs.length==0) {
 		let deleteAllTemplate = $('#deleteAllTemplate').html();
 		Mustache.parse(deleteAllTemplate);
-		$("#sAccordion").append(deleteAllTemplate);
+		$("#saccordion").append(deleteAllTemplate);
+		$("#closeAll").on("click", function () {
+			deleteAll();
+		});
+
 		$("#plotber").css("display", "inline");
 		$("#plotfer").css("display", "inline");
 	}
 	$("#tips").css("display", "none");
 	$("#selector .bers .active").removeClass("active");
 	$(this).addClass("active");
-	if (Curves.length==Curves.max) {
-		console.log("Maximum quantity of curves reached!");
-		alert("For readability, you can not display more than 10 curves.");
-	}
-	else {
-		displaySelectedCurve(a);
-		let cval=[];
-		for (let i=0; i<Curves.max; i++) {
-			cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
-		}
-		let uri  = "/comparator.html?curve0="+cval[0];
-		for (let i=1; i<Curves.max; i++) {
-			uri=uri+"&curve"+String(i)+"="+cval[i];
-		}
-		if (input==0) uri = updateURLParameter(uri,Curves.curveId(),getId(a));
-		else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(a.trace)));
-		// window.history.replaceState({},"aff3ct.github.io",uri);
-		if (input==0) {
-			Curves.addCurve(a);
-		}
-		else {
-			Curves.addInputCurve(a);
-		}
-		Curves.plots.forEach(function(x) {
-			const CURVESBIS=[];
-			for (let l=0; l<Curves.max; l++) {
-				if (Curves.plotOrder[l]!=-1) {
-					CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
-				}
-			}
-			Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
-		});
+	if (Curves.selectedRefs.length==Curves.max) {
+		let errorMsg = "The maximum number of curves is reached! (max = "+Curves.max+")";
+		console.log(errorMsg);
+		alert(errorMsg);
+	} else {
+		displaySelectedRefs(ref);
+
+		// let cval=[];
+		// for (let i=0; i<Curves.max; i++) {
+		// 	cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
+		// }
+		// let uri  = "/comparator.html?curve0="+cval[0];
+		// for (let i=1; i<Curves.max; i++) {
+		// 	uri=uri+"&curve"+String(i)+"="+cval[i];
+		// }
+		// if (input==0) uri = updateURLParameter(uri,Curves.curveId(),ref.hash.id);
+		// else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(ref.trace)));
+		// // window.history.replaceState({},"aff3ct.github.io",uri);
+
+		Curves.selectedRefs.push(ref.hash.id);
+		ref["color"] = Curves.colors.pop();
+		ref["hidden"] = false;
+		$("#scurve"+ref.hash.id).attr('id', "scurve"+ref["color"].id);
+		updateAddButton(ref.hash.id, true, '<i class="fas fa-minus"></i>');
+		plotSelectedRefs();
 	}
 }
 
 // Click listener for curves list
-function addClick(a, input) {//Plot the curve
+function addClick(ref, input) {//Plot the curve
 	if (input==1) {
-		subAddClick(a, input);
+		subAddClick(ref, input);
 	}
 	else {
-		$('#curve'+getId(a)).on('click', function() {
-			subAddClick(a, 0);
+		$('#curve'+ref.hash.id).on('click', function() {
+			subAddClick(ref, 0);
 			// track the click with Google Analytics
 			/**ga('send', {
 			hitType:       'event',
 			eventCategory: 'BER/FER Comparator',
 			eventAction:   'click',
-			eventLabel:    decodeURIComponent(a.filename)
+			eventLabel:    decodeURIComponent(ref.filename)
 		});**/
 	});
 	}
 }
 
 function deleteAll() {
-	Curves.names.forEach(x => deleteClick('delete', x));
+	let cpy = Array.from(Curves.selectedRefs);
+	cpy.forEach(id => deleteClick(id));
 }
 
-function deleteClick(divId, idSide) {//unplot a curve
-	//delete a selected curve
-	for (let i=0; i<Curves.max; i++) {
-		if (Curves.hidden[i]==1) showCurve(i);
-	}
-	$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).prop('disabled', false);
-	if (Curves.length !== 0) {
-		$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).empty();
-		$('#'+Curves.curveId()+Curves.id[Number(idSide.substring(5,idSide.length))]).append("+");
-		Curves.deleteCurve(idSide.substring(5, idSide.length));
-		if (Curves.length==0) {
+function deleteClick(id) {
+	// let cval=[];
+	// let uri  = "/comparator.html?curve0=";
+	// for (let i=0; i<Curves.max; i++) {
+	// 	cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
+	// 	if (i==0) uri+=cval[0];
+	// 	else uri=uri+"&curve"+String(i)+"="+cval[i];
+	// }
+	// uri = updateURLParameter(uri,idSide,"");
+	// // window.history.replaceState({},"aff3ct.github.io",uri);
+
+	var index = Curves.selectedRefs.indexOf(id);
+	if (index > -1) {
+		Curves.selectedRefs.splice(index, 1);
+		$("#scurve"+Curves.db[id].color.id).remove();
+		Curves.colors.push(Curves.db[id].color);
+		delete Curves.db[id].color;
+		delete Curves.db[id].hidden;
+		updateAddButton(id, false, '<i class="fas fa-plus"></i>');
+
+		if (Curves.selectedRefs.length==0) {
 			$("#closeAll").remove();
-			$("#tips"   ).css("display", "inline");
 			$("#plotber").css("display", "none"  );
 			$("#plotfer").css("display", "none"  );
+			$("#tips"   ).css("display", "inline");
 		}
-		let cval=[];
-		let uri  = "/comparator.html?curve0=";
-		for (let i=0; i<Curves.max; i++) {
-			cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
-			if (i==0) uri+=cval[0];
-			else uri=uri+"&curve"+String(i)+"="+cval[i];
-		}
-		uri = updateURLParameter(uri,idSide,"");
-		// window.history.replaceState({},"aff3ct.github.io",uri);
-		$("#s"+idSide).remove();
-		Curves.plots.forEach(function(x) {
-			const CURVESBIS=[];
-			for (let l=0; l<Curves.max; l++) {
-				if ((Curves.plotOrder[l]!=-1) && (l!=Curves.plotOrder.indexOf(Number(idSide.substring(5,idSide.length))))) {
-					CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
-				}
-			}
-			Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
+		else
+			plotSelectedRefs();
+	}
+}
+
+function showPlotRef(id) {
+	if (Curves.db[id].color && Curves.db[id].hidden == true)
+	{
+		Curves.db[id].hidden = false;
+		plotSelectedRefs();
+
+		let cid = Curves.db[id].color.id;
+		$("#scurve"+cid).fadeTo("fast", 1);
+		$("#show"+id).remove();
+		let hideTemplate = $('#hideTemplate').html();
+		Mustache.parse(hideTemplate);
+		let hideRendered=Mustache.render(hideTemplate, Curves.db[id]);
+		$("#delete"+id).after(hideRendered);
+		$("#hide"+id).on("click", function () {
+			hidePlotRef(id);
 		});
 	}
 }
 
-function showCurve(idSide) {
-	Curves.colors.splice(Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]),1);
-	let nb=Curves.plotOrder.indexOf(Number(idSide));
-	let ind=0;
-	for(let i=0; i<=nb; i++) {
-		if (Curves.hidden[i]==1 && (i!=Curves.plotOrder.indexOf(Number(idSide)))) {
-			ind++;
-		}
-	}
-	nb=nb-ind;
-	Curves.colors.splice(nb,0,Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]);
-	Curves.plots.forEach(function(x) {
-		const CURVESBIS=[];
-		for (let l=0; l<Curves.max; l++) {
-			if (l==Curves.plotOrder.indexOf(Number(idSide))) {
-				Curves.hidden[l]=0;
-			}
-			if ((Curves.plotOrder[l]!=-1) && (Curves.hidden[l]==0)) {
-				CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
-			}
-		}
-		Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
-	});
-	$("#scurve"+String(idSide)).fadeTo("fast", 1);
-	$("#show"+String(idSide)).remove();
-	let hideTemplate = $('#hideTemplate').html();
-	Mustache.parse(hideTemplate);
-	let hideRendered=Mustache.render(hideTemplate, {
-		sideNumber: String(idSide)
-	});
-	$("#delete"+String(idSide)).append(hideRendered);
-}
+function hidePlotRef(id) {
+	if (Curves.db[id].color && Curves.db[id].hidden == false)
+	{
+		Curves.db[id].hidden = true;
+		plotSelectedRefs();
 
-function hideCurve(idSide) {
-	let a=Curves.colors[Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))])];
-	Curves.colors.splice(Curves.colors.indexOf(Curves.referenceColors[Curves.plotOrder.indexOf(Number(idSide))]),1);
-	Curves.colors.push(a);
-	Curves.plots.forEach(function(x) {
-		const CURVESBIS=[];
-		for (let l=0; l<Curves.max; l++) {
-			if (l==Curves.plotOrder.indexOf(Number(idSide))) {
-				Curves.hidden[l]=1;
-			}
-			if ((Curves.plotOrder[l]!=-1) && (Curves.hidden[l]==0)) {
-				CURVESBIS.push(Curves.values[Curves.plotOrder[l]][x]);
-			}
-		}
-		Plotly.newPlot(GD[x],CURVESBIS.slice(0,Curves.length),LAYOUT[x],{displaylogo:false});
-	});
-	$("#scurve"+String(idSide)).fadeTo("slow", 0.33);
-	$("#hide"+String(idSide)).remove();
-	let showTemplate = $('#showTemplate').html();
-	Mustache.parse(showTemplate);
-	let showRendered=Mustache.render(showTemplate, {
-		sideNumber: String(idSide)
-	});
-	$("#delete"+String(idSide)).append(showRendered);
+		let cid = Curves.db[id].color.id;
+		$("#scurve"+cid).fadeTo("slow", 0.33);
+		$("#hide"+id).remove();
+		let showTemplate = $('#showTemplate').html();
+		Mustache.parse(showTemplate);
+		let showRendered=Mustache.render(showTemplate, Curves.db[id]);
+		$("#delete"+id).after(showRendered);
+		$("#show"+id).on("click", function () {
+			showPlotRef(id);
+		});
+	}
 }
 
 function loadFilesRecursive(fileInput, i) {//Load a file from input
@@ -578,8 +467,8 @@ function loadFilesRecursive(fileInput, i) {//Load a file from input
 				reader.readAsText(file);
 				reader.onloadend = function(e)
 				{
-					let o=text2json(reader.result, file.name);
-					let filename = encodeURIComponent(getId(o));
+					let o=precomputeData(text2json(reader.result, file.name));
+					let filename = encodeURIComponent(o.hash.id);
 					addClick(o, 1);
 					loadFilesRecursive(fileInput, i+1);
 				};
@@ -758,19 +647,23 @@ function displaySelectors(except = "") {
 }
 
 function drawCurvesFromURI() {
-	Curves.names.forEach(function(name) {
+	let names = [];
+	for (let i = 0; i < Curves.max; i++)
+		names.push("curve"+i);
+	names.forEach(function(name) {
 		let val=findGetParameter(name);
 		if (val) {
 			if (val.slice(0,4)=="NoWw") {
-				let o=text2json(LZString.decompressFromEncodedURIComponent(val));
-				subAddClick(o, 1);
+				let ref=precomputeData(text2json(LZString.decompressFromEncodedURIComponent(val)));
+				subAddClick(ref, 1);
 			}
 			else {
-				if (Curves.db[val])
-					subAddClick(Curves.db[val], 0);
+				let id = val;
+				if (Curves.db[id])
+					subAddClick(Curves.db[id], 0);
 				else {
 					subAddClick(Curves.refs["BCH"][0], 0); // TODO: here is a bug
-					deleteClick('delete', name);
+					deleteClick(name);
 				}
 			}
 		}
@@ -779,7 +672,6 @@ function drawCurvesFromURI() {
 
 // main
 $(document).ready(function() {
-	Curves.initialization();
 	let d3 = Plotly.d3;
 	let widthInPercentOfParent = 100;
 	let heightInPercentOfParent = 40;
