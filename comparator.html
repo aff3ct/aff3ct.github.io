@@ -108,7 +108,7 @@
   <script id="refBodyTemplate" type="x-tmpl-mustache">
     <div id="{{prefix}}collapse{{hash.id}}" class="collapse" aria-labelledby="heading{{hash.id}}" data-parent="#{{prefix}}accordion{{hash.id}}">
       <div class="card-body">
-        <li class="g{{hash.id}} list-group-item list-group-item-action align-item-start">
+        <li id="g{{hash.id}}" class="list-group-item list-group-item-action align-item-start">
           <div class="text-muted twoColumns">
             <small>
               <ul class="typeList">
@@ -189,8 +189,31 @@
       </div>
     </div>
   </script>
+  <script id="permalinkModalTemplate" type="x-tmpl-mustache">
+    <div class="modal fade" id="permalinkInstModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Permalink</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input class="form-control" type="text" placeholder="{{permalink}}" value="{{permalink}}" readonly>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
   <script id="deleteAllTemplate" type="x-tmpl-mustache">
     <button id="closeAll" type="button" class="btn btn-danger"><i class="fas fa-trash"></i> Delete All</button>
+  </script>
+  <script id="permalinkTemplate" type="x-tmpl-mustache">
+    <button id="permalink" type="button" class="btn btn-primary"><i class="fas fa-link"></i> Get Permalink</button>
   </script>
   <script id="showTemplate" type="x-tmpl-mustache">
     <button id="show{{hash.id}}" type="button" class="btn btn-sm btn-link">
@@ -344,6 +367,7 @@
     </div>
   </div>
   <div id="curveModals"></div>
+  <div id="permalinkModal"></div>
   <div class="container marketing">
     <h2>More BER/FER references</h2>
     <ul>
@@ -358,6 +382,7 @@
       <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="return trackOutboundLink('http://www.agence-nationale-recherche.fr/');">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="return trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="return trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
     </footer>
   </div>
+  <script src="./js/comparator_tools.js"></script>
   <script src="./js/comparator_tooltips.js"></script>
   <script src="./js/comparator_text2json.js"></script>
   <script src="./js/comparator.js"></script>

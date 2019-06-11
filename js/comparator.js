@@ -3,7 +3,7 @@ const BRANCH="development";
 
 var Curves = {
 	db: {},
-	max: 10, // colors are defined for only 10 curves. I'm not responsible for more curves. Sincerely, Me.
+	max: 10, // colors are defined for only 10 curves
 	colors: [{id: 9, value: '#17becf'},
 	         {id: 8, value: '#bcbd22'},
 	         {id: 7, value: '#7f7f7f'},
@@ -25,17 +25,10 @@ var Curves = {
 	selectedRefs: [],
 };
 
-// axis/legend of the 2 plots
 const LT = {
 	showlegend:false,
 	xaxis:{ zeroline:false, hoverformat: '.e', title: 'Eb/N0 (dB)'},
-	margin: {
-		l: 100,
-		r: 40,
-		b: 40,
-		t: 40,
-		pad: 4
-	},
+	margin: { l: 100, r: 40, b: 40, t: 40, pad: 4 },
 	hovermode: 'x',
 };
 
@@ -45,64 +38,6 @@ const LAYOUT= {
 };
 
 var GD={};
-
-function updateURLParameter(url, param, paramVal)
-{
-	let theAnchor = null;
-	let newAdditionalURL = "";
-	let tempArray = url.split("?");
-	let baseURL = tempArray[0];
-	let additionalURL = tempArray[1];
-	let temp = "";
-
-	if (additionalURL)
-	{
-		let tmpAnchor = additionalURL.split("#");
-		let theParams = tmpAnchor[0];
-		theAnchor = tmpAnchor[1];
-		if(theAnchor)
-			additionalURL = theParams;
-
-		tempArray = additionalURL.split("&");
-
-		for (let i=0; i<tempArray.length; i++)
-		{
-			if(tempArray[i].split('=')[0] != param)
-			{
-				newAdditionalURL += temp + tempArray[i];
-				temp = "&";
-			}
-		}
-	}
-	else
-	{
-		let tmpAnchor = baseURL.split("#");
-		let theParams = tmpAnchor[0];
-		theAnchor = tmpAnchor[1];
-
-		if(theParams)
-			baseURL = theParams;
-	}
-
-	if(theAnchor)
-		paramVal += "#" + theAnchor;
-	if (paramVal=="") paramVal="null";
-	let rows_txt = temp + "" + param + "=" + paramVal;
-	return baseURL + "?" + newAdditionalURL + rows_txt;
-}
-
-function findGetParameter(parameterName) {
-	let result = null,
-	tmp = [];
-	window.location.search
-	.substr(1)
-	.split("&")
-	.forEach(function (item) {
-		tmp = item.split("=");
-		if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-	});
-	return result;
-}
 
 function precomputeData(id)
 {
@@ -138,14 +73,14 @@ function precomputeData(id)
 
 // size of the compressed Gitlab refs database in bytes
 let EVT_TOTAL = 1279262;
-function loadDatabase() {//Return String that include the whole file
-	let databaseURL = GITLAB + "jobs/artifacts/" + BRANCH + "/raw/database.json?job=deploy-database-json";
+function loadDatabase() {
 	$.ajaxSetup({
 		beforeSend: function(xhr) {
 			if (xhr.overrideMimeType) xhr.overrideMimeType("application/json");
 		},
 		isLocal:false
 	});
+	let databaseURL = GITLAB+"jobs/artifacts/"+BRANCH+"/raw/database.json?job=deploy-database-json";
 	$.ajax(databaseURL,
 		{error:function(xhr,status,error) {
 			logger("**Error loading \"" + databaseURL + "\"\n"+status+" "+error);
@@ -175,7 +110,7 @@ function loadDatabase() {//Return String that include the whole file
 		$("#tips"      ).css("display", "block");
 		$("#selector"  ).css("display", "block");
 		$("#comparator").css("display", "block");
-		drawCurvesFromURI();
+		displayRefsFromURI();
 		displayRefsList(Object.keys(Curves.db));
 	});
 }
@@ -222,7 +157,7 @@ function displayTraceModal(ref)
 	}
 }
 
-function displayRefsList(refs) {//Display refs that can be selected
+function displayRefsList(refs) {
 	// sort refs by curve title (lexicographical order)
 	refs.sort(function(a,b) {
 		return Curves.db[a].metadata.title > Curves.db[b].metadata.title;
@@ -251,12 +186,22 @@ function displayRefsList(refs) {//Display refs that can be selected
 				displayTraceModal(ref);
 			});
 		}
-		addClick(ref, 0);
+		$('#curve'+ref.hash.id).on('click', function() {
+			addSelectedRef(ref);
+			// track the click with Google Analytics
+			/**ga('send', {
+				hitType:       'event',
+				eventCategory: 'BER/FER Comparator',
+				eventAction:   'click',
+				eventLabel:    decodeURIComponent(ref.filename)
+			});**/
+		});
+
 	});
 	$('[data-toggle="tooltip"]').tooltip();
 }
 
-function displaySelectedRefs(ref) {//Display the current selected curve on the right
+function displaySelectedRefs(ref) {
 	let refSelectedTemplate = $('#refSelectedTemplate').html();
 	Mustache.parse(refSelectedTemplate);
 	let refSelectedRendered=Mustache.render(refSelectedTemplate, ref);
@@ -279,7 +224,7 @@ function displaySelectedRefs(ref) {//Display the current selected curve on the r
 	}
 
 	$("#delete"+ref.hash.id).on("click", function () {
-		deleteClick(ref.hash.id);
+		deleteSelectedRef(ref.hash.id);
 	});
 	$("#hide"+ref.hash.id).on("click", function () {
 		hidePlotRef(ref.hash.id);
@@ -320,15 +265,43 @@ function plotSelectedRefs()
 	});
 }
 
-function subAddClick(ref, input) {
+function getPermalink() {
+	$("#permalinkModal").empty();
+	let url=window.location.origin;
+	if (url=="null")
+		url="http://aff3ct.github.io";
+	let permalink=url+"/comparator.html?"
+	let isFirst=true;
+	Curves.selectedRefs.forEach(function(id) {
+		let ref=Curves.db[id];
+		if (ref.local)
+		{
+			console.log("TODO: put on CouchDB");
+		}
+		permalink+=(isFirst?"":"&")+"curve"+ref.color.id+"="+ref.hash.id;
+		isFirst=false;
+	});
+	let permalinkModalTemplate = $('#permalinkModalTemplate').html();
+	Mustache.parse(permalinkModalTemplate);
+	let permalinkModalRendered=Mustache.render(permalinkModalTemplate, {permalink: permalink});
+	$("#permalinkModal").append(permalinkModalRendered);
+	$('#permalinkInstModal').modal("show");
+}
+
+function addSelectedRef(ref, colorId = -1) {
 	if (Curves.selectedRefs.length==0) {
 		let deleteAllTemplate = $('#deleteAllTemplate').html();
 		Mustache.parse(deleteAllTemplate);
 		$("#saccordion").append(deleteAllTemplate);
+		let permalinkTemplate = $('#permalinkTemplate').html();
+		Mustache.parse(permalinkTemplate);
+		$("#saccordion").append(permalinkTemplate);
 		$("#closeAll").on("click", function () {
-			deleteAll();
+			deleteAllSelectedRefs();
 		});
-
+		$("#permalink").on("click", function () {
+			getPermalink();
+		});
 		$("#plotber").css("display", "inline");
 		$("#plotfer").css("display", "inline");
 	}
@@ -336,68 +309,44 @@ function subAddClick(ref, input) {
 	$("#selector .bers .active").removeClass("active");
 	$(this).addClass("active");
 	if (Curves.selectedRefs.length==Curves.max) {
-		let errorMsg = "The maximum number of curves is reached! (max = "+Curves.max+")";
+		let errorMsg = "The maximum number of curves is reached (max = "+Curves.max+")!";
 		console.log(errorMsg);
 		alert(errorMsg);
 	} else {
-		displaySelectedRefs(ref);
-
-		// let cval=[];
-		// for (let i=0; i<Curves.max; i++) {
-		// 	cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
-		// }
-		// let uri  = "/comparator.html?curve0="+cval[0];
-		// for (let i=1; i<Curves.max; i++) {
-		// 	uri=uri+"&curve"+String(i)+"="+cval[i];
-		// }
-		// if (input==0) uri = updateURLParameter(uri,Curves.curveId(),ref.hash.id);
-		// else uri = updateURLParameter(uri,Curves.curveId(),encodeURIComponent(LZString.compressToEncodedURIComponent(ref.trace)));
-		// // window.history.replaceState({},"aff3ct.github.io",uri);
-
-		Curves.selectedRefs.push(ref.hash.id);
-		ref["color"] = Curves.colors.pop();
-		ref["hidden"] = false;
-		$("#scurve"+ref.hash.id).attr('id', "scurve"+ref["color"].id);
-		updateAddButton(ref.hash.id, true, '<i class="fas fa-minus"></i>');
-		plotSelectedRefs();
+		if (!Curves.selectedRefs.includes(ref.hash.id)) {
+			Curves.selectedRefs.push(ref.hash.id);
+			if (colorId == -1)
+				ref["color"] = Curves.colors.pop();
+			else {
+				let index=-1;
+				for (let i=0; i<Curves.colors.length; i++) {
+					if (Curves.colors[i].id == colorId) {
+						index=i;
+						break;
+					}
+				}
+				if (index > -1)
+					ref["color"] = Curves.colors.splice(index, 1)[0];
+			}
+			if (ref["color"]) {
+				displaySelectedRefs(ref);
+				ref["hidden"] = false;
+				$("#scurve"+ref.hash.id).attr('id', "scurve"+ref["color"].id);
+				updateAddButton(ref.hash.id, true, '<i class="fas fa-minus"></i>');
+				plotSelectedRefs();
+			}
+		} else {
+			console.log("It is not allowed to add multiple times the same ref.");
+		}
 	}
 }
 
-// Click listener for curves list
-function addClick(ref, input) {//Plot the curve
-	if (input==1) {
-		subAddClick(ref, input);
-	}
-	else {
-		$('#curve'+ref.hash.id).on('click', function() {
-			subAddClick(ref, 0);
-			// track the click with Google Analytics
-			/**ga('send', {
-			hitType:       'event',
-			eventCategory: 'BER/FER Comparator',
-			eventAction:   'click',
-			eventLabel:    decodeURIComponent(ref.filename)
-		});**/
-	});
-	}
-}
-
-function deleteAll() {
+function deleteAllSelectedRefs() {
 	let cpy = Array.from(Curves.selectedRefs);
-	cpy.forEach(id => deleteClick(id));
+	cpy.forEach(id => deleteSelectedRef(id));
 }
 
-function deleteClick(id) {
-	// let cval=[];
-	// let uri  = "/comparator.html?curve0=";
-	// for (let i=0; i<Curves.max; i++) {
-	// 	cval.push(encodeURIComponent(findGetParameter("curve"+String(i))));
-	// 	if (i==0) uri+=cval[0];
-	// 	else uri=uri+"&curve"+String(i)+"="+cval[i];
-	// }
-	// uri = updateURLParameter(uri,idSide,"");
-	// // window.history.replaceState({},"aff3ct.github.io",uri);
-
+function deleteSelectedRef(id) {
 	var index = Curves.selectedRefs.indexOf(id);
 	if (index > -1) {
 		Curves.selectedRefs.splice(index, 1);
@@ -408,7 +357,8 @@ function deleteClick(id) {
 		updateAddButton(id, false, '<i class="fas fa-plus"></i>');
 
 		if (Curves.selectedRefs.length==0) {
-			$("#closeAll").remove();
+			$("#closeAll" ).remove();
+			$("#permalink").remove();
 			$("#plotber").css("display", "none"  );
 			$("#plotfer").css("display", "none"  );
 			$("#tips"   ).css("display", "inline");
@@ -456,20 +406,28 @@ function hidePlotRef(id) {
 	}
 }
 
-function loadFilesRecursive(fileInput, i) {//Load a file from input
+function loadFilesRecursive(fileInput, i = 0) {
 	if (i<fileInput.files.length) {
 		let file = fileInput.files[i];
 		if (file.type=="text/plain")
 		{
 			$("#fileDisplayArea").empty();
-			if (Curves.length<Curves.max) {
+			if (Curves.selectedRefs.length < Curves.max) {
 				let reader = new FileReader();
 				reader.readAsText(file);
 				reader.onloadend = function(e)
 				{
-					let o=precomputeData(text2json(reader.result, file.name));
-					let filename = encodeURIComponent(o.hash.id);
-					addClick(o, 1);
+					let ref=text2json(reader.result, file.name);
+					let id=ref.hash.value.substring(0,7);
+					if (typeof(Curves.db[id])==="undefined")
+					{
+						ref["local"]=true;
+						Curves.db[id]=ref;
+						precomputeData(id);
+					}
+					else
+						console.log("The reference already exists in the database (id='"+id+"').");
+					addSelectedRef(Curves.db[id]);
 					loadFilesRecursive(fileInput, i+1);
 				};
 			}
@@ -646,27 +604,33 @@ function displaySelectors(except = "") {
 	});
 }
 
-function drawCurvesFromURI() {
-	let names = [];
+function displayRefsFromURI() {
+	let paramNames = [];
 	for (let i = 0; i < Curves.max; i++)
-		names.push("curve"+i);
-	names.forEach(function(name) {
-		let val=findGetParameter(name);
+		paramNames.push("curve"+i);
+	let colorId = 0;
+	paramNames.forEach(function(paramName) {
+		let val=findGetParameter(paramName);
 		if (val) {
 			if (val.slice(0,4)=="NoWw") {
-				let ref=precomputeData(text2json(LZString.decompressFromEncodedURIComponent(val)));
-				subAddClick(ref, 1);
-			}
-			else {
+				let ref=text2json(LZString.decompressFromEncodedURIComponent(val));
+				let id=ref.hash.value.substring(0,7);
+				if (typeof(Curves.db[id])==="undefined")
+				{
+					ref["local"]=true;
+					Curves.db[id]=ref;
+					precomputeData(id);
+				}
+				else
+					console.log("The reference already exists in the database (id='"+id+"').");
+				addSelectedRef(ref, colorId);
+			} else {
 				let id = val;
 				if (Curves.db[id])
-					subAddClick(Curves.db[id], 0);
-				else {
-					subAddClick(Curves.refs["BCH"][0], 0); // TODO: here is a bug
-					deleteClick(name);
-				}
+					addSelectedRef(Curves.db[id], colorId);
 			}
 		}
+		colorId++;
 	});
 }
 
@@ -690,7 +654,7 @@ $(document).ready(function() {
 		applySelections();
 	});
 	$("#fileInput").on('change', function() {
-		loadFilesRecursive(fileInput, 0);
+		loadFilesRecursive(fileInput);
 	});
 	$(window).resize(function() {
 		Plotly.Plots.resize(GD.ber);

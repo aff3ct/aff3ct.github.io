@@ -8,7 +8,6 @@ function sleep(milliseconds) {
 }
 
 function roughSizeOfObject( object ) {
-
 	var objectList = [];
 	var stack = [ object ];
 	var bytes = 0;
@@ -39,4 +38,62 @@ function roughSizeOfObject( object ) {
 		}
 	}
 	return bytes;
+}
+
+function updateURLParameter(url, param, paramVal)
+{
+	let theAnchor = null;
+	let newAdditionalURL = "";
+	let tempArray = url.split("?");
+	let baseURL = tempArray[0];
+	let additionalURL = tempArray[1];
+	let temp = "";
+
+	if (additionalURL)
+	{
+		let tmpAnchor = additionalURL.split("#");
+		let theParams = tmpAnchor[0];
+		theAnchor = tmpAnchor[1];
+		if(theAnchor)
+			additionalURL = theParams;
+
+		tempArray = additionalURL.split("&");
+
+		for (let i=0; i<tempArray.length; i++)
+		{
+			if(tempArray[i].split('=')[0] != param)
+			{
+				newAdditionalURL += temp + tempArray[i];
+				temp = "&";
+			}
+		}
+	}
+	else
+	{
+		let tmpAnchor = baseURL.split("#");
+		let theParams = tmpAnchor[0];
+		theAnchor = tmpAnchor[1];
+
+		if(theParams)
+			baseURL = theParams;
+	}
+
+	if(theAnchor)
+		paramVal += "#" + theAnchor;
+	if (paramVal=="") paramVal="null";
+	let rows_txt = temp + "" + param + "=" + paramVal;
+	return baseURL + "?" + newAdditionalURL + rows_txt;
+}
+
+function findGetParameter(parameterName) {
+	let result = null,
+	tmp = [];
+	window.location.search
+	.substr(1)
+	.split("&")
+	.forEach(function (item) {
+		tmp = item.split("=");
+		if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+	});
+	return result;
 }

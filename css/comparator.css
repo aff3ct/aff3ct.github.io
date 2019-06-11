@@ -104,6 +104,11 @@
   margin-bottom:5px;
 }
 
+#permalink {
+  margin-bottom:5px;
+  float: right;
+}
+
 .card .subtitle {
   font-size: 10pt;
   padding-bottom: 6px;
