@@ -1,6 +1,11 @@
 const GITLAB="https://gitlab.com/api/v4/projects/10354484/";
 const BRANCH="development";
 
+// connexion to the CouchDB server (this code do not connect to the CouchDB until the first usage)
+const serverCDB = "https://couchdb-580e7b.smileupps.com";
+const nameCDB = "aff3ct_refs";
+var DB = new PouchDB(serverCDB+'/'+nameCDB);
+
 var Curves = {
 	db: {},
 	max: 10, // colors are defined for only 10 curves
@@ -188,13 +193,6 @@ function displayRefsList(refs) {
 		}
 		$('#curve'+ref.hash.id).on('click', function() {
 			addSelectedRef(ref);
-			// track the click with Google Analytics
-			/**ga('send', {
-				hitType:       'event',
-				eventCategory: 'BER/FER Comparator',
-				eventAction:   'click',
-				eventLabel:    decodeURIComponent(ref.filename)
-			});**/
 		});
 
 	});
@@ -276,7 +274,18 @@ function getPermalink() {
 		let ref=Curves.db[id];
 		if (ref.local)
 		{
-			console.log("TODO: put on CouchDB");
+			// put a document on the CouchDB server
+			DB.put(
+				$.extend({_id: id}, ref)
+			).then(function (response) {
+				console.log("PouchDB: put success");
+				console.log(response);
+				ref.local=false;
+			}).catch(function (err) {
+				console.log("PouchDB: put fail");
+				console.log(err);
+				ref.local=false;
+			});
 		}
 		permalink+=(isFirst?"":"&")+"curve"+ref.color.id+"="+ref.hash.id;
 		isFirst=false;
@@ -334,6 +343,15 @@ function addSelectedRef(ref, colorId = -1) {
 				$("#scurve"+ref.hash.id).attr('id', "scurve"+ref["color"].id);
 				updateAddButton(ref.hash.id, true, '<i class="fas fa-minus"></i>');
 				plotSelectedRefs();
+				/**
+				// track the click with Google Analytics
+				ga('send', {
+					hitType:       'event',
+					eventCategory: 'BER/FER Comparator',
+					eventAction:   'click',
+					eventLabel:    decodeURIComponent(ref.filename)
+				});
+				**/
 			}
 		} else {
 			console.log("It is not allowed to add multiple times the same ref.");
@@ -628,6 +646,20 @@ function displayRefsFromURI() {
 				let id = val;
 				if (Curves.db[id])
 					addSelectedRef(Curves.db[id], colorId);
+				else {
+					// this is very important to make the copy because the 'DB.get' call is asynchronous
+					let cid=colorId;
+					// get a document from the server
+					DB.get(id).then(function (ref) {
+						console.log("PouchDB: get success");
+						Curves.db[id]=ref;
+						precomputeData(id);
+						addSelectedRef(ref, cid);
+					}).catch(function (err) {
+						console.log("PouchDB: get fail");
+						console.log(err);
+					});
+				}
 			}
 		}
 		colorId++;
