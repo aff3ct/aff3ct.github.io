@@ -333,10 +333,10 @@ function addSelectedRef(ref, colorId=-1) {
 	if (Curves.selectedRefs.length==0) {
 		let deleteAllTemplate = $('#deleteAllTemplate').html();
 		Mustache.parse(deleteAllTemplate);
-		$("#saccordion").append(deleteAllTemplate);
+		$("#sbuttons").append(deleteAllTemplate);
 		let permalinkTemplate = $('#permalinkTemplate').html();
 		Mustache.parse(permalinkTemplate);
-		$("#saccordion").append(permalinkTemplate);
+		$("#sbuttons").append(permalinkTemplate);
 		$("#closeAll").on("click", function () {
 			deleteAllSelectedRefs();
 		});
@@ -407,8 +407,7 @@ function deleteSelectedRef(id) {
 		updateAddButton(id, false);
 
 		if (Curves.selectedRefs.length==0) {
-			$("#closeAll" ).remove();
-			$("#permalink").remove();
+			$("#sbuttons").empty();
 			$("#plotber").css("display", "none"  );
 			$("#plotfer").css("display", "none"  );
 			$("#tips"   ).css("display", "inline");

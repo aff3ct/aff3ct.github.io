@@ -156,7 +156,7 @@
               <span class="curveIcon"><a href="{{metadata.url}}" target="_blank" title="URL" onclick="return trackOutboundLink('{{metadata.url}}');"><i class="fas fa-globe"></i></a></span>
             {{/metadata.url}}
             {{#metadata.command}}
-              <span class="curveIcon"><a href="#" id="{{prefix}}displayCmdModal{{hash.id}}" data-toggle="modal" data-target="#cmdModal{{hash.id}}" title="Command line"><i class="fas fa-laptop"></i></a></span>
+              <span class="curveIcon"><a href="#" id="{{prefix}}displayCmdModal{{hash.id}}" data-toggle="modal" data-target="#cmdModal{{hash.id}}" title="Command line"><i class="fas fa-terminal"></i></a></span>
             {{/metadata.command}}
             {{#trace}}
               <span class="curveIcon"><a href="#" id="{{prefix}}displayTraceModal{{hash.id}}" data-toggle="modal" data-target="#traceModal{{hash.id}}" title="Original reference file"><i class="fas fa-file-alt"></i></a></span>
@@ -394,6 +394,7 @@
       </div>
       <div class="col-2 p-1" id="scurve">
         <div class="container">
+          <div id="sbuttons"></div>
           <div id="saccordion"></div>
         </div>
       </div>

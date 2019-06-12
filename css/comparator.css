@@ -16,9 +16,9 @@
   padding:0rem !important
 }
 
-#comparator #scurve
+#comparator #saccordion
 {
-  height:75vh;
+  height:70vh;
   overflow-y:auto;
   overflow-x:hidden;
 }
