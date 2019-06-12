@@ -30,17 +30,72 @@ var Curves = {
 	selectedRefs: [],
 };
 
-const LT = {
-	showlegend:false,
-	xaxis:{ zeroline:false, hoverformat: '.e', title: 'Eb/N0 (dB)'},
-	margin: { l: 100, r: 40, b: 40, t: 40, pad: 4 },
-	hovermode: 'x',
-};
-const LAYOUT= {
-	ber: $.extend({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Bit Error Rate (BER)'} },LT),
-	fer: $.extend({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Frame Error Rate (FER)'}},LT),
-};
-var GD={};
+var Plot;
+var PlotLayouts = {
+	common: {
+		showlegend:false,
+		margin: { l: 100, r: 40, b: 40, t: 40, pad: 4 },
+		hovermode: 'x',
+	},
+	x: {
+		"Eb/N0": {
+			xaxis: { title: 'Eb/N0 (dB)', zeroline:false, hoverformat: '.e' },
+			default: true,
+			enabled: false,
+		},
+		"Es/N0": {
+			xaxis: { title: 'Es/N0 (dB)', zeroline:false, hoverformat: '.e' },
+			default: false,
+			enabled: false,
+		},
+		"EP": {
+			xaxis: { title: 'Erasure Probability (EP)', zeroline:false, hoverformat: '.e' },
+			default: true,
+			enabled: false,
+		},
+	},
+	y: {
+		"BER": {
+			yaxis: { title: 'Bit Error Rate (BER)', type: 'log', autorange: true, hoverformat: '.2e' },
+			compatible: "FER",
+			default: true,
+			enabled: false,
+		},
+		"FER": {
+			yaxis: { title: 'Frame Error Rate (FER)', type: 'log', autorange: true, hoverformat: '.2e' },
+			compatible: "BER",
+			default: true,
+			enabled: false,
+		},
+		"FRA": {
+			yaxis: { title: 'Simulated Frames', type: 'log', autorange: true, hoverformat: '.2e' },
+			default: false,
+			enabled: false,
+		},
+		"FE": {
+			yaxis: { title: 'Number of Frame Errors', autorange: true },
+			compatible: "BE",
+			default: false,
+			enabled: false,
+		},
+		"BE": {
+			yaxis: { title: 'Number of Bit Errors', autorange: true },
+			compatible: "FE",
+			default: false,
+			enabled: false,
+		},
+		"SIM_THR": {
+			yaxis: { title: 'Simulation Throughput (Mb/s)', autorange: true },
+			default: false,
+			enabled: false,
+		},
+		"ET/RT": {
+			yaxis: { title: 'Elapsed Time (sec)', type: 'log', autorange: true, hoverformat: '.2e' },
+			default: false,
+			enabled: false,
+		},
+	},
+}
 
 function precomputeData(id) {
 	let ref = Curves.db[id];
@@ -281,20 +336,41 @@ function plotSelectedRefs() {
 			colorList.push(Curves.db[id].color.value);
 	});
 
-	Curves.plots.forEach(function(x) {
-		let data = [];
-		Curves.selectedRefs.forEach(function(id) {
-			if ((typeof(Curves.db[id].hidden)==="undefined") || Curves.db[id].hidden == false) {
-				data.push({
-					x: Curves.db[id].contents["Eb/N0"],
-					y: Curves.db[id].contents[Curves.PLOTS[x]],
-					type: 'scatter',
-					name: Curves.db[id].metadata.bigtitle,
-				});
-			}
-		});
-		Plotly.newPlot(GD[x], data, $.extend(LAYOUT[x], {colorway: colorList}), {displaylogo:false});
+	let layoutCommon = PlotLayouts.common;
+	let xaxis = "";
+	Object.keys(PlotLayouts.x).forEach(function(key) {
+		if (PlotLayouts.x[key].enabled) {
+			$.extend(layoutCommon, {xaxis: PlotLayouts.x[key].xaxis});
+			xaxis = key;
+		}
 	});
+
+	let lines = ['solid', 'dash', 'dot', 'dashdot'];
+	let l = 0;
+	let yaxis = "";
+	let layout = layoutCommon;
+	let data = [];
+	Object.keys(PlotLayouts.y).forEach(function(key) {
+		if (PlotLayouts.y[key].enabled) {
+			$.extend(layout, {yaxis: PlotLayouts.y[key].yaxis});
+			$.extend(layout, {colorway: colorList});
+			yaxis = key;
+			Curves.selectedRefs.forEach(function(id) {
+				if ((typeof(Curves.db[id].hidden)==="undefined") || Curves.db[id].hidden == false) {
+					data.push({
+						x: Curves.db[id].contents[xaxis],
+						y: Curves.db[id].contents[yaxis],
+						type: 'scatter',
+						line: {dash: lines[l%lines.length]},
+						name: key,
+					});
+				}
+			});
+			l++;
+		}
+	});
+	if (data.length)
+		Plotly.newPlot(Plot, data, layout, {displaylogo:false});
 }
 
 function getPermalink() {
@@ -329,6 +405,30 @@ function getPermalink() {
 	$('#permalinkInstModal').modal("show");
 }
 
+function removeAxes()
+{
+	Object.keys(PlotLayouts.x).forEach(function(key) {
+		PlotLayouts.x[key].enabled=false;
+	});
+	Object.keys(PlotLayouts.y).forEach(function(key) {
+		PlotLayouts.y[key].enabled=false;
+	});
+}
+
+function displayAxes(ref)
+{
+	Object.keys(ref.contents).forEach(function(keyRef) {
+		Object.keys(PlotLayouts.x).forEach(function(keyPlot) {
+			if (keyRef==keyPlot && PlotLayouts.x[keyPlot].default)
+				PlotLayouts.x[keyPlot].enabled=true;
+		});
+		Object.keys(PlotLayouts.y).forEach(function(keyPlot) {
+			if (keyRef==keyPlot && PlotLayouts.y[keyPlot].default)
+				PlotLayouts.y[keyPlot].enabled=true;
+		});
+	});
+}
+
 function addSelectedRef(ref, colorId=-1) {
 	if (Curves.selectedRefs.length==0) {
 		let deleteAllTemplate = $('#deleteAllTemplate').html();
@@ -343,8 +443,8 @@ function addSelectedRef(ref, colorId=-1) {
 		$("#permalink").on("click", function () {
 			getPermalink();
 		});
-		$("#plotber").css("display", "inline");
-		$("#plotfer").css("display", "inline");
+		$("#plot").css("display", "inline");
+		displayAxes(ref);
 	}
 	$("#tips").css("display", "none");
 	$("#selector .bers .active").removeClass("active");
@@ -355,34 +455,53 @@ function addSelectedRef(ref, colorId=-1) {
 		alert(errorMsg);
 	} else {
 		if (!Curves.selectedRefs.includes(ref.hash.id)) {
-			Curves.selectedRefs.push(ref.hash.id);
-			if (colorId == -1)
-				ref["color"] = Curves.colors.pop();
-			else {
-				let index=-1;
-				for (let i=0; i<Curves.colors.length; i++) {
-					if (Curves.colors[i].id == colorId) {
-						index=i;
-						break;
+			let isCompatibleRef=false;
+			let noiseTypeRef="", noiseTypePlot="";
+			let contentsKeys = Object.keys(ref.contents);
+			for (let c=0; c<contentsKeys.length && !isCompatibleRef; c++) {
+				let plotKeys = Object.keys(PlotLayouts.x);
+				for (let p=0; p<plotKeys.length && !isCompatibleRef; p++) {
+					if (PlotLayouts.x[plotKeys[p]].enabled) {
+						noiseTypePlot=plotKeys[p];
+						if (plotKeys[p] == contentsKeys[c])
+							isCompatibleRef=true;
 					}
+					if (plotKeys[p]==contentsKeys[c])
+						noiseTypeRef=contentsKeys[c];
 				}
-				if (index > -1)
-					ref["color"] = Curves.colors.splice(index, 1)[0];
 			}
-			if (ref["color"]) {
-				displaySelectedRefs(ref);
-				ref["hidden"] = false;
-				$("#scurve"+ref.hash.id).attr('id', "scurve"+ref["color"].id);
-				updateAddButton(ref.hash.id, true);
-				plotSelectedRefs();
-				if (window.location.host == "aff3ct.github.io") {
-					// track the click with Google Analytics
-					ga('send', {
-						hitType:       'event',
-						eventCategory: 'BER/FER Comparator',
-						eventAction:   'click',
-						eventLabel:    decodeURIComponent(ref.filename)
-					});
+			if (!isCompatibleRef) {
+				alert("Impossible to mix '"+noiseTypeRef+"' with '"+noiseTypePlot+"' noise, please remove the selected references before to try to re-add this reference.")
+			} else {
+				Curves.selectedRefs.push(ref.hash.id);
+				if (colorId == -1)
+					ref["color"] = Curves.colors.pop();
+				else {
+					let index=-1;
+					for (let i=0; i<Curves.colors.length; i++) {
+						if (Curves.colors[i].id == colorId) {
+							index=i;
+							break;
+						}
+					}
+					if (index > -1)
+						ref["color"] = Curves.colors.splice(index, 1)[0];
+				}
+				if (ref["color"]) {
+					displaySelectedRefs(ref);
+					ref["hidden"] = false;
+					$("#scurve"+ref.hash.id).attr('id', "scurve"+ref["color"].id);
+					updateAddButton(ref.hash.id, true);
+					plotSelectedRefs();
+					if (window.location.host == "aff3ct.github.io") {
+						// track the click with Google Analytics
+						ga('send', {
+							hitType:       'event',
+							eventCategory: 'BER/FER Comparator',
+							eventAction:   'click',
+							eventLabel:    decodeURIComponent(ref.filename)
+						});
+					}
 				}
 			}
 		} else {
@@ -408,9 +527,9 @@ function deleteSelectedRef(id) {
 
 		if (Curves.selectedRefs.length==0) {
 			$("#sbuttons").empty();
-			$("#plotber").css("display", "none"  );
-			$("#plotfer").css("display", "none"  );
-			$("#tips"   ).css("display", "inline");
+			$("#plot").css("display", "none"  );
+			$("#tips").css("display", "inline");
+			removeAxes();
 		}
 		else
 			plotSelectedRefs();
@@ -695,18 +814,14 @@ function displayRefsFromURI() {
 // main
 $(document).ready(function() {
 	let d3 = Plotly.d3;
-	let widthInPercentOfParent = 100;
-	let heightInPercentOfParent = 40;
-	Curves.plots.forEach(function(e) {
-		GD[e] = d3.select("#plot"+e)
-		.append('div')
-		.style({
-			width: widthInPercentOfParent + '%',
-			'margin-left': (100 - widthInPercentOfParent) / 2 + '%',
-			height: heightInPercentOfParent + 'vh',
-			'margin-top': (40 - heightInPercentOfParent) / 2 + 'vh'
-		}).node();
-	});
+	Plot = d3.select("#plot")
+	.append('div')
+	.style({
+		width: '100%',
+		'margin-left': '0%',
+		height: '75vh',
+		'margin-top': '0vh'
+	}).node();
 	loadDatabase();
 	$('#applySelections').on('click', function() {
 		displayRefsList(filters(Object.keys(Curves.db)));
@@ -715,7 +830,6 @@ $(document).ready(function() {
 		loadFilesRecursive(fileInput);
 	});
 	$(window).resize(function() {
-		Plotly.Plots.resize(GD.ber);
-		Plotly.Plots.resize(GD.fer);
+		Plotly.Plots.resize(Plot);
 	});
 });
