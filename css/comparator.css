@@ -106,7 +106,7 @@
 
 #permalink {
   margin-bottom:5px;
-  float: right;
+/*  float: right;*/
 }
 
 .card .subtitle {
@@ -122,6 +122,17 @@
 
 .typeList li {
   padding: 3px 0px 3px 0px;
+}
+
+.selectedRefButtons button {
+  float: right;
+  padding: 0px 2px 0px 2px;
+  margin: 0px 0px 0px 0px;
+}
+
+.addButton {
+  margin-top:auto;
+  margin-bottom:auto;
 }
 
 .tt

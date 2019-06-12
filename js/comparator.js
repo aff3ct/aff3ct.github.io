@@ -36,18 +36,15 @@ const LT = {
 	margin: { l: 100, r: 40, b: 40, t: 40, pad: 4 },
 	hovermode: 'x',
 };
-
 const LAYOUT= {
 	ber: $.extend({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Bit Error Rate (BER)'} },LT),
 	fer: $.extend({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Frame Error Rate (FER)'}},LT),
 };
-
 var GD={};
 
 function precomputeData(id) {
 	let ref = Curves.db[id];
 	ref["hash"]["id"] = id;
-
 	if (typeof(ref.metadata)==="undefined" || typeof(ref.metadata.title)==="undefined")
 	{
 		if (typeof(ref.headers)!=="undefined" &&
@@ -63,16 +60,8 @@ function precomputeData(id) {
 	}
 	if (typeof(ref.metadata)!=="undefined" && typeof(ref.metadata.title)!=="undefined") {
 		/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(ref.metadata.title);
-		let bigtitle=ref.metadata.title;
-		let subtitle="";
-		if (ref.metadata.title.length > 23) {
-			if (RegExp.$1=="" || RegExp.$2=="")
-				bigtitle=ref.metadata.title.substring(0,19)+'... ';
-			else {
-				bigtitle=$.trim(RegExp.$1);
-				subtitle=$.trim(RegExp.$2);
-			}
-		}
+		let bigtitle=(RegExp.$1==""||RegExp.$2=="")?ref.metadata.title:$.trim(RegExp.$1);
+		let subtitle=$.trim(RegExp.$2);
 		ref["metadata"]["bigtitle"] = bigtitle;
 		ref["metadata"]["subtitle"] = subtitle;
 	}
@@ -244,12 +233,6 @@ function displaySelectedRefs(ref) {
 	});
 
 	$('[data-toggle="tooltip"]').tooltip();
-
-	tippy('#tooltipCurve'+ref.hash.id, {
-		arrow: true,
-		arrowType: 'sharp',
-		animation: 'fade',
-	});
 }
 
 function updateAddButton(id, bool) {
