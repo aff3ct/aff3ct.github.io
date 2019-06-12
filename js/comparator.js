@@ -45,8 +45,7 @@ var GD={};
 function precomputeData(id) {
 	let ref = Curves.db[id];
 	ref["hash"]["id"] = id;
-	if (typeof(ref.metadata)==="undefined" || typeof(ref.metadata.title)==="undefined")
-	{
+	if (typeof(ref.metadata)==="undefined" || typeof(ref.metadata.title)==="undefined"){
 		if (typeof(ref.headers)!=="undefined" &&
 			typeof(ref.headers.Codec)!=="undefined" &&
 			typeof(ref.headers.Codec["Type"])!=="undefined" &&
@@ -59,9 +58,11 @@ function precomputeData(id) {
 		}
 	}
 	if (typeof(ref.metadata)!=="undefined" && typeof(ref.metadata.title)!=="undefined") {
-		/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(ref.metadata.title);
-		let bigtitle=(RegExp.$1==""||RegExp.$2=="")?ref.metadata.title:$.trim(RegExp.$1);
-		let subtitle=$.trim(RegExp.$2);
+		let regex = /([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/g;
+		let res = ref.metadata.title.match(regex);
+		regex.test(ref.metadata.title);
+		let bigtitle=(res)?$.trim(RegExp.$1):ref.metadata.title;
+		let subtitle=(res)?$.trim(RegExp.$2):"";
 		ref["metadata"]["bigtitle"] = bigtitle;
 		ref["metadata"]["subtitle"] = subtitle;
 	}
@@ -450,79 +451,85 @@ function loadFilesRecursive(fileInput, i=0) {
 	}
 }
 
-function filterByGeneric(refs, selectorObj) {
-	let spath = selectorObj.path.split("/");
+function filterByGeneric(ids, selector) {
+	let spath = selector.path.split("/");
 	let p=[];
-	if (selectorObj.selection.length!=0 && refs.length!=0) {
-		refs.forEach(function(ref) {
-			selectorObj.selection.forEach(function(selection) {
-				if (Curves.db[ref][spath[0]][spath[1]][spath[2]]==selection) {
-					p.push(ref);
+	if (selector.selection.length!=0 && ids.length!=0) {
+		ids.forEach(function(id) {
+			selector.selection.forEach(function(value) {
+				if (typeof(Curves.db[id][spath[0]])!=="undefined" &&
+				    typeof(Curves.db[id][spath[0]][spath[1]])!=="undefined" &&
+				    typeof(Curves.db[id][spath[0]][spath[1]][spath[2]])!=="undefined" &&
+				    Curves.db[id][spath[0]][spath[1]][spath[2]]==value) {
+					p.push(id);
 				}
 			});
 		});
 		return p;
 	}
 	else
-		return refs;
+		return ids;
 }
 
-function filterByCodeTypes(refs) {
-	return filterByGeneric(refs, Curves.selectors.codeType);
+function filterByCodeTypes(ids) {
+	return filterByGeneric(ids, Curves.selectors.codeType);
 }
 
-function filterByFrameSizes(refs) {
-	return filterByGeneric(refs, Curves.selectors.frameSize);
+function filterByFrameSizes(ids) {
+	return filterByGeneric(ids, Curves.selectors.frameSize);
 }
 
-function filterByModems(refs) {
-	return filterByGeneric(refs, Curves.selectors.modemType);
+function filterByModems(ids) {
+	return filterByGeneric(ids, Curves.selectors.modemType);
 }
 
-function filterByChannels(refs) {
-	return filterByGeneric(refs, Curves.selectors.channelType);
+function filterByChannels(ids) {
+	return filterByGeneric(ids, Curves.selectors.channelType);
 }
 
-function filterByCodeRates(refs) {
+function filterByCodeRates(ids) {
 	let p=[];
 	let codeRateRange=$('#codeRate')[0].noUiSlider.get();
 	let codeRateMin = codeRateRange[0];
 	let codeRateMax = codeRateRange[1];
 	if (codeRateMin==0 && codeRateMax==1)
-		return refs;
+		return ids;
 	else {
-		refs.forEach(function(ref) {
-			if (codeRateMin<=Curves.db[ref].headers["Codec"]["Code rate"] &&
-				codeRateMax>=Curves.db[ref].headers["Codec"]["Code rate"]) {
-				p.push(ref);
+		ids.forEach(function(id) {
+			if (typeof(Curves.db[id]["headers"])!=="undefined" &&
+			    typeof(Curves.db[id]["headers"]["Codec"])!=="undefined" &&
+			    typeof(Curves.db[id]["headers"]["Codec"]["Code rate"])!=="undefined" &&
+			    codeRateMin<=Curves.db[id]["headers"]["Codec"]["Code rate"] &&
+			    codeRateMax>=Curves.db[id]["headers"]["Codec"]["Code rate"]) {
+				p.push(id);
 			}
 		});
 		return p;
 	}
 }
 
-function filters(refs, type = "") {
+function filters(ids, type="") {
 	switch(type) {
-		case "codeType"   : return filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(refs))));
-		case "frameSize"  : return filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(refs))));
-		case "modemType"  : return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(refs))));
-		case "channelType": return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(refs))));
-		case "codeRate"   : return filterByCodeTypes(filterByFrameSizes(filterByChannels(filterByModems(refs))));
+		case "codeType"   : return filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(ids))));
+		case "frameSize"  : return filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(ids))));
+		case "modemType"  : return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(ids))));
+		case "channelType": return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(ids))));
+		case "codeRate"   : return filterByCodeTypes(filterByFrameSizes(filterByChannels(filterByModems(ids))));
 		default:
-			return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(refs)))));
+			return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(ids)))));
 	}
 }
 
-function updateSelected(val, selectionList, id) {
+function updateSelected(val, selectionList, selectorName) {
 	if ($("#"+val).is(":checked")) {
 		selectionList.push(val);
 	} else {
 		selectionList.splice(selectionList.indexOf(val), 1);
 	}
-	displaySelectors(selectionList.length ? id : "");
+	displaySelectors(selectionList.length ? selectorName : "");
 }
 
-function displayCheckbox(length, font, endFont, disabled, selectionList, element, id) {
+function displayCheckbox(length, font, endFont, disabled, selectionList, element, selectorName) {
 	let checkboxTemplate = $('#checkboxTemplate').html();
 	Mustache.parse(checkboxTemplate);
 	let checkboxRendered=Mustache.render(checkboxTemplate, {
@@ -532,38 +539,47 @@ function displayCheckbox(length, font, endFont, disabled, selectionList, element
 		endBlackFont: endFont,
 		length: length
 	});
-	$("#"+id).append(checkboxRendered);
+	$("#"+selectorName).append(checkboxRendered);
 	$('#'+element).on('click', function() {
-		updateSelected(element, selectionList, id);
+		updateSelected(element, selectionList, selectorName);
 	});
 }
 
-function displaySelector(id, selectorObj, showZeros = false) {
-	let spath = selectorObj.path.split("/");
-	let filteredRefs=filters(Object.keys(Curves.db), id);
+function displaySelector(selectorName, showZeros=false) {
+	let selector = Curves.selectors[selectorName];
+	let spath = selector.path.split("/");
+	let filteredRefs=filters(Object.keys(Curves.db), selectorName);
 	let refsCounter={};
 	if (showZeros) {
 		Object.keys(Curves.db).forEach(function(id) {
-			let key = Curves.db[id][spath[0]][spath[1]][spath[2]];
-			if (!refsCounter[key])
-				refsCounter[key] = 0;
-			filteredRefs.forEach(function(ref) {
-				if (id == ref)
-					refsCounter[key]++;
-			});
+			if (typeof(Curves.db[id][spath[0]])!=="undefined" &&
+			    typeof(Curves.db[id][spath[0]][spath[1]])!=="undefined" &&
+			    typeof(Curves.db[id][spath[0]][spath[1]][spath[2]])!=="undefined") {
+				let key = Curves.db[id][spath[0]][spath[1]][spath[2]];
+				if (!refsCounter[key])
+					refsCounter[key] = 0;
+				filteredRefs.forEach(function(fid) {
+					if (id == fid)
+						refsCounter[key]++;
+				});
+			}
 		});
 	} else {
-		filteredRefs.forEach(function(ref) {
-			let key=Curves.db[ref][spath[0]][spath[1]][spath[2]];
-			if (!refsCounter[key])
-				refsCounter[key] = 0;
-			refsCounter[key]++;
+		filteredRefs.forEach(function(fid) {
+			if (typeof(Curves.db[fid][spath[0]])!=="undefined" &&
+			    typeof(Curves.db[fid][spath[0]][spath[1]])!=="undefined" &&
+			    typeof(Curves.db[fid][spath[0]][spath[1]][spath[2]])!=="undefined") {
+				let key=Curves.db[fid][spath[0]][spath[1]][spath[2]];
+				if (!refsCounter[key])
+					refsCounter[key] = 0;
+				refsCounter[key]++;
+			}
 		});
 	}
-	$("#"+id).empty();
-	$("#"+id).append('<ul>');
+	$("#"+selectorName).empty();
+	$("#"+selectorName).append('<ul>');
 	for (let key in refsCounter){
-		$("#"+id).append('<li>');
+		$("#"+selectorName).append('<li>');
 		let number=refsCounter[key];
 		let black='<font color="black">';
 		let disabled='';
@@ -572,18 +588,18 @@ function displaySelector(id, selectorObj, showZeros = false) {
 			if (number) {
 				black='<font color="black">';
 				endBlack='</font>';
-			} else if (selectorObj.selection.indexOf(key)>-1) {
+			} else if (selector.selection.indexOf(key)>-1) {
 				black='<font color="black">';
 				endBlack='</font>';
 			} else
 				disabled='disabled';
 		}
-		displayCheckbox(number, black, endBlack, disabled, selectorObj.selection, key, id);
-		$("#"+id).append('</li>');
+		displayCheckbox(number, black, endBlack, disabled, selector.selection, key, selectorName);
+		$("#"+selectorName).append('</li>');
 	}
-	$("#"+id).append('</ul>');
-	$("#"+id).off();
-	selectorObj.selection.forEach(function(x) {
+	$("#"+selectorName).append('</ul>');
+	$("#"+selectorName).off();
+	selector.selection.forEach(function(x) {
 		if ($("#"+x)) {
 			if (!$("#"+x).prop('disabled'))
 				$("#"+x).prop('checked', true);
@@ -594,10 +610,10 @@ function displaySelector(id, selectorObj, showZeros = false) {
 }
 
 function displaySelectors(except="") {
-	Object.keys(Curves.selectors).forEach(function(key) {
-		let showZeros = key == "codeType" ? true : false;
-		if (except != key)
-			displaySelector(key, Curves.selectors[key], showZeros);
+	Object.keys(Curves.selectors).forEach(function(selectorName) {
+		let showZeros = selectorName == "codeType" ? true : false;
+		if (except != selectorName)
+			displaySelector(selectorName, showZeros);
 	});
 }
 
@@ -607,43 +623,27 @@ function displayRefsFromURI() {
 		paramNames.push("curve"+i);
 	let colorId = 0;
 	paramNames.forEach(function(paramName) {
-		let val=findGetParameter(paramName);
-		if (val) {
-			if (val.slice(0,4)=="NoWw") {
-				let ref=text2json(LZString.decompressFromEncodedURIComponent(val));
-				let id=ref.hash.value.substring(0,7);
-				if (typeof(Curves.db[id])==="undefined")
-				{
-					ref["local"]=true;
+		let id=findGetParameter(paramName);
+		if (id) {
+			if (Curves.db[id])
+				addSelectedRef(Curves.db[id], colorId);
+			else {
+				// this is very important to make the copy because the 'CDB.get' call is asynchronous
+				let cid=colorId;
+				// get a document from the server
+				CDB.get(id).then(function (ref) {
+					console.log("PouchDB: get success");
 					Curves.db[id]=ref;
 					precomputeData(id);
-				}
-				else
-					console.log("The reference already exists in the database (id='"+id+"').");
-				addSelectedRef(ref, colorId);
-			} else {
-				let id = val;
-				if (Curves.db[id])
-					addSelectedRef(Curves.db[id], colorId);
-				else {
-					// this is very important to make the copy because the 'CDB.get' call is asynchronous
-					let cid=colorId;
-					// get a document from the server
-					CDB.get(id).then(function (ref) {
-						console.log("PouchDB: get success");
-						Curves.db[id]=ref;
-						precomputeData(id);
-						addSelectedRef(ref, cid);
-					}).catch(function (err) {
-						console.log("PouchDB: get fail");
-						console.log(err);
-					});
-				}
+					addSelectedRef(ref, cid);
+				}).catch(function (err) {
+					console.log("PouchDB: get fail");
+					console.log(err);
+				});
 			}
 		}
 		colorId++;
 	});
-
 	// remove get parameter from the URI
 	if (window.history) {
 		let url=window.location.host;
