@@ -202,7 +202,7 @@ function displayTraceModal(ref) {
 function displayRefsList(refs) {
 	// sort refs by title (lexicographical order)
 	refs.sort(function(a,b) {
-		return Curves.db[a].metadata.title > Curves.db[b].metadata.title;
+		return Curves.db[a].metadata.title.localeCompare(Curves.db[b].metadata.title);
 	});
 	$("#refsList #accordion").empty();
 	refs.forEach(function(id) {
