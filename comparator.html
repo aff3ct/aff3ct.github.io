@@ -70,7 +70,12 @@
             </div>
             <div class="col-md-10 px-0">
               <button class="btn btn-link pr-0 pl-3" data-toggle="collapse" data-target="#collapse{{hash.id}}" aria-expanded="true" aria-controls="collapse{{hash.id}}">
-                {{metadata.bigtitle}}
+                {{#metadata.bigtitle}}
+                  {{metadata.bigtitle}}
+                {{/metadata.bigtitle}}
+                {{^metadata.bigtitle}}
+                  Undefined Title
+                {{/metadata.bigtitle}}
               </button>
               <div class="pl-3 subtitle">{{metadata.subtitle}}</div>
             </div>
@@ -86,12 +91,17 @@
           <h5 class="mb-0">
             <div class="mb-0 form-group row">
               <div class="col-sm-9" data-toggle="collapse" data-target="#scollapse{{hash.id}}" aria-expanded="true" aria-controls="scollapse{{hash.id}}">
-                {{#metadata.subtitle}}
-                  <button class="btn btn-block btn-link text-left" id="tooltipCurve{{hash.id}}" data-tippy-content="{{metadata.title}}">{{metadata.bigtitle}}</button>
-                {{/metadata.subtitle}}
-                {{^metadata.subtitle}}
-                  <button class="btn btn-block btn-link text-left">{{metadata.title}}</button>
-                {{/metadata.subtitle}}
+                {{#metadata.title}}
+                  {{#metadata.subtitle}}
+                    <button class="btn btn-block btn-link text-left" id="tooltipCurve{{hash.id}}" data-tippy-content="{{metadata.title}}">{{metadata.bigtitle}}</button>
+                  {{/metadata.subtitle}}
+                  {{^metadata.subtitle}}
+                    <button class="btn btn-block btn-link text-left">{{metadata.title}}</button>
+                  {{/metadata.subtitle}}
+                {{/metadata.title}}
+                {{^metadata.title}}
+                   <button class="btn btn-block btn-link text-left">Undefined Title</button>
+                {{/metadata.title}}
             </div>
             <div class="col-0">
               <button id="delete{{hash.id}}" type="button" class="close" aria-label="Close">
@@ -110,22 +120,29 @@
     <div id="{{prefix}}collapse{{hash.id}}" class="collapse" aria-labelledby="heading{{hash.id}}" data-parent="#{{prefix}}accordion{{hash.id}}">
       <div class="card-body">
         <li id="g{{hash.id}}" class="list-group-item list-group-item-action align-item-start">
-          <div class="text-muted twoColumns">
-            <small>
-              <ul class="typeList">
-              {{#headers.list}}
-                <li>
-                {{#tooltip}}
-                  <b>{{name}}</b>: <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{tooltip}}">{{value}}</span>
-                {{/tooltip}}
-                {{^tooltip}}
-                  <b>{{name}}</b>: <span>{{value}}</span>
-                {{/tooltip}}
-                </li>
-              {{/headers.list}}
-              </ul>
-            </small>
-          </div>
+          {{#headers}}
+            <div class="text-muted twoColumns">
+              <small>
+                <ul class="typeList">
+                  {{#headers.list}}
+                  <li>
+                  {{#tooltip}}
+                    <b>{{name}}</b>: <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{tooltip}}">{{value}}</span>
+                  {{/tooltip}}
+                  {{^tooltip}}
+                    <b>{{name}}</b>: <span>{{value}}</span>
+                  {{/tooltip}}
+                  </li>
+                  {{/headers.list}}
+                </ul>
+              </small>
+            </div>
+          {{/headers}}
+          {{^headers}}
+            <div class="text-muted">
+              <small><b>Headers are not available.<b></small>
+            </div>
+          {{/headers}}
           <div class="curveIcons">
             {{#metadata.doi}}
               <span class="curveIcon"><a href="https://doi.org/{{metadata.doi}}" target="_blank" title="DOI" onclick="return trackOutboundLink('https://doi.org/{{metadata.doi}}');""><i class="fas fa-book"></i></a></span>
@@ -137,7 +154,7 @@
               <span class="curveIcon"><a href="#" id="{{prefix}}displayCmdModal{{hash.id}}" data-toggle="modal" data-target="#cmdModal{{hash.id}}" title="Command line"><i class="fas fa-laptop"></i></a></span>
             {{/metadata.command}}
             {{#trace}}
-              <span class="curveIcon"><a href="#" id="{{prefix}}displayTraceModal{{hash.id}}" data-toggle="modal" data-target="#traceModal{{hash.id}}" title="Original output text file"><i class="fas fa-file-alt"></i></a></span>
+              <span class="curveIcon"><a href="#" id="{{prefix}}displayTraceModal{{hash.id}}" data-toggle="modal" data-target="#traceModal{{hash.id}}" title="Original reference file"><i class="fas fa-file-alt"></i></a></span>
             {{/trace}}
           </div>
         </li>
@@ -149,7 +166,12 @@
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">{{metadata.title}}</h5>
+            {{#metadata.title}}
+              <h5 class="modal-title" id="exampleModalLongTitle">{{metadata.title}}</h5>
+            {{/metadata.title}}
+            {{^metadata.title}}
+              <h5 class="modal-title" id="exampleModalLongTitle">Undefined Title</h5>
+            {{/metadata.title}}
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -175,7 +197,12 @@
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">{{metadata.title}}</h5>
+            {{#metadata.title}}
+              <h5 class="modal-title" id="exampleModalLongTitle">{{metadata.title}}</h5>
+            {{/metadata.title}}
+            {{^metadata.title}}
+              <h5 class="modal-title" id="exampleModalLongTitle">Undefined Title</h5>
+            {{/metadata.title}}
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

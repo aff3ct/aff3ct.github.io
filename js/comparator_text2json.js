@@ -14,7 +14,7 @@ function text2json(txt, filename = "")
 	{
 		let l = lines[ln];
 
-		if (ln == 0 && l != "[metadata]")
+		if ((ln == 0 && l != "[metadata]") || l.startsWith("#"))
 			isTrace = true;
 
 		if (l == "[trace]")
@@ -101,47 +101,57 @@ function text2json(txt, filename = "")
 			{
 				if (!isLegend)
 				{
-					isLegend = true;
-					if (ln >= 3)
+					let i = 1;
+					while (!isLegend && ln >= i)
 					{
-						leg = lines[ln -3];
+						let leg = lines[ln -i];
 						leg = leg.replace("#", "");
 						legends = leg.split("|");
+						for (let c = 0; c < legends.length; c++)
+							if ($.trim(legends[c]) == "BER" || $.trim(legends[c]) == "FER")
+							{
+								isLegend = true;
+								break;
+							}
+						i++;
 					}
 				}
 
-				let cols = l.split("|");
-				if (cols.length == legends.length)
+				if (isLegend)
 				{
-					for (let c = 0; c < cols.length; c++)
+					let cols = l.split("|");
+					if (cols.length == legends.length)
 					{
-						key = $.trim(legends[c]);
-						if (key != "")
+						for (let c = 0; c < cols.length; c++)
 						{
-							val = $.trim(cols[c]).split(" ")[0];
-
-							if (key == "ET/RT")
+							key = $.trim(legends[c]);
+							if (key != "")
 							{
-								newVal = parseInt(val.split("'")[1]);
-								newVal += parseInt(val.split("'")[0].split("h")[1]) * 60;
-								newVal += parseInt(val.split("'")[0].split("h")[0]) * 3600;
-								val = newVal;
-							}
+								val = $.trim(cols[c]).split(" ")[0];
 
-							let li = parseInt(val);
-							if (isNaN(li))
-								li = val;
-							else
-							{
-								let li2 = parseFloat(val);
-								if (li - li2 != 0)
-									li = li2;
-							}
+								if (key == "ET/RT")
+								{
+									newVal = parseInt(val.split("'")[1]);
+									newVal += parseInt(val.split("'")[0].split("h")[1]) * 60;
+									newVal += parseInt(val.split("'")[0].split("h")[0]) * 3600;
+									val = newVal;
+								}
 
-							if (key in contents)
-								contents[key].push(li);
-							else
-								contents[key] = [li];
+								let li = parseInt(val);
+								if (isNaN(li))
+									li = val;
+								else
+								{
+									let li2 = parseFloat(val);
+									if (li - li2 != 0)
+										li = li2;
+								}
+
+								if (key in contents)
+									contents[key].push(li);
+								else
+									contents[key] = [li];
+							}
 						}
 					}
 				}
@@ -161,9 +171,6 @@ function text2json(txt, filename = "")
 	if (!$.isEmptyObject(contents)) dict["contents"] = contents;
 	                                dict["trace"   ] = txt;
 	                                dict["hash"    ] = hash;
-
-	let o = {};
-	o[hashMaker.hex().substring(0,7)] = dict;
 
 	return dict;
 }

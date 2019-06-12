@@ -4,7 +4,7 @@ const BRANCH="development";
 // connexion to the CouchDB server (this code do not connect to the CouchDB until the first usage)
 const serverCDB = "https://couchdb-580e7b.smileupps.com";
 const nameCDB = "aff3ct_refs";
-var DB = new PouchDB(serverCDB+'/'+nameCDB);
+var CDB = new PouchDB(serverCDB+'/'+nameCDB);
 
 var Curves = {
 	db: {},
@@ -38,8 +38,8 @@ const LT = {
 };
 
 const LAYOUT= {
-	ber: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Bit Error Rate (BER)'} },LT),
-	fer: Object.assign({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Frame Error Rate (FER)'}},LT),
+	ber: $.extend({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Bit Error Rate (BER)'} },LT),
+	fer: $.extend({ yaxis: { type: 'log', autorange: true, hoverformat: '.2e',title: 'Frame Error Rate (FER)'}},LT),
 };
 
 var GD={};
@@ -47,36 +47,54 @@ var GD={};
 function precomputeData(id) {
 	let ref = Curves.db[id];
 	ref["hash"]["id"] = id;
-	/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(ref.metadata.title);
-	let bigtitle=ref.metadata.title;
-	let subtitle="";
-	if (ref.metadata.title.length > 23) {
-		if (RegExp.$1=="" || RegExp.$2=="")
-			bigtitle=ref.metadata.title.substring(0,19)+'... ';
-		else {
-			bigtitle=$.trim(RegExp.$1);
-			subtitle=$.trim(RegExp.$2);
+
+	if (typeof(ref.metadata)==="undefined" || typeof(ref.metadata.title)==="undefined")
+	{
+		if (typeof(ref.headers)!=="undefined" &&
+			typeof(ref.headers.Codec)!=="undefined" &&
+			typeof(ref.headers.Codec["Type"])!=="undefined" &&
+			typeof(ref.headers.Codec["Frame size (N)"])!=="undefined" &&
+			typeof(ref.headers.Codec["Info. bits (K)"])!=="undefined") {
+			let codeType = ref.headers.Codec["Type"];
+			let N = ref.headers.Codec["Frame size (N)"];
+			let K = ref.headers.Codec["Info. bits (K)"];
+			ref["metadata"] = {title: codeType+" ("+N+","+K+")"};
 		}
 	}
-	ref["metadata"]["bigtitle"] = bigtitle;
-	ref["metadata"]["subtitle"] = subtitle;
-	ref["headers"]["list"] = [];
-	ref["headers"]["list"].push({"name": "Frame size", "value" : ref.headers.Codec["Frame size (N)"]});
-	if (ref.headers.Codec["Codeword size (N_cw)"] > ref.headers.Codec["Frame size (N)"])
-		ref["headers"]["list"].push({"name": "Codeword", "value" : ref.headers.Codec["Codeword size (N_cw)"]});
-	ref["headers"]["list"].push({"name": "Code rate", "value" : ref.headers.Codec["Code rate"]});
-	for (let j in ref.headers) {
-		if (ref.headers[j].Type) {
-			let obj = {"name": j, "value" : ref.headers[j].Type};
-			if (tooltips.get(ref.headers[j].Type))
-				obj["tooltip"] = tooltips.get(ref.headers[j].Type);
-			ref["headers"]["list"].push(obj);
+	if (typeof(ref.metadata)!=="undefined" && typeof(ref.metadata.title)!=="undefined") {
+		/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(ref.metadata.title);
+		let bigtitle=ref.metadata.title;
+		let subtitle="";
+		if (ref.metadata.title.length > 23) {
+			if (RegExp.$1=="" || RegExp.$2=="")
+				bigtitle=ref.metadata.title.substring(0,19)+'... ';
+			else {
+				bigtitle=$.trim(RegExp.$1);
+				subtitle=$.trim(RegExp.$2);
+			}
+		}
+		ref["metadata"]["bigtitle"] = bigtitle;
+		ref["metadata"]["subtitle"] = subtitle;
+	}
+	if (typeof(ref.headers)!=="undefined") {
+		ref["headers"]["list"] = [];
+		ref["headers"]["list"].push({"name": "Frame size", "value" : ref.headers.Codec["Frame size (N)"]});
+		if (ref.headers.Codec["Codeword size (N_cw)"] > ref.headers.Codec["Frame size (N)"])
+			ref["headers"]["list"].push({"name": "Codeword", "value" : ref.headers.Codec["Codeword size (N_cw)"]});
+		ref["headers"]["list"].push({"name": "Code rate", "value" : ref.headers.Codec["Code rate"]});
+		for (let j in ref.headers) {
+			if (ref.headers[j].Type) {
+				let obj = {"name": j, "value" : ref.headers[j].Type};
+				if (tooltips.get(ref.headers[j].Type))
+					obj["tooltip"] = tooltips.get(ref.headers[j].Type);
+				ref["headers"]["list"].push(obj);
+			}
 		}
 	}
 }
 
 // size of the compressed Gitlab refs database in bytes
-let EVT_TOTAL = 1279262;
+var EVT_TOTAL = 1279262;
 function loadDatabase() {
 	$.ajaxSetup({
 		beforeSend: function(xhr) {
@@ -160,7 +178,7 @@ function displayTraceModal(ref) {
 }
 
 function displayRefsList(refs) {
-	// sort refs by curve title (lexicographical order)
+	// sort refs by title (lexicographical order)
 	refs.sort(function(a,b) {
 		return Curves.db[a].metadata.title > Curves.db[b].metadata.title;
 	});
@@ -175,7 +193,7 @@ function displayRefsList(refs) {
 
 		let refBodyTemplate = $('#refBodyTemplate').html();
 		Mustache.parse(refBodyTemplate);
-		let refBodyRendered=Mustache.render(refBodyTemplate, Object.assign(ref, {prefix: ""}));
+		let refBodyRendered=Mustache.render(refBodyTemplate, $.extend({prefix: ""}, ref));
 		$("#card"+ref.hash.id).append(refBodyRendered);
 
 		if (ref.metadata.command) {
@@ -204,15 +222,15 @@ function displaySelectedRefs(ref) {
 
 	let refBodyTemplate = $('#refBodyTemplate').html();
 	Mustache.parse(refBodyTemplate);
-	let refBodyRendered=Mustache.render(refBodyTemplate, Object.assign(ref, {prefix: "s"}));
+	let refBodyRendered=Mustache.render(refBodyTemplate, $.extend({prefix: "s"}, ref));
 	$("#ss"+ref.hash.id).append(refBodyRendered);
 
-	if (ref.metadata.command) {
+	if (typeof(ref.metadata)!=="undefined" && typeof(ref.metadata.command)!=="undefined") {
 		$("#sdisplayCmdModal"+ref.hash.id).on("click", function () {
 			displayCommandModal(ref);
 		});
 	}
-	if (ref.trace) {
+	if (typeof(ref.trace)!=="undefined") {
 		$("#sdisplayTraceModal"+ref.hash.id).on("click", function () {
 			displayTraceModal(ref);
 		});
@@ -234,10 +252,10 @@ function displaySelectedRefs(ref) {
 	});
 }
 
-function updateAddButton(id, bool, contents) {
+function updateAddButton(id, bool) {
 	$("#curve"+id).prop('disabled', bool);
 	$("#curve"+id).empty();
-	$("#curve"+id).append(contents);
+	$("#curve"+id).append(bool?'<i class="fas fa-minus"></i>':'<i class="fas fa-plus"></i>');
 }
 
 function plotSelectedRefs() {
@@ -255,7 +273,7 @@ function plotSelectedRefs() {
 				           y: Curves.db[id].contents[Curves.PLOTS[x]],
 				           type: 'scatter'});
 		});
-		Plotly.newPlot(GD[x], data, Object.assign(LAYOUT[x], {colorway: colorList}), {displaylogo:false});
+		Plotly.newPlot(GD[x], data, $.extend(LAYOUT[x], {colorway: colorList}), {displaylogo:false});
 	});
 }
 
@@ -271,7 +289,7 @@ function getPermalink() {
 		if (ref.local) {
 			ref.local=false;
 			// put a document on the CouchDB server
-			DB.put(
+			CDB.put(
 				$.extend({_id: id}, ref)
 			).then(function (response) {
 				console.log("PouchDB: put success");
@@ -335,7 +353,7 @@ function addSelectedRef(ref, colorId=-1) {
 				displaySelectedRefs(ref);
 				ref["hidden"] = false;
 				$("#scurve"+ref.hash.id).attr('id', "scurve"+ref["color"].id);
-				updateAddButton(ref.hash.id, true, '<i class="fas fa-minus"></i>');
+				updateAddButton(ref.hash.id, true);
 				plotSelectedRefs();
 				/**
 				// track the click with Google Analytics
@@ -366,7 +384,7 @@ function deleteSelectedRef(id) {
 		Curves.colors.push(Curves.db[id].color);
 		delete Curves.db[id].color;
 		delete Curves.db[id].hidden;
-		updateAddButton(id, false, '<i class="fas fa-plus"></i>');
+		updateAddButton(id, false);
 
 		if (Curves.selectedRefs.length==0) {
 			$("#closeAll" ).remove();
@@ -446,14 +464,6 @@ function loadFilesRecursive(fileInput, i=0) {
 			$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">File not supported!</span>');
 			loadFilesRecursive(fileInput, i+1);
 		}
-	}
-}
-
-function applySelections() {
-	displayRefsList(filters(Object.keys(Curves.db)));
-	for (let i in Curves.disponibility) {
-		if (Curves.disponibility[i]==0)
-			Curves.updateAddButton(true, '<i class="fas fa-minus"></i>', i);
 	}
 }
 
@@ -633,10 +643,10 @@ function displayRefsFromURI() {
 				if (Curves.db[id])
 					addSelectedRef(Curves.db[id], colorId);
 				else {
-					// this is very important to make the copy because the 'DB.get' call is asynchronous
+					// this is very important to make the copy because the 'CDB.get' call is asynchronous
 					let cid=colorId;
 					// get a document from the server
-					DB.get(id).then(function (ref) {
+					CDB.get(id).then(function (ref) {
 						console.log("PouchDB: get success");
 						Curves.db[id]=ref;
 						precomputeData(id);
@@ -655,7 +665,7 @@ function displayRefsFromURI() {
 	if (window.history) {
 		let url=window.location.host;
 		let uri="/comparator.html";
-		if (url!="null")
+		if (url!="")
 			window.history.replaceState({}, url, uri);
 	}
 }
@@ -677,7 +687,7 @@ $(document).ready(function() {
 	});
 	loadDatabase();
 	$('#applySelections').on('click', function() {
-		applySelections();
+		displayRefsList(filters(Object.keys(Curves.db)));
 	});
 	$("#fileInput").on('change', function() {
 		loadFilesRecursive(fileInput);
