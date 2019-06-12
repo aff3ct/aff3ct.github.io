@@ -375,13 +375,15 @@ function addSelectedRef(ref, colorId=-1) {
 				$("#scurve"+ref.hash.id).attr('id', "scurve"+ref["color"].id);
 				updateAddButton(ref.hash.id, true);
 				plotSelectedRefs();
-				// track the click with Google Analytics
-				ga('send', {
-					hitType:       'event',
-					eventCategory: 'BER/FER Comparator',
-					eventAction:   'click',
-					eventLabel:    decodeURIComponent(ref.filename)
-				});
+				if (window.location.host == "aff3ct.github.io") {
+					// track the click with Google Analytics
+					ga('send', {
+						hitType:       'event',
+						eventCategory: 'BER/FER Comparator',
+						eventAction:   'click',
+						eventLabel:    decodeURIComponent(ref.filename)
+					});
+				}
 			}
 		} else {
 			console.log("It is not allowed to add multiple times the same ref.");
