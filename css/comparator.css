@@ -4,7 +4,7 @@
   margin: 20px 20px 0px 20px;
   overflow: auto;
   display: none;
-/*  height:80vh;*/
+  /*height:80vh;*/
   /*overflow-y:hidden;*/
 }
 
@@ -16,11 +16,28 @@
   padding:0rem !important
 }
 
-#comparator #scurve
+#comparator #saccordion
 {
-  height:75vh;
+  height:70vh;
   overflow-y:auto;
   overflow-x:hidden;
+}
+
+#codeRate .noUi-connect {
+  background: #6C757D;
+}
+
+#selector .dropdown-menu .form-check {
+  max-height:40vh;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+#selector ul {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 #scurve9 :nth-child(0n+1)
@@ -81,6 +98,41 @@
 {
   background-color:#1F77B4;
   color:#fff !important;
+}
+
+#closeAll {
+  margin-bottom:5px;
+}
+
+#permalink {
+  margin-bottom:5px;
+/*  float: right;*/
+}
+
+.card .subtitle {
+  font-size: 10pt;
+  padding-bottom: 6px;
+}
+
+.typeList {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  list-style: none;
+}
+
+.typeList li {
+  padding: 3px 0px 3px 0px;
+}
+
+.selectedRefButtons button {
+  float: right;
+  padding: 0px 2px 0px 2px;
+  margin: 0px 0px 0px 0px;
+}
+
+.addButton {
+  margin-top:auto;
+  margin-bottom:auto;
 }
 
 .tt
@@ -228,11 +280,26 @@
 
 .shell-body a
 {
-  color:#fff !important;
+  color:#A5C9E1 !important;
   text-decoration: underline;
 }
 
 .shell-body a:hover
 {
-  color:#ddd !important;
+  color:#B0D4E6 !important;
+}
+
+.shell-body .aff3ct
+{
+  color:#ADD9AB;
+}
+
+.shell-body .num
+{
+  color:#F4A3A4;
+}
+
+.shell-body .str
+{
+  color:#A5C9E1;
 }
