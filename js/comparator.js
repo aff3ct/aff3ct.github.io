@@ -45,7 +45,7 @@ var GD={};
 function precomputeData(id) {
 	let ref = Curves.db[id];
 	ref["hash"]["id"] = id;
-	if (typeof(ref.metadata)==="undefined" || typeof(ref.metadata.title)==="undefined"){
+	if (typeof(ref.metadata)==="undefined" || typeof(ref.metadata.title)==="undefined") {
 		if (typeof(ref.headers)!=="undefined" &&
 			typeof(ref.headers.Codec)!=="undefined" &&
 			typeof(ref.headers.Codec["Type"])!=="undefined" &&
@@ -65,6 +65,9 @@ function precomputeData(id) {
 		let subtitle=(res)?$.trim(RegExp.$2):"";
 		ref["metadata"]["bigtitle"] = bigtitle;
 		ref["metadata"]["subtitle"] = subtitle;
+	}
+	if (typeof(ref.metadata)==="undefined" || typeof(ref.metadata.title)==="undefined") {
+		ref["metadata"] = {title: "Undefined Title", bigtitle: "Undefined Title", subtitle: ""};
 	}
 	if (typeof(ref.headers)!=="undefined") {
 		ref["headers"]["list"] = [];
@@ -252,10 +255,14 @@ function plotSelectedRefs() {
 	Curves.plots.forEach(function(x) {
 		let data = [];
 		Curves.selectedRefs.forEach(function(id) {
-			if (!Curves.db[id].hidden || Curves.db[id].hidden == false)
-				data.push({x: Curves.db[id].contents["Eb/N0"],
-				           y: Curves.db[id].contents[Curves.PLOTS[x]],
-				           type: 'scatter'});
+			if ((typeof(Curves.db[id].hidden)==="undefined") || Curves.db[id].hidden == false) {
+				data.push({
+					x: Curves.db[id].contents["Eb/N0"],
+					y: Curves.db[id].contents[Curves.PLOTS[x]],
+					type: 'scatter',
+					name: Curves.db[id].metadata.bigtitle,
+				});
+			}
 		});
 		Plotly.newPlot(GD[x], data, $.extend(LAYOUT[x], {colorway: colorList}), {displaylogo:false});
 	});
@@ -430,22 +437,26 @@ function loadFilesRecursive(fileInput, i=0) {
 				reader.readAsText(file);
 				reader.onloadend = function(e) {
 					let ref=text2json(reader.result, file.name);
-					let id=ref.hash.value.substring(0,7);
-					if (typeof(Curves.db[id])==="undefined") {
-						ref["local"]=true;
-						Curves.db[id]=ref;
-						precomputeData(id);
+					if (typeof(ref.contents)!=="undefined") {
+						let id=ref.hash.value.substring(0,7);
+						if (typeof(Curves.db[id])==="undefined") {
+							ref["local"]=true;
+							Curves.db[id]=ref;
+							precomputeData(id);
+						}
+						else
+							console.log("The reference already exists in the database (id='"+id+"').");
+						addSelectedRef(Curves.db[id]);
+					} else {
+						$("#fileDisplayArea").html('<br><span class="alert alert-danger" role="alert">Incompatible file format!</span>');
 					}
-					else
-						console.log("The reference already exists in the database (id='"+id+"').");
-					addSelectedRef(Curves.db[id]);
 					loadFilesRecursive(fileInput, i+1);
 				};
 			} else {
-				$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">Too many curves displayed</span>');
+				$("#fileDisplayArea").html('<br><span class="alert alert-danger" role="alert">Too many curves displayed!</span>');
 			}
 		} else {
-			$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">File not supported!</span>');
+			$("#fileDisplayArea").html('<br><span class="alert alert-danger" role="alert">File not supported!</span>');
 			loadFilesRecursive(fileInput, i+1);
 		}
 	}
