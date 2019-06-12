@@ -57,14 +57,43 @@ function precomputeData(id) {
 			ref["metadata"] = {title: codeType+" ("+N+","+K+")"};
 		}
 	}
-	if (typeof(ref.metadata)!=="undefined" && typeof(ref.metadata.title)!=="undefined") {
-		let regex = /([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/g;
-		let res = ref.metadata.title.match(regex);
-		regex.test(ref.metadata.title);
-		let bigtitle=(res)?$.trim(RegExp.$1):ref.metadata.title;
-		let subtitle=(res)?$.trim(RegExp.$2):"";
-		ref["metadata"]["bigtitle"] = bigtitle;
-		ref["metadata"]["subtitle"] = subtitle;
+	if (typeof(ref.metadata)!=="undefined") {
+		if (typeof(ref.metadata.title)!=="undefined") {
+			let regex = /([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/g;
+			let res = ref.metadata.title.match(regex);
+			regex.test(ref.metadata.title);
+			let bigtitle=(res)?$.trim(RegExp.$1):ref.metadata.title;
+			let subtitle=(res)?$.trim(RegExp.$2):"";
+			ref["metadata"]["bigtitle"] = bigtitle;
+			ref["metadata"]["subtitle"] = subtitle;
+		}
+		if (typeof(ref.metadata.command)!=="undefined") {
+			let cmd = ref.metadata.command;
+			let params = cmd.split(' -');
+			let aff3ct = $.trim(params[0]);
+			let niceCmd = '<span class="aff3ct">'+aff3ct+'</span> ';
+			for (let p=1; p < params.length; p++) {
+				let pSplit = params[p].split(' ');
+				let key="";
+				let val="";
+				if (pSplit.length >= 1)
+					key = "-"+$.trim(pSplit[0]);
+				if (pSplit.length >= 2)
+					for (let i=1; i<pSplit.length; i++)
+						val += (i==1?"":" ")+$.trim(pSplit[i]);
+				if (key!="")
+					niceCmd += key+' ';
+				if (val!="") {
+					val=val.replace(/"([^ ,:;]*)"/g, "$1");
+					val=val.replace(/\-\-sim\-meta\ "([^]*)"/g, "");
+					val=val.replace(/\-\-sim\-meta\ ([^ ]*)/g, "");
+					let blobUrlGithub="https://github.com/aff3ct/configuration_files/blob/";
+					val=val.replace(/conf\/([^"]*)/g,"<a target='_blank' href='"+blobUrlGithub+BRANCH+"/$1' onclick='return trackOutboundLink(\""+blobUrlGithub+BRANCH+"/$1\");'>conf/$1</a>");
+					niceCmd += '<span class="'+(isNaN(parseInt(val))?'str':'num')+'">'+val+'</span> ';
+				}
+			}
+			ref.metadata["niceCommand"] = niceCmd;
+		}
 	}
 	if (typeof(ref.metadata)==="undefined" || typeof(ref.metadata.title)==="undefined") {
 		ref["metadata"] = {title: "Undefined Title", bigtitle: "Undefined Title", subtitle: ""};

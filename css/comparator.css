@@ -4,7 +4,7 @@
   margin: 20px 20px 0px 20px;
   overflow: auto;
   display: none;
-/*  height:80vh;*/
+  /*height:80vh;*/
   /*overflow-y:hidden;*/
 }
 
@@ -280,11 +280,26 @@
 
 .shell-body a
 {
-  color:#fff !important;
+  color:#A5C9E1 !important;
   text-decoration: underline;
 }
 
 .shell-body a:hover
 {
-  color:#ddd !important;
+  color:#B0D4E6 !important;
+}
+
+.shell-body .aff3ct
+{
+  color:#ADD9AB;
+}
+
+.shell-body .num
+{
+  color:#F4A3A4;
+}
+
+.shell-body .str
+{
+  color:#A5C9E1;
 }
