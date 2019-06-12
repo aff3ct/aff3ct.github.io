@@ -44,8 +44,7 @@ const LAYOUT= {
 
 var GD={};
 
-function precomputeData(id)
-{
+function precomputeData(id) {
 	let ref = Curves.db[id];
 	ref["hash"]["id"] = id;
 	/([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/mg.test(ref.metadata.title);
@@ -140,8 +139,7 @@ function displaySlider() {
 	});
 }
 
-function displayCommandModal(ref)
-{
+function displayCommandModal(ref) {
 	if (!$("#cmdModal"+ref.hash.id).length)
 	{
 		let cmdModalTemplate = $('#cmdModalTemplate').html();
@@ -151,8 +149,7 @@ function displayCommandModal(ref)
 	}
 }
 
-function displayTraceModal(ref)
-{
+function displayTraceModal(ref) {
 	if (!$("#traceModal"+ref.hash.id).length)
 	{
 		let traceModalTemplate = $('#traceModalTemplate').html();
@@ -243,8 +240,7 @@ function updateAddButton(id, bool, contents) {
 	$("#curve"+id).append(contents);
 }
 
-function plotSelectedRefs()
-{
+function plotSelectedRefs() {
 	let colorList=[];
 	Curves.selectedRefs.forEach(function(id) {
 		if (!Curves.db[id].hidden || Curves.db[id].hidden == false)
@@ -295,7 +291,7 @@ function getPermalink() {
 	$('#permalinkInstModal').modal("show");
 }
 
-function addSelectedRef(ref, colorId = -1) {
+function addSelectedRef(ref, colorId=-1) {
 	if (Curves.selectedRefs.length==0) {
 		let deleteAllTemplate = $('#deleteAllTemplate').html();
 		Mustache.parse(deleteAllTemplate);
@@ -422,21 +418,18 @@ function hidePlotRef(id) {
 	}
 }
 
-function loadFilesRecursive(fileInput, i = 0) {
+function loadFilesRecursive(fileInput, i=0) {
 	if (i<fileInput.files.length) {
 		let file = fileInput.files[i];
-		if (file.type=="text/plain")
-		{
+		if (file.type=="text/plain") {
 			$("#fileDisplayArea").empty();
 			if (Curves.selectedRefs.length < Curves.max) {
 				let reader = new FileReader();
 				reader.readAsText(file);
-				reader.onloadend = function(e)
-				{
+				reader.onloadend = function(e) {
 					let ref=text2json(reader.result, file.name);
 					let id=ref.hash.value.substring(0,7);
-					if (typeof(Curves.db[id])==="undefined")
-					{
+					if (typeof(Curves.db[id])==="undefined") {
 						ref["local"]=true;
 						Curves.db[id]=ref;
 						precomputeData(id);
@@ -446,13 +439,10 @@ function loadFilesRecursive(fileInput, i = 0) {
 					addSelectedRef(Curves.db[id]);
 					loadFilesRecursive(fileInput, i+1);
 				};
-			}
-			else {
+			} else {
 				$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">Too many curves displayed</span>');
 			}
-		}
-		else
-		{
+		} else {
 			$("#fileDisplayArea").html('<br><br><span class="alert alert-danger" role="alert">File not supported!</span>');
 			loadFilesRecursive(fileInput, i+1);
 		}
@@ -589,12 +579,10 @@ function displaySelector(id, selectorObj, showZeros = false) {
 			if (number) {
 				black='<font color="black">';
 				endBlack='</font>';
-			}
-			else if (selectorObj.selection.indexOf(key)>-1) {
+			} else if (selectorObj.selection.indexOf(key)>-1) {
 				black='<font color="black">';
 				endBlack='</font>';
-			}
-			else
+			} else
 				disabled='disabled';
 		}
 		displayCheckbox(number, black, endBlack, disabled, selectorObj.selection, key, id);
@@ -612,7 +600,7 @@ function displaySelector(id, selectorObj, showZeros = false) {
 	});
 }
 
-function displaySelectors(except = "") {
+function displaySelectors(except="") {
 	Object.keys(Curves.selectors).forEach(function(key) {
 		let showZeros = key == "codeType" ? true : false;
 		if (except != key)
@@ -662,6 +650,14 @@ function displayRefsFromURI() {
 		}
 		colorId++;
 	});
+
+	// remove get parameter from the URI
+	if (window.history) {
+		let url=window.location.host;
+		let uri="/comparator.html";
+		if (url!="null")
+			window.history.replaceState({}, url, uri);
+	}
 }
 
 // main
