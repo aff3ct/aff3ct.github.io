@@ -243,10 +243,15 @@
             </button>
           </div>
           <div class="modal-body">
-            <input class="form-control" type="text" placeholder="{{permalink}}" value="{{permalink}}" readonly>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <div class="row">
+              <div class="col-9">
+                <input id="permalinkInput" class="form-control" type="text" placeholder="{{permalink}}" value="{{permalink}}" readonly>
+              </div>
+              <div class="col-3">
+                <button id="copyClipboard" type="button" class="btn btn-outline-primary">
+                  <i class="fas fa-clipboard"></i> Copy to Clipboard
+                </button>
+              </div>
           </div>
         </div>
       </div>

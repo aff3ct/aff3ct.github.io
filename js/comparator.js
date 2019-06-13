@@ -429,6 +429,7 @@ function getPermalink() {
 		let ref=Curves.db[id];
 		if (ref.metadata.source=="local") {
 			ref.metadata.source="couchdb";
+			delete ref.metadata.local;
 			ref.metadata["couchdb"]=true;
 			// put a document on the CouchDB server
 			CDB.put(
@@ -448,6 +449,12 @@ function getPermalink() {
 	Mustache.parse(permalinkModalTemplate);
 	let permalinkModalRendered=Mustache.render(permalinkModalTemplate, {permalink: permalink});
 	$("#permalinkModal").append(permalinkModalRendered);
+	$("#copyClipboard").on("click", function() {
+		let copyText = $("#permalinkInput")[0]; // get the text field
+		copyText.select(); // select the text field
+		document.execCommand("copy"); // copy the text inside the text field
+		$("#copyClipboard i").removeClass("fa-clipboard").addClass("fa-clipboard-check");
+	});
 	$('#permalinkInstModal').modal("show");
 }
 
