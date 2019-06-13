@@ -40,6 +40,10 @@
   padding-bottom: 0px;
 }
 
+#selector #axes {
+  display: none;
+}
+
 #scurve9 :nth-child(0n+1)
 {
   background-color:#17BECF;

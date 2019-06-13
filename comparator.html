@@ -260,7 +260,22 @@
     </button>
   </script>
   <script id="checkboxTemplate" type="x-tmpl-mustache">
-    <input type="checkbox" class="form-check-input" id="{{element}}" title="{{element}}" {{disabled}}><label class="form-check-label" for="{{element}}" title="{{element}}">{{{startBlackFont}}}{{element}} ({{length}}){{{endBlackFont}}}</label>
+    <input type="checkbox" class="form-check-input" id="{{element}}" title="{{element}}" {{disabled}}>
+    <label class="form-check-label" for="{{element}}" title="{{element}}">
+      {{{startBlackFont}}}{{element}} ({{length}}){{{endBlackFont}}}
+    </label>
+  </script>
+  <script id="axisSelectorTemplate" type="x-tmpl-mustache">
+    <ul class="typeList">
+      {{#axes}}
+        <li>
+          <input type="checkbox" class="form-check-input" id="{{id}}" title="{{name}}" {{checked}}>
+          <label class="form-check-label" for="{{id}}" title="{{name}}">
+            <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{desc}}">{{name}}</span>
+          </label>
+        </li>
+      {{/axes}}
+    </ul>
   </script>
 </head>
 <body>
@@ -367,6 +382,30 @@
           </div>
           <hr class="separator">
           <button type="button" id="applySelections" class="btn btn-primary btn-lg btn-block">Apply selections</button>
+          <div id="axes">
+            <hr class="separator">
+            <hr class="separator">
+            <div class="form-group">
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select x-axis
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
+                  <div id="xaxis" class="form-check px-5 py-2"></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select y-axis
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
+                  <div id="yaxis" class="form-check px-5 py-2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </form>
       </div>
       <div class="col-2 p-1" id="refsList">

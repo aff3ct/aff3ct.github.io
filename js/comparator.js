@@ -39,60 +39,76 @@ var PlotLayouts = {
 	},
 	x: {
 		"Eb/N0": {
-			xaxis: { title: 'Eb/N0 (dB)', zeroline:false, hoverformat: '.e' },
+			xaxis: { title: 'Signal-to-Noise Ratio (SNR) - Eb/N0 (dB)', zeroline:false, hoverformat: '.e' },
 			default: true,
 			enabled: false,
+			id: "EbN0",
 		},
 		"Es/N0": {
-			xaxis: { title: 'Es/N0 (dB)', zeroline:false, hoverformat: '.e' },
+			xaxis: { title: 'Signal-to-Noise Ratio (SNR) - Es/N0 (dB)', zeroline:false, hoverformat: '.e' },
 			default: false,
 			enabled: false,
+			id: "EsN0",
 		},
 		"EP": {
 			xaxis: { title: 'Erasure Probability (EP)', zeroline:false, hoverformat: '.e' },
 			default: true,
 			enabled: false,
+			id: "EP",
 		},
 	},
 	y: {
 		"BER": {
 			yaxis: { title: 'Bit Error Rate (BER)', type: 'log', autorange: true, hoverformat: '.2e' },
-			compatible: "FER",
+			compatible: ["FER"],
 			default: true,
 			enabled: false,
+			id: "BER",
 		},
 		"FER": {
 			yaxis: { title: 'Frame Error Rate (FER)', type: 'log', autorange: true, hoverformat: '.2e' },
-			compatible: "BER",
+			compatible: ["BER"],
 			default: true,
 			enabled: false,
+			id: "FER",
 		},
 		"FRA": {
-			yaxis: { title: 'Simulated Frames', type: 'log', autorange: true, hoverformat: '.2e' },
+			yaxis: { title: 'Simulated Frames', type: 'log', autorange: true },
 			default: false,
 			enabled: false,
+			id: "FRA",
 		},
 		"FE": {
-			yaxis: { title: 'Number of Frame Errors', autorange: true },
-			compatible: "BE",
+			yaxis: { title: 'Number of Frame Errors (FE)', autorange: true },
 			default: false,
 			enabled: false,
+			id: "FE",
 		},
 		"BE": {
-			yaxis: { title: 'Number of Bit Errors', autorange: true },
-			compatible: "FE",
+			yaxis: { title: 'Number of Bit Errors (BE)', autorange: true },
 			default: false,
 			enabled: false,
+			id: "BE",
+		},
+		"BE/FE": {
+			yaxis: { title: 'Bit Errors on Frame Errors Ratio (BE/FE)', autorange: true },
+			default: false,
+			enabled: false,
+			id: "BEFE",
 		},
 		"SIM_THR": {
 			yaxis: { title: 'Simulation Throughput (Mb/s)', autorange: true },
 			default: false,
 			enabled: false,
+			alt: "THR",
+			id: "THR",
 		},
 		"ET/RT": {
-			yaxis: { title: 'Elapsed Time (sec)', type: 'log', autorange: true, hoverformat: '.2e' },
+			yaxis: { title: 'Elapsed Time (sec)', type: 'log', autorange: true },
 			default: false,
 			enabled: false,
+			alt: "TIME",
+			id: "TIME",
 		},
 	},
 }
@@ -167,6 +183,15 @@ function precomputeData(id) {
 				ref["headers"]["list"].push(obj);
 			}
 		}
+	}
+	if (typeof(ref.contents)!=="undefined" &&
+		typeof(ref.contents.BE)!=="undefined" &&
+		typeof(ref.contents.FE)!=="undefined" &&
+		typeof(ref.contents["BE/FE"])==="undefined") {
+		let BEFE=[];
+		for (let i=0; i<ref.contents.BE.length; i++)
+			BEFE.push(ref.contents.BE[i]/ref.contents.FE[i]);
+		ref.contents["BE/FE"]=BEFE;
 	}
 }
 
@@ -336,7 +361,7 @@ function plotSelectedRefs() {
 			colorList.push(Curves.db[id].color.value);
 	});
 
-	let layoutCommon = PlotLayouts.common;
+	let layoutCommon = Object.assign({}, PlotLayouts.common);
 	let xaxis = "";
 	Object.keys(PlotLayouts.x).forEach(function(key) {
 		if (PlotLayouts.x[key].enabled) {
@@ -344,7 +369,6 @@ function plotSelectedRefs() {
 			xaxis = key;
 		}
 	});
-
 	let lines = ['solid', 'dash', 'dot', 'dashdot'];
 	let l = 0;
 	let yaxis = "";
@@ -370,7 +394,7 @@ function plotSelectedRefs() {
 		}
 	});
 	if (data.length)
-		Plotly.newPlot(Plot, data, layout, {displaylogo:false});
+		Plotly.newPlot(Plot, data, layout, { displayModeBar: true, displaylogo: false });
 }
 
 function getPermalink() {
@@ -405,28 +429,96 @@ function getPermalink() {
 	$('#permalinkInstModal').modal("show");
 }
 
-function removeAxes()
-{
+function removeAxes() {
 	Object.keys(PlotLayouts.x).forEach(function(key) {
 		PlotLayouts.x[key].enabled=false;
 	});
 	Object.keys(PlotLayouts.y).forEach(function(key) {
 		PlotLayouts.y[key].enabled=false;
 	});
+	$('#xaxis').empty();
+	$('#yaxis').empty();
+	$('#axes').hide();
 }
 
-function displayAxes(ref)
-{
+function updateAxesCheckboxes(id, key, axis) {
+	let except=[];
+	if (typeof(PlotLayouts[axis][key].compatible)!=="undefined")
+		except=PlotLayouts[axis][key].compatible;
+	let nCheck=0;
+	Object.keys(PlotLayouts[axis]).forEach(function(lkey) {
+		if (PlotLayouts[axis][lkey].enabled)
+			nCheck++;
+	});
+	if (nCheck == 1 && !$('#'+id).prop('checked')) {
+		$('#'+id).prop('checked', true);
+	} else {
+		if (!$('#'+id).prop('checked')) {
+			PlotLayouts[axis][key].enabled = false;
+		} else {
+			Object.keys(PlotLayouts[axis]).forEach(function(lkey) {
+				if (!except.includes(lkey) && lkey!=key) {
+					PlotLayouts[axis][lkey].enabled = false;
+					$('#'+PlotLayouts[axis][lkey].id).prop('checked', false);
+				}
+			});
+			PlotLayouts[axis][key].enabled = true;
+		}
+		plotSelectedRefs();
+	}
+}
+
+function displayAxes(ref) {
+	let xaxes=[];
+	let yaxes=[];
 	Object.keys(ref.contents).forEach(function(keyRef) {
 		Object.keys(PlotLayouts.x).forEach(function(keyPlot) {
-			if (keyRef==keyPlot && PlotLayouts.x[keyPlot].default)
-				PlotLayouts.x[keyPlot].enabled=true;
+			if (keyRef==keyPlot) {
+				let name=(typeof(PlotLayouts.x[keyPlot].alt)!=="undefined")?PlotLayouts.x[keyPlot].alt:keyPlot;
+				let xaxis = {id: PlotLayouts.x[keyPlot].id, key: keyPlot, name: name, desc: PlotLayouts.x[keyPlot].xaxis.title};
+				if (PlotLayouts.x[keyPlot].default) {
+					PlotLayouts.x[keyPlot].enabled=true;
+					xaxis["checked"]="checked";
+				} else {
+					xaxis["checked"]="";
+				}
+				xaxes.push(xaxis);
+			}
 		});
 		Object.keys(PlotLayouts.y).forEach(function(keyPlot) {
-			if (keyRef==keyPlot && PlotLayouts.y[keyPlot].default)
-				PlotLayouts.y[keyPlot].enabled=true;
+			if (keyRef==keyPlot) {
+				let name=(typeof(PlotLayouts.y[keyPlot].alt)!=="undefined")?PlotLayouts.y[keyPlot].alt:keyPlot;
+				let yaxis = {id: PlotLayouts.y[keyPlot].id, key: keyPlot, name: name, desc: PlotLayouts.y[keyPlot].yaxis.title};
+				if (PlotLayouts.y[keyPlot].default) {
+					PlotLayouts.y[keyPlot].enabled=true;
+					yaxis["checked"]="checked";
+				} else {
+					yaxis["checked"]="";
+				}
+				yaxes.push(yaxis);
+			}
 		});
 	});
+	let xaxisSelectorTemplate = $('#axisSelectorTemplate').html();
+	Mustache.parse(xaxisSelectorTemplate);
+	let xaxisSelectorRendered=Mustache.render(xaxisSelectorTemplate, {axes: xaxes});
+	$("#xaxis").append(xaxisSelectorRendered);
+	let yaxisSelectorTemplate = $('#axisSelectorTemplate').html();
+	Mustache.parse(yaxisSelectorTemplate);
+	let yaxisSelectorRendered=Mustache.render(yaxisSelectorTemplate, {axes: yaxes});
+	$("#yaxis").append(yaxisSelectorRendered);
+	xaxes.forEach(function(axis){
+		$("#"+axis.id).on("click", function () {
+			updateAxesCheckboxes(axis.id, axis.key, "x");
+		});
+	});
+	yaxes.forEach(function(axis){
+		$("#"+axis.id).on("click", function () {
+			updateAxesCheckboxes(axis.id, axis.key, "y");
+		});
+	})
+	$('[data-toggle="tooltip"]').tooltip();
+	$('#axes').show();
 }
 
 function addSelectedRef(ref, colorId=-1) {
