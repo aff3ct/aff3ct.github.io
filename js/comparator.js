@@ -114,7 +114,9 @@ var PlotLayouts = {
 function precomputeData(id) {
 	let ref = Curves.db[id];
 	ref["hash"]["id"] = id;
-	if (typeof(ref.metadata)==="undefined" || typeof(ref.metadata.title)==="undefined") {
+	if (typeof(ref.metadata)==="undefined")
+		ref.metadata={};
+	if (typeof(ref.metadata.title)==="undefined") {
 		if (typeof(ref.headers)!=="undefined" &&
 			typeof(ref.headers.Codec)!=="undefined" &&
 			typeof(ref.headers.Codec["Type"])!=="undefined" &&
@@ -123,7 +125,7 @@ function precomputeData(id) {
 			let codeType = ref.headers.Codec["Type"];
 			let N = ref.headers.Codec["Frame size (N)"];
 			let K = ref.headers.Codec["Info. bits (K)"];
-			ref["metadata"] = {title: codeType+" ("+N+","+K+")"};
+			ref["metadata"]["title"] = codeType+" ("+N+","+K+")";
 		}
 	}
 	if (typeof(ref.metadata)!=="undefined") {
@@ -165,9 +167,9 @@ function precomputeData(id) {
 		}
 	}
 	if (typeof(ref.metadata)==="undefined" || typeof(ref.metadata.title)==="undefined") {
-		ref["metadata"] = {title: "Undefined Title", bigtitle: "Undefined Title", subtitle: ""};
+		$.extend(ref["metadata"], {title: "Undefined", bigtitle: "Undefined", subtitle: ""});
 	}
-	if (typeof(ref.headers)!=="undefined") {
+	if (typeof(ref.headers)!=="undefined" && typeof(ref.headers.list)==="undefined") {
 		ref["headers"]["list"] = [];
 		ref["headers"]["list"].push({"name": "Frame size", "value" : ref.headers.Codec["Frame size (N)"]});
 		if (ref.headers.Codec["Codeword size (N_cw)"] > ref.headers.Codec["Frame size (N)"])
