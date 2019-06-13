@@ -86,7 +86,7 @@ var PlotLayouts = {
 			yaxis: { title: 'Number of Bit Errors (BE)', autorange: true },
 			default: false,
 			enabled: false,
-			id: "BE",
+			divId: "BE",
 		},
 		"BE/FE": {
 			yaxis: { title: 'Bit Errors on Frame Errors Ratio (BE/FE)', autorange: true },
