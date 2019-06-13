@@ -2,9 +2,9 @@ const GITLAB="https://gitlab.com/api/v4/projects/10354484/";
 const BRANCH="development";
 
 // connexion to the CouchDB server (this code do not connect to the CouchDB until the first usage)
-const serverCDB = "https://couchdb-580e7b.smileupps.com";
-const nameCDB = "aff3ct_refs";
-var CDB = new PouchDB(serverCDB+'/'+nameCDB);
+const ServerCDB = "https://couchdb-580e7b.smileupps.com";
+const NameCDB = "aff3ct_refs";
+var CDB = new PouchDB(ServerCDB+'/'+NameCDB);
 
 var Curves = {
 	db: {},
@@ -116,6 +116,8 @@ function precomputeData(id) {
 	ref["hash"]["id"] = id;
 	if (typeof(ref.metadata)==="undefined")
 		ref.metadata={};
+	if (typeof(ref.metadata.source)!=="undefined")
+		ref.metadata[ref.metadata.source] = true;
 	if (typeof(ref.metadata.title)==="undefined") {
 		if (typeof(ref.headers)!=="undefined" &&
 			typeof(ref.headers.Codec)!=="undefined" &&
@@ -295,7 +297,12 @@ function displayRefsList(refs) {
 
 		let refBodyTemplate = $('#refBodyTemplate').html();
 		Mustache.parse(refBodyTemplate);
-		let refBodyRendered=Mustache.render(refBodyTemplate, $.extend({prefix: ""}, ref));
+		let refBodyRendered=Mustache.render(refBodyTemplate, $.extend({
+			prefix: "",
+			branch: BRANCH,
+			serverCDB: ServerCDB,
+			nameCDB: NameCDB,
+		}, ref));
 		$("#card"+ref.hash.id).append(refBodyRendered);
 
 		if (ref.metadata.command) {
@@ -324,7 +331,12 @@ function displaySelectedRefs(ref) {
 
 	let refBodyTemplate = $('#refBodyTemplate').html();
 	Mustache.parse(refBodyTemplate);
-	let refBodyRendered=Mustache.render(refBodyTemplate, $.extend({prefix: "s"}, ref));
+	let refBodyRendered=Mustache.render(refBodyTemplate, $.extend({
+		prefix: "s",
+		branch: BRANCH,
+		serverCDB: ServerCDB,
+		nameCDB: NameCDB,
+	}, ref));
 	$("#ss"+ref.hash.id).append(refBodyRendered);
 
 	if (typeof(ref.metadata)!=="undefined" && typeof(ref.metadata.command)!=="undefined") {
@@ -417,6 +429,7 @@ function getPermalink() {
 		let ref=Curves.db[id];
 		if (ref.metadata.source=="local") {
 			ref.metadata.source="couchdb";
+			ref.metadata["couchdb"]=true;
 			// put a document on the CouchDB server
 			CDB.put(
 				$.extend({_id: id}, ref)
