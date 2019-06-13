@@ -372,25 +372,34 @@ function plotSelectedRefs() {
 	let yaxis = "";
 	let layout = layoutCommon;
 	let data = [];
+	let finalColorsList=[];
 	Object.keys(PlotLayouts.y).forEach(function(key) {
 		if (PlotLayouts.y[key].enabled) {
 			$.extend(layout, {yaxis: PlotLayouts.y[key].yaxis});
-			$.extend(layout, {colorway: colorsList});
 			yaxis = key;
+			let cid = 0;
+			let tmpColorsList=Array.from(colorsList);
 			Curves.selectedRefs.forEach(function(id) {
-				if ((typeof(Curves.db[id].metadata.hidden)==="undefined") || Curves.db[id].metadata.hidden == false) {
-					data.push({
-						x: Curves.db[id].contents[xaxis],
-						y: Curves.db[id].contents[yaxis],
-						type: 'scatter',
-						line: {dash: lines[l%lines.length]},
-						name: key,
-					});
+				if (((typeof(Curves.db[id].metadata.hidden)==="undefined") || Curves.db[id].metadata.hidden == false)) {
+					if (typeof(Curves.db[id].contents[xaxis])!=="undefined" &&
+					    typeof(Curves.db[id].contents[yaxis])!=="undefined") {
+						data.push({
+							x: Curves.db[id].contents[xaxis],
+							y: Curves.db[id].contents[yaxis],
+							type: 'scatter',
+							line: {dash: lines[l%lines.length]},
+							name: key,
+						});
+						cid++;
+					} else
+						tmpColorsList.splice(cid, 1);
 				}
 			});
+			finalColorsList=finalColorsList.concat(tmpColorsList);
 			l++;
 		}
 	});
+	$.extend(layout, {colorway: finalColorsList});
 	if (data.length)
 		Plotly.newPlot(Plot, data, layout, { displayModeBar: true, displaylogo: false });
 }
