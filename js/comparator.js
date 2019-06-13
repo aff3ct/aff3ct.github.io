@@ -19,8 +19,6 @@ var Curves = {
 	         {id: 2, value: '#2ca02c'},
 	         {id: 1, value: '#ff7f0e'},
 	         {id: 0, value: '#1f77b4'}],
-	plots: ["ber","fer"],
-	PLOTS: {ber: "BER", fer: "FER"},
 	selectors: {
 		codeType:    { selection: [], path: "headers/Codec/Type"           },
 		frameSize:   { selection: [], path: "headers/Codec/Frame size (N)" },
@@ -42,19 +40,19 @@ var PlotLayouts = {
 			xaxis: { title: 'Signal-to-Noise Ratio (SNR) - Eb/N0 (dB)', zeroline:false, hoverformat: '.e' },
 			default: true,
 			enabled: false,
-			id: "EbN0",
+			divId: "EbN0",
 		},
 		"Es/N0": {
 			xaxis: { title: 'Signal-to-Noise Ratio (SNR) - Es/N0 (dB)', zeroline:false, hoverformat: '.e' },
 			default: false,
 			enabled: false,
-			id: "EsN0",
+			divId: "EsN0",
 		},
 		"EP": {
 			xaxis: { title: 'Erasure Probability (EP)', zeroline:false, hoverformat: '.e' },
 			default: true,
 			enabled: false,
-			id: "EP",
+			divId: "EP",
 		},
 	},
 	y: {
@@ -63,26 +61,26 @@ var PlotLayouts = {
 			compatible: ["FER"],
 			default: true,
 			enabled: false,
-			id: "BER",
+			divId: "BER",
 		},
 		"FER": {
 			yaxis: { title: 'Frame Error Rate (FER)', type: 'log', autorange: true, hoverformat: '.2e' },
 			compatible: ["BER"],
 			default: true,
 			enabled: false,
-			id: "FER",
+			divId: "FER",
 		},
 		"FRA": {
 			yaxis: { title: 'Simulated Frames', type: 'log', autorange: true },
 			default: false,
 			enabled: false,
-			id: "FRA",
+			divId: "FRA",
 		},
 		"FE": {
 			yaxis: { title: 'Number of Frame Errors (FE)', autorange: true },
 			default: false,
 			enabled: false,
-			id: "FE",
+			divId: "FE",
 		},
 		"BE": {
 			yaxis: { title: 'Number of Bit Errors (BE)', autorange: true },
@@ -94,21 +92,21 @@ var PlotLayouts = {
 			yaxis: { title: 'Bit Errors on Frame Errors Ratio (BE/FE)', autorange: true },
 			default: false,
 			enabled: false,
-			id: "BEFE",
+			divId: "BEFE",
 		},
 		"SIM_THR": {
 			yaxis: { title: 'Simulation Throughput (Mb/s)', autorange: true },
 			default: false,
 			enabled: false,
 			alt: "THR",
-			id: "THR",
+			divId: "THR",
 		},
 		"ET/RT": {
 			yaxis: { title: 'Elapsed Time (sec)', type: 'log', autorange: true },
 			default: false,
 			enabled: false,
 			alt: "TIME",
-			id: "TIME",
+			divId: "TIME",
 		},
 	},
 }
@@ -355,10 +353,10 @@ function updateAddButton(id, bool) {
 }
 
 function plotSelectedRefs() {
-	let colorList=[];
+	let colorsList=[];
 	Curves.selectedRefs.forEach(function(id) {
-		if (!Curves.db[id].hidden || Curves.db[id].hidden == false)
-			colorList.push(Curves.db[id].color.value);
+		if (!Curves.db[id].metadata.hidden || Curves.db[id].metadata.hidden == false)
+			colorsList.push(Curves.db[id].metadata.color.value);
 	});
 
 	let layoutCommon = Object.assign({}, PlotLayouts.common);
@@ -377,10 +375,10 @@ function plotSelectedRefs() {
 	Object.keys(PlotLayouts.y).forEach(function(key) {
 		if (PlotLayouts.y[key].enabled) {
 			$.extend(layout, {yaxis: PlotLayouts.y[key].yaxis});
-			$.extend(layout, {colorway: colorList});
+			$.extend(layout, {colorway: colorsList});
 			yaxis = key;
 			Curves.selectedRefs.forEach(function(id) {
-				if ((typeof(Curves.db[id].hidden)==="undefined") || Curves.db[id].hidden == false) {
+				if ((typeof(Curves.db[id].metadata.hidden)==="undefined") || Curves.db[id].metadata.hidden == false) {
 					data.push({
 						x: Curves.db[id].contents[xaxis],
 						y: Curves.db[id].contents[yaxis],
@@ -406,8 +404,8 @@ function getPermalink() {
 	let isFirst=true;
 	Curves.selectedRefs.forEach(function(id) {
 		let ref=Curves.db[id];
-		if (ref.local) {
-			ref.local=false;
+		if (ref.metadata.source=="local") {
+			ref.metadata.source="couchdb";
 			// put a document on the CouchDB server
 			CDB.put(
 				$.extend({_id: id}, ref)
@@ -419,7 +417,7 @@ function getPermalink() {
 				console.log(err);
 			});
 		}
-		permalink+=(isFirst?"":"&")+"curve"+ref.color.id+"="+ref.hash.id;
+		permalink+=(isFirst?"":"&")+"curve"+ref.metadata.color.id+"="+ref.hash.id;
 		isFirst=false;
 	});
 	let permalinkModalTemplate = $('#permalinkModalTemplate').html();
@@ -441,7 +439,7 @@ function removeAxes() {
 	$('#axes').hide();
 }
 
-function updateAxesCheckboxes(id, key, axis) {
+function updateAxesCheckboxes(divId, key, axis) {
 	let except=[];
 	if (typeof(PlotLayouts[axis][key].compatible)!=="undefined")
 		except=PlotLayouts[axis][key].compatible;
@@ -450,16 +448,16 @@ function updateAxesCheckboxes(id, key, axis) {
 		if (PlotLayouts[axis][lkey].enabled)
 			nCheck++;
 	});
-	if (nCheck == 1 && !$('#'+id).prop('checked')) {
-		$('#'+id).prop('checked', true);
+	if (nCheck == 1 && !$('#'+divId).prop('checked')) {
+		$('#'+divId).prop('checked', true);
 	} else {
-		if (!$('#'+id).prop('checked')) {
+		if (!$('#'+divId).prop('checked')) {
 			PlotLayouts[axis][key].enabled = false;
 		} else {
 			Object.keys(PlotLayouts[axis]).forEach(function(lkey) {
 				if (!except.includes(lkey) && lkey!=key) {
 					PlotLayouts[axis][lkey].enabled = false;
-					$('#'+PlotLayouts[axis][lkey].id).prop('checked', false);
+					$('#'+PlotLayouts[axis][lkey].divId).prop('checked', false);
 				}
 			});
 			PlotLayouts[axis][key].enabled = true;
@@ -475,7 +473,7 @@ function displayAxes(ref) {
 		Object.keys(PlotLayouts.x).forEach(function(keyPlot) {
 			if (keyRef==keyPlot) {
 				let name=(typeof(PlotLayouts.x[keyPlot].alt)!=="undefined")?PlotLayouts.x[keyPlot].alt:keyPlot;
-				let xaxis = {id: PlotLayouts.x[keyPlot].id, key: keyPlot, name: name, desc: PlotLayouts.x[keyPlot].xaxis.title};
+				let xaxis = {divId: PlotLayouts.x[keyPlot].divId, key: keyPlot, name: name, desc: PlotLayouts.x[keyPlot].xaxis.title};
 				if (PlotLayouts.x[keyPlot].default) {
 					PlotLayouts.x[keyPlot].enabled=true;
 					xaxis["checked"]="checked";
@@ -488,7 +486,7 @@ function displayAxes(ref) {
 		Object.keys(PlotLayouts.y).forEach(function(keyPlot) {
 			if (keyRef==keyPlot) {
 				let name=(typeof(PlotLayouts.y[keyPlot].alt)!=="undefined")?PlotLayouts.y[keyPlot].alt:keyPlot;
-				let yaxis = {id: PlotLayouts.y[keyPlot].id, key: keyPlot, name: name, desc: PlotLayouts.y[keyPlot].yaxis.title};
+				let yaxis = {divId: PlotLayouts.y[keyPlot].divId, key: keyPlot, name: name, desc: PlotLayouts.y[keyPlot].yaxis.title};
 				if (PlotLayouts.y[keyPlot].default) {
 					PlotLayouts.y[keyPlot].enabled=true;
 					yaxis["checked"]="checked";
@@ -508,13 +506,13 @@ function displayAxes(ref) {
 	let yaxisSelectorRendered=Mustache.render(yaxisSelectorTemplate, {axes: yaxes});
 	$("#yaxis").append(yaxisSelectorRendered);
 	xaxes.forEach(function(axis){
-		$("#"+axis.id).on("click", function () {
-			updateAxesCheckboxes(axis.id, axis.key, "x");
+		$("#"+axis.divId).on("click", function () {
+			updateAxesCheckboxes(axis.divId, axis.key, "x");
 		});
 	});
 	yaxes.forEach(function(axis){
-		$("#"+axis.id).on("click", function () {
-			updateAxesCheckboxes(axis.id, axis.key, "y");
+		$("#"+axis.divId).on("click", function () {
+			updateAxesCheckboxes(axis.divId, axis.key, "y");
 		});
 	})
 	$('[data-toggle="tooltip"]').tooltip();
@@ -567,7 +565,7 @@ function addSelectedRef(ref, colorId=-1) {
 			} else {
 				Curves.selectedRefs.push(ref.hash.id);
 				if (colorId == -1)
-					ref["color"] = Curves.colors.pop();
+					ref.metadata["color"] = Curves.colors.pop();
 				else {
 					let index=-1;
 					for (let i=0; i<Curves.colors.length; i++) {
@@ -577,12 +575,12 @@ function addSelectedRef(ref, colorId=-1) {
 						}
 					}
 					if (index > -1)
-						ref["color"] = Curves.colors.splice(index, 1)[0];
+						ref.metadata["color"] = Curves.colors.splice(index, 1)[0];
 				}
-				if (ref["color"]) {
+				if (ref.metadata["color"]) {
 					displaySelectedRefs(ref);
-					ref["hidden"] = false;
-					$("#scurve"+ref.hash.id).attr('id', "scurve"+ref["color"].id);
+					ref.metadata["hidden"] = false;
+					$("#scurve"+ref.hash.id).attr('id', "scurve"+ref.metadata["color"].id);
 					updateAddButton(ref.hash.id, true);
 					plotSelectedRefs();
 					if (window.location.host == "aff3ct.github.io") {
@@ -597,7 +595,9 @@ function addSelectedRef(ref, colorId=-1) {
 				}
 			}
 		} else {
-			console.log("It is not allowed to add multiple times the same ref.");
+			let err="It is not allowed to add multiple times the same reference!";
+			console.log(err);
+			alert(err)
 		}
 	}
 }
@@ -611,10 +611,10 @@ function deleteSelectedRef(id) {
 	var index = Curves.selectedRefs.indexOf(id);
 	if (index > -1) {
 		Curves.selectedRefs.splice(index, 1);
-		$("#scurve"+Curves.db[id].color.id).remove();
-		Curves.colors.push(Curves.db[id].color);
-		delete Curves.db[id].color;
-		delete Curves.db[id].hidden;
+		$("#scurve"+Curves.db[id].metadata.color.id).remove();
+		Curves.colors.push(Curves.db[id].metadata.color);
+		delete Curves.db[id].metadata.color;
+		delete Curves.db[id].metadata.hidden;
 		updateAddButton(id, false);
 
 		if (Curves.selectedRefs.length==0) {
@@ -629,12 +629,12 @@ function deleteSelectedRef(id) {
 }
 
 function showPlotRef(id) {
-	if (Curves.db[id].color && Curves.db[id].hidden == true)
+	if (Curves.db[id].metadata.color && Curves.db[id].metadata.hidden == true)
 	{
-		Curves.db[id].hidden = false;
+		Curves.db[id].metadata.hidden = false;
 		plotSelectedRefs();
 
-		let cid = Curves.db[id].color.id;
+		let cid = Curves.db[id].metadata.color.id;
 		$("#scurve"+cid).fadeTo("fast", 1);
 		$("#show"+id).remove();
 		let hideTemplate = $('#hideTemplate').html();
@@ -648,12 +648,11 @@ function showPlotRef(id) {
 }
 
 function hidePlotRef(id) {
-	if (Curves.db[id].color && Curves.db[id].hidden == false)
-	{
-		Curves.db[id].hidden = true;
+	if (Curves.db[id].metadata.color && Curves.db[id].metadata.hidden == false) {
+		Curves.db[id].metadata.hidden = true;
 		plotSelectedRefs();
 
-		let cid = Curves.db[id].color.id;
+		let cid = Curves.db[id].metadata.color.id;
 		$("#scurve"+cid).fadeTo("slow", 0.33);
 		$("#hide"+id).remove();
 		let showTemplate = $('#showTemplate').html();
@@ -679,7 +678,6 @@ function loadFilesRecursive(fileInput, i=0) {
 					if (typeof(ref.contents)!=="undefined") {
 						let id=ref.hash.value.substring(0,7);
 						if (typeof(Curves.db[id])==="undefined") {
-							ref["local"]=true;
 							Curves.db[id]=ref;
 							precomputeData(id);
 						}
