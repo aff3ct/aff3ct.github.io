@@ -390,12 +390,14 @@ function plotSelectedRefs() {
 	let lines = ['solid', 'dash', 'dot', 'dashdot'];
 	let l = 0;
 	let yaxis = "";
-	let layout = layoutCommon;
+	let layout = $.extend({yaxis:{}},layoutCommon);
 	let data = [];
 	let finalColorsList=[];
+	let titles=[];
 	Object.keys(PlotLayouts.y).forEach(function(key) {
 		if (PlotLayouts.y[key].enabled) {
-			$.extend(layout, {yaxis: PlotLayouts.y[key].yaxis});
+			$.extend(layout.yaxis, PlotLayouts.y[key].yaxis);
+			titles.push(PlotLayouts.y[key].yaxis.title);
 			yaxis = key;
 			let cid = 0;
 			let tmpColorsList=Array.from(colorsList);
@@ -420,6 +422,12 @@ function plotSelectedRefs() {
 		}
 	});
 	$.extend(layout, {colorway: finalColorsList});
+	if (titles.length > 1) {
+		let title=titles[0];
+		for (let t=1; t<titles.length; t++)
+			title+=" & "+titles[t];
+		layout.yaxis["title"]=title;
+	}
 	if (data.length)
 		Plotly.newPlot(Plot, data, layout, { displayModeBar: true, displaylogo: false });
 }
