@@ -233,7 +233,6 @@ function loadDatabase() {
 		$("#loader"    ).css("display", "none" );
 		$("#curvesTip" ).css("display", "block");
 		$("#tips"      ).css("display", "block");
-		$("#selector"  ).css("display", "block");
 		$("#comparator").css("display", "block");
 		displayRefsFromURI();
 		displayRefsList(Object.keys(Curves.db));
@@ -569,8 +568,6 @@ function addSelectedRef(ref, colorId=-1) {
 		displayAxes(ref);
 	}
 	$("#tips").css("display", "none");
-	$("#selector .bers .active").removeClass("active");
-	$(this).addClass("active");
 	if (Curves.colors.length==0) {
 		let errorMsg = "The maximum number of curves is reached!";
 		console.log(errorMsg);
@@ -925,10 +922,9 @@ $(document).ready(function() {
 	Plot = d3.select("#plot")
 	.append('div')
 	.style({
-		width: '100%',
-		'margin-left': '0%',
-		height: '75vh',
-		'margin-top': '0vh'
+		'width': '100%',
+		'height': '100%',
+		'margin': '0px 0px 0px 0px',
 	}).node();
 	loadDatabase();
 	$('#applySelections').on('click', function() {

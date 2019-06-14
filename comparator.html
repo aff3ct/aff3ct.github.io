@@ -344,115 +344,108 @@
   </div>
   <div id="comparator" class="shadow-lg p-3 mb-5 bg-white rounded">
     <div class="row">
-      <div class="col-2 p-1" id="selector">
-        <div class="container">
-          <div class="form-group">
-            <div class="dropdown">
-              <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Type of code
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
-                <form><div id="codeType" class="form-check px-5 py-2"></div></form>
-              </div>
+      <div class="col-2 column" id="selector">
+        <div class="form-group">
+          <div class="dropdown">
+            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Type of code
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
+              <form><div id="codeType" class="form-check px-5 py-2"></div></form>
             </div>
           </div>
+        </div>
+        <div class="form-group">
+          <div class="dropdown">
+            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownSizeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Frame size (N)
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownSizeButton">
+              <form><div id="frameSize" class="form-check px-5 py-2"></div></form>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="dropdown">
+            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Type of modem
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
+              <form><div id="modemType" class="form-check px-5 py-2"></div></form>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="dropdown">
+            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownchannelButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Type of channel
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownchannelButton">
+              <form><div id="channelType" class="form-check px-5 py-2"></div></form>
+            </div>
+          </div>
+        </div>
+        <hr class="separator">
+        <div class="form-group">
+          <label for="codeRate" class="col-sm-6">Code rate (R)</label>
+          <div id="codeRate" class="mb-5 col-sm-12"></div>
+        </div>
+        <hr class="separator">
+        <button type="button" id="applySelections" class="btn btn-primary btn-lg btn-block">Apply Filters</button>
+        <hr class="separator">
+        <div class="form-group" id="input">
+          <label for="fileInput">Upload a file or a group of files</label>
+          <input type="file" multiple="multiple" class="form-control-file" id="fileInput">
+          <span id="fileDisplayArea"></span>
+        </div>
+        <div id="axes">
+          <hr class="separator">
           <div class="form-group">
             <div class="dropdown">
-              <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownSizeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Frame size (N)
+              <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select x-axis
               </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownSizeButton">
-                <form><div id="frameSize" class="form-check px-5 py-2"></div></form>
+              <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
+                <form><div id="xaxis" class="form-check px-5 py-2"></div></form>
               </div>
             </div>
           </div>
           <div class="form-group">
             <div class="dropdown">
               <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Type of modem
+                Select y-axis
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
-                <form><div id="modemType" class="form-check px-5 py-2"></div></form>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="dropdown">
-              <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownchannelButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Type of channel
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownchannelButton">
-                <form><div id="channelType" class="form-check px-5 py-2"></div></form>
-              </div>
-            </div>
-          </div>
-          <hr class="separator">
-          <div class="form-group">
-            <label for="codeRate" class="col-sm-6">Code rate (R)</label>
-            <div id="codeRate" class="mb-5 col-sm-12"></div>
-          </div>
-          <hr class="separator">
-          <div class="form-group" id="input">
-            <label for="fileInput">Upload a file or a group of files</label>
-            <input type="file" multiple="multiple" class="form-control-file" id="fileInput">
-            <span id="fileDisplayArea"></span>
-          </div>
-          <hr class="separator">
-          <button type="button" id="applySelections" class="btn btn-primary btn-lg btn-block">Apply selections</button>
-          <div id="axes">
-            <hr class="separator">
-            <hr class="separator">
-            <div class="form-group">
-              <div class="dropdown">
-                <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Select x-axis
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
-                  <form><div id="xaxis" class="form-check px-5 py-2"></div></form>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="dropdown">
-                <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Select y-axis
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
-                  <form><div id="yaxis" class="form-check px-5 py-2"></div></form>
-                </div>
+                <form><div id="yaxis" class="form-check px-5 py-2"></div></form>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-2 p-1" id="refsList">
-        <div class="p-3 mb-3 bg-white rounded container">
+      <div class="col-2 column" id="refsList">
+        <div class="bg-white rounded">
           <ul class="list-group bers">
             <div id="accordion"></div>
           </ul>
         </div>
       </div>
-      <div class="col-6 p-0" id="curves">
-        <div class="container">
-          <div id="curvesTip">
-            <p id="tips" class="text-center">
-              <strong>
-                Please select up to 10 curves<br/>
-                on the left blue buttons<br/>
-                and delete them on the right.<br/>
-                You can plot your own curve(s)<br/>
-                by loading your AFF3CT text file(s).
-              </strong>
-            </p>
-          </div>
-          <div id="plot"></div>
+      <div class="col-6 column" id="curves">
+        <div id="curvesTip">
+          <p id="tips" class="text-center">
+            <strong>
+              Please select up to 10 curves<br/>
+              on the left blue buttons<br/>
+              and delete them on the right.<br/>
+              You can plot your own curve(s)<br/>
+              by loading your AFF3CT text file(s).
+            </strong>
+          </p>
         </div>
+        <div id="plot"></div>
       </div>
-      <div class="col-2 p-1" id="scurve">
-        <div class="container">
-          <div id="sbuttons"></div>
-          <div id="saccordion"></div>
-        </div>
+      <div class="col-2 column" id="scurve">
+        <div id="sbuttons"></div>
+        <div id="saccordion"></div>
       </div>
     </div>
   </div>
