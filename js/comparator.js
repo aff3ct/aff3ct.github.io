@@ -652,7 +652,6 @@ function addSelectedRef(ref, colorId=-1, xaxisEnabled="", yaxesEnabled=[]) {
 						ref.metadata["color"] = Curves.colors.splice(index, 1)[0];
 				}
 				if (ref.metadata["color"]) {
-					console.log("bim"+ref.metadata["hidden"]);
 					displaySelectedRefs(ref);
 					if (!ref.metadata.hidden)
 						ref.metadata.hidden = false;
@@ -936,11 +935,9 @@ function displayRefsFromURI() {
 	for (let colorId=0; colorId<nColors; colorId++) {
 		let id=findGetParameter("curve"+colorId);
 		let hidden=findGetParameter("hidden"+colorId);
-		console.log("colorId="+colorId+"- hidden="+hidden);
 		if (id) {
 			if (Curves.db[id]) {
 				Curves.db[id].metadata.hidden=hidden?true:false;
-				console.log(Curves.db[id].metadata.hidden);
 				addSelectedRef(Curves.db[id], colorId, xaxisEnabled, yaxesEnabled);
 			} else {
 				// this is very important to make the copy because the 'CDB.get' call is asynchronous
