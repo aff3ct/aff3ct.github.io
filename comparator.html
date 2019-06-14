@@ -86,7 +86,12 @@
     </div>
   </script>
   <script id="refSelectedTemplate" type="x-tmpl-mustache">
+    {{#metadata.hidden}}
+    <div id="scurve{{hash.id}}" style="opacity: 0.33;">
+    {{/metadata.hidden}}
+    {{^metadata.hidden}}
     <div id="scurve{{hash.id}}">
+    {{/metadata.hidden}}
       <div class="card" id="ss{{hash.id}}">
         <div class="card-header" id="sheading{{hash.id}}">
           <h5 class="mb-0">
@@ -105,9 +110,16 @@
                 <button id="delete{{hash.id}}" type="button" class="btn btn-link btn-sm" title="Delete ref">
                   <i class="fas fa-times"></i>
                 </button>
-                <button id="hide{{hash.id}}" type="button" class="btn btn-link btn-sm" title="Hide ref">
-                  <i class="fas fa-eye-slash"></i>
-                </button>
+                {{#metadata.hidden}}
+                  <button id="show{{hash.id}}" type="button" class="btn btn-sm btn-link" title="Show ref">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                {{/metadata.hidden}}
+                {{^metadata.hidden}}
+                  <button id="hide{{hash.id}}" type="button" class="btn btn-link btn-sm" title="Hide ref">
+                    <i class="fas fa-eye-slash"></i>
+                  </button>
+                {{/metadata.hidden}}
               </div>
             </div>
             <div class="mb-0 form-group row">

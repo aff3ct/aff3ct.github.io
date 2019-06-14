@@ -365,10 +365,14 @@ function displaySelectedRefs(ref) {
 	$("#delete"+ref.hash.id).on("click", function () {
 		deleteSelectedRef(ref.hash.id);
 	});
-	$("#hide"+ref.hash.id).on("click", function () {
-		hidePlotRef(ref.hash.id);
-	});
-
+	if (ref.metadata.hidden)
+		$("#show"+ref.hash.id).on("click", function () {
+			showPlotRef(ref.hash.id);
+		});
+	else
+		$("#hide"+ref.hash.id).on("click", function () {
+			hidePlotRef(ref.hash.id);
+		});
 	$('[data-toggle="tooltip"]').tooltip();
 }
 
@@ -446,23 +450,44 @@ function getPermalink() {
 	let isFirst=true;
 	Curves.selectedRefs.forEach(function(id) {
 		let ref=Curves.db[id];
+		ref.metadata.hidden=ref.metadata.hidden?true:false;
+		let hidden=ref.metadata.hidden;
 		if (ref.metadata.source=="local") {
 			ref.metadata.source="couchdb";
 			delete ref.metadata.local;
 			ref.metadata["couchdb"]=true;
+			ref.metadata.hidden=false;
 			// put a document on the CouchDB server
 			CDB.put(
 				$.extend({_id: id}, ref)
 			).then(function (response) {
 				console.log("PouchDB: put success");
 				console.log(response);
+				ref.metadata.hidden=hidden;
 			}).catch(function (err) {
 				console.log("PouchDB: put fail");
 				console.log(err);
+				ref.metadata.hidden=hidden;
 			});
 		}
-		permalink+=(isFirst?"":"&")+"curve"+ref.metadata.color.id+"="+ref.hash.id;
+		permalink+=(isFirst?"":"&")+"curve"+ref.metadata.color.id+"="+ref.hash.id+(hidden?"&hidden"+ref.metadata.color.id:"");
 		isFirst=false;
+	});
+	permalink+="&xaxis=";
+	isFirst=true;
+	Object.keys(PlotLayouts.x).forEach(function(x) {
+		if (PlotLayouts.x[x].enabled) {
+			permalink+=encodeURIComponent((isFirst?"":",")+x);
+			isFirst=false;
+		}
+	});
+	permalink+="&yaxes=";
+	isFirst=true;
+	Object.keys(PlotLayouts.y).forEach(function(y) {
+		if (PlotLayouts.y[y].enabled) {
+			permalink+=encodeURIComponent((isFirst?"":",")+y);
+			isFirst=false;
+		}
 	});
 	let permalinkModalTemplate = $('#permalinkModalTemplate').html();
 	Mustache.parse(permalinkModalTemplate);
@@ -516,15 +541,16 @@ function updateAxesCheckboxes(divId, key, axis) {
 	}
 }
 
-function displayAxes(ref) {
+function displayAxes(ref, xaxisEnabled="", yaxesEnabled=[]) {
 	let xaxes=[];
 	let yaxes=[];
+
 	Object.keys(ref.contents).forEach(function(keyRef) {
 		Object.keys(PlotLayouts.x).forEach(function(keyPlot) {
 			if (keyRef==keyPlot) {
 				let name=(typeof(PlotLayouts.x[keyPlot].alt)!=="undefined")?PlotLayouts.x[keyPlot].alt:keyPlot;
 				let xaxis = {divId: PlotLayouts.x[keyPlot].divId, key: keyPlot, name: name, desc: PlotLayouts.x[keyPlot].xaxis.title};
-				if (PlotLayouts.x[keyPlot].default) {
+				if ((PlotLayouts.x[keyPlot].default && xaxisEnabled=="") || xaxisEnabled==keyPlot) {
 					PlotLayouts.x[keyPlot].enabled=true;
 					xaxis["checked"]="checked";
 				} else {
@@ -537,7 +563,7 @@ function displayAxes(ref) {
 			if (keyRef==keyPlot) {
 				let name=(typeof(PlotLayouts.y[keyPlot].alt)!=="undefined")?PlotLayouts.y[keyPlot].alt:keyPlot;
 				let yaxis = {divId: PlotLayouts.y[keyPlot].divId, key: keyPlot, name: name, desc: PlotLayouts.y[keyPlot].yaxis.title};
-				if (PlotLayouts.y[keyPlot].default) {
+				if ((PlotLayouts.y[keyPlot].default && !yaxesEnabled.length) || yaxesEnabled.includes(keyPlot)) {
 					PlotLayouts.y[keyPlot].enabled=true;
 					yaxis["checked"]="checked";
 				} else {
@@ -569,7 +595,7 @@ function displayAxes(ref) {
 	$('#axes').show();
 }
 
-function addSelectedRef(ref, colorId=-1) {
+function addSelectedRef(ref, colorId=-1, xaxisEnabled="", yaxesEnabled=[]) {
 	if (Curves.selectedRefs.length==0) {
 		let deleteAllTemplate = $('#deleteAllTemplate').html();
 		Mustache.parse(deleteAllTemplate);
@@ -584,7 +610,7 @@ function addSelectedRef(ref, colorId=-1) {
 			getPermalink();
 		});
 		$("#plot").css("display", "inline");
-		displayAxes(ref);
+		displayAxes(ref, xaxisEnabled, yaxesEnabled);
 	}
 	$("#tips").css("display", "none");
 	if (Curves.colors.length==0) {
@@ -626,8 +652,10 @@ function addSelectedRef(ref, colorId=-1) {
 						ref.metadata["color"] = Curves.colors.splice(index, 1)[0];
 				}
 				if (ref.metadata["color"]) {
+					console.log("bim"+ref.metadata["hidden"]);
 					displaySelectedRefs(ref);
-					ref.metadata["hidden"] = false;
+					if (!ref.metadata.hidden)
+						ref.metadata.hidden = false;
 					$("#scurve"+ref.hash.id).attr('id', "scurve"+ref.metadata["color"].id);
 					updateAddButton(ref.hash.id, true);
 					plotSelectedRefs();
@@ -900,32 +928,37 @@ function displaySelectors(except="") {
 }
 
 function displayRefsFromURI() {
-	let paramNames = [];
-	for (let i = 0; i < Curves.colors.length; i++)
-		paramNames.push("curve"+i);
-	let colorId = 0;
-	paramNames.forEach(function(paramName) {
-		let id=findGetParameter(paramName);
+	let xaxis=findGetParameter("xaxis");
+	let xaxisEnabled=xaxis?decodeURIComponent(xaxis):"";
+	let yaxes=findGetParameter("yaxes");
+	let yaxesEnabled=yaxes?decodeURIComponent(yaxes).split(','):[];
+	let nColors=Curves.colors.length;
+	for (let colorId=0; colorId<nColors; colorId++) {
+		let id=findGetParameter("curve"+colorId);
+		let hidden=findGetParameter("hidden"+colorId);
+		console.log("colorId="+colorId+"- hidden="+hidden);
 		if (id) {
-			if (Curves.db[id])
-				addSelectedRef(Curves.db[id], colorId);
-			else {
+			if (Curves.db[id]) {
+				Curves.db[id].metadata.hidden=hidden?true:false;
+				console.log(Curves.db[id].metadata.hidden);
+				addSelectedRef(Curves.db[id], colorId, xaxisEnabled, yaxesEnabled);
+			} else {
 				// this is very important to make the copy because the 'CDB.get' call is asynchronous
 				let cid=colorId;
 				// get a document from the server
 				CDB.get(id).then(function (ref) {
 					console.log("PouchDB: get success");
 					Curves.db[id]=ref;
+					Curves.db[id].metadata.hidden=hidden?true:false;
 					precomputeData(id);
-					addSelectedRef(ref, cid);
+					addSelectedRef(ref, cid, xaxisEnabled, yaxesEnabled);
 				}).catch(function (err) {
 					console.log("PouchDB: get fail");
 					console.log(err);
 				});
 			}
 		}
-		colorId++;
-	});
+	}
 	// remove get parameter from the URI
 	if (window.history) {
 		let url=window.location.host;
