@@ -8,7 +8,6 @@ var CDB = new PouchDB(ServerCDB+'/'+NameCDB);
 
 var Curves = {
 	db: {},
-	max: 10, // colors are defined for only 10 curves
 	colors: [{id: 9, value: '#17becf'},
 	         {id: 8, value: '#bcbd22'},
 	         {id: 7, value: '#7f7f7f'},
@@ -281,13 +280,13 @@ function displayTraceModal(ref) {
 	}
 }
 
-function displayRefsList(refs) {
+function displayRefsList(ids) {
 	// sort refs by title (lexicographical order)
-	refs.sort(function(a,b) {
+	ids.sort(function(a,b) {
 		return Curves.db[a].metadata.title.localeCompare(Curves.db[b].metadata.title);
 	});
 	$("#refsList #accordion").empty();
-	refs.forEach(function(id) {
+	ids.forEach(function(id) {
 		let ref=Curves.db[id];
 
 		let refTemplate = $('#refTemplate').html();
@@ -570,8 +569,8 @@ function addSelectedRef(ref, colorId=-1) {
 	$("#tips").css("display", "none");
 	$("#selector .bers .active").removeClass("active");
 	$(this).addClass("active");
-	if (Curves.selectedRefs.length==Curves.max) {
-		let errorMsg = "The maximum number of curves is reached (max = "+Curves.max+")!";
+	if (Curves.colors.length==0) {
+		let errorMsg = "The maximum number of curves is reached!";
 		console.log(errorMsg);
 		alert(errorMsg);
 	} else {
@@ -701,28 +700,24 @@ function loadFilesRecursive(fileInput, i=0) {
 		let file = fileInput.files[i];
 		if (file.type=="text/plain") {
 			$("#fileDisplayArea").empty();
-			if (Curves.selectedRefs.length < Curves.max) {
-				let reader = new FileReader();
-				reader.readAsText(file);
-				reader.onloadend = function(e) {
-					let ref=text2json(reader.result, file.name);
-					if (typeof(ref.contents)!=="undefined") {
-						let id=ref.hash.value.substring(0,7);
-						if (typeof(Curves.db[id])==="undefined") {
-							Curves.db[id]=ref;
-							precomputeData(id);
-						}
-						else
-							console.log("The reference already exists in the database (id='"+id+"').");
-						addSelectedRef(Curves.db[id]);
-					} else {
-						$("#fileDisplayArea").html('<br><span class="alert alert-danger" role="alert">Incompatible file format!</span>');
+			let reader = new FileReader();
+			reader.readAsText(file);
+			reader.onloadend = function(e) {
+				let ref=text2json(reader.result, file.name);
+				if (typeof(ref.contents)!=="undefined") {
+					let id=ref.hash.value.substring(0,7);
+					if (typeof(Curves.db[id])==="undefined") {
+						Curves.db[id]=ref;
+						precomputeData(id);
 					}
-					loadFilesRecursive(fileInput, i+1);
-				};
-			} else {
-				$("#fileDisplayArea").html('<br><span class="alert alert-danger" role="alert">Too many curves displayed!</span>');
-			}
+					else
+						console.log("The reference already exists in the database (id='"+id+"').");
+					addSelectedRef(Curves.db[id]);
+				} else {
+					$("#fileDisplayArea").html('<br><span class="alert alert-danger" role="alert">Incompatible file format!</span>');
+				}
+				loadFilesRecursive(fileInput, i+1);
+			};
 		} else {
 			$("#fileDisplayArea").html('<br><span class="alert alert-danger" role="alert">File not supported!</span>');
 			loadFilesRecursive(fileInput, i+1);
@@ -898,7 +893,7 @@ function displaySelectors(except="") {
 
 function displayRefsFromURI() {
 	let paramNames = [];
-	for (let i = 0; i < Curves.max; i++)
+	for (let i = 0; i < Curves.colors.length; i++)
 		paramNames.push("curve"+i);
 	let colorId = 0;
 	paramNames.forEach(function(paramName) {
