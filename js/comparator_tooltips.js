@@ -21,6 +21,8 @@ var Tooltips = {
 	"BCJR"                 : "Bahl, Cocke, Jelinek and Raviv algorithm or Maximum A Posteriori (MAP)",
 	"BEC"                  : "Binary Erasure Channel",
 	"BER"                  : "Bit Error Rate",
+    "BFER"                 : "Bit/Frame Error Rate",
+    "BFERI"                : "Bit/Frame Error Rate Iterative (turbo demodulation)",
 	"BF"                   : "Bit Flipping",
 	"BER/FER"              : "Bit and Frame Error Rate",
 	"BPSK"                 : "Bit Phase-Shift Keying",

@@ -181,12 +181,17 @@ function precomputeData(id) {
 		ref["headers"]["list"].push({"name": "Frame size", "value" : ref.headers.Codec["Frame size (N)"]});
 		if (ref.headers.Codec["Codeword size (N_cw)"] > ref.headers.Codec["Frame size (N)"])
 			ref["headers"]["list"].push({"name": "Codeword", "value" : ref.headers.Codec["Codeword size (N_cw)"]});
-		ref["headers"]["list"].push({"name": "Code rate", "value" : ref.headers.Codec["Code rate"]});
+		ref["headers"]["list"].push({"name": "Code rate", "value" : ref.headers.Codec["Code rate"].toFixed(3)});
 		for (let j in ref.headers) {
 			if (ref.headers[j].Type) {
 				let obj = {"name": j, "value" : ref.headers[j].Type};
 				if (Tooltips[ref.headers[j].Type])
 					obj["tooltip"] = Tooltips[ref.headers[j].Type];
+				ref["headers"]["list"].push(obj);
+			} else if (ref.headers[j]["Type (D)"]) {
+				let obj = {"name": j, "value" : ref.headers[j]["Type (D)"]};
+				if (Tooltips[ref.headers[j]["Type (D)"]])
+					obj["tooltip"] = Tooltips[ref.headers[j]["Type (D)"]];
 				ref["headers"]["list"].push(obj);
 			}
 		}
