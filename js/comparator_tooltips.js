@@ -1,61 +1,161 @@
-var Tooltips = new Map();
-
-Tooltips.set("AZCW",                  "All Zero Code Words");
-Tooltips.set("AWGN",                  "Additive White Gaussian Noise");
-Tooltips.set("BEC",                   "Binary Erasure Channel");
-Tooltips.set("BSC",                   "Binary Symmetric Channel");
-Tooltips.set("PSK",                   "Phase-Shift Keying");
-Tooltips.set("QAM",                   "Quadrature Amplitude Modulation");
-Tooltips.set("PAM",                   "Pulse-Amplitude Modulation");
-Tooltips.set("OOK",                   "On-Off Keying");
-Tooltips.set("CPM",                   "Continuous Phase Modulation");
-Tooltips.set("SCMA",                  "Sparse Code Multiple Access");
-Tooltips.set("BPSK",                  "Bit Phase-Shift Keying");
-Tooltips.set("ML",                    "Maximum Likelihood");
-Tooltips.set("BP",                    "Belief Propagation");
-Tooltips.set("BP_LAYERED",            "Belief Propagation with horizontal layered scheduling");
-Tooltips.set("BP_HORIZONTAL_LAYERED", "Belief Propagation with horizontal layered scheduling");
-Tooltips.set("BP_VERTICAL_LAYERED",   "Belief Propagation with vertical layered scheduling");
-Tooltips.set("BP_FLOODING",           "Belief Propagation with flooding scheduling");
-Tooltips.set("SPA",                   "Sum-Product Algorithm");
-Tooltips.set("LSPA",                  "Logarithm Sum-Product Algorithm");
-Tooltips.set("MS",                    "Min-Sum");
-Tooltips.set("NMS",                   "Normalized Min-Sum");
-Tooltips.set("OMS",                   "Offset Min-Sum");
-Tooltips.set("ONMS",                  "Offset Normalized Min-Sum");
-Tooltips.set("AMS",                   "Approximate Min-Star");
-Tooltips.set("GALA",                  "Gallager A");
-Tooltips.set("ASCL",                  "Adaptive Successive Cancellation List");
-Tooltips.set("SC",                    "Successive Cancellation");
-Tooltips.set("SCL",                   "Successive Cancellation List");
-Tooltips.set("SCAN",                  "Soft CANcellation");
-Tooltips.set("CP",                    "Chase-Pyndiah");
-Tooltips.set("BCJR",                  "Bahl, Cocke, Jelinek and Raviv algorithm or Maximum A Posteriori (MAP)");
-Tooltips.set("BFER",                  "Bit/Frame Error Rate");
-Tooltips.set("BFERI",                 "Bit/Frame Error Rate Iterative (turbo demodulation)");
-Tooltips.set("EXIT",                  "EXtrinsic Information Transfer chart");
-Tooltips.set("ARP",                   "Almost Regular Permutation");
-Tooltips.set("CCSDS",                 "Consultative Committee for Space Data Systems");
-Tooltips.set("LTE",                   "Long Term Evolution");
-Tooltips.set("GSM",                   "Global System for Mobile Communications");
-Tooltips.set("DVB-S1",                "Digital Video Broadcasting - Satellite 1");
-Tooltips.set("DVB-S2",                "Digital Video Broadcasting - Satellite 2");
-Tooltips.set("DVB-RCS1",              "Digital Video Broadcasting - Return Channel via Satellite 1");
-Tooltips.set("DVB-RCS2",              "Digital Video Broadcasting - Return Channel via Satellite 2");
-Tooltips.set("STD",                   "Standard");
-Tooltips.set("RAND",                  "Random");
-Tooltips.set("POW2",                  "Distance between the quantified values is a power of 2");
-Tooltips.set("CUSTOM",                "Distance between the quantified values is customized");
-Tooltips.set("LDPC",                  "Low-Density Parity-Check code");
-Tooltips.set("BCH",                   "Bose, Ray-Chaudhuri and Hocquenghem code");
-Tooltips.set("RS",                    "Reed-Solomon code");
-Tooltips.set("RSC",                   "Recursive Systematic Convolutional code");
-Tooltips.set("REP",                   "Repetition code");
-Tooltips.set("RA",                    "Repeat and Accumulate code");
-Tooltips.set("POLAR",                 "Polar code");
-Tooltips.set("TURBO",                 "Parallel Turbo code (Single-Binary)");
-Tooltips.set("TURBO_DB",              "Parallel Turbo code (Double-Binary)");
-Tooltips.set("TURBO_PROD",            "Turbo Product code");
-Tooltips.set("UNCODED",               "No channel code");
-Tooltips.set("ROW_COL",               "Row Column");
-Tooltips.set("TPC",                   "Turbo Product Code");
+var Tooltips = {
+	"AFF3CT"               : "A Fast Forward Error Correction Toolbox!",
+	"AMS"                  : "Approximate Min-Star",
+	"API"                  : "Application Programming Interface",
+	"ARM"                  : "Advanced RISC (Reduced Instruction Set Computer) Machine",
+	"ARMv7"                : "Advanced RISC (Reduced Instruction Set Computer) Machine Vesion 7",
+	"ARMv8"                : "Advanced RISC (Reduced Instruction Set Computer) Machine Vesion 8",
+	"ARP"                  : "Almost Regular Permutation",
+	"ASCII"                : "American Standard Code for Information Interchange",
+	"ASCL"                 : "Adaptive Successive Cancellation List",
+	"A-SCL"                : "Adaptive Successive Cancellation List",
+	"AVX"                  : "Advanced Vector Extensions",
+	"AVX2"                 : "Advanced Vector Extensions 2",
+	"AVX-512"              : "Advanced Vector Extensions 512-bit",
+	"AVX-512F"             : "Advanced Vector Extensions 512-bit Foundation",
+	"AVX-512BW"            : "Advanced Vector Extensions 512-bit Bytes-Words",
+	"AWGN"                 : "Additive White Gaussian Noise",
+	"AZCW"                 : "All Zero Code Word",
+	"AZCWs"                : "All Zero Code Words",
+	"BCH"                  : "Bose, Ray-Chaudhuri and Hocquenghem",
+	"BCJR"                 : "Bahl, Cocke, Jelinek and Raviv algorithm or Maximum A Posteriori (MAP)",
+	"BEC"                  : "Binary Erasure Channel",
+	"BER"                  : "Bit Error Rate",
+	"BF"                   : "Bit Flipping",
+	"BER/FER"              : "Bit and Frame Error Rate",
+	"BPSK"                 : "Bit Phase-Shift Keying",
+	"BM"                   : "Berlekamp-Massey",
+	"BP_FLOODING"          : "Belief Propagation with flooding scheduling",
+	"BP_HORIZONTAL_LAYERED": "Belief Propagation with horizontal layered scheduling",
+	"BP_LAYERED"           : "Belief Propagation with horizontal layered scheduling",
+	"BP_VERTICAL_LAYERED"  : "Belief Propagation with vertical layered scheduling",
+	"BP"                   : "Belief Propagation",
+	"BP-F"                 : "Belief Propagation with Flooding scheduling",
+	"BP-HL"                : "Belief Propagation with Horizontal Layered scheduling",
+	"BP-P"                 : "Belief Propagation Peeling",
+	"BP-VL"                : "Belief Propagation with Vertical Layered scheduling",
+	"BPS"                  : "Bit Per Symbol",
+	"BSC"                  : "Binary Symmetric Channel",
+	"CA"                   : "CRC Aided",
+	"CCSDS"                : "Consultative Committee for Space Data Systems",
+	"CDF"                  : "Cumulative Distribution Function",
+	"CISC"                 : "Complex Instruction Set Computer",
+	"CN"                   : "Check Node",
+	"CNs"                  : "Check Nodes",
+	"codec"                : "coder/decoder",
+	"codecs"               : "coders/decodes",
+	"CP"                   : "Chase-Pyndiah",
+	"CPM"                  : "Continuous Phase Modulation",
+	"CPU"                  : "Central Process Unit",
+	"CPUs"                 : "Central Process Units",
+	"CRC"                  : "Cyclic Redundancy Check",
+	"CRCs"                 : "Cyclic Redundancy Checks",
+	"CSV"                  : "Comma-Separated Values",
+	"CUSTOM"               : "Distance between the quantified values is customized",
+	"DB"                   : "Double Binary",
+	"DE"                   : "Density Evolution",
+	"DVB-RCS1"             : "Digital Video Broadcasting - Return Channel via Satellite 1",
+	"DVB-RCS2"             : "Digital Video Broadcasting - Return Channel via Satellite 2",
+	"DVB-S1"               : "Digital Video Broadcasting - Satellite 1",
+	"DVB-S2"               : "Digital Video Broadcasting - Satellite 2",
+	"EP"                   : "Event Probability",
+	"EXIT"                 : "EXtrinsic Information Transfer chart",
+	"FA-SCL"               : "Fully Adaptive Successive Cancellation List",
+	"FER"                  : "Frame Error Rate",
+	"FNC"                  : "Flip aNd Check",
+	"GA"                   : "Gaussian Approximation",
+	"GALA"                 : "Gallager A",
+	"GALB"                 : "Gallager B",
+	"GALE"                 : "Gallager E",
+	"GNU"                  : "GNU's Not Unix!",
+	"GPP"                  : "General Purpose Processor",
+	"GPPs"                 : "General Purpose Processors",
+	"GPU"                  : "Graphics Processing Unit",
+	"GPUs"                 : "Graphics Processing Units",
+	"GSL"                  : "GNU Scientific Library",
+	"GSM"                  : "Global System for Mobile Communications",
+	"GUI"                  : "Graphical User Interface",
+	"icpc"                 : "Intel C++ Compiler",
+	"IEEE"                 : "Institute of Electrical and Electronics Engineers",
+	"IFL"                  : "Inter Frame Level",
+	"IRA"                  : "Irregular Repeat Accumulate",
+	"ISA"                  : "Instruction Set Architecture",
+	"ISAs"                 : "Instruction Set Architectures",
+	"JSON"                 : "JavaScript Object Notation",
+	"LDPC"                 : "Low-Density Parity-Check",
+	"LLRs"                 : "Log Likelihood Ratios",
+	"LLR"                  : "Log Likelihood Ratio",
+	"LSPA"                 : "Logarithmic Sum-Product Algorithm",
+	"LTE"                  : "Long Term Evolution",
+	"LUT"                  : "Look Up Table",
+	"LUTs"                 : "Look Up Tables",
+	"MAP"                  : "Maximum A Posteriori",
+	"MI"                   : "Mutual Information",
+	"MK"                   : "Multi-Kernel",
+	"MKL"                  : "Intel Math Kernel Library",
+	"ML"                   : "Maximum Likelihood",
+	"modem"                : "modulator/demodulator",
+	"modems"               : "modulators/demodulators",
+	"MPI"                  : "Message Passing Interface",
+	"MS"                   : "Min-Sum",
+	"MSVC"                 : "Microsoft Visual C++",
+	"MT 19937"             : "Mersenne Twister 19937",
+	"MWBF"                 : "Modified Weighted Bit Flipping",
+	"NEON"                 : "ARM SIMD instructions",
+	"NMS"                  : "Normalized Min-Sum",
+	"OMS"                  : "Offset Min-Sum",
+	"ONMS"                 : "Offset Normalized Min-Sum",
+	"OOK"                  : "On-Off Keying",
+	"OS"                   : "Operating System",
+	"OSs"                  : "Operating Systems",
+	"PA-SCL"               : "Partially Adaptive Successive Cancellation List",
+	"PAM"                  : "Pulse-Amplitude Modulation",
+	"PDF"                  : "Probability Density Function",
+	"POLAR"                : "Polar code",
+	"POW2"                 : "Distance between the quantified values is a power of 2",
+	"PRNG"                 : "Pseudo Random Number Generator",
+	"PRNGs"                : "Pseudo Random Number Generators",
+	"PSK"                  : "Phase-Shift Keying",
+	"PPBF"                 : "Probabilistic Parallel Bit-Flipping",
+	"QAM"                  : "Quadrature Amplitude Modulation",
+	"QC"                   : "Quasi-Cyclic",
+	"RA"                   : "Repeat and Accumulate",
+	"RAND"                 : "Random",
+	"REP"                  : "Repetition",
+	"RISC"                 : "Reduced Instruction Set Computer",
+	"ROP"                  : "Received Optical Power",
+	"ROW_COL"              : "Row Column",
+	"RSC"                  : "Recursive Systematic Convolutional",
+	"RSC_DB"               : "Recursive Systematic Convolutional (Double-Binary)",
+	"RS"                   : "Reed-Solomon",
+	"SC"                   : "Successive Cancellation",
+	"SCAN"                 : "Soft CANcellation",
+	"SCF"                  : "Successive Cancellation Flip",
+	"SCL"                  : "Successive Cancellation List",
+	"SCMA"                 : "Sparse Code Multiple Access",
+	"SC"                   : "Self-Corrected",
+	"SDR"                  : "Software-Defined Radio",
+	"SF"                   : "Scaling Factor",
+	"SFs"                  : "Scaling Factors",
+	"SIMD"                 : "Single Instruction Multiple Data",
+	"SNRs"                 : "Signal Noise Ratios",
+	"SNR"                  : "Signal Noise Ratio",
+	"SPC"                  : "Single Parity Check",
+	"SPA"                  : "Sum-Product Algorithm",
+	"SSE"                  : "Streaming SIMD Extensions",
+	"SSE2"                 : "Streaming SIMD Extensions 2",
+	"SSE3"                 : "Streaming SIMD Extensions 3",
+	"SSSE3"                : "Supplemental Streaming SIMD Extensions 3",
+	"SSE4.1"               : "Streaming SIMD Extensions 4.1",
+	"SSE4.2"               : "Streaming SIMD Extensions 4.2",
+	"STD"                  : "Standard",
+	"TPC"                  : "Turbo Product Code",
+	"TURBO"                : "Parallel Turbo code (Single-Binary)",
+	"TURBO_DB"             : "Parallel Turbo code (Double-Binary)",
+	"TURBO_PROD"           : "Turbo Product code",
+	"TV"                   : "Tal & Vardy",
+	"UNCODED"              : "No channel code",
+	"VN"                   : "Variable Node",
+	"VNs"                  : "Variable Nodes",
+	"WBF"                  : "Weighted Bit Flipping",
+};

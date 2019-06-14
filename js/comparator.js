@@ -179,8 +179,8 @@ function precomputeData(id) {
 		for (let j in ref.headers) {
 			if (ref.headers[j].Type) {
 				let obj = {"name": j, "value" : ref.headers[j].Type};
-				if (Tooltips.get(ref.headers[j].Type))
-					obj["tooltip"] = Tooltips.get(ref.headers[j].Type);
+				if (Tooltips[ref.headers[j].Type])
+					obj["tooltip"] = Tooltips[ref.headers[j].Type];
 				ref["headers"]["list"].push(obj);
 			}
 		}
@@ -847,8 +847,8 @@ function displaySelector(selectorName, showZeros=false) {
 		$('#'+key).on('click', function() {
 			updateSelected(key, selector.selection, selectorName);
 		});
-		if (Tooltips.get(key))
-			entry["desc"] = Tooltips.get(key);
+		if (Tooltips[key])
+			entry["desc"] = Tooltips[key];
 		entries.push(entry);
 	}
 	let selectorTemplate = $('#selectorTemplate').html();
