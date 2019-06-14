@@ -315,7 +315,10 @@ function displayRefsList(ids) {
 			});
 		}
 		$('#curve'+ref.hash.id).on('click', function() {
-			addSelectedRef(ref);
+			if ($('#curve'+ref.hash.id).hasClass("btn-primary"))
+				addSelectedRef(ref);
+			else
+				deleteSelectedRef(ref.hash.id);
 		});
 
 	});
@@ -360,9 +363,8 @@ function displaySelectedRefs(ref) {
 }
 
 function updateAddButton(id, bool) {
-	$("#curve"+id).prop('disabled', bool);
-	$("#curve"+id).empty();
-	$("#curve"+id).append(bool?'<i class="fas fa-minus"></i>':'<i class="fas fa-plus"></i>');
+	$("#curve"+id).removeClass(bool?"btn-primary":"btn-danger").addClass(bool?"btn-danger":"btn-primary");
+	$("#curve"+id+" i").removeClass(bool?"fa-plus":"fa-minus").addClass(bool?"fa-minus":"fa-plus");
 }
 
 function plotSelectedRefs() {
