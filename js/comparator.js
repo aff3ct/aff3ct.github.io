@@ -53,6 +53,12 @@ var PlotLayouts = {
 			enabled: false,
 			divId: "EP",
 		},
+		"ROP": {
+			xaxis: { title: 'Receive Optical Power (dB)', zeroline:false, hoverformat: '.e' },
+			default: true,
+			enabled: false,
+			divId: "ROP",
+		},
 	},
 	y: {
 		"BER": {
