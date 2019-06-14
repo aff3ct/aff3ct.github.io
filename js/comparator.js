@@ -54,7 +54,7 @@ var PlotLayouts = {
 			divId: "EP",
 		},
 		"ROP": {
-			xaxis: { title: 'Receive Optical Power (dB)', zeroline:false, hoverformat: '.e' },
+			xaxis: { title: 'Received Optical Power (dB)', zeroline:false, hoverformat: '.e' },
 			default: true,
 			enabled: false,
 			divId: "ROP",
