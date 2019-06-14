@@ -379,7 +379,7 @@ function plotSelectedRefs() {
 			colorsList.push(Curves.db[id].metadata.color.value);
 	});
 
-	let layoutCommon = Object.assign({}, PlotLayouts.common);
+	let layoutCommon = $.extend({}, PlotLayouts.common);
 	let xaxis = "";
 	Object.keys(PlotLayouts.x).forEach(function(key) {
 		if (PlotLayouts.x[key].enabled) {
