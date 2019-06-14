@@ -179,8 +179,8 @@ function precomputeData(id) {
 		for (let j in ref.headers) {
 			if (ref.headers[j].Type) {
 				let obj = {"name": j, "value" : ref.headers[j].Type};
-				if (tooltips.get(ref.headers[j].Type))
-					obj["tooltip"] = tooltips.get(ref.headers[j].Type);
+				if (Tooltips.get(ref.headers[j].Type))
+					obj["tooltip"] = Tooltips.get(ref.headers[j].Type);
 				ref["headers"]["list"].push(obj);
 			}
 		}
@@ -529,13 +529,13 @@ function displayAxes(ref) {
 			}
 		});
 	});
-	let xaxisSelectorTemplate = $('#axisSelectorTemplate').html();
+	let xaxisSelectorTemplate = $('#selectorTemplate').html();
 	Mustache.parse(xaxisSelectorTemplate);
-	let xaxisSelectorRendered=Mustache.render(xaxisSelectorTemplate, {axes: xaxes});
+	let xaxisSelectorRendered=Mustache.render(xaxisSelectorTemplate, {entries: xaxes});
 	$("#xaxis").append(xaxisSelectorRendered);
-	let yaxisSelectorTemplate = $('#axisSelectorTemplate').html();
+	let yaxisSelectorTemplate = $('#selectorTemplate').html();
 	Mustache.parse(yaxisSelectorTemplate);
-	let yaxisSelectorRendered=Mustache.render(yaxisSelectorTemplate, {axes: yaxes});
+	let yaxisSelectorRendered=Mustache.render(yaxisSelectorTemplate, {entries: yaxes});
 	$("#yaxis").append(yaxisSelectorRendered);
 	xaxes.forEach(function(axis){
 		$("#"+axis.divId).on("click", function () {
@@ -805,22 +805,6 @@ function updateSelected(val, selectionList, selectorName) {
 	displaySelectors(selectionList.length ? selectorName : "");
 }
 
-function displayCheckbox(length, font, endFont, disabled, selectionList, element, selectorName) {
-	let checkboxTemplate = $('#checkboxTemplate').html();
-	Mustache.parse(checkboxTemplate);
-	let checkboxRendered=Mustache.render(checkboxTemplate, {
-		element: element,
-		disabled: disabled,
-		startBlackFont: font,
-		endBlackFont: endFont,
-		length: length
-	});
-	$("#"+selectorName).append(checkboxRendered);
-	$('#'+element).on('click', function() {
-		updateSelected(element, selectionList, selectorName);
-	});
-}
-
 function displaySelector(selectorName, showZeros=false) {
 	let selector = Curves.selectors[selectorName];
 	let spath = selector.path.split("/");
@@ -853,27 +837,33 @@ function displaySelector(selectorName, showZeros=false) {
 		});
 	}
 	$("#"+selectorName).empty();
-	$("#"+selectorName).append('<ul>');
+	let entries=[];
 	for (let key in refsCounter){
-		$("#"+selectorName).append('<li>');
+		let entry={};
+		entry["name"] = key;
+		entry["divId"] = key;
+		entry["isNumber"] = true;
 		let number=refsCounter[key];
-		let black='<font color="black">';
-		let disabled='';
-		let endBlack='</font>';
-		if (showZeros) {
-			if (number) {
-				black='<font color="black">';
-				endBlack='</font>';
-			} else if (selector.selection.indexOf(key)>-1) {
-				black='<font color="black">';
-				endBlack='</font>';
-			} else
-				disabled='disabled';
-		}
-		displayCheckbox(number, black, endBlack, disabled, selector.selection, key, selectorName);
-		$("#"+selectorName).append('</li>');
+		entry["number"] = number;
+		if (showZeros && !number && !(selector.selection.indexOf(key)>-1))
+			entry["disabled"] = "disabled";
+		$('#'+key).on('click', function() {
+			updateSelected(key, selector.selection, selectorName);
+		});
+		if (Tooltips.get(key))
+			entry["desc"] = Tooltips.get(key);
+		entries.push(entry);
 	}
-	$("#"+selectorName).append('</ul>');
+	let selectorTemplate = $('#selectorTemplate').html();
+	Mustache.parse(selectorTemplate);
+	let selectorRendered=Mustache.render(selectorTemplate, {entries: entries});
+	$("#"+selectorName).append(selectorRendered);
+	$('[data-toggle="tooltip"]').tooltip();
+	entries.forEach(function(entry){
+		$("#"+entry.name).on("click", function () {
+			updateSelected(entry.name, selector.selection, selectorName);
+		});
+	});
 	$("#"+selectorName).off();
 	selector.selection.forEach(function(x) {
 		if ($("#"+x)) {

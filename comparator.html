@@ -68,7 +68,7 @@
               {{/metadata.color}}
             </div>
             <div class="col-md-10 px-0">
-              <button class="btn btn-link pr-0 pl-3" data-toggle="collapse" data-target="#collapse{{hash.id}}" aria-expanded="true" aria-controls="collapse{{hash.id}}">
+              <button class="btn btn-link pr-0 pl-3 dropdown-toggle" data-toggle="collapse" data-target="#collapse{{hash.id}}" aria-expanded="true" aria-controls="collapse{{hash.id}}">
                 {{#metadata.bigtitle}}
                   {{metadata.bigtitle}}
                 {{/metadata.bigtitle}}
@@ -92,7 +92,7 @@
           <h5 class="mb-0">
             <div class="mb-0 form-group row">
               <div class="col-sm-8">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#scollapse{{hash.id}}" aria-expanded="true" aria-controls="scollapse{{hash.id}}">
+                <button class="btn btn-link dropdown-toggle" data-toggle="collapse" data-target="#scollapse{{hash.id}}" aria-expanded="true" aria-controls="scollapse{{hash.id}}">
                   {{#metadata.bigtitle}}
                     {{metadata.bigtitle}}
                   {{/metadata.bigtitle}}
@@ -273,22 +273,25 @@
       <i class="fas fa-eye-slash"></i>
     </button>
   </script>
-  <script id="checkboxTemplate" type="x-tmpl-mustache">
-    <input type="checkbox" class="form-check-input" id="{{element}}" title="{{element}}" {{disabled}}>
-    <label class="form-check-label" for="{{element}}" title="{{element}}">
-      {{{startBlackFont}}}{{element}} ({{length}}){{{endBlackFont}}}
-    </label>
-  </script>
-  <script id="axisSelectorTemplate" type="x-tmpl-mustache">
+  <script id="selectorTemplate" type="x-tmpl-mustache">
     <ul class="typeList">
-      {{#axes}}
+      {{#entries}}
         <li>
-          <input type="checkbox" class="form-check-input" id="{{divId}}" title="{{name}}" {{checked}}>
+          <input type="checkbox" class="form-check-input" id="{{divId}}" title="{{name}}" {{checked}} {{disabled}}>
           <label class="form-check-label" for="{{divId}}" title="{{name}}">
-            <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{desc}}">{{name}}</span>
+            {{#desc}}
+              <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{desc}}">
+            {{/desc}}
+            {{name}}
+            {{#isNumber}}
+              ({{number}})
+            {{/isNumber}}
+            {{#desc}}
+              </span>
+            {{/desc}}
           </label>
         </li>
-      {{/axes}}
+      {{/entries}}
     </ul>
   </script>
 </head>
@@ -342,14 +345,14 @@
   <div id="comparator" class="shadow-lg p-3 mb-5 bg-white rounded">
     <div class="row">
       <div class="col-2 p-1" id="selector">
-        <form class="container">
+        <div class="container">
           <div class="form-group">
             <div class="dropdown">
               <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Type of code
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
-                <div id="codeType" class="form-check px-5 py-2"></div>
+                <form><div id="codeType" class="form-check px-5 py-2"></div></form>
               </div>
             </div>
           </div>
@@ -359,7 +362,7 @@
                 Frame size (N)
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownSizeButton">
-                <div id="frameSize" class="form-check px-5 py-2"></div>
+                <form><div id="frameSize" class="form-check px-5 py-2"></div></form>
               </div>
             </div>
           </div>
@@ -369,7 +372,7 @@
                 Type of modem
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
-                <div id="modemType" class="form-check px-5 py-2"></div>
+                <form><div id="modemType" class="form-check px-5 py-2"></div></form>
               </div>
             </div>
           </div>
@@ -379,7 +382,7 @@
                 Type of channel
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownchannelButton">
-                <div id="channelType" class="form-check px-5 py-2"></div>
+                <form><div id="channelType" class="form-check px-5 py-2"></div></form>
               </div>
             </div>
           </div>
@@ -405,7 +408,7 @@
                   Select x-axis
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
-                  <div id="xaxis" class="form-check px-5 py-2"></div>
+                  <form><div id="xaxis" class="form-check px-5 py-2"></div></form>
                 </div>
               </div>
             </div>
@@ -415,12 +418,12 @@
                   Select y-axis
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
-                  <div id="yaxis" class="form-check px-5 py-2"></div>
+                  <form><div id="yaxis" class="form-check px-5 py-2"></div></form>
                 </div>
               </div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
       <div class="col-2 p-1" id="refsList">
         <div class="p-3 mb-3 bg-white rounded container">
