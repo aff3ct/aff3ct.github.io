@@ -4,7 +4,7 @@ function text2jsonAFF3CT(txt, filename = "")
 	let isLegend = false;
 	let legends = [];
 	let contents = {};
-	let metadata = {source: "local"};
+	let metadata = {source: "Local"};
 	let titleSection = "";
 	let headers = {};
 	let section = {};
@@ -175,7 +175,7 @@ function text2jsonAFF3CT(txt, filename = "")
 	return dict;
 }
 
-function text2jsonKaiserslautern(txt, filename = "", fromKL = true)
+function text2jsonKaiserslautern(txt, filename = "", fromKL = false)
 {
 	let correspAxes = {
 		"Eb/N0 (dB)": "Eb/N0",
@@ -225,9 +225,14 @@ function text2jsonKaiserslautern(txt, filename = "", fromKL = true)
 	}
 
 	let legends = [];
-	let metadata = {source: "local"};
+	let metadata = {source: "Local"};
 	let headers = {};
 	let contents = {};
+
+	if (fromKL) {
+		metadata.source="Kaiserslautern";
+		metadata.kaiserslautern=true;
+	}
 
 	if (filename!="") {
 		let resCodeType=filename.match(/([A-Za-z0-9]*)\_/);
@@ -261,11 +266,11 @@ function text2jsonKaiserslautern(txt, filename = "", fromKL = true)
 			}
 			let resTitle = l.match(/(.*) Code:/);
 			if (resTitle && resTitle.length==2) {
-				metadata.title=resTitle[1];
+				metadata.title=$.trim(resTitle[1]);
 			} else {
 				let resTitle = l.match(/(.*) turbo code:/);
 				if (resTitle && resTitle.length==2)
-					metadata.title=resTitle[1];
+					metadata.title=$.trim(resTitle[1]);
 			}
 			let resCode = l.match(/\: ([^ ]*) Simulation Results/);
 			if (resCode && resCode.length==2) {
@@ -273,11 +278,14 @@ function text2jsonKaiserslautern(txt, filename = "", fromKL = true)
 			}
 		}
 		let resChannel = l.match(/Channel: (.*)/);
-		if (resChannel && resChannel.length==2)
-			headers.Channel = {"Type": resChannel[1]};
+		if (resChannel && resChannel.length==2) {
+			headers.Channel = {"Type": $.trim(resChannel[1])};
+			if (headers.Channel.Type=="AWGNC")
+				headers.Channel.Type="AWGN";
+		}
 		let resModem = l.match(/Modulation: (.*)/);
 		if (resModem && resModem.length==2)
-			headers.Modem = {"Type": resModem[1]};
+			headers.Modem = {"Type": $.trim(resModem[1])};
 
 		if (l.startsWith("Eb/N0")) {
 			let cols = l.split("  ");
@@ -343,7 +351,7 @@ function text2jsonKaiserslautern(txt, filename = "", fromKL = true)
 function text2json(txt, filename = "")
 {
 	if (txt.match(/University of Kaiserslautern/))
-		return text2jsonKaiserslautern(txt, filename, true);
+		return text2jsonKaiserslautern(txt, filename, false);
 	else
 		return text2jsonAFF3CT(txt, filename);
 }

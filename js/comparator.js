@@ -19,10 +19,11 @@ var Curves = {
 	         {id: 1, value: '#ff7f0e'},
 	         {id: 0, value: '#1f77b4'}],
 	selectors: {
-		codeType:    { selection: [], path: "headers/Codec/Type"           },
-		frameSize:   { selection: [], path: "headers/Codec/Frame size (N)" },
-		modemType:   { selection: [], path: "headers/Modem/Type"           },
-		channelType: { selection: [], path: "headers/Channel/Type"         }
+		dataBase:    { showZeros: true,  path: "metadata.source"             , selection: ["AFF3CT"] },
+		codeType:    { showZeros: true,  path: "headers.Codec.Type"          , selection: [        ] },
+		frameSize:   { showZeros: false, path: "headers.Codec.Frame size (N)", selection: [        ] },
+		modemType:   { showZeros: false, path: "headers.Modem.Type"          , selection: [        ] },
+		channelType: { showZeros: false, path: "headers.Channel.Type"        , selection: [        ] }
 	},
 	selectedRefs: [],
 };
@@ -218,10 +219,10 @@ function loadDatabase() {
 		},
 		isLocal:false
 	});
-	let databaseURL = GITLAB+"jobs/artifacts/"+BRANCH+"/raw/database.json?job=deploy-database-json";
-	$.ajax(databaseURL,
+	let AFF3CTdatabaseURL = GITLAB+"jobs/artifacts/"+BRANCH+"/raw/database.json?job=deploy-database-json";
+	$.ajax(AFF3CTdatabaseURL,
 		{error:function(xhr,status,error) {
-			logger("**Error loading \"" + databaseURL + "\"\n"+status+" "+error);
+			logger("**Error loading \"" + AFF3CTdatabaseURL + "\"\n"+status+" "+error);
 		},
 		xhr: function (){
 			let xhr = new window.XMLHttpRequest();
@@ -238,17 +239,28 @@ function loadDatabase() {
 		}
 	}).done(function(database) {
 		Curves.db = database;
-		Object.keys(Curves.db).forEach(function(key) {
-			precomputeData(key);
+		$.ajaxSetup({
+			isLocal:true
 		});
-		displaySlider();
-		displaySelectors();
-		$("#loader"    ).css("display", "none" );
-		$("#curvesTip" ).css("display", "block");
-		$("#tips"      ).css("display", "block");
-		$("#comparator").css("display", "block");
-		displayRefsFromURI();
-		displayRefsList(Object.keys(Curves.db));
+		let KLdatabaseURL="resources/comparator/kldb.json";
+		$.ajax(KLdatabaseURL,
+			{error:function(xhr,status,error) {
+				logger("**Error loading \"" + KLdatabaseURL + "\"\n"+status+" "+error);
+			}
+		}).done(function(database) {
+			$.extend(Curves.db, database);
+			Object.keys(Curves.db).forEach(function(key) {
+				precomputeData(key);
+			});
+			displaySlider();
+			displaySelectors();
+			$("#loader"    ).css("display", "none" );
+			$("#curvesTip" ).css("display", "block");
+			$("#tips"      ).css("display", "block");
+			$("#comparator").css("display", "block");
+			displayRefsFromURI();
+			displayRefsList(filters(Object.keys(Curves.db)));
+		});
 	});
 }
 
@@ -454,8 +466,8 @@ function getPermalink() {
 		let ref=Curves.db[id];
 		ref.metadata.hidden=ref.metadata.hidden?true:false;
 		let hidden=ref.metadata.hidden;
-		if (ref.metadata.source=="local") {
-			ref.metadata.source="couchdb";
+		if (ref.metadata.source=="Local") {
+			ref.metadata.source="CouchDB";
 			delete ref.metadata.local;
 			ref.metadata["couchdb"]=true;
 			ref.metadata.hidden=false;
@@ -774,15 +786,11 @@ function loadFilesRecursive(fileInput, i=0) {
 }
 
 function filterByGeneric(ids, selector) {
-	let spath = selector.path.split("/");
 	let p=[];
 	if (selector.selection.length!=0 && ids.length!=0) {
 		ids.forEach(function(id) {
 			selector.selection.forEach(function(value) {
-				if (typeof(Curves.db[id][spath[0]])!=="undefined" &&
-				    typeof(Curves.db[id][spath[0]][spath[1]])!=="undefined" &&
-				    typeof(Curves.db[id][spath[0]][spath[1]][spath[2]])!=="undefined" &&
-				    Curves.db[id][spath[0]][spath[1]][spath[2]]==value) {
+				if (deepFind(Curves.db[id],selector.path)==value) {
 					p.push(id);
 				}
 			});
@@ -791,6 +799,10 @@ function filterByGeneric(ids, selector) {
 	}
 	else
 		return ids;
+}
+
+function filterByDatabase(ids) {
+	return filterByGeneric(ids, Curves.selectors.dataBase);
 }
 
 function filterByCodeTypes(ids) {
@@ -832,13 +844,14 @@ function filterByCodeRates(ids) {
 
 function filters(ids, type="") {
 	switch(type) {
-		case "codeType"   : return filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(ids))));
-		case "frameSize"  : return filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(ids))));
-		case "modemType"  : return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(ids))));
-		case "channelType": return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(ids))));
-		case "codeRate"   : return filterByCodeTypes(filterByFrameSizes(filterByChannels(filterByModems(ids))));
+		case "dataBase"   : return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(ids)))));
+		case "codeType"   : return filterByDatabase(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(ids)))));
+		case "frameSize"  : return filterByDatabase(filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(ids)))));
+		case "modemType"  : return filterByDatabase(filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(ids)))));
+		case "channelType": return filterByDatabase(filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(ids)))));
+		case "codeRate"   : return filterByDatabase(filterByCodeTypes(filterByFrameSizes(filterByChannels(filterByModems(ids)))));
 		default:
-			return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(ids)))));
+			return filterByDatabase(filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(ids))))));
 	}
 }
 
@@ -853,15 +866,12 @@ function updateSelected(val, selectionList, selectorName) {
 
 function displaySelector(selectorName, showZeros=false) {
 	let selector = Curves.selectors[selectorName];
-	let spath = selector.path.split("/");
 	let filteredRefs=filters(Object.keys(Curves.db), selectorName);
 	let refsCounter={};
 	if (showZeros) {
 		Object.keys(Curves.db).forEach(function(id) {
-			if (typeof(Curves.db[id][spath[0]])!=="undefined" &&
-			    typeof(Curves.db[id][spath[0]][spath[1]])!=="undefined" &&
-			    typeof(Curves.db[id][spath[0]][spath[1]][spath[2]])!=="undefined") {
-				let key = Curves.db[id][spath[0]][spath[1]][spath[2]];
+			let key = deepFind(Curves.db[id], selector.path);
+			if (key) {
 				if (!refsCounter[key])
 					refsCounter[key] = 0;
 				filteredRefs.forEach(function(fid) {
@@ -872,10 +882,8 @@ function displaySelector(selectorName, showZeros=false) {
 		});
 	} else {
 		filteredRefs.forEach(function(fid) {
-			if (typeof(Curves.db[fid][spath[0]])!=="undefined" &&
-			    typeof(Curves.db[fid][spath[0]][spath[1]])!=="undefined" &&
-			    typeof(Curves.db[fid][spath[0]][spath[1]][spath[2]])!=="undefined") {
-				let key=Curves.db[fid][spath[0]][spath[1]][spath[2]];
+			let key = deepFind(Curves.db[fid], selector.path);
+			if (key) {
 				if (!refsCounter[key])
 					refsCounter[key] = 0;
 				refsCounter[key]++;
@@ -924,9 +932,8 @@ function displaySelector(selectorName, showZeros=false) {
 
 function displaySelectors(except="") {
 	Object.keys(Curves.selectors).forEach(function(selectorName) {
-		let showZeros = selectorName == "codeType" ? true : false;
 		if (except != selectorName)
-			displaySelector(selectorName, showZeros);
+			displaySelector(selectorName, Curves.selectors[selectorName].showZeros);
 	});
 }
 

@@ -185,6 +185,11 @@
   margin-left: 10px;
 }
 
+.kaiserslautern {
+  float: left;
+  height: 25px;
+}
+
 /* Selector */
 
 .selector-group > .row {

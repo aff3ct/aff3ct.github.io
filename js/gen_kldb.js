@@ -13,12 +13,13 @@ $(document).ready(function() {
 			logger("**Error loading \"" + databaseURL + "\"\n"+status+" "+error);
 		},
 	}).done(function(html) {
-		let list = html.match(/href="\/fileadmin\/chaco\/public\/results_[^.]*\.txt/g);
+		let list = html.match(/href="\/fileadmin\/chaco\/public\/results_[^"]*"/g);
 		// rm duplicates
 		let obj = {};
 		list.forEach(function(entry) {
-			let url = entry.match(/href="(\/fileadmin\/chaco\/public\/results_[^.]*\.txt)/)[1];
-			obj[url]="";
+			let url = entry.match(/href="(\/fileadmin\/chaco\/public\/results_[^"]*)"/)[1];
+			if (entry.match(/\.txt/))
+				obj[url]="";
 		});
 		let urls = Object.keys(obj);
 		let cu=0;
@@ -28,7 +29,7 @@ $(document).ready(function() {
 					logger("**Error loading \"" + databaseURL + "\"\n"+status+" "+error);
 				},
 			}).done(function(txt) {
-				let filename = url.match(/\/([^/.]*\.txt)/)[1];
+				let filename = url.match(/\/([^/]*\.txt)/)[1];
 				let ref = text2jsonKaiserslautern(txt, filename, true);
 				KLDB[ref.hash.value.substring(0,7)]=ref;
 				cu++

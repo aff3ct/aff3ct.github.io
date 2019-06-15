@@ -2,7 +2,8 @@
   "2935209": {
     "filename": "BCH_N63_K36_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K36_ML.txt",
       "title": "BCH (63,36)"
     },
@@ -17,10 +18,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -82,7 +83,8 @@
   "3944271": {
     "filename": "WRAN_384_320_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WRAN_384_320_ML.txt",
       "title": "WRAN_N384_K320_P16_R083.txt (384,320)"
     },
@@ -97,7 +99,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -162,7 +164,8 @@
   "5965485": {
     "filename": "BCH_N511_K484_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N511_K484_ML.txt",
       "title": "BCH (511,484)"
     },
@@ -177,10 +180,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -222,7 +225,8 @@
   "7462166": {
     "filename": "RM_4_8__ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rm/RM_4_8__ML.txt",
       "title": "RM(4,8) (256,163)"
     },
@@ -237,7 +241,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -278,7 +282,8 @@
   "c86bff9": {
     "filename": "WIMAX_N576_K480_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N576_K480_ML.txt",
       "title": "WIMAX (576,480)"
     },
@@ -293,10 +298,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -370,7 +375,8 @@
   "3c97203": {
     "filename": "WIMAX_N672_K560_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N672_K560_ML.txt",
       "title": "WIMAX (672,560)"
     },
@@ -385,10 +391,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -458,7 +464,8 @@
   "a4bd47a": {
     "filename": "WIMAX_N768_K640_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N768_K640_ML.txt",
       "title": "WIMAX (768,640)"
     },
@@ -473,10 +480,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -538,7 +545,8 @@
   "2c3d457": {
     "filename": "WIMAX_N864_K720_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N864_K720_ML.txt",
       "title": "WIMAX (864,720)"
     },
@@ -553,10 +561,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -622,7 +630,8 @@
   "8d20ab2": {
     "filename": "WIMAX_N960_K800_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N960_K800_ML.txt",
       "title": "WIMAX (960,800)"
     },
@@ -637,10 +646,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -682,7 +691,8 @@
   "ead871e": {
     "filename": "WIMAX_N1056_K880_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N1056_K880_ML.txt",
       "title": "WIMAX (1056,880)"
     },
@@ -697,10 +707,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -742,7 +752,8 @@
   "32f1d7b": {
     "filename": "LDPC_N96_K48_dmin10_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_N96_K48_dmin10_ML.txt",
       "title": "LDPC (96,48)"
     },
@@ -757,10 +768,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -815,10 +826,80 @@
       "value": "32f1d7b2cf75a1e0828fcc2b9a61f2c98fa6e7b3"
     }
   },
+  "1bbb11d": {
+    "filename": "wimaxlike_N192_K96_ML.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/wimaxlike_N192_K96_ML.txt",
+      "title": "wimaxlike (192,96)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "LDPC",
+        "Frame size (N)": 192,
+        "Info. bits (K)": 96,
+        "Code rate": 0.5
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        2.5,
+        3
+      ],
+      "FER": [
+        0.4658,
+        0.3021,
+        0.1449,
+        0.04103,
+        0.006004,
+        0.0008236,
+        0.000084
+      ],
+      "FE": [
+        102,
+        103,
+        101,
+        100,
+        101,
+        101,
+        84
+      ],
+      "FRA": [
+        219,
+        341,
+        697,
+        2437,
+        16823,
+        122639,
+        1000000
+      ]
+    },
+    "trace": "wimaxlike (192,96) Code: ML Simulation Results \nChannel: AWGN \nModulation: BPSK \n\nEb/N0 (dB)   FER     error frames   total frames\n  0.00,   4.658e-01,    102,             219\n  0.50,   3.021e-01,    103,             341\n  1.00,   1.449e-01,    101,             697\n  1.50,   4.103e-02,    100,            2437\n  2.00,   6.004e-03,    101,           16823\n  2.50,   8.236e-04,    101,          122639\n  3.00,   8.400e-05,     84,         1000000\n\n\nStefan Scholl and Michael Helmling \nMicroelectronic Systems Design Research Group and Optimization Research Group \nUniversity of Kaiserslautern, Germany, 2012 \n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/ \n",
+    "hash": {
+      "type": "sha1",
+      "value": "1bbb11d612a3014e84574508cc738240afe45565"
+    }
+  },
   "1b836ad": {
     "filename": "wimaxlike_N240_K120_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/wimaxlike_N240_K120_ML.txt",
       "title": "wimaxlike (240,120)"
     },
@@ -833,10 +914,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -910,7 +991,8 @@
   "ac9614e": {
     "filename": "wimaxlike_N336_K168_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/wimaxlike_N336_K168_ML.txt",
       "title": "wimaxlike (336,168)"
     },
@@ -925,10 +1007,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -974,7 +1056,8 @@
   "45b7cdd": {
     "filename": "wimaxlike_N384_K192_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/wimaxlike_N384_K192_ML.txt",
       "title": "wimaxlike (384,192)"
     },
@@ -989,10 +1072,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -1046,7 +1129,8 @@
   "a2dbd29": {
     "filename": "WRAN_N384_K256_P16_R066.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WRAN_N384_K256_P16_R066.txt",
       "title": "WRAN_N384_K256_P16_R066.txt (384,256)"
     },
@@ -1061,7 +1145,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -1114,7 +1198,8 @@
   "b2eb34c": {
     "filename": "WRAN_N384_K288_P16_R075_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WRAN_N384_K288_P16_R075_ML.txt",
       "title": "WRAN_N384_K288_P16_R075.txt (384,288)"
     },
@@ -1129,7 +1214,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -1182,7 +1267,8 @@
   "3338cfe": {
     "filename": "WRAN_N480_K360_P20_R075_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WRAN_N480_K360_P20_R075_ML.txt",
       "title": "WRAN_N480_K360_P20_R075.txt (480,360)"
     },
@@ -1197,7 +1283,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -1250,7 +1336,8 @@
   "834001b": {
     "filename": "WRAN_N480_K400_P20_R083_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WRAN_N480_K400_P20_R083_ML.txt",
       "title": "WRAN_N480_K400_P20_R083.txt (480,400)"
     },
@@ -1265,7 +1352,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -1322,7 +1409,8 @@
   "c82bbf9": {
     "filename": "WiFi_N648_K540_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WiFi_N648_K540_ML.txt",
       "title": "WiFi (648,540)"
     },
@@ -1337,10 +1425,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -1382,7 +1470,8 @@
   "4fa79eb": {
     "filename": "ccsds_N32_K16_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/ccsds_N32_K16_ML.txt",
       "title": "ccsds (32,16)"
     },
@@ -1397,10 +1486,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -1458,7 +1547,8 @@
   "ac9ac97": {
     "filename": "ccsds_N128_K64_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/ccsds_N128_K64_ML.txt",
       "title": "ccsds (128,64)"
     },
@@ -1473,10 +1563,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -1522,7 +1612,8 @@
   "7fc7fb3": {
     "filename": "Tanner_N155_K64_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/Tanner_N155_K64_ML.txt",
       "title": "Tanner_155_64.alist (155,64)"
     },
@@ -1537,7 +1628,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -1587,10 +1678,173 @@
       "value": "7fc7fb3cffbbf5d711f1e2d15048cdd32c0f5a5c"
     }
   },
+  "900373c": {
+    "filename": "MacKay_96.33.964_ML.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/MacKay_96.33.964_ML.txt",
+      "title": "MacKay_96.33.964.alist (96,48)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "LDPC",
+        "Frame size (N)": 96,
+        "Info. bits (K)": 48,
+        "Code rate": 0.5
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        3.5,
+        4,
+        4.5,
+        5,
+        5.5,
+        6
+      ],
+      "FER": [
+        0.1724,
+        0.06752,
+        0.02565,
+        0.0091,
+        0.002386,
+        0.0006214,
+        0.0001797,
+        0.0000475,
+        0.00001802,
+        0.000004103,
+        9.4e-7
+      ],
+      "FE": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        94
+      ],
+      "FRA": [
+        580,
+        1481,
+        3898,
+        10989,
+        41914,
+        160939,
+        556583,
+        2105114,
+        5549579,
+        24374790,
+        100000000
+      ]
+    },
+    "trace": "MacKay_96.33.964.alist (96,48) Code: ML Simulation Results\nChannel: AWGNC\nModulation: BPSK\n\nEb/N0 (dB)   FER     error frames   total frames\n  1.00,   1.724e-01,    100,             580\n  1.50,   6.752e-02,    100,            1481\n  2.00,   2.565e-02,    100,            3898\n  2.50,   9.100e-03,    100,           10989\n  3.00,   2.386e-03,    100,           41914\n  3.50,   6.214e-04,    100,          160939\n  4.00,   1.797e-04,    100,          556583\n  4.50,   4.750e-05,    100,         2105114\n  5.00,   1.802e-05,    100,         5549579\n  5.50,   4.103e-06,    100,        24374790\n  6.00,   9.400e-07,     94,       100000000\n\n\nStefan Scholl and Michael Helmling\nMicroelectronic Systems Design Research Group and Optimization Research Group\nUniversity of Kaiserslautern, Germany, 2014\n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/\n",
+    "hash": {
+      "type": "sha1",
+      "value": "900373ce79cca6e1ed59eb764751f9c5542f049b"
+    }
+  },
+  "5ea0f53": {
+    "filename": "MacKay_204.33.484_ML.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/MacKay_204.33.484_ML.txt",
+      "title": "MacKay_204.33.484.alist (204,102)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "LDPC",
+        "Frame size (N)": 204,
+        "Info. bits (K)": 102,
+        "Code rate": 0.5
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        3.5,
+        4,
+        4.5,
+        5
+      ],
+      "FER": [
+        0.1193,
+        0.04002,
+        0.006572,
+        0.0006019,
+        0.00007677,
+        0.00001562,
+        0.000004406,
+        0.000001103,
+        2.8e-7
+      ],
+      "FE": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        28
+      ],
+      "FRA": [
+        838,
+        2499,
+        15216,
+        166127,
+        1302564,
+        6401819,
+        22694922,
+        90621994,
+        100000000
+      ]
+    },
+    "trace": "MacKay_204.33.484.alist (204,102) Code: ML Simulation Results\nChannel: AWGNC\nModulation: BPSK\n\nEb/N0 (dB)   FER     error frames   total frames\n  1.00,   1.193e-01,    100,             838\n  1.50,   4.002e-02,    100,            2499\n  2.00,   6.572e-03,    100,           15216\n  2.50,   6.019e-04,    100,          166127\n  3.00,   7.677e-05,    100,         1302564\n  3.50,   1.562e-05,    100,         6401819\n  4.00,   4.406e-06,    100,        22694922\n  4.50,   1.103e-06,    100,        90621994\n  5.00,   2.800e-07,     28,       100000000\n\n\nStefan Scholl and Michael Helmling\nMicroelectronic Systems Design Research Group and Optimization Research Group\nUniversity of Kaiserslautern, Germany, 2014\n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/\n",
+    "hash": {
+      "type": "sha1",
+      "value": "5ea0f53373965d12a032f5df402259c0d127e38c"
+    }
+  },
   "ec1b126": {
     "filename": "LDPC_MET_N100_K50_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_MET_N100_K50_ML.txt",
       "title": "LDPC_MET (100,50)"
     },
@@ -1605,10 +1859,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -1658,7 +1912,8 @@
   "07b54d8": {
     "filename": "LDPC_MET_N120_K60_v0_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_MET_N120_K60_v0_ML.txt",
       "title": "LDPC_MET (120,60)"
     },
@@ -1673,10 +1928,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -1722,7 +1977,8 @@
   "1c3e1d0": {
     "filename": "LDPC_MET_N120_K60_v1_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_MET_N120_K60_v1_ML.txt",
       "title": "LDPC_MET (120,60)"
     },
@@ -1737,10 +1993,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -1786,7 +2042,8 @@
   "5bac8ba": {
     "filename": "LDPC_MET_N128_K64_s3_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_MET_N128_K64_s3_ML.txt",
       "title": "LDPC_MET (128,64)"
     },
@@ -1801,10 +2058,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -1846,7 +2103,8 @@
   "0e33beb": {
     "filename": "NB_LDPC_N96_K48_ML.txt",
     "metadata": {
-      "source": "local"
+      "source": "Kaiserslautern",
+      "kaiserslautern": true
     },
     "headers": {
       "Codec": {
@@ -1858,10 +2116,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -1915,7 +2173,8 @@
   "d32daa9": {
     "filename": "LDPC_N128_K64_GF256_bi_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_N128_K64_GF256_bi_ML.txt",
       "title": "LDPC_N128_K64_GF256_bi.alist (128,64)"
     },
@@ -1930,7 +2189,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -1988,10 +2247,88 @@
       "value": "d32daa98bda5c67362e29b8268f0338e96bc84ae"
     }
   },
+  "441e6cd": {
+    "filename": "LDPC_N128_K64_GF16_bi.alist_ML.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_N128_K64_GF16_bi.alist_ML.txt",
+      "title": "LDPC_N128_K64_GF16_bi.alist (128,64)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "LDPC",
+        "Frame size (N)": 128,
+        "Info. bits (K)": 64,
+        "Code rate": 0.5
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        3.5,
+        4,
+        4.5,
+        5
+      ],
+      "FER": [
+        0.1585,
+        0.05258,
+        0.01874,
+        0.004909,
+        0.001121,
+        0.0002593,
+        0.00005313,
+        0.000007678,
+        0.000001094
+      ],
+      "FE": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "FRA": [
+        631,
+        1902,
+        5336,
+        20370,
+        89232,
+        385681,
+        1882070,
+        13024297,
+        91390030
+      ]
+    },
+    "trace": "LDPC_N128_K64_GF16_bi.alist (128,64) Code: ML Simulation Results\nChannel: AWGNC\nModulation: BPSK\n\nEb/N0 (dB)   FER     error frames   total frames\n  1.00,   1.585e-01,    100,             631\n  1.50,   5.258e-02,    100,            1902\n  2.00,   1.874e-02,    100,            5336\n  2.50,   4.909e-03,    100,           20370\n  3.00,   1.121e-03,    100,           89232\n  3.50,   2.593e-04,    100,          385681\n  4.00,   5.313e-05,    100,         1882070\n  4.50,   7.678e-06,    100,        13024297\n  5.00,   1.094e-06,    100,        91390030\n\n\nStefan Scholl and Michael Helmling\nMicroelectronic Systems Design Research Group and Optimization Research Group\nUniversity of Kaiserslautern, Germany, 2014\n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/\n",
+    "hash": {
+      "type": "sha1",
+      "value": "441e6cde01de9ff9915724f582e2523dd943d99c"
+    }
+  },
   "8530d0f": {
     "filename": "LDPC_N128_K64_GF256_UNBPB_bi_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_N128_K64_GF256_UNBPB_bi_ML.txt",
       "title": "LDPC_N128_K64_GF256_UNBPB_bi.alist (128,64)"
     },
@@ -2006,7 +2343,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2055,7 +2392,8 @@
   "2795fae": {
     "filename": "LDPC_N576_K480_GF64_bi_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_N576_K480_GF64_bi_ML.txt",
       "title": "LDPC_N576_K480_GF64_bi.alist (576,480)"
     },
@@ -2070,7 +2408,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2127,7 +2465,8 @@
   "dc82f35": {
     "filename": "ArrayCode_N49_K24_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/ArrayCode_N49_K24_ML.txt",
       "title": "ArrayCode_N49_K24_r0.49.alist (49,24)"
     },
@@ -2142,7 +2481,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2203,7 +2542,8 @@
   "67b829a": {
     "filename": "ArrayCode_N49_K30_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/ArrayCode_N49_K30_ML.txt",
       "title": "ArrayCode_N49_K30_r0.61.alist (49,30)"
     },
@@ -2218,7 +2558,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2279,7 +2619,8 @@
   "b902afd": {
     "filename": "ArrayCode_N49_K36_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/ArrayCode_N49_K36_ML.txt",
       "title": "ArrayCode_N49_K36_r0.73.alist (49,36)"
     },
@@ -2294,7 +2635,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2355,7 +2696,8 @@
   "9dcabe5": {
     "filename": "ArrayCode_N49_K42_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/ArrayCode_N49_K42_ML.txt",
       "title": "ArrayCode_N49_K42_r0.86.alist (49,42)"
     },
@@ -2370,7 +2712,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2431,7 +2773,8 @@
   "6ab2f5f": {
     "filename": "Array_p11_r6_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r6_ML.txt",
       "title": "(11,6) Array LDPC Code (121,60)"
     },
@@ -2446,7 +2789,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2499,7 +2842,8 @@
   "f9caf4e": {
     "filename": "Array_p11_r5_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r5_ML.txt",
       "title": "(11,5) Array LDPC Code (121,70)"
     },
@@ -2514,7 +2858,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2575,7 +2919,8 @@
   "5a0d407": {
     "filename": "Array_p11_r4_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r4_ML.txt",
       "title": "(11,4) Array LDPC Code (121,80)"
     },
@@ -2590,7 +2935,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2643,7 +2988,8 @@
   "1105ea9": {
     "filename": "Array_p11_r3_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r3_ML.txt",
       "title": "(11,3) Array LDPC Code (121,90)"
     },
@@ -2658,7 +3004,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2723,7 +3069,8 @@
   "128ee9d": {
     "filename": "Array_p11_r2_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r2_ML.txt",
       "title": "(11,2) Array LDPC Code (121,100)"
     },
@@ -2738,7 +3085,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2815,7 +3162,8 @@
   "a26b195": {
     "filename": "Array_p11_r1_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r1_ML.txt",
       "title": "(11,1) Array LDPC Code (121,110)"
     },
@@ -2830,7 +3178,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2923,7 +3271,8 @@
   "94a616c": {
     "filename": "Array_p13_r5_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p13_r5_ML.txt",
       "title": "(13,5) Array LDPC Code (169,108)"
     },
@@ -2938,7 +3287,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -2983,7 +3332,8 @@
   "9ca27bb": {
     "filename": "Array_p13_r4_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p13_r4_ML.txt",
       "title": "(13,4) Array LDPC Code (169,120)"
     },
@@ -2998,7 +3348,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -3047,7 +3397,8 @@
   "f0c835c": {
     "filename": "Array_p13_r3_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p13_r3_ML.txt",
       "title": "(13,3) Array LDPC Code (169,132)"
     },
@@ -3062,7 +3413,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -3123,7 +3474,8 @@
   "8d8f7b0": {
     "filename": "Array_p13_r1_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p13_r1_ML.txt",
       "title": "(13,1) Array LDPC Code (169,156)"
     },
@@ -3138,7 +3490,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -3231,7 +3583,8 @@
   "52a001e": {
     "filename": "Array_p19_r4_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p19_r4_ML.txt",
       "title": "(19,4) Array LDPC Code (361,288)"
     },
@@ -3246,7 +3599,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -3299,7 +3652,8 @@
   "30e955f": {
     "filename": "Array_p19_r2_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p19_r2_ML.txt",
       "title": "(19,2) Array LDPC Code (361,324)"
     },
@@ -3314,7 +3668,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -3391,7 +3745,8 @@
   "f991490": {
     "filename": "Array_p37_r1_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p37_r1_ML.txt",
       "title": "(37,1) Array LDPC Code (1369,1332)"
     },
@@ -3406,7 +3761,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -3499,7 +3854,8 @@
   "f3bcd28": {
     "filename": "3GPP__132_40__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__132_40__turbo_code_ML.txt",
       "title": "3GPP (132,40)"
     },
@@ -3547,7 +3903,8 @@
   "cdec12d": {
     "filename": "3GPP__156_48__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__156_48__turbo_code_ML.txt",
       "title": "3GPP (156,48)"
     },
@@ -3591,7 +3948,8 @@
   "597c1af": {
     "filename": "3GPP__180_56__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__180_56__turbo_code_ML.txt",
       "title": "3GPP (180,56)"
     },
@@ -3637,7 +3995,8 @@
   "24dc5e9": {
     "filename": "3GPP__204_64__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__204_64__turbo_code_ML.txt",
       "title": "3GPP (204,64)"
     },
@@ -3681,7 +4040,8 @@
   "7cd1512": {
     "filename": "3GPP__228_72__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__228_72__turbo_code_ML.txt",
       "title": "3GPP (228,72)"
     },
@@ -3723,7 +4083,8 @@
   "3d7eb1c": {
     "filename": "3GPP__252_80__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__252_80__turbo_code_ML.txt",
       "title": "3GPP (252,80)"
     },
@@ -3769,7 +4130,8 @@
   "19847f6": {
     "filename": "3GPP__276_88__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__276_88__turbo_code_ML.txt",
       "title": "3GPP (276,88)"
     },
@@ -3815,7 +4177,8 @@
   "0b6c967": {
     "filename": "3GPP__300_96__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__300_96__turbo_code_ML.txt",
       "title": "3GPP (300,96)"
     },
@@ -3861,7 +4224,8 @@
   "b1fe961": {
     "filename": "3GPP__324_104__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__324_104__turbo_code_ML.txt",
       "title": "3GPP (324,104)"
     },
@@ -3907,7 +4271,8 @@
   "380c06f": {
     "filename": "3GPP__348_112__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__348_112__turbo_code_ML.txt",
       "title": "3GPP (348,112)"
     },
@@ -3953,7 +4318,8 @@
   "fa70e21": {
     "filename": "3GPP__372_120__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__372_120__turbo_code_ML.txt",
       "title": "3GPP (372,120)"
     },
@@ -3999,7 +4365,8 @@
   "a134cfb": {
     "filename": "3GPP__396_128__turbo_code_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__396_128__turbo_code_ML.txt",
       "title": "3GPP (396,128)"
     },
@@ -4039,7 +4406,8 @@
   "ad0f0e0": {
     "filename": "BCH_N7_K4_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N7_K4_ML.txt",
       "title": "BCH (7,4)"
     },
@@ -4054,10 +4422,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -4115,7 +4483,8 @@
   "56115e9": {
     "filename": "BCH_N15_K7_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N15_K7_ML.txt",
       "title": "BCH (15,7)"
     },
@@ -4130,10 +4499,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -4191,7 +4560,8 @@
   "ee0f503": {
     "filename": "BCH_N15_K11_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N15_K11_ML.txt",
       "title": "BCH (15,11)"
     },
@@ -4206,10 +4576,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -4267,7 +4637,8 @@
   "642aa02": {
     "filename": "BCH_N31_K11_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N31_K11_ML.txt",
       "title": "BCH (31,11)"
     },
@@ -4282,10 +4653,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -4355,7 +4726,8 @@
   "071928d": {
     "filename": "BCH_N31_K16_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N31_K16_ML.txt",
       "title": "BCH (31,16)"
     },
@@ -4370,10 +4742,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -4443,7 +4815,8 @@
   "d2a93bc": {
     "filename": "BCH_N31_K21_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N31_K21_ML.txt",
       "title": "BCH (31,21)"
     },
@@ -4458,10 +4831,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -4535,7 +4908,8 @@
   "cc9d969": {
     "filename": "BCH_N31_K26_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N31_K26_ML.txt",
       "title": "BCH (31,26)"
     },
@@ -4550,10 +4924,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -4607,7 +4981,8 @@
   "81589d8": {
     "filename": "BCH_N63_K30_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K30_ML.txt",
       "title": "BCH (63,30)"
     },
@@ -4622,10 +4997,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -4687,7 +5062,8 @@
   "fa28c57": {
     "filename": "BCH_N63_K39_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K39_ML.txt",
       "title": "BCH (63,39)"
     },
@@ -4702,10 +5078,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -4771,7 +5147,8 @@
   "e997119": {
     "filename": "BCH_N63_K45_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K45_ML.txt",
       "title": "BCH (63,45)"
     },
@@ -4786,10 +5163,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -4859,7 +5236,8 @@
   "f64302c": {
     "filename": "BCH_N63_K51_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K51_ML.txt",
       "title": "BCH (63,51)"
     },
@@ -4874,10 +5252,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -4951,7 +5329,8 @@
   "3a7aacb": {
     "filename": "BCH_N63_K57_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K57_ML.txt",
       "title": "BCH (63,57)"
     },
@@ -4966,10 +5345,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5027,7 +5406,8 @@
   "0a04eda": {
     "filename": "BCH_N127_K85_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K85_ML.txt",
       "title": "BCH (127,85)"
     },
@@ -5042,10 +5422,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5091,7 +5471,8 @@
   "a9ae679": {
     "filename": "BCH_N127_K92_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K92_ML.txt",
       "title": "BCH (127,92)"
     },
@@ -5106,10 +5487,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5151,7 +5532,8 @@
   "afe89ec": {
     "filename": "BCH_N127_K99_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K99_ML.txt",
       "title": "BCH (127,99)"
     },
@@ -5166,10 +5548,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5219,7 +5601,8 @@
   "c5450d9": {
     "filename": "BCH_N127_K106_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K106_ML.txt",
       "title": "BCH (127,106)"
     },
@@ -5234,10 +5617,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5287,7 +5670,8 @@
   "17f21a7": {
     "filename": "BCH_N127_K113_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K113_ML.txt",
       "title": "BCH (127,113)"
     },
@@ -5302,10 +5686,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5355,7 +5739,8 @@
   "c0341d3": {
     "filename": "BCH_N127_K120_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K120_ML.txt",
       "title": "BCH (127,120)"
     },
@@ -5370,10 +5755,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5431,7 +5816,8 @@
   "cd279d1": {
     "filename": "BCH_N255_K223_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N255_K223_ML.txt",
       "title": "BCH (255,223)"
     },
@@ -5446,10 +5832,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5491,7 +5877,8 @@
   "455eb39": {
     "filename": "BCH_N255_K231_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N255_K231_ML.txt",
       "title": "BCH (255,231)"
     },
@@ -5506,10 +5893,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5555,7 +5942,8 @@
   "484b5d3": {
     "filename": "BCH_N255_K239_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N255_K239_ML.txt",
       "title": "BCH (255,239)"
     },
@@ -5570,10 +5958,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5627,7 +6015,8 @@
   "e3b76ae": {
     "filename": "BCH_N255_K247_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N255_K247_ML.txt",
       "title": "BCH (255,247)"
     },
@@ -5642,10 +6031,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5707,7 +6096,8 @@
   "55e93f5": {
     "filename": "BCH_N511_K493_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N511_K493_ML.txt",
       "title": "BCH (511,493)"
     },
@@ -5722,10 +6112,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5783,7 +6173,8 @@
   "84f2d71": {
     "filename": "BCH_N511_K502_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N511_K502_ML.txt",
       "title": "BCH (511,502)"
     },
@@ -5798,10 +6189,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5871,7 +6262,8 @@
   "0870fcc": {
     "filename": "BCH_N1023_K993_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N1023_K993_ML.txt",
       "title": "BCH (1023,993)"
     },
@@ -5886,10 +6278,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5927,7 +6319,8 @@
   "c5e3b4a": {
     "filename": "BCH_N1023_K1003_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N1023_K1003_ML.txt",
       "title": "BCH (1023,1003)"
     },
@@ -5942,10 +6335,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -5987,7 +6380,8 @@
   "5aaacc5": {
     "filename": "BCH_N1023_K1013_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N1023_K1013_ML.txt",
       "title": "BCH (1023,1013)"
     },
@@ -6002,10 +6396,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6071,7 +6465,8 @@
   "9d0731a": {
     "filename": "RS_N21_K9_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N21_K9_ML.txt"
     },
     "headers": {
@@ -6085,10 +6480,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6142,7 +6537,8 @@
   "ade59ae": {
     "filename": "RS_N21_K15_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N21_K15_ML.txt"
     },
     "headers": {
@@ -6156,10 +6552,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6217,7 +6613,8 @@
   "3dd362c": {
     "filename": "RS_N60_K12_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K12_ML.txt"
     },
     "headers": {
@@ -6231,10 +6628,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6300,7 +6697,8 @@
   "b4c937b": {
     "filename": "RS_N60_K20_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K20_ML.txt"
     },
     "headers": {
@@ -6314,10 +6712,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6383,7 +6781,8 @@
   "d9f763c": {
     "filename": "RS_N60_K28_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K28_ML.txt"
     },
     "headers": {
@@ -6397,10 +6796,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6446,7 +6845,8 @@
   "d2aa7f3": {
     "filename": "RS_N60_K36_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K36_ML.txt"
     },
     "headers": {
@@ -6460,10 +6860,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6533,7 +6933,8 @@
   "4e885bd": {
     "filename": "RS_N60_K44_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K44_ML.txt"
     },
     "headers": {
@@ -6547,10 +6948,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6600,7 +7001,8 @@
   "2d67fe3": {
     "filename": "RS_N60_K52_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K52_ML.txt"
     },
     "headers": {
@@ -6614,10 +7016,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6683,7 +7085,8 @@
   "313bd54": {
     "filename": "RS_N155_K115_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K115_ML.txt"
     },
     "headers": {
@@ -6697,10 +7100,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6755,78 +7158,11 @@
       "value": "313bd543221345ff608bd6024aca35e7f3d18f06"
     }
   },
-  "1bbb11d": {
-    "filename": "wimaxlike_N192_K96_ML.txt",
-    "metadata": {
-      "source": "local",
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/wimaxlike_N192_K96_ML.txt",
-      "title": "wimaxlike (192,96)"
-    },
-    "headers": {
-      "Codec": {
-        "Type": "LDPC",
-        "Frame size (N)": 192,
-        "Info. bits (K)": 96,
-        "Code rate": 0.5
-      },
-      "Decoder": {
-        "Type (D)": "ML"
-      },
-      "Channel": {
-        "Type": "AWGN "
-      },
-      "Modem": {
-        "Type": "BPSK "
-      }
-    },
-    "contents": {
-      "Eb/N0": [
-        0,
-        0.5,
-        1,
-        1.5,
-        2,
-        2.5,
-        3
-      ],
-      "FER": [
-        0.4658,
-        0.3021,
-        0.1449,
-        0.04103,
-        0.006004,
-        0.0008236,
-        0.000084
-      ],
-      "FE": [
-        102,
-        103,
-        101,
-        100,
-        101,
-        101,
-        84
-      ],
-      "FRA": [
-        219,
-        341,
-        697,
-        2437,
-        16823,
-        122639,
-        1000000
-      ]
-    },
-    "trace": "wimaxlike (192,96) Code: ML Simulation Results \nChannel: AWGN \nModulation: BPSK \n\nEb/N0 (dB)   FER     error frames   total frames\n  0.00,   4.658e-01,    102,             219\n  0.50,   3.021e-01,    103,             341\n  1.00,   1.449e-01,    101,             697\n  1.50,   4.103e-02,    100,            2437\n  2.00,   6.004e-03,    101,           16823\n  2.50,   8.236e-04,    101,          122639\n  3.00,   8.400e-05,     84,         1000000\n\n\nStefan Scholl and Michael Helmling \nMicroelectronic Systems Design Research Group and Optimization Research Group \nUniversity of Kaiserslautern, Germany, 2012 \n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/ \n",
-    "hash": {
-      "type": "sha1",
-      "value": "1bbb11d612a3014e84574508cc738240afe45565"
-    }
-  },
   "bec6e2c": {
     "filename": "RS_N155_K125_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K125_ML.txt"
     },
     "headers": {
@@ -6840,10 +7176,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6901,7 +7237,8 @@
   "77e0802": {
     "filename": "rs_31_25_3_lp.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/rs_31_25_3_lp.txt",
       "title": "(155,125)"
     },
@@ -6916,10 +7253,10 @@
         "Type (D)": "LP/LP+ACG"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -6963,7 +7300,8 @@
   "f16e1c0": {
     "filename": "RS_N155_K135_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K135_ML.txt"
     },
     "headers": {
@@ -6977,10 +7315,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -7050,7 +7388,8 @@
   "86c7399": {
     "filename": "RS_N155_K145_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K145_ML.txt"
     },
     "headers": {
@@ -7064,10 +7403,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -7137,7 +7476,8 @@
   "f7c3e17": {
     "filename": "rs_63_55_4_lp.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/rs_63_55_4_lp.txt",
       "title": "(378,330)"
     },
@@ -7152,10 +7492,10 @@
         "Type (D)": "LP/LP+ACG"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -7198,10 +7538,659 @@
       "value": "f7c3e17735a62f1bf6376ba6fdf90bbbc4e98d45"
     }
   },
+  "b771aaf": {
+    "filename": "PolarCode_n_7__SNR_3__mu_128__rate_0.5__ML.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_7__SNR_3__mu_128__rate_0.5__ML.txt",
+      "title": "PolarCode(n=7, SNR=3, mu=128, rate=0.5) (128,64)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "POLAR",
+        "Frame size (N)": 128,
+        "Info. bits (K)": 64,
+        "Code rate": 0.5
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        3.5,
+        4
+      ],
+      "FER": [
+        0.4854,
+        0.3049,
+        0.1449,
+        0.05688,
+        0.01859,
+        0.006806,
+        0.002095,
+        0.0007447,
+        0.0001823
+      ],
+      "FE": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "FRA": [
+        206,
+        328,
+        690,
+        1758,
+        5379,
+        14693,
+        47741,
+        134291,
+        548643
+      ]
+    },
+    "trace": "PolarCode(n=7, SNR=3, mu=128, rate=0.5) (128,64) Code: ML Simulation Results\nChannel: AWGNC\nModulation: BPSK\n\nEb/N0 (dB)   FER     error frames   total frames\n  0.00,   4.854e-01,    100,             206\n  0.50,   3.049e-01,    100,             328\n  1.00,   1.449e-01,    100,             690\n  1.50,   5.688e-02,    100,            1758\n  2.00,   1.859e-02,    100,            5379\n  2.50,   6.806e-03,    100,           14693\n  3.00,   2.095e-03,    100,           47741\n  3.50,   7.447e-04,    100,          134291\n  4.00,   1.823e-04,    100,          548643\n\n\nStefan Scholl and Michael Helmling\nMicroelectronic Systems Design Research Group and Optimization Research Group\nUniversity of Kaiserslautern, Germany, 2015\n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/\n",
+    "hash": {
+      "type": "sha1",
+      "value": "b771aaf37999b763fe25753dbaef61b066cf4050"
+    }
+  },
+  "d782a37": {
+    "filename": "PolarCode_n_7__SNR_3__mu_128__rate_0.5__SCL.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_7__SNR_3__mu_128__rate_0.5__SCL.txt",
+      "title": "PolarCode(n=7, SNR=3, mu=128, rate=0.5) (128,64)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "POLAR",
+        "Frame size (N)": 128,
+        "Info. bits (K)": 64,
+        "Code rate": 0.5
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        3.5,
+        4
+      ],
+      "FER": [
+        0.5319,
+        0.3226,
+        0.1541,
+        0.06068,
+        0.01884,
+        0.007881,
+        0.002141,
+        0.0007447,
+        0.0001823
+      ],
+      "FE": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "FRA": [
+        188,
+        310,
+        649,
+        1648,
+        5308,
+        12689,
+        46713,
+        134291,
+        548643
+      ]
+    },
+    "trace": "PolarCode(n=7, SNR=3, mu=128, rate=0.5) (128,64) Code: ML Simulation Results\nChannel: AWGNC\nModulation: BPSK\n\nEb/N0 (dB)   FER     error frames   total frames\n  0.00,   5.319e-01,    100,             188\n  0.50,   3.226e-01,    100,             310\n  1.00,   1.541e-01,    100,             649\n  1.50,   6.068e-02,    100,            1648\n  2.00,   1.884e-02,    100,            5308\n  2.50,   7.881e-03,    100,           12689\n  3.00,   2.141e-03,    100,           46713\n  3.50,   7.447e-04,    100,          134291\n  4.00,   1.823e-04,    100,          548643\n\n\nStefan Scholl and Michael Helmling\nMicroelectronic Systems Design Research Group and Optimization Research Group\nUniversity of Kaiserslautern, Germany, 2015\n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/\n",
+    "hash": {
+      "type": "sha1",
+      "value": "d782a372d594cc2234e5d8be5598fca1b8eab782"
+    }
+  },
+  "f003522": {
+    "filename": "PolarCode_n_8__SNR_3__mu_128__rate_0.63671875__ML.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_8__SNR_3__mu_128__rate_0.63671875__ML.txt",
+      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.63671875) (256,163)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "POLAR",
+        "Frame size (N)": 256,
+        "Info. bits (K)": 163,
+        "Code rate": 0.63671875
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        3.5,
+        4,
+        4.5,
+        5
+      ],
+      "FER": [
+        0.8696,
+        0.7042,
+        0.4587,
+        0.1912,
+        0.06053,
+        0.02074,
+        0.006079,
+        0.001539,
+        0.0003931,
+        0.000092,
+        0.00001
+      ],
+      "FE": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        92,
+        10
+      ],
+      "FRA": [
+        115,
+        142,
+        218,
+        523,
+        1652,
+        4821,
+        16451,
+        64985,
+        254400,
+        1000000,
+        1000000
+      ]
+    },
+    "trace": "PolarCode(n=8, SNR=3, mu=128, rate=0.63671875) (256,163) Code: ML Simulation Results\nChannel: AWGNC\nModulation: BPSK\n\nEb/N0 (dB)   FER     error frames   total frames\n  0.00,   8.696e-01,    100,             115\n  0.50,   7.042e-01,    100,             142\n  1.00,   4.587e-01,    100,             218\n  1.50,   1.912e-01,    100,             523\n  2.00,   6.053e-02,    100,            1652\n  2.50,   2.074e-02,    100,            4821\n  3.00,   6.079e-03,    100,           16451\n  3.50,   1.539e-03,    100,           64985\n  4.00,   3.931e-04,    100,          254400\n  4.50,   9.200e-05,     92,         1000000\n  5.00,   1.000e-05,     10,         1000000\n\n\nStefan Scholl and Michael Helmling\nMicroelectronic Systems Design Research Group and Optimization Research Group\nUniversity of Kaiserslautern, Germany, 2015\n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/\n",
+    "hash": {
+      "type": "sha1",
+      "value": "f0035220a1c4c3f9007e72c463a0e184fbd98c0f"
+    }
+  },
+  "d202edb": {
+    "filename": "PolarCode_n_8__SNR_3__mu_128__rate_0.63671875__SCL.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_8__SNR_3__mu_128__rate_0.63671875__SCL.txt",
+      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.63671875) (256,163)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "POLAR",
+        "Frame size (N)": 256,
+        "Info. bits (K)": 163,
+        "Code rate": 0.63671875
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        3.5,
+        4,
+        4.5,
+        5
+      ],
+      "FER": [
+        0.9091,
+        0.7874,
+        0.5495,
+        0.2421,
+        0.07143,
+        0.02229,
+        0.006318,
+        0.001539,
+        0.0003931,
+        0.000092,
+        0.00001
+      ],
+      "FE": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        92,
+        10
+      ],
+      "FRA": [
+        110,
+        127,
+        182,
+        413,
+        1400,
+        4487,
+        15827,
+        64985,
+        254400,
+        1000000,
+        1000000
+      ]
+    },
+    "trace": "PolarCode(n=8, SNR=3, mu=128, rate=0.63671875) (256,163) Code: ML Simulation Results\nChannel: AWGNC\nModulation: BPSK\n\nEb/N0 (dB)   FER     error frames   total frames\n  0.00,   9.091e-01,    100,             110\n  0.50,   7.874e-01,    100,             127\n  1.00,   5.495e-01,    100,             182\n  1.50,   2.421e-01,    100,             413\n  2.00,   7.143e-02,    100,            1400\n  2.50,   2.229e-02,    100,            4487\n  3.00,   6.318e-03,    100,           15827\n  3.50,   1.539e-03,    100,           64985\n  4.00,   3.931e-04,    100,          254400\n  4.50,   9.200e-05,     92,         1000000\n  5.00,   1.000e-05,     10,         1000000\n\n\nStefan Scholl and Michael Helmling\nMicroelectronic Systems Design Research Group and Optimization Research Group\nUniversity of Kaiserslautern, Germany, 2015\n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/\n",
+    "hash": {
+      "type": "sha1",
+      "value": "d202edbb6f6fe2cc50f2fdaca27b1689b422c8cc"
+    }
+  },
+  "bb68273": {
+    "filename": "PolarCode_n_8_rate_0.85546875__ML.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_8_rate_0.85546875__ML.txt",
+      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.85546875) (256,219)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "POLAR",
+        "Frame size (N)": 256,
+        "Info. bits (K)": 219,
+        "Code rate": 0.85546875
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        3.5,
+        4,
+        4.5,
+        5
+      ],
+      "FER": [
+        1,
+        1,
+        0.9901,
+        0.9434,
+        0.8475,
+        0.5917,
+        0.3077,
+        0.1078,
+        0.04677,
+        0.01447,
+        0.003998
+      ],
+      "FE": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "FRA": [
+        100,
+        100,
+        101,
+        106,
+        118,
+        169,
+        325,
+        928,
+        2138,
+        6912,
+        25014
+      ]
+    },
+    "trace": "PolarCode(n=8, SNR=3, mu=128, rate=0.85546875) (256,219) Code: ML Simulation Results\nChannel: AWGNC\nModulation: BPSK\n\nEb/N0 (dB)   FER     error frames   total frames\n  0.00,   1.000e+00,    100,             100\n  0.50,   1.000e+00,    100,             100\n  1.00,   9.901e-01,    100,             101\n  1.50,   9.434e-01,    100,             106\n  2.00,   8.475e-01,    100,             118\n  2.50,   5.917e-01,    100,             169\n  3.00,   3.077e-01,    100,             325\n  3.50,   1.078e-01,    100,             928\n  4.00,   4.677e-02,    100,            2138\n  4.50,   1.447e-02,    100,            6912\n  5.00,   3.998e-03,    100,           25014\n\n\nStefan Scholl and Michael Helmling\nMicroelectronic Systems Design Research Group and Optimization Research Group\nUniversity of Kaiserslautern, Germany, 2015\n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/\n",
+    "hash": {
+      "type": "sha1",
+      "value": "bb68273823f20cedc0b483e70c38c64e57a17c9f"
+    }
+  },
+  "736c5ac": {
+    "filename": "PolarCode_n_8_rate_0.85546875__SCL.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_8_rate_0.85546875__SCL.txt",
+      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.85546875) (256,219)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "POLAR",
+        "Frame size (N)": 256,
+        "Info. bits (K)": 219,
+        "Code rate": 0.85546875
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        3.5,
+        4,
+        4.5,
+        5
+      ],
+      "FER": [
+        1,
+        1,
+        0.9901,
+        0.9434,
+        0.8475,
+        0.6024,
+        0.3077,
+        0.1078,
+        0.04677,
+        0.01447,
+        0.003998
+      ],
+      "FE": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "FRA": [
+        100,
+        100,
+        101,
+        106,
+        118,
+        166,
+        325,
+        928,
+        2138,
+        6912,
+        25014
+      ]
+    },
+    "trace": "PolarCode(n=8, SNR=3, mu=128, rate=0.85546875) (256,219) Code: ML Simulation Results\nChannel: AWGNC\nModulation: BPSK\n\nEb/N0 (dB)   FER     error frames   total frames\n  0.00,   1.000e+00,    100,             100\n  0.50,   1.000e+00,    100,             100\n  1.00,   9.901e-01,    100,             101\n  1.50,   9.434e-01,    100,             106\n  2.00,   8.475e-01,    100,             118\n  2.50,   6.024e-01,    100,             166\n  3.00,   3.077e-01,    100,             325\n  3.50,   1.078e-01,    100,             928\n  4.00,   4.677e-02,    100,            2138\n  4.50,   1.447e-02,    100,            6912\n  5.00,   3.998e-03,    100,           25014\n\n\nStefan Scholl and Michael Helmling\nMicroelectronic Systems Design Research Group and Optimization Research Group\nUniversity of Kaiserslautern, Germany, 2015\n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/\n",
+    "hash": {
+      "type": "sha1",
+      "value": "736c5acb0a73fcaed37ed874e7a935bf0fb3091b"
+    }
+  },
+  "55be7d0": {
+    "filename": "PolarCode_n_9_rate_0.91015625__ML.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_9_rate_0.91015625__ML.txt",
+      "title": "PolarCode(n=9, SNR=3, mu=128, rate=0.91015625) (512,466)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "POLAR",
+        "Frame size (N)": 512,
+        "Info. bits (K)": 466,
+        "Code rate": 0.91015625
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        2,
+        2.5,
+        3,
+        3.5,
+        4,
+        4.5,
+        5,
+        5.5,
+        6
+      ],
+      "FER": [
+        1,
+        0.9524,
+        0.7692,
+        0.4785,
+        0.1786,
+        0.05647,
+        0.01702,
+        0.004154,
+        0.00099
+      ],
+      "FE": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        99
+      ],
+      "FRA": [
+        100,
+        105,
+        130,
+        209,
+        560,
+        1771,
+        5876,
+        24073,
+        100000
+      ]
+    },
+    "trace": "PolarCode(n=9, SNR=3, mu=128, rate=0.91015625) (512,466) Code: ML Simulation Results\nChannel: AWGNC\nModulation: BPSK\n\nEb/N0 (dB)   FER     error frames   total frames\n  2.00,   1.000e+00,    100,             100\n  2.50,   9.524e-01,    100,             105\n  3.00,   7.692e-01,    100,             130\n  3.50,   4.785e-01,    100,             209\n  4.00,   1.786e-01,    100,             560\n  4.50,   5.647e-02,    100,            1771\n  5.00,   1.702e-02,    100,            5876\n  5.50,   4.154e-03,    100,           24073\n  6.00,   9.900e-04,     99,          100000\n\n\nStefan Scholl and Michael Helmling\nMicroelectronic Systems Design Research Group and Optimization Research Group\nUniversity of Kaiserslautern, Germany, 2015\n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/\n",
+    "hash": {
+      "type": "sha1",
+      "value": "55be7d0337fe075be97971d9343edd4df40350f7"
+    }
+  },
+  "0a1488d": {
+    "filename": "PolarCode_n_9_rate_0.91015625__SCL.txt",
+    "metadata": {
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_9_rate_0.91015625__SCL.txt",
+      "title": "PolarCode(n=9, SNR=3, mu=128, rate=0.91015625) (512,466)"
+    },
+    "headers": {
+      "Codec": {
+        "Type": "POLAR",
+        "Frame size (N)": 512,
+        "Info. bits (K)": 466,
+        "Code rate": 0.91015625
+      },
+      "Decoder": {
+        "Type (D)": "ML"
+      },
+      "Channel": {
+        "Type": "AWGN"
+      },
+      "Modem": {
+        "Type": "BPSK"
+      }
+    },
+    "contents": {
+      "Eb/N0": [
+        2,
+        2.5,
+        3,
+        3.5,
+        4,
+        4.5,
+        5,
+        5.5,
+        6
+      ],
+      "FER": [
+        1,
+        0.9524,
+        0.7752,
+        0.4785,
+        0.1786,
+        0.05647,
+        0.01702,
+        0.004154,
+        0.0009978
+      ],
+      "FE": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "FRA": [
+        100,
+        105,
+        129,
+        209,
+        560,
+        1771,
+        5876,
+        24073,
+        100221
+      ]
+    },
+    "trace": "PolarCode(n=9, SNR=3, mu=128, rate=0.91015625) (512,466) Code: ML Simulation Results\nChannel: AWGNC\nModulation: BPSK\n\nEb/N0 (dB)   FER     error frames   total frames\n  2.00,   1.000e+00,    100,             100\n  2.50,   9.524e-01,    100,             105\n  3.00,   7.752e-01,    100,             129\n  3.50,   4.785e-01,    100,             209\n  4.00,   1.786e-01,    100,             560\n  4.50,   5.647e-02,    100,            1771\n  5.00,   1.702e-02,    100,            5876\n  5.50,   4.154e-03,    100,           24073\n  6.00,   9.978e-04,    100,          100221\n\n\nStefan Scholl and Michael Helmling\nMicroelectronic Systems Design Research Group and Optimization Research Group\nUniversity of Kaiserslautern, Germany, 2015\n\nThis file was downloaded from: http://www.uni-kl.de/channel-codes/\n",
+    "hash": {
+      "type": "sha1",
+      "value": "0a1488d1c280c95adc2a24dc8d6d97d68095d573"
+    }
+  },
   "ff0841d": {
     "filename": "RM_3_7__ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rm/RM_3_7__ML.txt",
       "title": "RM(3,7) (128,64)"
     },
@@ -7216,7 +8205,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -7273,7 +8262,8 @@
   "aa1be9b": {
     "filename": "RM_5_8__ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rm/RM_5_8__ML.txt",
       "title": "RM(5,8) (256,219)"
     },
@@ -7288,7 +8278,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -7357,7 +8347,8 @@
   "cc14830": {
     "filename": "RM_6_9__ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rm/RM_6_9__ML.txt",
       "title": "RM(6,9) (512,466)"
     },
@@ -7372,7 +8363,7 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGNC"
+        "Type": "AWGN"
       },
       "Modem": {
         "Type": "BPSK"
@@ -7429,7 +8420,8 @@
   "71e37ce": {
     "filename": "Golay_N24_K12_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_others/Golay_N24_K12_ML.txt",
       "title": "Golay (24,12)"
     },
@@ -7444,10 +8436,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
@@ -7533,7 +8525,8 @@
   "3f0ff3f": {
     "filename": "Cyclic_N48_K24_ML.txt",
     "metadata": {
-      "source": "local",
+      "source": "Kaiserslautern",
+      "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_others/Cyclic_N48_K24_ML.txt",
       "title": "Cyclic (48,24)"
     },
@@ -7548,10 +8541,10 @@
         "Type (D)": "ML"
       },
       "Channel": {
-        "Type": "AWGN "
+        "Type": "AWGN"
       },
       "Modem": {
-        "Type": "BPSK "
+        "Type": "BPSK"
       }
     },
     "contents": {
