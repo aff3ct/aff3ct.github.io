@@ -142,6 +142,10 @@ function precomputeData(id) {
 			let subtitle=(res && res.length>=3)?$.trim(res[2]):"";
 			ref["metadata"]["bigtitle"] = bigtitle;
 			ref["metadata"]["subtitle"] = subtitle;
+
+			let maxBigTitleSize=20;
+			if (bigtitle.length > maxBigTitleSize)
+				ref["metadata"]["shortbigtitle"]=bigtitle.substring(0,maxBigTitleSize-3)+"...";
 		}
 		if (typeof(ref.metadata.command)!=="undefined") {
 			let cmd = ref.metadata.command;

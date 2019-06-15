@@ -70,7 +70,12 @@
             <div class="col-md-10 px-0">
               <button class="btn btn-link pr-0 pl-3 dropdown-toggle" data-toggle="collapse" data-target="#collapse{{hash.id}}" aria-expanded="true" aria-controls="collapse{{hash.id}}">
                 {{#metadata.bigtitle}}
-                  {{metadata.bigtitle}}
+                  {{#metadata.shortbigtitle}}
+                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{metadata.bigtitle}}">{{metadata.shortbigtitle}}</span>
+                  {{/metadata.shortbigtitle}}
+                  {{^metadata.shortbigtitle}}
+                    {{metadata.bigtitle}}
+                  {{/metadata.shortbigtitle}}
                 {{/metadata.bigtitle}}
                 {{^metadata.bigtitle}}
                   Undefined
@@ -99,7 +104,12 @@
               <div class="col-sm-8">
                 <button class="btn btn-link dropdown-toggle" data-toggle="collapse" data-target="#scollapse{{hash.id}}" aria-expanded="true" aria-controls="scollapse{{hash.id}}">
                   {{#metadata.bigtitle}}
-                    {{metadata.bigtitle}}
+                    {{#metadata.shortbigtitle}}
+                      <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{metadata.bigtitle}}">{{metadata.shortbigtitle}}</span>
+                    {{/metadata.shortbigtitle}}
+                    {{^metadata.shortbigtitle}}
+                      {{metadata.bigtitle}}
+                    {{/metadata.shortbigtitle}}
                   {{/metadata.bigtitle}}
                   {{^metadata.bigtitle}}
                     Undefined
