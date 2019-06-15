@@ -137,11 +137,9 @@ function precomputeData(id) {
 	}
 	if (typeof(ref.metadata)!=="undefined") {
 		if (typeof(ref.metadata.title)!=="undefined") {
-			let regex = /([a-z0-9A-Z.\-,\/=\s;\+:]+\([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/g;
-			let res = ref.metadata.title.match(regex);
-			regex.test(ref.metadata.title);
-			let bigtitle=(res)?$.trim(RegExp.$1):ref.metadata.title;
-			let subtitle=(res)?$.trim(RegExp.$2):"";
+			let res = ref.metadata.title.match(/([a-z0-9A-Z.\-,\/=\s;\+:]+\ \([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/);
+			let bigtitle=(res && res.length>=2)?$.trim(res[1]):ref.metadata.title;
+			let subtitle=(res && res.length>=3)?$.trim(res[2]):"";
 			ref["metadata"]["bigtitle"] = bigtitle;
 			ref["metadata"]["subtitle"] = subtitle;
 		}
@@ -754,6 +752,7 @@ function loadFilesRecursive(fileInput, i=0) {
 					if (typeof(Curves.db[id])==="undefined") {
 						Curves.db[id]=ref;
 						precomputeData(id);
+						displaySelectors();
 					}
 					else
 						console.log("The reference already exists in the database (id='"+id+"').");
@@ -900,6 +899,7 @@ function displaySelector(selectorName, showZeros=false) {
 	let selectorTemplate = $('#selectorTemplate').html();
 	Mustache.parse(selectorTemplate);
 	let selectorRendered=Mustache.render(selectorTemplate, {entries: entries});
+	$("#"+selectorName).empty();
 	$("#"+selectorName).append(selectorRendered);
 	$('[data-toggle="tooltip"]').tooltip();
 	entries.forEach(function(entry){
@@ -948,6 +948,7 @@ function displayRefsFromURI() {
 					Curves.db[id]=ref;
 					Curves.db[id].metadata.hidden=hidden?true:false;
 					precomputeData(id);
+					displaySelectors();
 					addSelectedRef(ref, cid, xaxisEnabled, yaxesEnabled);
 				}).catch(function (err) {
 					console.log("PouchDB: get fail");

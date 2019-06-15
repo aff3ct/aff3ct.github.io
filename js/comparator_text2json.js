@@ -1,4 +1,4 @@
-function text2json(txt, filename = "")
+function text2jsonAFF3CT(txt, filename = "")
 {
 	let isTrace = false;
 	let isLegend = false;
@@ -162,7 +162,7 @@ function text2json(txt, filename = "")
 	let hashMaker = sha1.create();
 	hashMaker.update(txt);
 	hashMaker.hex();
-	hash = {"type" : "sha1", "value" : hashMaker.hex()};
+	let hash = {"type" : "sha1", "value" : hashMaker.hex()};
 
 	let dict = {};
 	if (filename != ""            ) dict["filename"] = filename;
@@ -173,4 +173,177 @@ function text2json(txt, filename = "")
 	                                dict["hash"    ] = hash;
 
 	return dict;
+}
+
+function text2jsonKaiserslautern(txt, filename = "", fromKL = true)
+{
+	let correspAxes = {
+		"Eb/N0 (dB)": "Eb/N0",
+		"FER": "FER",
+		"BER": "BER",
+		"error frames": "FE",
+		"total frames": "FRA",
+	};
+
+	let correspCodeType = {
+		"LDPC": {
+			corresp: ["LDPC", "WIMAX", "wimaxlike", "WRAN", "WiFi", "ccsds", "Tanner", "MacKay"],
+			dir: "results_ldpc",
+		},
+		"LDPC_AR": {
+			corresp: ["ArrayCode", "Array"],
+			dir: "results_array",
+		},
+		"TURBO": {
+			corresp: ["3GPP"],
+			dir: "results_turbo",
+		},
+		"POLAR": {
+			corresp: ["PolarCode"],
+			dir: "results_polar",
+		},
+		"BCH": {
+			corresp: ["BCH"],
+			dir: "results_bch",
+		},
+		"RS": {
+			corresp: ["RS", "rs"],
+			dir: "results_rs",
+		},
+		"RM": {
+			corresp: ["RM"],
+			dir: "results_rm",
+		},
+		"GOLAY": {
+			corresp: ["Golay"],
+			dir: "results_others",
+		},
+		"CYCLIC": {
+			corresp: ["Cyclic"],
+			dir: "results_others",
+		},
+	}
+
+	let legends = [];
+	let metadata = {source: "local"};
+	let headers = {};
+	let contents = {};
+
+	if (filename!="") {
+		let resCodeType=filename.match(/([A-Za-z0-9]*)\_/);
+		if (resCodeType && resCodeType.length==2) {
+			Object.keys(correspCodeType).forEach(function(key) {
+				correspCodeType[key].corresp.forEach(function(str) {
+					if (resCodeType[1]==str) {
+						headers.Codec = {"Type": key};
+						if (fromKL)
+							metadata.url="https://www.uni-kl.de/fileadmin/chaco/public/"+correspCodeType[key].dir+"/"+filename;
+					}
+				});
+			});
+		}
+	}
+
+	let lines = txt.split("\n");
+	for (let ln = 0; ln < lines.length; ln++)
+	{
+		let l = lines[ln];
+		if (ln==0) {
+			let resNK = l.match(/\ \(([0-9]*)\,([0-9]*)\)/);
+			if (!resNK)
+				resNK = l.match(/^\(([0-9]*)\,([0-9]*)\)/);
+			if (resNK && resNK.length==3) {
+				let N = parseInt(resNK[1]);
+				let K = parseInt(resNK[2]);
+				let coderate = K/N;
+				if (!headers.Codec) headers.Codec={};
+				$.extend(headers.Codec, {"Frame size (N)": N, "Info. bits (K)": K, "Code rate": coderate});
+			}
+			let resTitle = l.match(/(.*) Code:/);
+			if (resTitle && resTitle.length==2) {
+				metadata.title=resTitle[1];
+			} else {
+				let resTitle = l.match(/(.*) turbo code:/);
+				if (resTitle && resTitle.length==2)
+					metadata.title=resTitle[1];
+			}
+			let resCode = l.match(/\: ([^ ]*) Simulation Results/);
+			if (resCode && resCode.length==2) {
+				headers.Decoder = {"Type (D)": $.trim(resCode[1])};
+			}
+		}
+		let resChannel = l.match(/Channel: (.*)/);
+		if (resChannel && resChannel.length==2)
+			headers.Channel = {"Type": resChannel[1]};
+		let resModem = l.match(/Modulation: (.*)/);
+		if (resModem && resModem.length==2)
+			headers.Modem = {"Type": resModem[1]};
+
+		if (l.startsWith("Eb/N0")) {
+			let cols = l.split("  ");
+			if (cols.length > 1) {
+				legends = [];
+				cols.forEach(function(col) {
+					if (correspAxes[$.trim(col)])
+						legends.push(correspAxes[$.trim(col)]);
+				});
+			} else // hack for turbo codes
+				legends = ["Eb/N0", "FER"];
+		}
+
+		let delims = [",", " "];
+		let wrongSplitter=true;
+		let d = 0;
+		while (legends.length && wrongSplitter && d<delims.length) {
+			let cols = l.split(delims[d++]);
+			let c=0;
+			while (cols && c<cols.length) {
+				if (cols[c]=="")
+					cols.splice(c,1);
+				else
+					c++;
+			}
+			if (cols && cols.length==legends.length && !isNaN(parseInt(cols[0]))) {
+				wrongSplitter=false;
+				for (let c=0; c<cols.length; c++) {
+					let key = legends[c];
+					let val = $.trim(cols[c]);
+					let li = parseInt(val);
+					if (isNaN(li))
+						li = val;
+					else {
+						let li2 = parseFloat(val);
+						li = (li - li2 != 0)?li2:li;
+					}
+					if (key in contents)
+						contents[key].push(li);
+					else
+						contents[key] = [li];
+				}
+			}
+		}
+	}
+
+	let hashMaker = sha1.create();
+	hashMaker.update(txt);
+	hashMaker.hex();
+	let hash = {"type" : "sha1", "value" : hashMaker.hex()};
+
+	let dict = {};
+	if (filename != ""            ) dict["filename"] = filename;
+	if (!$.isEmptyObject(metadata)) dict["metadata"] = metadata;
+	if (!$.isEmptyObject(headers )) dict["headers" ] = headers;
+	if (!$.isEmptyObject(contents)) dict["contents"] = contents;
+	                                dict["trace"   ] = txt;
+	                                dict["hash"    ] = hash;
+
+	return dict;
+}
+
+function text2json(txt, filename = "")
+{
+	if (txt.match(/University of Kaiserslautern/))
+		return text2jsonKaiserslautern(txt, filename, true);
+	else
+		return text2jsonAFF3CT(txt, filename);
 }
