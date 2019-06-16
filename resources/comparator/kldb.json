@@ -3,9 +3,10 @@
     "filename": "BCH_N63_K36_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (63,36)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K36_ML.txt",
-      "title": "BCH (63,36)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_63_36_5_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -84,9 +85,10 @@
     "filename": "WRAN_384_320_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WRAN_N384_K320_P16_R083.txt (384,320)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WRAN_384_320_ML.txt",
-      "title": "WRAN_N384_K320_P16_R083.txt (384,320)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wran/WRAN_N384_K320_P16_R083.txt"
     },
     "headers": {
       "Codec": {
@@ -165,9 +167,10 @@
     "filename": "BCH_N511_K484_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (511,484)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N511_K484_ML.txt",
-      "title": "BCH (511,484)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_511_484_3_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -226,9 +229,10 @@
     "filename": "RM_4_8__ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "RM(4,8) (256,163)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rm/RM_4_8__ML.txt",
-      "title": "RM(4,8) (256,163)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rm/RM_4_8_.txt"
     },
     "headers": {
       "Codec": {
@@ -283,9 +287,10 @@
     "filename": "WIMAX_N576_K480_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WIMAX (576,480)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N576_K480_ML.txt",
-      "title": "WIMAX (576,480)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wimax/wimax_576_0.83.alist"
     },
     "headers": {
       "Codec": {
@@ -376,9 +381,10 @@
     "filename": "WIMAX_N672_K560_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WIMAX (672,560)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N672_K560_ML.txt",
-      "title": "WIMAX (672,560)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wimax/wimax_672_0.83.alist"
     },
     "headers": {
       "Codec": {
@@ -465,9 +471,10 @@
     "filename": "WIMAX_N768_K640_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WIMAX (768,640)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N768_K640_ML.txt",
-      "title": "WIMAX (768,640)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wimax/wimax_768_0.83.alist"
     },
     "headers": {
       "Codec": {
@@ -546,9 +553,10 @@
     "filename": "WIMAX_N864_K720_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WIMAX (864,720)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N864_K720_ML.txt",
-      "title": "WIMAX (864,720)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wimax/wimax_864_0.83.alist"
     },
     "headers": {
       "Codec": {
@@ -631,9 +639,10 @@
     "filename": "WIMAX_N960_K800_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WIMAX (960,800)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N960_K800_ML.txt",
-      "title": "WIMAX (960,800)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wimax/wimax_960_0.83.alist"
     },
     "headers": {
       "Codec": {
@@ -692,9 +701,10 @@
     "filename": "WIMAX_N1056_K880_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WIMAX (1056,880)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WIMAX_N1056_K880_ML.txt",
-      "title": "WIMAX (1056,880)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wimax/wimax_1056_0.83.alist"
     },
     "headers": {
       "Codec": {
@@ -753,9 +763,10 @@
     "filename": "LDPC_N96_K48_dmin10_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "LDPC (96,48)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_N96_K48_dmin10_ML.txt",
-      "title": "LDPC (96,48)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_misc/LDPC_N96_K48_P8_set0_dmin10.txt"
     },
     "headers": {
       "Codec": {
@@ -830,9 +841,10 @@
     "filename": "wimaxlike_N192_K96_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "wimaxlike (192,96)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/wimaxlike_N192_K96_ML.txt",
-      "title": "wimaxlike (192,96)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wimaxlike/wimaxlike_N192_K96_P8_set0.txt"
     },
     "headers": {
       "Codec": {
@@ -899,9 +911,10 @@
     "filename": "wimaxlike_N240_K120_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "wimaxlike (240,120)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/wimaxlike_N240_K120_ML.txt",
-      "title": "wimaxlike (240,120)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wimaxlike/wimaxlike_N240_K120_P10_set0.txt"
     },
     "headers": {
       "Codec": {
@@ -992,9 +1005,10 @@
     "filename": "wimaxlike_N336_K168_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "wimaxlike (336,168)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/wimaxlike_N336_K168_ML.txt",
-      "title": "wimaxlike (336,168)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wimaxlike/wimaxlike_N336_K168_P14_set0.txt"
     },
     "headers": {
       "Codec": {
@@ -1057,9 +1071,10 @@
     "filename": "wimaxlike_N384_K192_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "wimaxlike (384,192)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/wimaxlike_N384_K192_ML.txt",
-      "title": "wimaxlike (384,192)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wimaxlike/wimaxlike_N384_K192_P16_set0.txt"
     },
     "headers": {
       "Codec": {
@@ -1130,9 +1145,10 @@
     "filename": "WRAN_N384_K256_P16_R066.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WRAN_N384_K256_P16_R066.txt (384,256)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WRAN_N384_K256_P16_R066.txt",
-      "title": "WRAN_N384_K256_P16_R066.txt (384,256)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wran/WRAN_N384_K256_P16_R066.txt"
     },
     "headers": {
       "Codec": {
@@ -1199,9 +1215,10 @@
     "filename": "WRAN_N384_K288_P16_R075_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WRAN_N384_K288_P16_R075.txt (384,288)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WRAN_N384_K288_P16_R075_ML.txt",
-      "title": "WRAN_N384_K288_P16_R075.txt (384,288)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wran/WRAN_N384_K288_P16_R075.txt"
     },
     "headers": {
       "Codec": {
@@ -1268,9 +1285,10 @@
     "filename": "WRAN_N480_K360_P20_R075_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WRAN_N480_K360_P20_R075.txt (480,360)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WRAN_N480_K360_P20_R075_ML.txt",
-      "title": "WRAN_N480_K360_P20_R075.txt (480,360)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wran/WRAN_N480_K360_P20_R075.txt"
     },
     "headers": {
       "Codec": {
@@ -1337,9 +1355,10 @@
     "filename": "WRAN_N480_K400_P20_R083_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WRAN_N480_K400_P20_R083.txt (480,400)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WRAN_N480_K400_P20_R083_ML.txt",
-      "title": "WRAN_N480_K400_P20_R083.txt (480,400)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wran/WRAN_N480_K400_P20_R083.txt"
     },
     "headers": {
       "Codec": {
@@ -1410,9 +1429,10 @@
     "filename": "WiFi_N648_K540_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "WiFi (648,540)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/WiFi_N648_K540_ML.txt",
-      "title": "WiFi (648,540)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_wifi/wifi_648_r083.alist"
     },
     "headers": {
       "Codec": {
@@ -1471,9 +1491,10 @@
     "filename": "ccsds_N32_K16_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "ccsds (32,16)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/ccsds_N32_K16_ML.txt",
-      "title": "ccsds (32,16)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_ccsds/CCSDS_ldpc_n32_k16.alist"
     },
     "headers": {
       "Codec": {
@@ -1548,9 +1569,10 @@
     "filename": "ccsds_N128_K64_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "ccsds (128,64)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/ccsds_N128_K64_ML.txt",
-      "title": "ccsds (128,64)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_ccsds/CCSDS_ldpc_n128_k64.alist"
     },
     "headers": {
       "Codec": {
@@ -1613,9 +1635,10 @@
     "filename": "Tanner_N155_K64_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "Tanner_155_64.alist (155,64)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/Tanner_N155_K64_ML.txt",
-      "title": "Tanner_155_64.alist (155,64)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_misc/Tanner_155_64.alist"
     },
     "headers": {
       "Codec": {
@@ -1682,9 +1705,10 @@
     "filename": "MacKay_96.33.964_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "MacKay_96.33.964.alist (96,48)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/MacKay_96.33.964_ML.txt",
-      "title": "MacKay_96.33.964.alist (96,48)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_misc/MacKay_96.33.964.alist"
     },
     "headers": {
       "Codec": {
@@ -1767,9 +1791,10 @@
     "filename": "MacKay_204.33.484_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "MacKay_204.33.484.alist (204,102)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/MacKay_204.33.484_ML.txt",
-      "title": "MacKay_204.33.484.alist (204,102)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_misc/MacKay_204.33.484.alist"
     },
     "headers": {
       "Codec": {
@@ -1844,9 +1869,10 @@
     "filename": "LDPC_MET_N100_K50_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "LDPC_MET (100,50)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_MET_N100_K50_ML.txt",
-      "title": "LDPC_MET (100,50)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_misc/LDPC_N100_K50_H20_P5_dmin10.txt"
     },
     "headers": {
       "Codec": {
@@ -1913,9 +1939,10 @@
     "filename": "LDPC_MET_N120_K60_v0_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "LDPC_MET (120,60)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_MET_N120_K60_v0_ML.txt",
-      "title": "LDPC_MET (120,60)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_misc/LDPC_N120_K60_H24_P6_v0.txt"
     },
     "headers": {
       "Codec": {
@@ -1978,9 +2005,10 @@
     "filename": "LDPC_MET_N120_K60_v1_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "LDPC_MET (120,60)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_MET_N120_K60_v1_ML.txt",
-      "title": "LDPC_MET (120,60)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_misc/LDPC_N120_K60_H24_P6_v1.txt"
     },
     "headers": {
       "Codec": {
@@ -2043,9 +2071,10 @@
     "filename": "LDPC_MET_N128_K64_s3_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "LDPC_MET (128,64)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_MET_N128_K64_s3_ML.txt",
-      "title": "LDPC_MET (128,64)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_misc/LDPC_MET_N128_K64_H32_P8_s3.txt"
     },
     "headers": {
       "Codec": {
@@ -2104,10 +2133,12 @@
     "filename": "NB_LDPC_N96_K48_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
-      "kaiserslautern": true
+      "kaiserslautern": true,
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/NB_LDPC_N96_K48_ML.txt"
     },
     "headers": {
       "Codec": {
+        "Type": "LDPC",
         "Frame size (N)": 96,
         "Info. bits (K)": 48,
         "Code rate": 0.5
@@ -2174,13 +2205,13 @@
     "filename": "LDPC_N128_K64_GF256_bi_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "LDPC_N128_K64_GF256_bi.alist (128,64)",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_N128_K64_GF256_bi_ML.txt",
-      "title": "LDPC_N128_K64_GF256_bi.alist (128,64)"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_nonbinary/LDPC_N128_K64_GF256_bi_ML.txt"
     },
     "headers": {
       "Codec": {
-        "Type": "LDPC",
+        "Type": "LDPC_NB",
         "Frame size (N)": 128,
         "Info. bits (K)": 64,
         "Code rate": 0.5
@@ -2251,13 +2282,14 @@
     "filename": "LDPC_N128_K64_GF16_bi.alist_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "LDPC_N128_K64_GF16_bi.alist (128,64)",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_N128_K64_GF16_bi.alist_ML.txt",
-      "title": "LDPC_N128_K64_GF16_bi.alist (128,64)"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_nonbinary/LDPC_N128_K64_GF16_bi.alist_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/results_nonbinary/LDPC_N128_K64_GF16_bi.alist_ML.txt"
     },
     "headers": {
       "Codec": {
-        "Type": "LDPC",
+        "Type": "LDPC_NB",
         "Frame size (N)": 128,
         "Info. bits (K)": 64,
         "Code rate": 0.5
@@ -2328,13 +2360,13 @@
     "filename": "LDPC_N128_K64_GF256_UNBPB_bi_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "LDPC_N128_K64_GF256_UNBPB_bi.alist (128,64)",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_N128_K64_GF256_UNBPB_bi_ML.txt",
-      "title": "LDPC_N128_K64_GF256_UNBPB_bi.alist (128,64)"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_nonbinary/LDPC_N128_K64_GF256_UNBPB_bi_ML.txt"
     },
     "headers": {
       "Codec": {
-        "Type": "LDPC",
+        "Type": "LDPC_NB",
         "Frame size (N)": 128,
         "Info. bits (K)": 64,
         "Code rate": 0.5
@@ -2393,13 +2425,13 @@
     "filename": "LDPC_N576_K480_GF64_bi_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "LDPC_N576_K480_GF64_bi.alist (576,480)",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_ldpc/LDPC_N576_K480_GF64_bi_ML.txt",
-      "title": "LDPC_N576_K480_GF64_bi.alist (576,480)"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_nonbinary/LDPC_N576_K480_GF64_bi_ML.txt"
     },
     "headers": {
       "Codec": {
-        "Type": "LDPC",
+        "Type": "LDPC_NB",
         "Frame size (N)": 576,
         "Info. bits (K)": 480,
         "Code rate": 0.8333333333333334
@@ -2466,9 +2498,10 @@
     "filename": "ArrayCode_N49_K24_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "ArrayCode_N49_K24_r0.49.alist (49,24)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/ArrayCode_N49_K24_ML.txt",
-      "title": "ArrayCode_N49_K24_r0.49.alist (49,24)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N49_K24_r0.49.alist"
     },
     "headers": {
       "Codec": {
@@ -2543,9 +2576,10 @@
     "filename": "ArrayCode_N49_K30_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "ArrayCode_N49_K30_r0.61.alist (49,30)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/ArrayCode_N49_K30_ML.txt",
-      "title": "ArrayCode_N49_K30_r0.61.alist (49,30)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N49_K30_r0.61.alist"
     },
     "headers": {
       "Codec": {
@@ -2620,9 +2654,10 @@
     "filename": "ArrayCode_N49_K36_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "ArrayCode_N49_K36_r0.73.alist (49,36)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/ArrayCode_N49_K36_ML.txt",
-      "title": "ArrayCode_N49_K36_r0.73.alist (49,36)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N49_K36_r0.73.alist"
     },
     "headers": {
       "Codec": {
@@ -2697,9 +2732,10 @@
     "filename": "ArrayCode_N49_K42_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "ArrayCode_N49_K42_r0.86.alist (49,42)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/ArrayCode_N49_K42_ML.txt",
-      "title": "ArrayCode_N49_K42_r0.86.alist (49,42)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N49_K42_r0.86.alist"
     },
     "headers": {
       "Codec": {
@@ -2774,9 +2810,10 @@
     "filename": "Array_p11_r6_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(11,6) Array LDPC Code (121,60)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r6_ML.txt",
-      "title": "(11,6) Array LDPC Code (121,60)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N121_K60_r0.50.alist"
     },
     "headers": {
       "Codec": {
@@ -2843,9 +2880,10 @@
     "filename": "Array_p11_r5_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(11,5) Array LDPC Code (121,70)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r5_ML.txt",
-      "title": "(11,5) Array LDPC Code (121,70)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N121_K70_r0.58.alist"
     },
     "headers": {
       "Codec": {
@@ -2920,9 +2958,10 @@
     "filename": "Array_p11_r4_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(11,4) Array LDPC Code (121,80)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r4_ML.txt",
-      "title": "(11,4) Array LDPC Code (121,80)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N121_K80_r0.66.alist"
     },
     "headers": {
       "Codec": {
@@ -2989,9 +3028,10 @@
     "filename": "Array_p11_r3_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(11,3) Array LDPC Code (121,90)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r3_ML.txt",
-      "title": "(11,3) Array LDPC Code (121,90)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N121_K90_r0.74.alist"
     },
     "headers": {
       "Codec": {
@@ -3070,9 +3110,10 @@
     "filename": "Array_p11_r2_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(11,2) Array LDPC Code (121,100)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r2_ML.txt",
-      "title": "(11,2) Array LDPC Code (121,100)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N121_K100_r0.83.alist"
     },
     "headers": {
       "Codec": {
@@ -3163,9 +3204,10 @@
     "filename": "Array_p11_r1_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(11,1) Array LDPC Code (121,110)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p11_r1_ML.txt",
-      "title": "(11,1) Array LDPC Code (121,110)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N121_K110_r0.91.alist"
     },
     "headers": {
       "Codec": {
@@ -3272,9 +3314,10 @@
     "filename": "Array_p13_r5_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(13,5) Array LDPC Code (169,108)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p13_r5_ML.txt",
-      "title": "(13,5) Array LDPC Code (169,108)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N169_K108_r0.64.alist"
     },
     "headers": {
       "Codec": {
@@ -3333,9 +3376,10 @@
     "filename": "Array_p13_r4_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(13,4) Array LDPC Code (169,120)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p13_r4_ML.txt",
-      "title": "(13,4) Array LDPC Code (169,120)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N169_K120_r0.71.alist"
     },
     "headers": {
       "Codec": {
@@ -3398,9 +3442,10 @@
     "filename": "Array_p13_r3_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(13,3) Array LDPC Code (169,132)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p13_r3_ML.txt",
-      "title": "(13,3) Array LDPC Code (169,132)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N169_K144_r0.85.alist"
     },
     "headers": {
       "Codec": {
@@ -3475,9 +3520,10 @@
     "filename": "Array_p13_r1_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(13,1) Array LDPC Code (169,156)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p13_r1_ML.txt",
-      "title": "(13,1) Array LDPC Code (169,156)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N169_K156_r0.92.alist"
     },
     "headers": {
       "Codec": {
@@ -3584,9 +3630,10 @@
     "filename": "Array_p19_r4_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(19,4) Array LDPC Code (361,288)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p19_r4_ML.txt",
-      "title": "(19,4) Array LDPC Code (361,288)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N361_K288_r0.80.alist"
     },
     "headers": {
       "Codec": {
@@ -3653,9 +3700,10 @@
     "filename": "Array_p19_r2_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(19,2) Array LDPC Code (361,324)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p19_r2_ML.txt",
-      "title": "(19,2) Array LDPC Code (361,324)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N361_K324_r0.90.alist"
     },
     "headers": {
       "Codec": {
@@ -3746,9 +3794,10 @@
     "filename": "Array_p37_r1_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(37,1) Array LDPC Code (1369,1332)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_array/Array_p37_r1_ML.txt",
-      "title": "(37,1) Array LDPC Code (1369,1332)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_array/ArrayCode_N1369_K1332_r0.97.alist"
     },
     "headers": {
       "Codec": {
@@ -3855,9 +3904,10 @@
     "filename": "3GPP__132_40__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (132,40)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__132_40__turbo_code_ML.txt",
-      "title": "3GPP (132,40)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_40_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -3904,9 +3954,10 @@
     "filename": "3GPP__156_48__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (156,48)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__156_48__turbo_code_ML.txt",
-      "title": "3GPP (156,48)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_48_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -3949,9 +4000,10 @@
     "filename": "3GPP__180_56__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (180,56)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__180_56__turbo_code_ML.txt",
-      "title": "3GPP (180,56)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_56_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -3996,9 +4048,10 @@
     "filename": "3GPP__204_64__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (204,64)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__204_64__turbo_code_ML.txt",
-      "title": "3GPP (204,64)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_64_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -4041,9 +4094,10 @@
     "filename": "3GPP__228_72__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (228,72)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__228_72__turbo_code_ML.txt",
-      "title": "3GPP (228,72)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_72_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -4084,9 +4138,10 @@
     "filename": "3GPP__252_80__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (252,80)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__252_80__turbo_code_ML.txt",
-      "title": "3GPP (252,80)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_80_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -4131,9 +4186,10 @@
     "filename": "3GPP__276_88__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (276,88)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__276_88__turbo_code_ML.txt",
-      "title": "3GPP (276,88)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_88_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -4178,9 +4234,10 @@
     "filename": "3GPP__300_96__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (300,96)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__300_96__turbo_code_ML.txt",
-      "title": "3GPP (300,96)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_96_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -4225,9 +4282,10 @@
     "filename": "3GPP__324_104__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (324,104)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__324_104__turbo_code_ML.txt",
-      "title": "3GPP (324,104)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_104_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -4272,9 +4330,10 @@
     "filename": "3GPP__348_112__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (348,112)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__348_112__turbo_code_ML.txt",
-      "title": "3GPP (348,112)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_112_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -4319,9 +4378,10 @@
     "filename": "3GPP__372_120__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (372,120)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__372_120__turbo_code_ML.txt",
-      "title": "3GPP (372,120)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_120_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -4366,9 +4426,10 @@
     "filename": "3GPP__396_128__turbo_code_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "3GPP (396,128)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_turbo/3GPP__396_128__turbo_code_ML.txt",
-      "title": "3GPP (396,128)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_turbo/LTE_Turbo_Code_k_128_.alist.xz"
     },
     "headers": {
       "Codec": {
@@ -4407,9 +4468,10 @@
     "filename": "BCH_N7_K4_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (7,4)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N7_K4_ML.txt",
-      "title": "BCH (7,4)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_7_4_1_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -4484,9 +4546,10 @@
     "filename": "BCH_N15_K7_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (15,7)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N15_K7_ML.txt",
-      "title": "BCH (15,7)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_15_7_2_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -4561,9 +4624,10 @@
     "filename": "BCH_N15_K11_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (15,11)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N15_K11_ML.txt",
-      "title": "BCH (15,11)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_15_11_1_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -4638,9 +4702,10 @@
     "filename": "BCH_N31_K11_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (31,11)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N31_K11_ML.txt",
-      "title": "BCH (31,11)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_31_11_5_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -4727,9 +4792,10 @@
     "filename": "BCH_N31_K16_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (31,16)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N31_K16_ML.txt",
-      "title": "BCH (31,16)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_31_16_3_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -4816,9 +4882,10 @@
     "filename": "BCH_N31_K21_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (31,21)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N31_K21_ML.txt",
-      "title": "BCH (31,21)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_31_21_2_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -4909,9 +4976,10 @@
     "filename": "BCH_N31_K26_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (31,26)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N31_K26_ML.txt",
-      "title": "BCH (31,26)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_31_26_1_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -4982,9 +5050,10 @@
     "filename": "BCH_N63_K30_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (63,30)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K30_ML.txt",
-      "title": "BCH (63,30)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_63_30_6_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5063,9 +5132,10 @@
     "filename": "BCH_N63_K39_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (63,39)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K39_ML.txt",
-      "title": "BCH (63,39)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_63_39_4_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5148,9 +5218,10 @@
     "filename": "BCH_N63_K45_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (63,45)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K45_ML.txt",
-      "title": "BCH (63,45)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_63_45_3_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5237,9 +5308,10 @@
     "filename": "BCH_N63_K51_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (63,51)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K51_ML.txt",
-      "title": "BCH (63,51)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_63_51_2_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5330,9 +5402,10 @@
     "filename": "BCH_N63_K57_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (63,57)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N63_K57_ML.txt",
-      "title": "BCH (63,57)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_63_57_1_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5407,9 +5480,10 @@
     "filename": "BCH_N127_K85_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (127,85)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K85_ML.txt",
-      "title": "BCH (127,85)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_127_85_6_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5472,9 +5546,10 @@
     "filename": "BCH_N127_K92_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (127,92)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K92_ML.txt",
-      "title": "BCH (127,92)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_127_92_5_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5533,9 +5608,10 @@
     "filename": "BCH_N127_K99_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (127,99)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K99_ML.txt",
-      "title": "BCH (127,99)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_127_99_4_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5602,9 +5678,10 @@
     "filename": "BCH_N127_K106_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (127,106)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K106_ML.txt",
-      "title": "BCH (127,106)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_127_106_3_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5671,9 +5748,10 @@
     "filename": "BCH_N127_K113_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (127,113)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K113_ML.txt",
-      "title": "BCH (127,113)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_127_113_2_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5740,9 +5818,10 @@
     "filename": "BCH_N127_K120_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (127,120)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N127_K120_ML.txt",
-      "title": "BCH (127,120)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_127_120_1_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5817,9 +5896,10 @@
     "filename": "BCH_N255_K223_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (255,223)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N255_K223_ML.txt",
-      "title": "BCH (255,223)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_255_223_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5878,9 +5958,10 @@
     "filename": "BCH_N255_K231_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (255,231)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N255_K231_ML.txt",
-      "title": "BCH (255,231)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_255_231_3_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -5943,9 +6024,10 @@
     "filename": "BCH_N255_K239_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (255,239)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N255_K239_ML.txt",
-      "title": "BCH (255,239)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_255_239_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -6016,9 +6098,10 @@
     "filename": "BCH_N255_K247_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (255,247)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N255_K247_ML.txt",
-      "title": "BCH (255,247)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_255_247_1_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -6097,9 +6180,10 @@
     "filename": "BCH_N511_K493_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (511,493)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N511_K493_ML.txt",
-      "title": "BCH (511,493)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_511_493_2_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -6174,9 +6258,10 @@
     "filename": "BCH_N511_K502_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (511,502)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N511_K502_ML.txt",
-      "title": "BCH (511,502)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_511_502_1_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -6263,9 +6348,10 @@
     "filename": "BCH_N1023_K993_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (1023,993)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N1023_K993_ML.txt",
-      "title": "BCH (1023,993)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_1023_993_3_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -6320,9 +6406,10 @@
     "filename": "BCH_N1023_K1003_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (1023,1003)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N1023_K1003_ML.txt",
-      "title": "BCH (1023,1003)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_1023_1003_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -6381,9 +6468,10 @@
     "filename": "BCH_N1023_K1013_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "BCH (1023,1013)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_bch/BCH_N1023_K1013_ML.txt",
-      "title": "BCH (1023,1013)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_bch/BCH_1023_1013_1_strip.alist"
     },
     "headers": {
       "Codec": {
@@ -6467,7 +6555,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N21_K9_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N21_K9_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_7_3_2_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -6539,7 +6628,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N21_K15_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N21_K15_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_7_5_1_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -6615,7 +6705,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K12_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K12_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_15_3_6_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -6699,7 +6790,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K20_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K20_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_15_5_5_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -6783,7 +6875,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K28_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K28_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_15_7_4_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -6847,7 +6940,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K36_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K36_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_15_9_3_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -6935,7 +7029,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K44_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K44_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_15_11_2_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -7003,7 +7098,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K52_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N60_K52_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_15_13_1_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -7087,7 +7183,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K115_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K115_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_31_23_4_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -7163,7 +7260,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K125_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K125_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_31_25_3_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -7238,9 +7336,10 @@
     "filename": "rs_31_25_3_lp.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(155,125)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/rs_31_25_3_lp.txt",
-      "title": "(155,125)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_31_25_3_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -7302,7 +7401,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K135_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K135_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_31_27_2_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -7390,7 +7490,8 @@
     "metadata": {
       "source": "Kaiserslautern",
       "kaiserslautern": true,
-      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K145_ML.txt"
+      "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/RS_N155_K145_ML.txt",
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_31_29_1_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -7477,9 +7578,10 @@
     "filename": "rs_63_55_4_lp.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "(378,330)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rs/rs_63_55_4_lp.txt",
-      "title": "(378,330)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rs/RS_63_55_4_strip_bi.txt"
     },
     "headers": {
       "Codec": {
@@ -7542,9 +7644,10 @@
     "filename": "PolarCode_n_7__SNR_3__mu_128__rate_0.5__ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "PolarCode(n=7, SNR=3, mu=128, rate=0.5) (128,64)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_7__SNR_3__mu_128__rate_0.5__ML.txt",
-      "title": "PolarCode(n=7, SNR=3, mu=128, rate=0.5) (128,64)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_polar/Polar_7_.5_.txt"
     },
     "headers": {
       "Codec": {
@@ -7619,9 +7722,10 @@
     "filename": "PolarCode_n_7__SNR_3__mu_128__rate_0.5__SCL.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "PolarCode(n=7, SNR=3, mu=128, rate=0.5) (128,64)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_7__SNR_3__mu_128__rate_0.5__SCL.txt",
-      "title": "PolarCode(n=7, SNR=3, mu=128, rate=0.5) (128,64)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_polar/Polar_7_.5_.txt"
     },
     "headers": {
       "Codec": {
@@ -7696,9 +7800,10 @@
     "filename": "PolarCode_n_8__SNR_3__mu_128__rate_0.63671875__ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.63671875) (256,163)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_8__SNR_3__mu_128__rate_0.63671875__ML.txt",
-      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.63671875) (256,163)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_polar/Polar_8_.63671875_.txt"
     },
     "headers": {
       "Codec": {
@@ -7781,9 +7886,10 @@
     "filename": "PolarCode_n_8__SNR_3__mu_128__rate_0.63671875__SCL.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.63671875) (256,163)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_8__SNR_3__mu_128__rate_0.63671875__SCL.txt",
-      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.63671875) (256,163)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_polar/Polar_8_.63671875_.txt"
     },
     "headers": {
       "Codec": {
@@ -7866,9 +7972,10 @@
     "filename": "PolarCode_n_8_rate_0.85546875__ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.85546875) (256,219)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_8_rate_0.85546875__ML.txt",
-      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.85546875) (256,219)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_polar/Polar_8_.85546875_.txt"
     },
     "headers": {
       "Codec": {
@@ -7951,9 +8058,10 @@
     "filename": "PolarCode_n_8_rate_0.85546875__SCL.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.85546875) (256,219)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_8_rate_0.85546875__SCL.txt",
-      "title": "PolarCode(n=8, SNR=3, mu=128, rate=0.85546875) (256,219)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_polar/Polar_8_.85546875_.txt"
     },
     "headers": {
       "Codec": {
@@ -8036,9 +8144,10 @@
     "filename": "PolarCode_n_9_rate_0.91015625__ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "PolarCode(n=9, SNR=3, mu=128, rate=0.91015625) (512,466)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_9_rate_0.91015625__ML.txt",
-      "title": "PolarCode(n=9, SNR=3, mu=128, rate=0.91015625) (512,466)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_polar/Polar_9_.91015625_.txt"
     },
     "headers": {
       "Codec": {
@@ -8113,9 +8222,10 @@
     "filename": "PolarCode_n_9_rate_0.91015625__SCL.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "PolarCode(n=9, SNR=3, mu=128, rate=0.91015625) (512,466)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_polar/PolarCode_n_9_rate_0.91015625__SCL.txt",
-      "title": "PolarCode(n=9, SNR=3, mu=128, rate=0.91015625) (512,466)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_polar/Polar_9_.91015625_.txt"
     },
     "headers": {
       "Codec": {
@@ -8190,9 +8300,10 @@
     "filename": "RM_3_7__ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "RM(3,7) (128,64)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rm/RM_3_7__ML.txt",
-      "title": "RM(3,7) (128,64)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rm/RM_3_7_.txt"
     },
     "headers": {
       "Codec": {
@@ -8263,9 +8374,10 @@
     "filename": "RM_5_8__ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "RM(5,8) (256,219)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rm/RM_5_8__ML.txt",
-      "title": "RM(5,8) (256,219)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rm/RM_5_8_.txt"
     },
     "headers": {
       "Codec": {
@@ -8348,9 +8460,10 @@
     "filename": "RM_6_9__ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "RM(6,9) (512,466)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_rm/RM_6_9__ML.txt",
-      "title": "RM(6,9) (512,466)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_rm/RM_6_9_.txt"
     },
     "headers": {
       "Codec": {
@@ -8421,9 +8534,10 @@
     "filename": "Golay_N24_K12_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "Golay (24,12)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_others/Golay_N24_K12_ML.txt",
-      "title": "Golay (24,12)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_others/N24_K12_golay.alist"
     },
     "headers": {
       "Codec": {
@@ -8526,9 +8640,10 @@
     "filename": "Cyclic_N48_K24_ML.txt",
     "metadata": {
       "source": "Kaiserslautern",
+      "title": "Cyclic (48,24)",
       "kaiserslautern": true,
       "url": "https://www.uni-kl.de/fileadmin/chaco/public/results_others/Cyclic_N48_K24_ML.txt",
-      "title": "Cyclic (48,24)"
+      "parity": "https://www.uni-kl.de/fileadmin/chaco/public/alists_others/N48_K24_cyclic.alist"
     },
     "headers": {
       "Codec": {

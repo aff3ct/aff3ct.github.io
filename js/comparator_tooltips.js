@@ -86,6 +86,7 @@ var Tooltips = {
 	"JSON"                 : "JavaScript Object Notation",
 	"LDPC"                 : "Low-Density Parity-Check",
 	"LDPC_AR"              : "Array Low-Density Parity-Check",
+	"LDPC_NB"              : "Non-Binary Low-Density Parity-Check",
 	"LLRs"                 : "Log Likelihood Ratios",
 	"LLR"                  : "Log Likelihood Ratio",
 	"LSPA"                 : "Logarithmic Sum-Product Algorithm",

@@ -173,7 +173,9 @@
           {{/headers}}
           <div class="curveIcons">
             {{#metadata.kaiserslautern}}
-              <img class="kaiserslautern" src="images/Tu_kaiserslautern.svg" alt="University of Kaiserslautern">
+              <a href="https://www.uni-kl.de/channel-codes/ml-simulation-results/" onclick="return trackOutboundLink('https://www.uni-kl.de/channel-codes/ml-simulation-results/" target="_blank" title="Reference from the Kaiserslautern University">
+                <img class="kaiserslautern" src="images/Tu_kaiserslautern.svg" alt="University of Kaiserslautern">
+              </a>
             {{/metadata.kaiserslautern}}
             {{#metadata.aff3ct}}
               <span class="curveIcon"><a href="https://github.com/aff3ct/error_rate_references/blob/{{branch}}/{{filename}}" target="_blank" title="GitHub" onclick="return trackOutboundLink('https://github.com/aff3ct/error_rate_references/blob/{{branch}}/{{filename}}');"><i class="fab fa-github"></i></a></span>
@@ -193,6 +195,9 @@
             {{#metadata.command}}
               <span class="curveIcon"><a href="#" id="{{prefix}}displayCmdModal{{hash.id}}" data-toggle="modal" data-target="#cmdModal{{hash.id}}" title="Command line"><i class="fas fa-terminal"></i></a></span>
             {{/metadata.command}}
+            {{#metadata.parity}}
+              <span class="curveIcon"><a href="{{metadata.parity}}" target="_blank" title="H parity-check matrix" onclick="return trackOutboundLink('{{metadata.parity}}');"><i class="fas fa-file-alt"></i></a></span>
+            {{/metadata.parity}}
             {{#trace}}
               <span class="curveIcon"><a href="#" id="{{prefix}}displayTraceModal{{hash.id}}" data-toggle="modal" data-target="#traceModal{{hash.id}}" title="Original reference file"><i class="fas fa-file-alt"></i></a></span>
             {{/trace}}

@@ -175,7 +175,7 @@ function text2jsonAFF3CT(txt, filename = "")
 	return dict;
 }
 
-function text2jsonKaiserslautern(txt, filename = "", fromKL = false)
+function text2jsonKaiserslautern(txt, filename = "", codeType = "")
 {
 	let correspAxes = {
 		"Eb/N0 (dB)": "Eb/N0",
@@ -193,6 +193,10 @@ function text2jsonKaiserslautern(txt, filename = "", fromKL = false)
 		"LDPC_AR": {
 			corresp: ["ArrayCode", "Array"],
 			dir: "results_array",
+		},
+		"LDPC_NB": {
+			corresp: ["NB"],
+			dir: "results_ldpc",
 		},
 		"TURBO": {
 			corresp: ["3GPP"],
@@ -229,25 +233,20 @@ function text2jsonKaiserslautern(txt, filename = "", fromKL = false)
 	let headers = {};
 	let contents = {};
 
-	if (fromKL) {
-		metadata.source="Kaiserslautern";
-		metadata.kaiserslautern=true;
-	}
-
-	if (filename!="") {
+	if (filename!="" && codeType=="") {
 		let resCodeType=filename.match(/([A-Za-z0-9]*)\_/);
 		if (resCodeType && resCodeType.length==2) {
 			Object.keys(correspCodeType).forEach(function(key) {
 				correspCodeType[key].corresp.forEach(function(str) {
 					if (resCodeType[1]==str) {
 						headers.Codec = {"Type": key};
-						if (fromKL)
-							metadata.url="https://www.uni-kl.de/fileadmin/chaco/public/"+correspCodeType[key].dir+"/"+filename;
 					}
 				});
 			});
 		}
 	}
+	if (codeType!="")
+		headers.Codec = {"Type": codeType};
 
 	let lines = txt.split("\n");
 	for (let ln = 0; ln < lines.length; ln++)
@@ -351,7 +350,7 @@ function text2jsonKaiserslautern(txt, filename = "", fromKL = false)
 function text2json(txt, filename = "")
 {
 	if (txt.match(/University of Kaiserslautern/))
-		return text2jsonKaiserslautern(txt, filename, false);
+		return text2jsonKaiserslautern(txt, filename);
 	else
 		return text2jsonAFF3CT(txt, filename);
 }
