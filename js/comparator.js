@@ -123,7 +123,7 @@ function precomputeData(id) {
 	if (typeof(ref.metadata)==="undefined")
 		ref.metadata={};
 	if (typeof(ref.metadata.source)!=="undefined")
-		ref.metadata[ref.metadata.source] = true;
+		ref.metadata[ref.metadata.source.toLowerCase()] = true;
 	if (typeof(ref.metadata.title)==="undefined") {
 		if (typeof(ref.headers)!=="undefined" &&
 			typeof(ref.headers.Codec)!=="undefined" &&
