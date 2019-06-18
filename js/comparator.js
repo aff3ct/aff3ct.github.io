@@ -678,7 +678,7 @@ function addSelectedRef(ref, colorId=-1, xaxisEnabled="", yaxesEnabled=[]) {
 							hitType:       'event',
 							eventCategory: 'BER/FER Comparator',
 							eventAction:   'click',
-							eventLabel:    decodeURIComponent(ref.filename)
+							eventLabel:    ref.hash.id + " - " + ref.metadata.source + " - " + ref.filename
 						});
 					}
 				}
