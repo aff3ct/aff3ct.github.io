@@ -26,6 +26,7 @@ var Curves = {
 		channelType: { showZeros: false, path: "headers.Channel.Type"        , selection: [        ] }
 	},
 	selectedRefs: [],
+	filteredValueIds: []
 };
 
 var Plot;
@@ -230,7 +231,7 @@ function loadDatabase() {
 				let evt_total;
 				if (evt.lengthComputable) evt_total = evt.total;
 				else evt_total = EVT_TOTAL;
-				if (evt_total<=evt.loaded) evt_total=evt.loaded*101/100;
+				if (evt_total<evt.loaded) evt_total=evt.loaded*101/100;
 				let percentComplete = Math.round((evt.loaded / evt_total) * 100);
 				$("#loader .progress-bar").html(percentComplete+"%");
 				$('#loader .progress-bar').attr('aria-valuenow', percentComplete).css('width',percentComplete+"%");
@@ -252,14 +253,25 @@ function loadDatabase() {
 			Object.keys(Curves.db).forEach(function(key) {
 				precomputeData(key);
 			});
+			Curves.filteredValueIds=filterByValue(Object.keys(Curves.db));
 			displaySlider();
 			displaySelectors();
+			$('#searchValue').on('blur',function () {
+				Curves.filteredValueIds=filterByValue(Object.keys(Curves.db));
+				displaySelectors();
+			});
+			$('#searchValue').keyup(function(e){
+				if(e.keyCode == 13) { // enter pressed
+					Curves.filteredValueIds=filterByValue(Object.keys(Curves.db));
+					displayRefsList();
+				}
+			});
 			$("#loader"    ).css("display", "none" );
 			$("#curvesTip" ).css("display", "block");
 			$("#tips"      ).css("display", "block");
 			$("#comparator").css("display", "block");
 			displayRefsFromURI();
-			displayRefsList(filters(Object.keys(Curves.db)));
+			displayRefsList();
 		});
 	});
 }
@@ -304,7 +316,8 @@ function displayTraceModal(ref) {
 	}
 }
 
-function displayRefsList(ids) {
+function displayRefsList() {
+	let ids = filters(Curves.filteredValueIds);
 	// sort refs by title (lexicographical order)
 	ids.sort(function(a,b) {
 		return Curves.db[a].metadata.title.localeCompare(Curves.db[b].metadata.title);
@@ -451,8 +464,7 @@ function plotSelectedRefs() {
 			title+=" & "+titles[t];
 		layout.yaxis["title"]=title;
 	}
-	if (data.length)
-		Plotly.newPlot(Plot, data, layout, { displayModeBar: true, displaylogo: false });
+	Plotly.newPlot(Plot, data, layout, { displayModeBar: true, displaylogo: false });
 }
 
 function getPermalink() {
@@ -842,6 +854,55 @@ function filterByCodeRates(ids) {
 	}
 }
 
+function searchIfValuesInObject(values, obj) {
+	let objKeys = Object.keys(obj);
+	for (let k=0; k<objKeys.length; k++) {
+		for (let v=0; v<values.length; v++) {
+			if (objKeys[k].toLowerCase().includes(values[v]))
+				values.splice(v--, 1);
+		}
+		if (!values.length)
+			return true;
+	}
+	for (let k=0; k<objKeys.length; k++) {
+		let objVal = obj[objKeys[k]];
+		if (typeof(objVal)=="object") {
+			if (searchIfValuesInObject(values, objVal))
+				return true;
+		} else {
+			for (let v=0; v<values.length; v++) {
+				if (objVal.toString().toLowerCase().includes(values[v]))
+					values.splice(v--, 1);
+			}
+			if (!values.length)
+				return true;
+		}
+	}
+	return false;
+}
+
+function filterByValue(ids) {
+	let value=$("#searchValue").val();
+	let values=value.split(" ");
+	let vals={};
+	for (let v=0; v<values.length; v++) {
+		values[v]=$.trim(values[v]).toLowerCase();
+		if (values[v]=="") {
+			values.splice(v--, 1);
+		} else {
+			vals[values[v]]="";
+		}
+	}
+	if (!values.length)
+		return ids;
+	let list=[];
+	ids.forEach(function(id) {
+		if (searchIfValuesInObject(Object.keys(vals), Curves.db[id]))
+			list.push(id);
+	})
+	return list;
+}
+
 function filters(ids, type="") {
 	switch(type) {
 		case "dataBase"   : return filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(ids)))));
@@ -849,7 +910,6 @@ function filters(ids, type="") {
 		case "frameSize"  : return filterByDatabase(filterByCodeTypes(filterByCodeRates(filterByModems(filterByChannels(ids)))));
 		case "modemType"  : return filterByDatabase(filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByChannels(ids)))));
 		case "channelType": return filterByDatabase(filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(ids)))));
-		case "codeRate"   : return filterByDatabase(filterByCodeTypes(filterByFrameSizes(filterByChannels(filterByModems(ids)))));
 		default:
 			return filterByDatabase(filterByCodeTypes(filterByFrameSizes(filterByCodeRates(filterByModems(filterByChannels(ids))))));
 	}
@@ -866,7 +926,7 @@ function updateSelected(val, selectionList, selectorName) {
 
 function displaySelector(selectorName, showZeros=false) {
 	let selector = Curves.selectors[selectorName];
-	let filteredRefs=filters(Object.keys(Curves.db), selectorName);
+	let filteredRefs=filters(Curves.filteredValueIds, selectorName);
 	let refsCounter={};
 	if (showZeros) {
 		Object.keys(Curves.db).forEach(function(id) {
@@ -989,7 +1049,7 @@ $(document).ready(function() {
 	}).node();
 	loadDatabase();
 	$('#applySelections').on('click', function() {
-		displayRefsList(filters(Object.keys(Curves.db)));
+		displayRefsList();
 	});
 	$("#fileInput").on('change', function() {
 		loadFilesRecursive(fileInput);
