@@ -121,24 +121,21 @@ var PlotLayouts = {
 function precomputeData(id) {
 	let ref = Curves.db[id];
 	ref["hash"]["id"] = id;
-	if (typeof(ref.metadata)==="undefined")
+	if (!ref.metadata)
 		ref.metadata={};
-	if (typeof(ref.metadata.source)!=="undefined")
+	if (ref.metadata.source)
 		ref.metadata[ref.metadata.source.toLowerCase()] = true;
-	if (typeof(ref.metadata.title)==="undefined") {
-		if (typeof(ref.headers)!=="undefined" &&
-			typeof(ref.headers.Codec)!=="undefined" &&
-			typeof(ref.headers.Codec["Type"])!=="undefined" &&
-			typeof(ref.headers.Codec["Frame size (N)"])!=="undefined" &&
-			typeof(ref.headers.Codec["Info. bits (K)"])!=="undefined") {
+	if (!ref.metadata.title) {
+		if (ref.headers && ref.headers.Codec &&
+			ref.headers.Codec["Type"] && ref.headers.Codec["Frame size (N)"] && ref.headers.Codec["Info. bits (K)"]) {
 			let codeType = ref.headers.Codec["Type"];
 			let N = ref.headers.Codec["Frame size (N)"];
 			let K = ref.headers.Codec["Info. bits (K)"];
 			ref["metadata"]["title"] = codeType+" ("+N+","+K+")";
 		}
 	}
-	if (typeof(ref.metadata)!=="undefined") {
-		if (typeof(ref.metadata.title)!=="undefined") {
+	if (ref.metadata) {
+		if (ref.metadata.title) {
 			let res = ref.metadata.title.match(/([a-z0-9A-Z.\-,\/=\s;\+:]+\ \([0-9,]+\))([a-z0-9A-Z.\-,\/=\s;\+:()]+)/);
 			let bigtitle=(res && res.length>=2)?$.trim(res[1]):ref.metadata.title;
 			let subtitle=(res && res.length>=3)?$.trim(res[2]):"";
@@ -149,7 +146,7 @@ function precomputeData(id) {
 			if (bigtitle.length > maxBigTitleSize)
 				ref["metadata"]["shortbigtitle"]=bigtitle.substring(0,maxBigTitleSize-3)+"...";
 		}
-		if (typeof(ref.metadata.command)!=="undefined") {
+		if (ref.metadata.command) {
 			let cmd = ref.metadata.command;
 			let params = cmd.split(' -');
 			let aff3ct = $.trim(params[0]);
@@ -177,10 +174,10 @@ function precomputeData(id) {
 			ref.metadata["niceCommand"] = niceCmd;
 		}
 	}
-	if (typeof(ref.metadata)==="undefined" || typeof(ref.metadata.title)==="undefined") {
+	if (!ref.metadata || !ref.metadata.title) {
 		$.extend(ref["metadata"], {title: "Undefined", bigtitle: "Undefined", subtitle: ""});
 	}
-	if (typeof(ref.headers)!=="undefined" && typeof(ref.headers.list)==="undefined") {
+	if (ref.headers && !ref.headers.list) {
 		ref["headers"]["list"] = [];
 		ref["headers"]["list"].push({"name": "Frame size", "value" : ref.headers.Codec["Frame size (N)"]});
 		if (ref.headers.Codec["Codeword size (N_cw)"] > ref.headers.Codec["Frame size (N)"])
@@ -200,10 +197,7 @@ function precomputeData(id) {
 			}
 		}
 	}
-	if (typeof(ref.contents)!=="undefined" &&
-		typeof(ref.contents.BE)!=="undefined" &&
-		typeof(ref.contents.FE)!=="undefined" &&
-		typeof(ref.contents["BE/FE"])==="undefined") {
+	if (ref.contents && ref.contents.BE && ref.contents.FE && !ref.contents["BE/FE"]) {
 		let BEFE=[];
 		for (let i=0; i<ref.contents.BE.length; i++)
 			BEFE.push(ref.contents.BE[i]/ref.contents.FE[i]);
@@ -378,12 +372,12 @@ function displaySelectedRefs(ref) {
 	}, ref));
 	$("#ss"+ref.hash.id).append(refBodyRendered);
 
-	if (typeof(ref.metadata)!=="undefined" && typeof(ref.metadata.command)!=="undefined") {
+	if (ref.metadata && ref.metadata.command) {
 		$("#sdisplayCmdModal"+ref.hash.id).on("click", function () {
 			displayCommandModal(ref);
 		});
 	}
-	if (typeof(ref.trace)!=="undefined") {
+	if (ref.trace) {
 		$("#sdisplayTraceModal"+ref.hash.id).on("click", function () {
 			displayTraceModal(ref);
 		});
@@ -438,9 +432,8 @@ function plotSelectedRefs() {
 			let cid = 0;
 			let tmpColorsList=Array.from(colorsList);
 			Curves.selectedRefs.forEach(function(id) {
-				if (((typeof(Curves.db[id].metadata.hidden)==="undefined") || Curves.db[id].metadata.hidden == false)) {
-					if (typeof(Curves.db[id].contents[xaxis])!=="undefined" &&
-					    typeof(Curves.db[id].contents[yaxis])!=="undefined") {
+				if (((!Curves.db[id].metadata.hidden) || Curves.db[id].metadata.hidden == false)) {
+					if (Curves.db[id].contents[xaxis] && Curves.db[id].contents[yaxis]) {
 						data.push({
 							x: Curves.db[id].contents[xaxis],
 							y: Curves.db[id].contents[yaxis],
@@ -542,7 +535,7 @@ function removeAxes() {
 
 function updateAxesCheckboxes(divId, key, axis) {
 	let except=[];
-	if (typeof(PlotLayouts[axis][key].compatible)!=="undefined")
+	if (PlotLayouts[axis][key].compatible)
 		except=PlotLayouts[axis][key].compatible;
 	let nCheck=0;
 	Object.keys(PlotLayouts[axis]).forEach(function(lkey) {
@@ -574,7 +567,7 @@ function displayAxes(ref, xaxisEnabled="", yaxesEnabled=[]) {
 	Object.keys(ref.contents).forEach(function(keyRef) {
 		Object.keys(PlotLayouts.x).forEach(function(keyPlot) {
 			if (keyRef==keyPlot) {
-				let name=(typeof(PlotLayouts.x[keyPlot].alt)!=="undefined")?PlotLayouts.x[keyPlot].alt:keyPlot;
+				let name=PlotLayouts.x[keyPlot].alt?PlotLayouts.x[keyPlot].alt:keyPlot;
 				let xaxis = {divId: PlotLayouts.x[keyPlot].divId, key: keyPlot, name: name, desc: PlotLayouts.x[keyPlot].xaxis.title};
 				if ((PlotLayouts.x[keyPlot].default && xaxisEnabled=="") || xaxisEnabled==keyPlot) {
 					PlotLayouts.x[keyPlot].enabled=true;
@@ -587,7 +580,7 @@ function displayAxes(ref, xaxisEnabled="", yaxesEnabled=[]) {
 		});
 		Object.keys(PlotLayouts.y).forEach(function(keyPlot) {
 			if (keyRef==keyPlot) {
-				let name=(typeof(PlotLayouts.y[keyPlot].alt)!=="undefined")?PlotLayouts.y[keyPlot].alt:keyPlot;
+				let name=PlotLayouts.y[keyPlot].alt?PlotLayouts.y[keyPlot].alt:keyPlot;
 				let yaxis = {divId: PlotLayouts.y[keyPlot].divId, key: keyPlot, name: name, desc: PlotLayouts.y[keyPlot].yaxis.title};
 				if ((PlotLayouts.y[keyPlot].default && !yaxesEnabled.length) || yaxesEnabled.includes(keyPlot)) {
 					PlotLayouts.y[keyPlot].enabled=true;
@@ -775,11 +768,12 @@ function loadFilesRecursive(fileInput, i=0) {
 			reader.readAsText(file);
 			reader.onloadend = function(e) {
 				let ref=text2json(reader.result, file.name);
-				if (typeof(ref.contents)!=="undefined") {
+				if (ref.contents) {
 					let id=ref.hash.value.substring(0,7);
-					if (typeof(Curves.db[id])==="undefined") {
+					if (!Curves.db[id]) {
 						Curves.db[id]=ref;
 						precomputeData(id);
+						Curves.filteredValueIds=filterByValue(Object.keys(Curves.db));
 						displaySelectors();
 					}
 					else
@@ -842,11 +836,9 @@ function filterByCodeRates(ids) {
 		return ids;
 	else {
 		ids.forEach(function(id) {
-			if (typeof(Curves.db[id]["headers"])!=="undefined" &&
-			    typeof(Curves.db[id]["headers"]["Codec"])!=="undefined" &&
-			    typeof(Curves.db[id]["headers"]["Codec"]["Code rate"])!=="undefined" &&
-			    codeRateMin<=Curves.db[id]["headers"]["Codec"]["Code rate"] &&
-			    codeRateMax>=Curves.db[id]["headers"]["Codec"]["Code rate"]) {
+			if (Curves.db[id].headers && Curves.db[id].headers.Codec && Curves.db[id].headers.Codec["Code rate"] &&
+			    codeRateMin<=Curves.db[id].headers.Codec["Code rate"] &&
+			    codeRateMax>=Curves.db[id].headers.Codec["Code rate"]) {
 				p.push(id);
 			}
 		});
@@ -1019,6 +1011,7 @@ function displayRefsFromURI() {
 					Curves.db[id]=ref;
 					Curves.db[id].metadata.hidden=hidden?true:false;
 					precomputeData(id);
+					Curves.filteredValueIds=filterByValue(Object.keys(Curves.db));
 					displaySelectors();
 					addSelectedRef(ref, cid, xaxisEnabled, yaxesEnabled);
 				}).catch(function (err) {
