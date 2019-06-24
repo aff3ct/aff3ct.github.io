@@ -361,7 +361,7 @@ function displaySelectedRefs(ref, inplace=false) {
 	let refSelectedTemplate = $('#refSelectedTemplate').html();
 	Mustache.parse(refSelectedTemplate);
 	let refSelectedRendered=Mustache.render(refSelectedTemplate, ref);
-	if (inplace && ref.metadata && ref.metadata.color && ref.metadata.color.id)
+	if (inplace && ref.metadata && ref.metadata.color)
 		$("#scurve"+ref.metadata.color.id).replaceWith(refSelectedRendered);
 	else
 		$("#scurve #saccordion").append(refSelectedRendered);
@@ -398,7 +398,7 @@ function displaySelectedRefs(ref, inplace=false) {
 		$("#hide"+ref.hash.id).on("click", function () {
 			hidePlotRef(ref.hash.id);
 		});
-	if (inplace && ref.metadata && ref.metadata.color && ref.metadata.color.id)
+	if (inplace && ref.metadata && ref.metadata.color)
 		$("#scurve"+ref.hash.id).attr('id', "scurve"+ref.metadata.color.id);
 	$('[data-toggle="tooltip"]').tooltip();
 }
@@ -516,66 +516,73 @@ function updateURI() {
 	}
 }
 
-function getPermalink() {
-	let uploadCDB = function() {
-		Global.selectedIds.forEach(function(id) {
-			let ref=Global.refs[id];
-			if (ref.metadata.source=="Local") {
-				ref.metadata.hidden=ref.metadata.hidden?true:false;
-				let hidden=ref.metadata.hidden;
-				ref.metadata.source="CouchDB";
-				delete ref.metadata.local;
-				ref.metadata["couchdb"]=true;
-				ref.metadata.hidden=false;
-				// try to get the document from the server
-				CDB.get(id).then(function (doc) {
-					console.log("PouchDB: document '"+id+"' already exists.");
-					displaySelectors();
-					ref.metadata.hidden=hidden;
-					updateURI();
-					displaySelectedRefs(ref, true);
-				}).catch(function (err) {
-					// put a document on the CouchDB server
-					CDB.put(
-						$.extend({_id: id}, ref)
-					).then(function (response) {
-						console.log("PouchDB: put success");
-						console.log(response);
-						displaySelectors();
-						ref.metadata.hidden=hidden;
-						updateURI();
-						displaySelectedRefs(ref, true);
-					}).catch(function (err) {
-						console.log("PouchDB: put fail");
-						console.log(err);
-						ref.metadata.hidden=hidden;
-						delete ref.metadata.couchdb;
-						ref.metadata.source="Local";
-						ref.metadata["local"]=true;
-
-					});
-				});
-			}
-		});
-	};
-	$.when(uploadCDB).then(function(){
-		$("#permalinkModal").empty();
-		let url=window.location.origin;
-		if (url=="null")
-			url="http://aff3ct.github.io";
-		let permalink=url+"/comparator.html"+generateURI();
-		let permalinkModalTemplate = $('#permalinkModalTemplate').html();
-		Mustache.parse(permalinkModalTemplate);
-		let permalinkModalRendered=Mustache.render(permalinkModalTemplate, {permalink: permalink});
-		$("#permalinkModal").append(permalinkModalRendered);
-		$("#copyClipboard").on("click", function() {
-			let copyText = $("#permalinkInput")[0]; // get the text field
-			copyText.select(); // select the text field
-			document.execCommand("copy"); // copy the text inside the text field
-			$("#copyClipboard i").removeClass("fa-clipboard").addClass("fa-clipboard-check");
-		});
-		$('#permalinkInstModal').modal("show");
+function showPermalinkModal() {
+	$("#permalinkModal").empty();
+	let url=window.location.origin;
+	if (url=="null")
+		url="http://aff3ct.github.io";
+	let local = false;
+	let permalink=url+"/comparator.html"+generateURI(local);
+	let permalinkModalTemplate = $('#permalinkModalTemplate').html();
+	Mustache.parse(permalinkModalTemplate);
+	let permalinkModalRendered=Mustache.render(permalinkModalTemplate, {permalink: permalink});
+	$("#permalinkModal").append(permalinkModalRendered);
+	$("#copyClipboard").on("click", function() {
+		let copyText = $("#permalinkInput")[0]; // get the text field
+		copyText.select(); // select the text field
+		document.execCommand("copy"); // copy the text inside the text field
+		$("#copyClipboard i").removeClass("fa-clipboard").addClass("fa-clipboard-check");
 	});
+	$('#permalinkInstModal').modal("show");
+}
+
+function getPermalink() {
+	let transactions=[];
+	Global.selectedIds.forEach(function(id) {
+		if (Global.refs[id].metadata.source=="Local")
+			transactions.push(Global.refs[id]);
+	});
+	let transactionsCounter=0;
+	transactions.forEach(function(ref) {
+		let id=ref.hash.id;
+		ref.metadata.hidden=ref.metadata.hidden?true:false;
+		let hidden=ref.metadata.hidden;
+		ref.metadata.source="CouchDB";
+		delete ref.metadata.local;
+		ref.metadata["couchdb"]=true;
+		ref.metadata.hidden=false;
+		// try to get the document from the server
+		CDB.get(id).then(function (doc) {
+			console.log("PouchDB: document '"+id+"' already exists.");
+			displaySelectors();
+			ref.metadata.hidden=hidden;
+			updateURI();
+			displaySelectedRefs(ref, true);
+			if (++transactionsCounter==transactions.length) showPermalinkModal();
+		}).catch(function (err) {
+			// put a document on the CouchDB server
+			CDB.put(
+				$.extend({_id: id}, ref)
+			).then(function (response) {
+				console.log("PouchDB: put success");
+				console.log(response);
+				displaySelectors();
+				ref.metadata.hidden=hidden;
+				updateURI();
+				displaySelectedRefs(ref, true);
+				if (++transactionsCounter==transactions.length) showPermalinkModal();
+			}).catch(function (err) {
+				console.log("PouchDB: put fail");
+				console.log(err);
+				ref.metadata.hidden=hidden;
+				delete ref.metadata.couchdb;
+				ref.metadata.source="Local";
+				ref.metadata["local"]=true;
+				if (++transactionsCounter==transactions.length) showPermalinkModal();
+			});
+		});
+	});
+	if (transactions.length==0) showPermalinkModal();
 }
 
 function removeAxes() {
