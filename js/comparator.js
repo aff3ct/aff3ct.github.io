@@ -885,6 +885,15 @@ function filterByValue(ids) {
 	}
 	if (!values.length)
 		return ids;
+	if (window.location.host == "aff3ct.github.io") {
+		// track the search value with Google Analytics
+		ga('send', {
+			hitType:       'event',
+			eventCategory: 'BER/FER Comparator',
+			eventAction:   'search',
+			eventLabel:    value
+		});
+	}
 	let list=[];
 	ids.forEach(function(id) {
 		if (searchIfValuesInObject(Object.keys(vals), Global.refs[id]))
