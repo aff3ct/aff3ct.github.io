@@ -1,33 +1,136 @@
-function text2jsonAFF3CT(txt, filename = "")
-{
-	let isTrace = false;
-	let isLegend = false;
+function text2jsonContentsGeneric(txt) {
 	let legends = [];
 	let contents = {};
+	let correspAxes = {
+		"Eb/N0"  : ["Eb/N0 (dB)", "EbN0", "SNRs", "SNR", "Eb/N0"],
+		"Es/N0"  : ["Es/N0 (dB)", "EsN0", "Es/N0"],
+		"BE"     : ["bit errors", "bits errors", "bits error", "BE"],
+		"FE"     : ["error frames", "frame errors", "frames errors", "frames error", "FE"],
+		"BER"    : ["bit error rate", "BER"],
+		"FER"    : ["frame error rate", "FER"],
+		"FRA"    : ["total frames", "FRA"],
+		"SIM_THR": ["SIM_CTHR", "SIM_THR"],
+		"ET/RT"  : ["simulation time", "sim time", "time", "ET/RT"],
+	};
+	let delims = ["|", ",", ";", "	", " "];
+	let lines = txt.split("\n");
+	for (let ln = 0; ln < lines.length; ln++) {
+		let l = lines[ln];
+		let cols=[];
+		let d=0;
+		while (d<delims.length && cols.length < 2) {
+			cols = l.split(delims[d]);
+			let c=0;
+			while (cols && c<cols.length) {
+				if (cols[c]=="")
+					cols.splice(c,1);
+				else
+					c++;
+			}
+			d++;
+		}
+		if (cols.length >= 2 && !isNaN(parseInt(cols[0]))) {
+			if (!legends.length) {
+				let i = 1;
+				while (!legends.length && ln >= i) {
+					let newl = lines[ln -i];
+					newl = newl.replace("#", "");
+					let j=0;
+					let compatible=false;
+					while (!compatible && j < correspAxes["Eb/N0"].length) {
+						if (newl.includes(correspAxes["Eb/N0"][j])               ||
+						    newl.includes(correspAxes["Eb/N0"][j].toLowerCase()) ||
+						    newl.includes(correspAxes["Eb/N0"][j].toUpperCase()))
+							compatible=true;
+						j++;
+					}
+					if (compatible) {
+						Object.keys(correspAxes).forEach(function(legend) {
+							correspAxes[legend].forEach(function(alt) {
+								newl = newl.replace(alt, legend);
+								newl = newl.replace(alt.toLowerCase(), legend);
+								newl = newl.replace(alt.toUpperCase(), legend);
+							});
+						});
+						let colsL=[];
+						d=0;
+						while (d<delims.length && colsL.length < 2) {
+							colsL = newl.split(delims[d]);
+							let c=0;
+							while (colsL && c<colsL.length) {
+								if (colsL[c]=="")
+									colsL.splice(c,1);
+								else
+									c++;
+							}
+							d++;
+						}
+						legends = [];
+						colsL.forEach(function(col) {
+							if (col!="")
+								legends.push($.trim(col));
+						});
+						break;
+					}
+					i++;
+				}
+			}
+			let c=0;
+			while (cols && c<cols.length) {
+				if (cols[c]=="")
+					cols.splice(c,1);
+				else
+					c++;
+			}
+			if (cols && cols.length==legends.length) {
+				for (let c=0; c<cols.length; c++) {
+					let key = legends[c];
+					let val = $.trim(cols[c]);
+					if (key == "ET/RT") {
+						newVal = parseInt(val.split("'")[1]);
+						newVal += parseInt(val.split("'")[0].split("h")[1])*60;
+						newVal += parseInt(val.split("'")[0].split("h")[0])*3600;
+						val = newVal;
+					}
+					let li = parseInt(val);
+					if (!isNaN(li)) {
+						let li2 = parseFloat(val);
+						li = (li - li2 != 0)?li2:li;
+						if (key in contents)
+							contents[key].push(li);
+						else
+							contents[key] = [li];
+					}
+				}
+			}
+		}
+	}
+	return contents;
+}
+
+function text2jsonAFF3CT(txt, filename = "") {
+	let isTrace = false;
+	let contents = text2jsonContentsGeneric(txt);
 	let metadata = {source: "Local"};
 	let titleSection = "";
 	let headers = {};
 	let section = {};
 
 	let lines = txt.split("\n");
-	for (let ln = 0; ln < lines.length; ln++)
-	{
+	for (let ln = 0; ln < lines.length; ln++) {
 		let l = lines[ln];
 
 		if ((ln == 0 && l != "[metadata]") || l.startsWith("#"))
 			isTrace = true;
 
-		if (l == "[trace]")
-		{
+		if (l == "[trace]") {
 			isTrace = true;
 			continue;
 		}
 
-		if (!isTrace)
-		{
+		if (!isTrace) {
 			ls = l.split("=");
-			if (ls.length >= 2)
-			{
+			if (ls.length >= 2) {
 				let key = ls[0];
 				let val = ls[1];
 
@@ -41,24 +144,18 @@ function text2jsonAFF3CT(txt, filename = "")
 				else
 					metadata[key] = val;
 			}
-		}
-		else
-		{
-			if (l.startsWith("# *"))
-			{
-				if (titleSection != "")
-				{
+		} else {
+			if (l.startsWith("# *")) {
+				if (titleSection != "") {
 					headers[titleSection] = section;
 					section = {};
 				}
 				titleSection = l.substring(4).split(" -")[0];
 			}
-			else if (l.startsWith("#    **"))
-			{
+			else if (l.startsWith("#    **")) {
 				cleanL = l.substring(8);
 				splitL = cleanL.split(" = ");
-				if (splitL.length >= 2)
-				{
+				if (splitL.length >= 2) {
 					key = $.trim(splitL[0]);
 					val = splitL[1];
 
@@ -71,8 +168,7 @@ function text2jsonAFF3CT(txt, filename = "")
 						section[key] = true;
 					else if (["no", "off"].includes(val))
 						section[key] = false;
-					else
-					{
+					else {
 						let valInt = parseInt(val);
 						if (isNaN(valInt))
 							section[key] = val;
@@ -87,73 +183,11 @@ function text2jsonAFF3CT(txt, filename = "")
 					}
 				}
 			}
-			else if (l.startsWith("# The simulation is running..."))
-			{
-				if (titleSection != "")
-				{
+			else if (l.startsWith("# The simulation is running...")) {
+				if (titleSection != "") {
 					headers[titleSection] = section;
 					section = {};
 					titleSection = "";
-				}
-			}
-
-			if (!l.startsWith("#"))
-			{
-				if (!isLegend)
-				{
-					let i = 1;
-					while (!isLegend && ln >= i)
-					{
-						let leg = lines[ln -i];
-						leg = leg.replace("#", "");
-						legends = leg.split("|");
-						for (let c = 0; c < legends.length; c++)
-							if ($.trim(legends[c]) == "BER" || $.trim(legends[c]) == "FER")
-							{
-								isLegend = true;
-								break;
-							}
-						i++;
-					}
-				}
-
-				if (isLegend)
-				{
-					let cols = l.split("|");
-					if (cols.length == legends.length)
-					{
-						for (let c = 0; c < cols.length; c++)
-						{
-							key = $.trim(legends[c]);
-							if (key != "")
-							{
-								val = $.trim(cols[c]).split(" ")[0];
-
-								if (key == "ET/RT")
-								{
-									newVal = parseInt(val.split("'")[1]);
-									newVal += parseInt(val.split("'")[0].split("h")[1]) * 60;
-									newVal += parseInt(val.split("'")[0].split("h")[0]) * 3600;
-									val = newVal;
-								}
-
-								let li = parseInt(val);
-								if (isNaN(li))
-									li = val;
-								else
-								{
-									let li2 = parseFloat(val);
-									if (li - li2 != 0)
-										li = li2;
-								}
-
-								if (key in contents)
-									contents[key].push(li);
-								else
-									contents[key] = [li];
-							}
-						}
-					}
 				}
 			}
 		}
@@ -175,8 +209,7 @@ function text2jsonAFF3CT(txt, filename = "")
 	return dict;
 }
 
-function text2jsonKaiserslautern(txt, filename = "", codeType = "")
-{
+function text2jsonKaiserslautern(txt, filename = "", codeType = "") {
 	let correspAxes = {
 		"Eb/N0 (dB)": "Eb/N0",
 		"FER": "FER",
@@ -228,10 +261,9 @@ function text2jsonKaiserslautern(txt, filename = "", codeType = "")
 		},
 	}
 
-	let legends = [];
 	let metadata = {source: "Local"};
 	let headers = {};
-	let contents = {};
+	let contents = text2jsonContentsGeneric(txt);
 
 	if (filename!="" && codeType=="") {
 		let resCodeType=filename.match(/([A-Za-z0-9]*)\_/);
@@ -249,8 +281,7 @@ function text2jsonKaiserslautern(txt, filename = "", codeType = "")
 		headers.Codec = {"Type": codeType};
 
 	let lines = txt.split("\n");
-	for (let ln = 0; ln < lines.length; ln++)
-	{
+	for (let ln = 0; ln < lines.length; ln++) {
 		let l = lines[ln];
 		if (ln==0) {
 			let resNK = l.match(/\ \(([0-9]*)\,([0-9]*)\)/);
@@ -285,50 +316,6 @@ function text2jsonKaiserslautern(txt, filename = "", codeType = "")
 		let resModem = l.match(/Modulation: (.*)/);
 		if (resModem && resModem.length==2)
 			headers.Modem = {"Type": $.trim(resModem[1])};
-
-		if (l.startsWith("Eb/N0")) {
-			let cols = l.split("  ");
-			if (cols.length > 1) {
-				legends = [];
-				cols.forEach(function(col) {
-					if (correspAxes[$.trim(col)])
-						legends.push(correspAxes[$.trim(col)]);
-				});
-			} else // hack for turbo codes
-				legends = ["Eb/N0", "FER"];
-		}
-
-		let delims = [",", " "];
-		let wrongSplitter=true;
-		let d = 0;
-		while (legends.length && wrongSplitter && d<delims.length) {
-			let cols = l.split(delims[d++]);
-			let c=0;
-			while (cols && c<cols.length) {
-				if (cols[c]=="")
-					cols.splice(c,1);
-				else
-					c++;
-			}
-			if (cols && cols.length==legends.length && !isNaN(parseInt(cols[0]))) {
-				wrongSplitter=false;
-				for (let c=0; c<cols.length; c++) {
-					let key = legends[c];
-					let val = $.trim(cols[c]);
-					let li = parseInt(val);
-					if (isNaN(li))
-						li = val;
-					else {
-						let li2 = parseFloat(val);
-						li = (li - li2 != 0)?li2:li;
-					}
-					if (key in contents)
-						contents[key].push(li);
-					else
-						contents[key] = [li];
-				}
-			}
-		}
 	}
 
 	let hashMaker = sha1.create();
