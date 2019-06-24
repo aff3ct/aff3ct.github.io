@@ -459,15 +459,60 @@ function plotSelectedRefs() {
 		layout.yaxis["title"]=title;
 	}
 	Plotly.newPlot(Global.plot.div, data, layout, { displayModeBar: true, displaylogo: false });
+	updateURI();
+}
+
+function cleanURI() {
+	// remove get parameter from the URI
+	if (window.history) {
+		let url=window.location.host;
+		let uri="/comparator.html";
+		if (url!="")
+			window.history.replaceState({}, url, uri);
+	}
+}
+
+function generateURI(local=true) {
+	let uri="?";
+	let isFirst=true;
+	Global.selectedIds.forEach(function(id) {
+		let ref=Global.refs[id];
+		if (local || ref.metadata.source!="Local") {
+			uri+=(isFirst?"":"&")+"curve"+ref.metadata.color.id+"="+ref.hash.id+(ref.metadata.hidden?"&hidden"+ref.metadata.color.id:"");
+			isFirst=false;
+		}
+	});
+	uri+=(isFirst?"":"&")+"xaxis=";
+	isFirst=true;
+	Object.keys(Global.plot.layouts.x).forEach(function(x) {
+		if (Global.plot.layouts.x[x].enabled) {
+			uri+=encodeURIComponent((isFirst?"":",")+x);
+			isFirst=false;
+		}
+	});
+	uri+="&yaxes=";
+	isFirst=true;
+	Object.keys(Global.plot.layouts.y).forEach(function(y) {
+		if (Global.plot.layouts.y[y].enabled) {
+			uri+=encodeURIComponent((isFirst?"":",")+y);
+			isFirst=false;
+		}
+	});
+	return uri;
+}
+
+function updateURI() {
+	if (window.history) {
+		let url=window.location.host;
+		let local = false;
+		let uri="/comparator.html"+generateURI(local);
+		if (url!="")
+			window.history.replaceState({}, url, uri);
+	}
 }
 
 function getPermalink() {
 	$("#permalinkModal").empty();
-	let url=window.location.origin;
-	if (url=="null")
-		url="http://aff3ct.github.io";
-	let permalink=url+"/comparator.html?"
-	let isFirst=true;
 	Global.selectedIds.forEach(function(id) {
 		let ref=Global.refs[id];
 		ref.metadata.hidden=ref.metadata.hidden?true:false;
@@ -477,38 +522,36 @@ function getPermalink() {
 			delete ref.metadata.local;
 			ref.metadata["couchdb"]=true;
 			ref.metadata.hidden=false;
-			// put a document on the CouchDB server
-			CDB.put(
-				$.extend({_id: id}, ref)
-			).then(function (response) {
-				console.log("PouchDB: put success");
-				console.log(response);
-				ref.metadata.hidden=hidden;
+			// try to get the document from the server
+			CDB.get(id).then(function (doc) {
+				console.log("PouchDB: document '"+id+"' already exists.");
+				displaySelectors();
+				updateURI();
 			}).catch(function (err) {
-				console.log("PouchDB: put fail");
-				console.log(err);
-				ref.metadata.hidden=hidden;
+				// put a document on the CouchDB server
+				CDB.put(
+					$.extend({_id: id}, ref)
+				).then(function (response) {
+					console.log("PouchDB: put success");
+					console.log(response);
+					ref.metadata.hidden=hidden;
+					displaySelectors();
+					updateURI();
+				}).catch(function (err) {
+					console.log("PouchDB: put fail");
+					console.log(err);
+					ref.metadata.hidden=hidden;
+					delete ref.metadata.couchdb;
+					ref.metadata.source="Local";
+					ref.metadata["local"]=true;
+				});
 			});
 		}
-		permalink+=(isFirst?"":"&")+"curve"+ref.metadata.color.id+"="+ref.hash.id+(hidden?"&hidden"+ref.metadata.color.id:"");
-		isFirst=false;
 	});
-	permalink+="&xaxis=";
-	isFirst=true;
-	Object.keys(Global.plot.layouts.x).forEach(function(x) {
-		if (Global.plot.layouts.x[x].enabled) {
-			permalink+=encodeURIComponent((isFirst?"":",")+x);
-			isFirst=false;
-		}
-	});
-	permalink+="&yaxes=";
-	isFirst=true;
-	Object.keys(Global.plot.layouts.y).forEach(function(y) {
-		if (Global.plot.layouts.y[y].enabled) {
-			permalink+=encodeURIComponent((isFirst?"":",")+y);
-			isFirst=false;
-		}
-	});
+	let url=window.location.origin;
+	if (url=="null")
+		url="http://aff3ct.github.io";
+	let permalink=url+"/comparator.html"+generateURI();
 	let permalinkModalTemplate = $('#permalinkModalTemplate').html();
 	Mustache.parse(permalinkModalTemplate);
 	let permalinkModalRendered=Mustache.render(permalinkModalTemplate, {permalink: permalink});
@@ -717,6 +760,7 @@ function deleteSelectedRef(id) {
 			$("#plot").css("display", "none"  );
 			$("#tips").css("display", "inline");
 			removeAxes();
+			cleanURI();
 		}
 		else
 			plotSelectedRefs();
@@ -1002,39 +1046,37 @@ function displayRefsFromURI() {
 	let yaxes=findGetParameter("yaxes");
 	let yaxesEnabled=yaxes?decodeURIComponent(yaxes).split(','):[];
 	let nColors=Global.plot.colors.length;
+	let ids=[];
 	for (let colorId=0; colorId<nColors; colorId++) {
 		let id=findGetParameter("curve"+colorId);
-		let hidden=findGetParameter("hidden"+colorId);
-		if (id) {
-			if (Global.refs[id]) {
+		if (id)
+			ids.push({id: id, colorId: colorId, hidden: findGetParameter("hidden"+colorId)?true:false});
+	}
+	ids.forEach(function(obj) {
+		let id=obj.id;
+		let colorId=obj.colorId;
+		let hidden=obj.hidden;
+		if (Global.refs[id]) {
+			Global.refs[id].metadata.hidden=hidden?true:false;
+			addSelectedRef(Global.refs[id], colorId, xaxisEnabled, yaxesEnabled);
+		} else {
+			// this is very important to make the copy because the 'CDB.get' call is asynchronous
+			let cid=colorId;
+			// get a document from the server
+			CDB.get(id).then(function (ref) {
+				console.log("PouchDB: get success");
+				Global.refs[id]=ref;
 				Global.refs[id].metadata.hidden=hidden?true:false;
-				addSelectedRef(Global.refs[id], colorId, xaxisEnabled, yaxesEnabled);
-			} else {
-				// this is very important to make the copy because the 'CDB.get' call is asynchronous
-				let cid=colorId;
-				// get a document from the server
-				CDB.get(id).then(function (ref) {
-					console.log("PouchDB: get success");
-					Global.refs[id]=ref;
-					Global.refs[id].metadata.hidden=hidden?true:false;
-					precomputeData(id);
-					Global.filteredValueIds=filterByValue(Object.keys(Global.refs));
-					displaySelectors();
-					addSelectedRef(ref, cid, xaxisEnabled, yaxesEnabled);
-				}).catch(function (err) {
-					console.log("PouchDB: get fail");
-					console.log(err);
-				});
-			}
+				precomputeData(id);
+				Global.filteredValueIds=filterByValue(Object.keys(Global.refs));
+				displaySelectors();
+				addSelectedRef(ref, cid, xaxisEnabled, yaxesEnabled);
+			}).catch(function (err) {
+				console.log("PouchDB: get fail");
+				console.log(err);
+			});
 		}
-	}
-	// remove get parameter from the URI
-	if (window.history) {
-		let url=window.location.host;
-		let uri="/comparator.html";
-		if (url!="")
-			window.history.replaceState({}, url, uri);
-	}
+	});
 }
 
 // main
