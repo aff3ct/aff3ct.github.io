@@ -1,108 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="A Fast Forward Error Correction Toolbox (AFF3CT)">
-  <meta name="author" content="Denis BARTHOU, Adrien CASSAGNE and Mehdi NACIRI">
-  <meta name="keywords" content="BER,FER,comparison,comparator,Bit Error Rate,Frame Error Rate,ECC,Codes,FEC,LDPC,Turbo,Polar,dB,Eb/N0,Monte-Carlo,simulation">
-  <title>AFF3CT - A Fast Forward Error Correction Toolbox</title>
-  <link rel="stylesheet" href="./css/comparator.css">
-  <link rel="stylesheet" href="./css/lib/bootstrap-4.1.1.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/bootstrap_carousel.css">
-  <link rel="stylesheet" href="./css/lib/nouislider-13.1.5.min.css">
-  <script src="./js/lib/jquery-3.3.1.min.js"></script>
-  <script src="./js/lib/popper-1.14.3.min.js"></script>
-  <script src="./js/lib/bootstrap-4.1.1.min.js"></script>
-  <script src="./js/lib/plotly-1.37.1.min.js"></script>
-  <script src="./js/lib/mustache-3.0.1.js"></script>
-  <script src="./js/lib/nouislider-13.1.5.min.js"></script>
-  <script src="./js/lib/sha1-0.6.0.min.js"></script>
-  <script src="./js/lib/pouchdb-7.0.0.min.js"></script>
-  <script> /* Google Analytics */
-    if (window.location.host == "aff3ct.github.io") {
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-78973823-1', 'auto');
-      ga('send', 'pageview');
-    }
-  </script>
-  <script>
-    /*
-    * Function that tracks a click on an outbound link in Analytics.
-    * This function takes a valid URL string as an argument, and uses that URL string
-    * as the event label. Setting the transport method to 'beacon' lets the hit be sent
-    * using 'navigator.sendBeacon' in browser that support it.
-    */
-    var trackOutboundLink = function(url, isExternal = true) {
-      var params = {};
-      if (!isExternal) {
-        params.hitCallback = function () {
-          document.location = url;
-        }
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A Fast Forward Error Correction Toolbox (AFF3CT)">
+    <meta name="author" content="Denis BARTHOU, Adrien CASSAGNE and Mehdi NACIRI">
+    <meta name="keywords" content="BER,FER,comparison,comparator,Bit Error Rate,Frame Error Rate,ECC,Codes,FEC,LDPC,Turbo,Polar,dB,Eb/N0,Monte-Carlo,simulation">
+    <title>AFF3CT - A Fast Forward Error Correction Toolbox</title>
+    <link rel="stylesheet" href="./css/comparator.css">
+    <link rel="stylesheet" href="./css/lib/bootstrap-4.1.1.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/bootstrap_carousel.css">
+    <link rel="stylesheet" href="./css/lib/nouislider-13.1.5.min.css">
+    <script src="./js/lib/jquery-3.3.1.min.js"></script>
+    <script src="./js/lib/popper-1.14.3.min.js"></script>
+    <script src="./js/lib/bootstrap-4.1.1.min.js"></script>
+    <script src="./js/lib/plotly-1.37.1.min.js"></script>
+    <script src="./js/lib/mustache-3.0.1.js"></script>
+    <script src="./js/lib/nouislider-13.1.5.min.js"></script>
+    <script src="./js/lib/sha1-0.6.0.min.js"></script>
+    <script src="./js/lib/pouchdb-7.0.0.min.js"></script>
+    <script> /* Google Analytics */
+      if (window.location.host == "aff3ct.github.io") {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-78973823-1', 'auto');
+        ga('send', 'pageview');
       }
-      if (window.location.host == "aff3ct.github.io")
-        ga('send', 'event', 'outbound', 'click', url, params);
-      return isExternal;
-    }
-  </script>
-  <script id="refTemplate" type="x-tmpl-mustache">
-    <div class="card" id="card{{hash.id}}">
-      <div class="card-header p-2" id="heading{{hash.id}}">
-        <h5 class="mb-0">
-          <div class="mb-0 mx-0 form-group row">
-            <div class="col-md-2 px-0 addButton">
-              {{#metadata.color}}
-                <button type="button" id="curve{{hash.id}}" class="btn btn-danger">
-                  <i class="fas fa-minus"></i>
-                </button>
-              {{/metadata.color}}
-              {{^metadata.color}}
-                <button type="button" id="curve{{hash.id}}" class="btn btn-primary">
-                  <i class="fas fa-plus"></i>
-                </button>
-              {{/metadata.color}}
-            </div>
-            <div class="col-md-10 px-0">
-              <button class="btn btn-link pr-0 pl-3 dropdown-toggle" data-toggle="collapse" data-target="#collapse{{hash.id}}" aria-expanded="true" aria-controls="collapse{{hash.id}}">
-                {{#metadata.bigtitle}}
-                  {{#metadata.shortbigtitle}}
-                    <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{metadata.bigtitle}}">{{metadata.shortbigtitle}}</span>
-                  {{/metadata.shortbigtitle}}
-                  {{^metadata.shortbigtitle}}
-                    {{metadata.bigtitle}}
-                  {{/metadata.shortbigtitle}}
-                {{/metadata.bigtitle}}
-                {{^metadata.bigtitle}}
-                  Undefined
-                {{/metadata.bigtitle}}
-              </button>
-              {{#metadata.subtitle}}
-                <div class="pl-3 subtitle">{{metadata.subtitle}}</div>
-              {{/metadata.subtitle}}
-            </div>
-          </div>
-        </h5>
-      </div>
-    </div>
-  </script>
-  <script id="refSelectedTemplate" type="x-tmpl-mustache">
-    {{#metadata.hidden}}
-    <div id="scurve{{hash.id}}" style="opacity: 0.33;">
-    {{/metadata.hidden}}
-    {{^metadata.hidden}}
-    <div id="scurve{{hash.id}}">
-    {{/metadata.hidden}}
-      <div class="card" id="ss{{hash.id}}">
-        <div class="card-header" id="sheading{{hash.id}}">
+    </script>
+    <script>
+      /*
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url, isExternal = true) {
+        var params = {};
+        if (!isExternal) {
+          params.hitCallback = function () {
+            document.location = url;
+          }
+        }
+        if (window.location.host == "aff3ct.github.io")
+          ga('send', 'event', 'outbound', 'click', url, params);
+        return isExternal;
+      }
+    </script>
+    <script id="refTemplate" type="x-tmpl-mustache">
+      <div class="card" id="card{{hash.id}}">
+        <div class="card-header p-2" id="heading{{hash.id}}">
           <h5 class="mb-0">
-            <div class="mb-0 form-group row">
-              <div class="col-sm-8">
-                <button class="btn btn-link dropdown-toggle" data-toggle="collapse" data-target="#scollapse{{hash.id}}" aria-expanded="true" aria-controls="scollapse{{hash.id}}">
+            <div class="mb-0 mx-0 form-group row">
+              <div class="col-md-2 px-0 addButton">
+                {{#metadata.color}}
+                  <button type="button" id="curve{{hash.id}}" class="btn btn-danger">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                {{/metadata.color}}
+                {{^metadata.color}}
+                  <button type="button" id="curve{{hash.id}}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                {{/metadata.color}}
+              </div>
+              <div class="col-md-10 px-0">
+                <button class="btn btn-link pr-0 pl-3 dropdown-toggle" data-toggle="collapse" data-target="#collapse{{hash.id}}" aria-expanded="true" aria-controls="collapse{{hash.id}}">
                   {{#metadata.bigtitle}}
                     {{#metadata.shortbigtitle}}
                       <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{metadata.bigtitle}}">{{metadata.shortbigtitle}}</span>
@@ -115,25 +81,6 @@
                     Undefined
                   {{/metadata.bigtitle}}
                 </button>
-              </div>
-              <div class="col-sm-4 selectedRefButtons">
-                <button id="delete{{hash.id}}" type="button" class="btn btn-link btn-sm" title="Delete ref">
-                  <i class="fas fa-times"></i>
-                </button>
-                {{#metadata.hidden}}
-                  <button id="show{{hash.id}}" type="button" class="btn btn-sm btn-link" title="Show ref">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                {{/metadata.hidden}}
-                {{^metadata.hidden}}
-                  <button id="hide{{hash.id}}" type="button" class="btn btn-link btn-sm" title="Hide ref">
-                    <i class="fas fa-eye-slash"></i>
-                  </button>
-                {{/metadata.hidden}}
-              </div>
-            </div>
-            <div class="mb-0 form-group row">
-              <div class="col-sm-12">
                 {{#metadata.subtitle}}
                   <div class="pl-3 subtitle">{{metadata.subtitle}}</div>
                 {{/metadata.subtitle}}
@@ -142,374 +89,427 @@
           </h5>
         </div>
       </div>
-    </div>
-  </script>
-  <script id="refBodyTemplate" type="x-tmpl-mustache">
-    <div id="{{prefix}}collapse{{hash.id}}" class="collapse" aria-labelledby="heading{{hash.id}}" data-parent="#{{prefix}}accordion{{hash.id}}">
-      <div class="card-body">
-        <li id="g{{hash.id}}" class="list-group-item list-group-item-action align-item-start">
-          {{#headers}}
-            <div class="text-muted twoColumns">
-              <small>
-                <ul class="typeList">
-                  {{#headers.list}}
-                    <li>
-                    {{#tooltip}}
-                      <b>{{name}}</b>: <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{tooltip}}">{{value}}</span>
-                    {{/tooltip}}
-                    {{^tooltip}}
-                      <b>{{name}}</b>: <span>{{value}}</span>
-                    {{/tooltip}}
-                    </li>
-                  {{/headers.list}}
-                </ul>
-              </small>
-            </div>
-          {{/headers}}
-          {{^headers}}
-            <div class="text-muted">
-              <small><b>Headers are not available.<b></small>
-            </div>
-          {{/headers}}
-          <div class="curveIcons">
-            {{#metadata.kaiserslautern}}
-              <a href="https://www.uni-kl.de/channel-codes/ml-simulation-results/" onclick="return trackOutboundLink('https://www.uni-kl.de/channel-codes/ml-simulation-results/" target="_blank" title="Reference from the Kaiserslautern University">
-                <img class="kaiserslautern" src="images/Tu_kaiserslautern.svg" alt="University of Kaiserslautern">
-              </a>
-            {{/metadata.kaiserslautern}}
-            {{#metadata.aff3ct}}
-              <span class="curveIcon"><a href="https://github.com/aff3ct/error_rate_references/blob/{{branch}}/{{filename}}" target="_blank" title="GitHub" onclick="return trackOutboundLink('https://github.com/aff3ct/error_rate_references/blob/{{branch}}/{{filename}}');"><i class="fab fa-github"></i></a></span>
-            {{/metadata.aff3ct}}
-            {{#metadata.couchdb}}
-              <span class="curveIcon"><a href="{{serverCDB}}/_utils/document.html?{{nameCDB}}/{{hash.id}}" target="_blank" title="CouchDB" onclick="return trackOutboundLink('{{serverCDB}}/_utils/document.html?{{nameCDB}}/{{hash.id}}');""><i class="fas fa-couch"></i></a></span>
-            {{/metadata.couchdb}}
-            {{#metadata.local}}
-              <span class="curveIcon"><i class="fas fa-database"></i></span>
-            {{/metadata.local}}
-            {{#metadata.doi}}
-              <span class="curveIcon"><a href="https://doi.org/{{metadata.doi}}" target="_blank" title="DOI" onclick="return trackOutboundLink('https://doi.org/{{metadata.doi}}');"><i class="fas fa-book"></i></a></span>
-            {{/metadata.doi}}
-            {{#metadata.url}}
-              <span class="curveIcon"><a href="{{metadata.url}}" target="_blank" title="URL" onclick="return trackOutboundLink('{{metadata.url}}');"><i class="fas fa-globe"></i></a></span>
-            {{/metadata.url}}
-            {{#metadata.command}}
-              <span class="curveIcon"><a href="#" id="{{prefix}}displayCmdModal{{hash.id}}" data-toggle="modal" data-target="#cmdModal{{hash.id}}" title="Command line"><i class="fas fa-terminal"></i></a></span>
-            {{/metadata.command}}
-            {{#metadata.parity}}
-              <span class="curveIcon"><a href="{{metadata.parity}}" target="_blank" title="H parity-check matrix" onclick="return trackOutboundLink('{{metadata.parity}}');"><i class="fas fa-file-alt"></i></a></span>
-            {{/metadata.parity}}
-            {{#trace}}
-              <span class="curveIcon"><a href="#" id="{{prefix}}displayTraceModal{{hash.id}}" data-toggle="modal" data-target="#traceModal{{hash.id}}" title="Original reference file"><i class="fas fa-file-alt"></i></a></span>
-            {{/trace}}
+    </script>
+    <script id="refSelectedTemplate" type="x-tmpl-mustache">
+      {{#metadata.hidden}}
+      <div id="scurve{{hash.id}}" style="opacity: 0.33;">
+      {{/metadata.hidden}}
+      {{^metadata.hidden}}
+      <div id="scurve{{hash.id}}">
+      {{/metadata.hidden}}
+        <div class="card" id="ss{{hash.id}}">
+          <div class="card-header" id="sheading{{hash.id}}">
+            <h5 class="mb-0">
+              <div class="mb-0 form-group row">
+                <div class="col-sm-8">
+                  <button class="btn btn-link dropdown-toggle" data-toggle="collapse" data-target="#scollapse{{hash.id}}" aria-expanded="true" aria-controls="scollapse{{hash.id}}">
+                    {{#metadata.bigtitle}}
+                      {{#metadata.shortbigtitle}}
+                        <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{metadata.bigtitle}}">{{metadata.shortbigtitle}}</span>
+                      {{/metadata.shortbigtitle}}
+                      {{^metadata.shortbigtitle}}
+                        {{metadata.bigtitle}}
+                      {{/metadata.shortbigtitle}}
+                    {{/metadata.bigtitle}}
+                    {{^metadata.bigtitle}}
+                      Undefined
+                    {{/metadata.bigtitle}}
+                  </button>
+                </div>
+                <div class="col-sm-4 selectedRefButtons">
+                  <button id="delete{{hash.id}}" type="button" class="btn btn-link btn-sm" title="Delete ref">
+                    <i class="fas fa-times"></i>
+                  </button>
+                  {{#metadata.hidden}}
+                    <button id="show{{hash.id}}" type="button" class="btn btn-sm btn-link" title="Show ref">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                  {{/metadata.hidden}}
+                  {{^metadata.hidden}}
+                    <button id="hide{{hash.id}}" type="button" class="btn btn-link btn-sm" title="Hide ref">
+                      <i class="fas fa-eye-slash"></i>
+                    </button>
+                  {{/metadata.hidden}}
+                </div>
+              </div>
+              <div class="mb-0 form-group row">
+                <div class="col-sm-12">
+                  {{#metadata.subtitle}}
+                    <div class="pl-3 subtitle">{{metadata.subtitle}}</div>
+                  {{/metadata.subtitle}}
+                </div>
+              </div>
+            </h5>
           </div>
-        </li>
+        </div>
+      </div>
+    </script>
+    <script id="refBodyTemplate" type="x-tmpl-mustache">
+      <div id="{{prefix}}collapse{{hash.id}}" class="collapse" aria-labelledby="heading{{hash.id}}" data-parent="#{{prefix}}accordion{{hash.id}}">
+        <div class="card-body">
+          <li id="g{{hash.id}}" class="list-group-item list-group-item-action align-item-start">
+            {{#headers}}
+              <div class="text-muted twoColumns">
+                <small>
+                  <ul class="typeList">
+                    {{#headers.list}}
+                      <li>
+                      {{#tooltip}}
+                        <b>{{name}}</b>: <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{tooltip}}">{{value}}</span>
+                      {{/tooltip}}
+                      {{^tooltip}}
+                        <b>{{name}}</b>: <span>{{value}}</span>
+                      {{/tooltip}}
+                      </li>
+                    {{/headers.list}}
+                  </ul>
+                </small>
+              </div>
+            {{/headers}}
+            {{^headers}}
+              <div class="text-muted">
+                <small><b>Headers are not available.<b></small>
+              </div>
+            {{/headers}}
+            <div class="curveIcons">
+              {{#metadata.kaiserslautern}}
+                <a href="https://www.uni-kl.de/channel-codes/ml-simulation-results/" onclick="return trackOutboundLink('https://www.uni-kl.de/channel-codes/ml-simulation-results/" target="_blank" title="Reference from the Kaiserslautern University">
+                  <img class="kaiserslautern" src="images/Tu_kaiserslautern.svg" alt="University of Kaiserslautern">
+                </a>
+              {{/metadata.kaiserslautern}}
+              {{#metadata.aff3ct}}
+                <span class="curveIcon"><a href="https://github.com/aff3ct/error_rate_references/blob/{{branch}}/{{filename}}" target="_blank" title="GitHub" onclick="return trackOutboundLink('https://github.com/aff3ct/error_rate_references/blob/{{branch}}/{{filename}}');"><i class="fab fa-github"></i></a></span>
+              {{/metadata.aff3ct}}
+              {{#metadata.couchdb}}
+                <span class="curveIcon"><a href="{{serverCDB}}/_utils/document.html?{{nameCDB}}/{{hash.id}}" target="_blank" title="CouchDB" onclick="return trackOutboundLink('{{serverCDB}}/_utils/document.html?{{nameCDB}}/{{hash.id}}');""><i class="fas fa-couch"></i></a></span>
+              {{/metadata.couchdb}}
+              {{#metadata.local}}
+                <span class="curveIcon"><i class="fas fa-database"></i></span>
+              {{/metadata.local}}
+              {{#metadata.doi}}
+                <span class="curveIcon"><a href="https://doi.org/{{metadata.doi}}" target="_blank" title="DOI" onclick="return trackOutboundLink('https://doi.org/{{metadata.doi}}');"><i class="fas fa-book"></i></a></span>
+              {{/metadata.doi}}
+              {{#metadata.url}}
+                <span class="curveIcon"><a href="{{metadata.url}}" target="_blank" title="URL" onclick="return trackOutboundLink('{{metadata.url}}');"><i class="fas fa-globe"></i></a></span>
+              {{/metadata.url}}
+              {{#metadata.command}}
+                <span class="curveIcon"><a href="#" id="{{prefix}}displayCmdModal{{hash.id}}" data-toggle="modal" data-target="#cmdModal{{hash.id}}" title="Command line"><i class="fas fa-terminal"></i></a></span>
+              {{/metadata.command}}
+              {{#metadata.parity}}
+                <span class="curveIcon"><a href="{{metadata.parity}}" target="_blank" title="H parity-check matrix" onclick="return trackOutboundLink('{{metadata.parity}}');"><i class="fas fa-file-alt"></i></a></span>
+              {{/metadata.parity}}
+              {{#trace}}
+                <span class="curveIcon"><a href="#" id="{{prefix}}displayTraceModal{{hash.id}}" data-toggle="modal" data-target="#traceModal{{hash.id}}" title="Original reference file"><i class="fas fa-file-alt"></i></a></span>
+              {{/trace}}
+            </div>
+          </li>
+        </div>
+      </div>
+    </script>
+    <script id="cmdModalTemplate" type="x-tmpl-mustache">
+      <div class="modal fade" id="cmdModal{{hash.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              {{#metadata.title}}
+                <h5 class="modal-title" id="exampleModalLongTitle">{{metadata.title}}</h5>
+              {{/metadata.title}}
+              {{^metadata.title}}
+                <h5 class="modal-title" id="exampleModalLongTitle">Undefined</h5>
+              {{/metadata.title}}
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="shell-wrap">
+                <p class="shell-top-bar">AFF3CT command line</p>
+                <ul class="shell-body">
+                  <li>{{{metadata.niceCommand}}}</li>
+                </ul>
+              </div>
+              <br>
+              <p class="text-justify">
+                <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+    <script id="traceModalTemplate" type="x-tmpl-mustache">
+      <div class="modal fade" id="traceModal{{hash.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              {{#metadata.title}}
+                <h5 class="modal-title" id="exampleModalLongTitle">{{metadata.title}}</h5>
+              {{/metadata.title}}
+              {{^metadata.title}}
+                <h5 class="modal-title" id="exampleModalLongTitle">Undefined</h5>
+              {{/metadata.title}}
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <pre>{{trace}}</pre>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+    <script id="permalinkModalTemplate" type="x-tmpl-mustache">
+      <div class="modal fade" id="permalinkInstModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Permalink</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-9">
+                  <input id="permalinkInput" class="form-control" type="text" placeholder="{{permalink}}" value="{{permalink}}" readonly>
+                </div>
+                <div class="col-3">
+                  <button id="copyClipboard" type="button" class="btn btn-outline-primary">
+                    <i class="fas fa-clipboard"></i> Copy to Clipboard
+                  </button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+    <script id="deleteAllTemplate" type="x-tmpl-mustache">
+      <button id="closeAll" type="button" class="btn btn-danger"><i class="fas fa-trash"></i> Delete All</button>
+    </script>
+    <script id="permalinkTemplate" type="x-tmpl-mustache">
+      <button id="permalink" type="button" class="btn btn-primary"><i class="fas fa-link"></i> Get Permalink</button>
+    </script>
+    <script id="showTemplate" type="x-tmpl-mustache">
+      <button id="show{{hash.id}}" type="button" class="btn btn-sm btn-link" title="Show ref">
+        <i class="fas fa-eye"></i>
+      </button>
+    </script>
+    <script id="hideTemplate" type="x-tmpl-mustache">
+      <button id="hide{{hash.id}}" type="button" class="btn btn-link btn-sm" title="Hide ref">
+        <i class="fas fa-eye-slash"></i>
+      </button>
+    </script>
+    <script id="selectorTemplate" type="x-tmpl-mustache">
+      <ul class="typeList">
+        {{#entries}}
+          <li>
+            <input type="checkbox" class="form-check-input" id="{{divId}}" title="{{name}}" {{checked}} {{disabled}}>
+            <label class="form-check-label" for="{{divId}}" title="{{name}}">
+              {{#desc}}
+                <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{desc}}">
+              {{/desc}}
+              {{name}}
+              {{#desc}}
+                </span>
+              {{/desc}}
+              {{#isNumber}}
+                ({{number}})
+              {{/isNumber}}
+            </label>
+          </li>
+        {{/entries}}
+      </ul>
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="index.html">AFF3CT</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbarCollapse" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home" aria-hidden="true">&nbsp;</i>Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="publications.html"><i class="fa fa-newspaper" aria-hidden="true">&nbsp;</i>Publications</a></li>
+          <li class="nav-item"><a class="nav-link" href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
+          <li class="nav-item"><a class="nav-link" href="download.html"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://aff3ct.readthedocs.io" target="_blank" onclick="return trackOutboundLink('https://aff3ct.readthedocs.io');"><i class="fas fa-book" aria-hidden="true">&nbsp;</i>Documentation</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/aff3ct/aff3ct" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/aff3ct');"><i class="fab fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+          <li class="nav-item active"><a class="nav-link" href="comparator.html"><i class="fas fa-chart-bar" aria-hidden="true">&nbsp;</i>BER/FER Comparator</a></li>
+          <li class="nav-item"><a class="nav-link" href="turbo_reader.html"><i class="fas fa-code-branch" aria-hidden="true">&nbsp;</i>Turbo Code Reader</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown_hof" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list" aria-hidden="true">&nbsp;</i>Software Decoders Hall of Fame&nbsp;</a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_hof">
+              <h6 class="dropdown-header">Synoptic tables</h6>
+              <a class="dropdown-item" href="hof_turbo.html">Turbo Codes</a>
+              <a class="dropdown-item" href="hof_ldpc.html">LDPC Codes</a>
+              <a class="dropdown-item" href="hof_polar.html">Polar Codes</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="jumbotron">
+      <div class="container marketing">
+        <h1 class="display-4">BER/FER Comparator</h1>
+        <p class="lead">This page is an online tool dedicated to the <strong>Bit Error Rate (BER) and Frame Error Rate (FER) curve comparisons</strong>. Various type of codes are considered like <b>the Turbo codes (LTE, LTE-Advanced, CCSDS, etc.), the Low-Density Parity-Check (LDPC) codes (Wi-Fi, WiMAX, CCSDS, WRAN, DVB-S2, etc.), and the recently introduced Polar codes (candidates for 5G)</b>.</p>
+        <p class="lead">The presented results have been simulated with <a href="index.html">AFF3CT</a>: our Open-source communication chain dedicated to the Forward Error Correction (FEC) simulations. The simulated output text files are freely available on our dedicated <a href="https://github.com/aff3ct/error_rate_references/tree/development" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/error_rate_references/tree/development');">GitHub repository</a>.</p>
       </div>
     </div>
-  </script>
-  <script id="cmdModalTemplate" type="x-tmpl-mustache">
-    <div class="modal fade" id="cmdModal{{hash.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            {{#metadata.title}}
-              <h5 class="modal-title" id="exampleModalLongTitle">{{metadata.title}}</h5>
-            {{/metadata.title}}
-            {{^metadata.title}}
-              <h5 class="modal-title" id="exampleModalLongTitle">Undefined</h5>
-            {{/metadata.title}}
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+    <div class="container marketing" id="loader">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Loading the references...</h2>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
           </div>
-          <div class="modal-body">
-            <div class="shell-wrap">
-              <p class="shell-top-bar">AFF3CT command line</p>
-              <ul class="shell-body">
-                <li>{{{metadata.niceCommand}}}</li>
-              </ul>
+        </div>
+      </div>
+    </div>
+    <div id="comparator" class="shadow-lg p-3 mb-5 bg-white rounded">
+      <div class="row">
+        <div class="col-2 column" id="selector">
+          <div class="form-group">
+              <input id="searchValue" class="form-control" type="text" placeholder="Search in the database" value="">
+          </div>
+          <div class="form-group">
+            <div class="dropdown">
+              <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                BER/FER database
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
+                <form>
+                  <div id="dataBase" class="form-check px-5 py-2">
+                  </div>
+                </form>
+              </div>
             </div>
-            <br>
-            <p class="text-justify">
-              <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
+          </div>
+          <div class="form-group">
+            <div class="dropdown">
+              <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Type of code
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
+                <form><div id="codeType" class="form-check px-5 py-2"></div></form>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="dropdown">
+              <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownSizeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Frame size (N)
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownSizeButton">
+                <form><div id="frameSize" class="form-check px-5 py-2"></div></form>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="dropdown">
+              <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Type of modem
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
+                <form><div id="modemType" class="form-check px-5 py-2"></div></form>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="dropdown">
+              <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownchannelButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Type of channel
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownchannelButton">
+                <form><div id="channelType" class="form-check px-5 py-2"></div></form>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="codeRate" class="col-sm-12">Select the code rate (R)</label>
+            <div id="codeRate" class="mb-5 col-sm-12"></div>
+          </div>
+          <button type="button" id="applySelections" class="btn btn-primary btn-lg btn-block">Apply Filters</button>
+          <hr class="separator">
+          <div class="form-group" id="input">
+            <label for="fileInput">Upload a file or a group of files</label>
+            <input type="file" multiple="multiple" class="form-control-file" id="fileInput">
+            <span id="fileDisplayArea"></span>
+          </div>
+          <div id="axes">
+            <hr class="separator">
+            <div class="form-group">
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select x-axis
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
+                  <form><div id="xaxis" class="form-check px-5 py-2"></div></form>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select y-axis
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
+                  <form><div id="yaxis" class="form-check px-5 py-2"></div></form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-2 column" id="refsList">
+          <div class="bg-white rounded">
+            <div id="accordion"></div>
+          </div>
+        </div>
+        <div class="col-6 column" id="curves">
+          <div id="curvesTip">
+            <p id="tips" class="text-center">
+              <strong>
+                Please select up to 10 curves<br/>
+                on the left blue buttons<br/>
+                and delete them on the right.<br/>
+                You can plot your own curve(s)<br/>
+                by loading your AFF3CT text file(s).
+              </strong>
             </p>
           </div>
+          <div id="plot"></div>
+        </div>
+        <div class="col-2 column" id="scurve">
+          <div id="sbuttons"></div>
+          <div id="saccordion"></div>
         </div>
       </div>
     </div>
-  </script>
-  <script id="traceModalTemplate" type="x-tmpl-mustache">
-    <div class="modal fade" id="traceModal{{hash.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            {{#metadata.title}}
-              <h5 class="modal-title" id="exampleModalLongTitle">{{metadata.title}}</h5>
-            {{/metadata.title}}
-            {{^metadata.title}}
-              <h5 class="modal-title" id="exampleModalLongTitle">Undefined</h5>
-            {{/metadata.title}}
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <pre>{{trace}}</pre>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </script>
-  <script id="permalinkModalTemplate" type="x-tmpl-mustache">
-    <div class="modal fade" id="permalinkInstModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Permalink</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-9">
-                <input id="permalinkInput" class="form-control" type="text" placeholder="{{permalink}}" value="{{permalink}}" readonly>
-              </div>
-              <div class="col-3">
-                <button id="copyClipboard" type="button" class="btn btn-outline-primary">
-                  <i class="fas fa-clipboard"></i> Copy to Clipboard
-                </button>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </script>
-  <script id="deleteAllTemplate" type="x-tmpl-mustache">
-    <button id="closeAll" type="button" class="btn btn-danger"><i class="fas fa-trash"></i> Delete All</button>
-  </script>
-  <script id="permalinkTemplate" type="x-tmpl-mustache">
-    <button id="permalink" type="button" class="btn btn-primary"><i class="fas fa-link"></i> Get Permalink</button>
-  </script>
-  <script id="showTemplate" type="x-tmpl-mustache">
-    <button id="show{{hash.id}}" type="button" class="btn btn-sm btn-link" title="Show ref">
-      <i class="fas fa-eye"></i>
-    </button>
-  </script>
-  <script id="hideTemplate" type="x-tmpl-mustache">
-    <button id="hide{{hash.id}}" type="button" class="btn btn-link btn-sm" title="Hide ref">
-      <i class="fas fa-eye-slash"></i>
-    </button>
-  </script>
-  <script id="selectorTemplate" type="x-tmpl-mustache">
-    <ul class="typeList">
-      {{#entries}}
-        <li>
-          <input type="checkbox" class="form-check-input" id="{{divId}}" title="{{name}}" {{checked}} {{disabled}}>
-          <label class="form-check-label" for="{{divId}}" title="{{name}}">
-            {{#desc}}
-              <span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="{{desc}}">
-            {{/desc}}
-            {{name}}
-            {{#desc}}
-              </span>
-            {{/desc}}
-            {{#isNumber}}
-              ({{number}})
-            {{/isNumber}}
-          </label>
-        </li>
-      {{/entries}}
-    </ul>
-  </script>
-</head>
-<body>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="index.html">AFF3CT</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div id="navbarCollapse" class="collapse navbar-collapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home" aria-hidden="true">&nbsp;</i>Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="publications.html"><i class="fa fa-newspaper" aria-hidden="true">&nbsp;</i>Publications</a></li>
-        <li class="nav-item"><a class="nav-link" href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
-        <li class="nav-item"><a class="nav-link" href="download.html"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>
-        <li class="nav-item"><a class="nav-link" href="https://aff3ct.readthedocs.io" target="_blank" onclick="return trackOutboundLink('https://aff3ct.readthedocs.io');"><i class="fas fa-book" aria-hidden="true">&nbsp;</i>Documentation</a></li>
-        <li class="nav-item"><a class="nav-link" href="https://github.com/aff3ct/aff3ct" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/aff3ct');"><i class="fab fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
-      </ul>
-      <ul class="navbar-nav navbar-right">
-        <li class="nav-item active"><a class="nav-link" href="comparator.html"><i class="fas fa-chart-bar" aria-hidden="true">&nbsp;</i>BER/FER Comparator</a></li>
-        <li class="nav-item"><a class="nav-link" href="turbo_reader.html"><i class="fas fa-code-branch" aria-hidden="true">&nbsp;</i>Turbo Code Reader</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdown_hof" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list" aria-hidden="true">&nbsp;</i>Software Decoders Hall of Fame&nbsp;</a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_hof">
-            <h6 class="dropdown-header">Synoptic tables</h6>
-            <a class="dropdown-item" href="hof_turbo.html">Turbo Codes</a>
-            <a class="dropdown-item" href="hof_ldpc.html">LDPC Codes</a>
-            <a class="dropdown-item" href="hof_polar.html">Polar Codes</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <div class="jumbotron">
+    <div id="curveModals"></div>
+    <div id="permalinkModal"></div>
     <div class="container marketing">
-      <h1 class="display-4">BER/FER Comparator</h1>
-      <p class="lead">This page is an online tool dedicated to the <strong>Bit Error Rate (BER) and Frame Error Rate (FER) curve comparisons</strong>. Various type of codes are considered like <b>the Turbo codes (LTE, LTE-Advanced, CCSDS, etc.), the Low-Density Parity-Check (LDPC) codes (Wi-Fi, WiMAX, CCSDS, WRAN, DVB-S2, etc.), and the recently introduced Polar codes (candidates for 5G)</b>.</p>
-      <p class="lead">The presented results have been simulated with <a href="index.html">AFF3CT</a>: our Open-source communication chain dedicated to the Forward Error Correction (FEC) simulations. The simulated output text files are freely available on our dedicated <a href="https://github.com/aff3ct/error_rate_references/tree/development" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/error_rate_references/tree/development');">GitHub repository</a>.</p>
+      <h2>More BER/FER references</h2>
+      <ul>
+        <li><a target="_blank" href="https://www.uni-kl.de/channel-codes/ml-simulation-results/" onclick="return trackOutboundLink('https://www.uni-kl.de/channel-codes/ml-simulation-results/');">Maximum Likelihood (ML) Simulation Results</a> - <i>University of Kaiserslautern</i></li>
+        <li><a target="_blank" href="http://pretty-good-codes.org" onclick="return trackOutboundLink('http://pretty-good-codes.org');">Online Library of Good Channel Codes</a> - <i>Pretty-good-codes.org</i></li>
+        <li><a target="_blank" href="http://www.inference.org.uk/mackay/codes/data.html" onclick="return trackOutboundLink('http://www.inference.org.uk/mackay/codes/data.html');">Encyclopedia of Sparse Graph Codes</a> - <i>David J.C. MacKay</i></li>
+      </ul>
+      <div class="mb-4"></div>
+      <hr>
+      <footer class="container">
+        <p class="float-right"><a href="#"><i class="fa fa-level-up-alt" aria-hidden="true">&nbsp;</i>Back to top</a></p>
+        <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="return trackOutboundLink('http://www.agence-nationale-recherche.fr/');">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="return trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="return trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
+      </footer>
     </div>
-  </div>
-  <div class="container marketing" id="loader">
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Loading the references...</h2>
-        <div class="progress">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="comparator" class="shadow-lg p-3 mb-5 bg-white rounded">
-    <div class="row">
-      <div class="col-2 column" id="selector">
-        <div class="form-group">
-            <input id="searchValue" class="form-control" type="text" placeholder="Search in the database" value="">
-        </div>
-        <div class="form-group">
-          <div class="dropdown">
-            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              BER/FER database
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
-              <form>
-                <div id="dataBase" class="form-check px-5 py-2">
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="dropdown">
-            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownCodetypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Type of code
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownCodetypeButton">
-              <form><div id="codeType" class="form-check px-5 py-2"></div></form>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="dropdown">
-            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownSizeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Frame size (N)
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownSizeButton">
-              <form><div id="frameSize" class="form-check px-5 py-2"></div></form>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="dropdown">
-            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Type of modem
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
-              <form><div id="modemType" class="form-check px-5 py-2"></div></form>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="dropdown">
-            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownchannelButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Type of channel
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownchannelButton">
-              <form><div id="channelType" class="form-check px-5 py-2"></div></form>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="codeRate" class="col-sm-12">Select the code rate (R)</label>
-          <div id="codeRate" class="mb-5 col-sm-12"></div>
-        </div>
-        <button type="button" id="applySelections" class="btn btn-primary btn-lg btn-block">Apply Filters</button>
-        <hr class="separator">
-        <div class="form-group" id="input">
-          <label for="fileInput">Upload a file or a group of files</label>
-          <input type="file" multiple="multiple" class="form-control-file" id="fileInput">
-          <span id="fileDisplayArea"></span>
-        </div>
-        <div id="axes">
-          <hr class="separator">
-          <div class="form-group">
-            <div class="dropdown">
-              <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Select x-axis
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
-                <form><div id="xaxis" class="form-check px-5 py-2"></div></form>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="dropdown">
-              <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownmodemButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Select y-axis
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownmodemButton">
-                <form><div id="yaxis" class="form-check px-5 py-2"></div></form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-2 column" id="refsList">
-        <div class="bg-white rounded">
-          <div id="accordion"></div>
-        </div>
-      </div>
-      <div class="col-6 column" id="curves">
-        <div id="curvesTip">
-          <p id="tips" class="text-center">
-            <strong>
-              Please select up to 10 curves<br/>
-              on the left blue buttons<br/>
-              and delete them on the right.<br/>
-              You can plot your own curve(s)<br/>
-              by loading your AFF3CT text file(s).
-            </strong>
-          </p>
-        </div>
-        <div id="plot"></div>
-      </div>
-      <div class="col-2 column" id="scurve">
-        <div id="sbuttons"></div>
-        <div id="saccordion"></div>
-      </div>
-    </div>
-  </div>
-  <div id="curveModals"></div>
-  <div id="permalinkModal"></div>
-  <div class="container marketing">
-    <h2>More BER/FER references</h2>
-    <ul>
-      <li><a target="_blank" href="https://www.uni-kl.de/channel-codes/ml-simulation-results/" onclick="return trackOutboundLink('https://www.uni-kl.de/channel-codes/ml-simulation-results/');">Maximum Likelihood (ML) Simulation Results</a> - <i>University of Kaiserslautern</i></li>
-      <li><a target="_blank" href="http://pretty-good-codes.org" onclick="return trackOutboundLink('http://pretty-good-codes.org');">Online Library of Good Channel Codes</a> - <i>Pretty-good-codes.org</i></li>
-      <li><a target="_blank" href="http://www.inference.org.uk/mackay/codes/data.html" onclick="return trackOutboundLink('http://www.inference.org.uk/mackay/codes/data.html');">Encyclopedia of Sparse Graph Codes</a> - <i>David J.C. MacKay</i></li>
-    </ul>
-    <div class="mb-4"></div>
-    <hr>
-    <footer class="container">
-      <p class="float-right"><a href="#"><i class="fa fa-level-up-alt" aria-hidden="true">&nbsp;</i>Back to top</a></p>
-      <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="return trackOutboundLink('http://www.agence-nationale-recherche.fr/');">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="return trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="return trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
-    </footer>
-  </div>
-  <script src="./js/comparator_tools.js"></script>
-  <script src="./js/comparator_tooltips.js"></script>
-  <script src="./js/comparator_text2json.js"></script>
-  <script src="./js/comparator.js"></script>
-</body>
+    <script src="./js/comparator_tools.js"></script>
+    <script src="./js/comparator_tooltips.js"></script>
+    <script src="./js/comparator_text2json.js"></script>
+    <script src="./js/comparator.js"></script>
+  </body>
 </html>
