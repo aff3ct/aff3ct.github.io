@@ -21,6 +21,24 @@
   overflow-y:auto;
 }
 
+#preview
+{
+  background-image: url(../images/comparator.png);
+  background-repeat:no-repeat;
+  background-position: center center;
+  background-size: 100%;
+}
+
+#curves
+{
+  display: none;
+}
+
+#scurve
+{
+  display: none;
+}
+
 #codeRate .noUi-connect {
   background: #6C757D;
 }
@@ -158,13 +176,15 @@
   100% { transform: rotate(360deg); }
 }
 
+#curvesTip {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 #tips {
-  position: absolute;
-  left: 50%;
-  top: 20%;
-  z-index: 1;
-  width: 300px;
-  margin-left: -159px;
+  font-weight: bold;
+  font-size: 32px;
 }
 
 .twoColumns {

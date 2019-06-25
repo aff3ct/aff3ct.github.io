@@ -262,8 +262,7 @@ function loadDatabase() {
 				}
 			});
 			$("#loader"    ).css("display", "none" );
-			$("#curvesTip" ).css("display", "block");
-			$("#tips"      ).css("display", "block");
+			$("#preview"   ).css("display", "block");
 			$("#comparator").css("display", "block");
 			displayRefsFromURI();
 			displayRefsList();
@@ -694,8 +693,10 @@ function addSelectedRef(ref, colorId=-1, xaxisEnabled="", yaxesEnabled=[]) {
 		});
 		$("#plot").css("display", "inline");
 		displayAxes(ref, xaxisEnabled, yaxesEnabled);
+		$("#preview").css("display", "none" );
+		$("#curves" ).css("display", "block");
+		$("#scurve" ).css("display", "block");
 	}
-	$("#tips").css("display", "none");
 	if (Global.plot.colors.length==0) {
 		let errorMsg = "The maximum number of curves is reached!";
 		console.log(errorMsg);
@@ -777,8 +778,9 @@ function deleteSelectedRef(id) {
 
 		if (Global.selectedIds.length==0) {
 			$("#sbuttons").empty();
-			$("#plot").css("display", "none"  );
-			$("#tips").css("display", "inline");
+			$("#preview").css("display", "block");
+			$("#curves" ).css("display", "none" );
+			$("#scurve" ).css("display", "none" );
 			removeAxes();
 			cleanURI();
 		}
