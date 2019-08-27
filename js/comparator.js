@@ -176,7 +176,8 @@ function precomputeData(id) {
 		}
 	}
 	if (!ref.metadata || !ref.metadata.title) {
-		$.extend(ref["metadata"], {title: "Undefined", bigtitle: "Undefined", subtitle: ""});
+		let subtt = ref.filename ? ref.filename : "";
+		$.extend(ref["metadata"], {title: "Undefined", bigtitle: "Undefined", subtitle: subtt});
 	}
 	if (ref.headers && !ref.headers.list) {
 		ref["headers"]["list"] = [];
