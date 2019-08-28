@@ -2,7 +2,7 @@ const GITLAB="https://gitlab.com/api/v4/projects/10354484/";
 const BRANCH="development";
 
 // connexion to the CouchDB server (this code do not connect to the CouchDB until the first usage)
-const ServerCDB = "https://couchdb-580e7b.smileupps.com";
+const ServerCDB = "https://couchdb-fa3208.smileupps.com";
 const NameCDB = "aff3ct_refs";
 var CDB = new PouchDB(ServerCDB+'/'+NameCDB);
 
