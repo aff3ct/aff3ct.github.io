@@ -474,25 +474,30 @@ function plotSelectedRefs() {
 		layout.yaxis["title"]=title;
 	}
 	Plotly.newPlot(Global.plot.div, data, layout, { displayModeBar: true, displaylogo: false });
-
 	Global.plot.div.on('plotly_relayout',
 		function(eventdata){
+			let change=false;
 			if (eventdata['xaxis.range[0]'] && eventdata['xaxis.range[1]']) {
 				Global.plot.layouts.common.xaxis.autorange=false;
 				$.extend(Global.plot.layouts.common.xaxis, { range: eventdata['xaxis.range'] });
+				change=true;
 			}
 			if (eventdata['xaxis.autorange']) {
 				Global.plot.layouts.common.xaxis.autorange=true;
+				change=true;
 			}
 			if (eventdata['yaxis.range[0]'] && eventdata['yaxis.range[1]']) {
 				Global.plot.layouts.common.yaxis.autorange=false;
 				$.extend(Global.plot.layouts.common.yaxis, { range: eventdata['yaxis.range'] });
+				change=true;
 			}
 			if (eventdata['yaxis.autorange']) {
 				Global.plot.layouts.common.yaxis.autorange=true;
+				change=true;
 			}
+			if (change)
+				updateURI();
 	});
-
 	updateURI();
 }
 
