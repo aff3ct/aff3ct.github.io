@@ -298,6 +298,14 @@ function displayCommandModal(ref) {
 		Mustache.parse(cmdModalTemplate);
 		let cmdModalRendered=Mustache.render(cmdModalTemplate, ref);
 		$("#curveModals").append(cmdModalRendered);
+		$("#copyClipboardCmd"+ref.hash.id).on("click", function() {
+			let copyText = $("#commandInput"+ref.hash.id)[0]; // get the text field
+			copyText.type = 'text';
+			copyText.select(); // select the text field
+			document.execCommand("copy"); // copy the text inside the text field
+			copyText.type = 'hidden';
+			$("#copyClipboardCmd"+ref.hash.id+" i").removeClass("fa-clipboard").addClass("fa-clipboard-check");
+		});
 	}
 }
 

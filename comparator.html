@@ -222,16 +222,30 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="shell-wrap">
-                <p class="shell-top-bar">AFF3CT command line</p>
-                <ul class="shell-body">
-                  <li>{{{metadata.niceCommand}}}</li>
-                </ul>
+              <div class="row">
+                <div class="col-12">
+                  <div class="shell-wrap">
+                    <p class="shell-top-bar">AFF3CT command line</p>
+                    <ul class="shell-body">
+                      <li>{{{metadata.niceCommand}}}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <br>
-              <p class="text-justify">
-                <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
-              </p>
+              <div class="row">
+                <div class="col-9">
+                  <p class="text-justify">
+                    <b>Be careful</b>, this command is not guarantee to work with the <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/master" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/master\");"><i>master</i> branch</a> of AFF3CT. To ensure the compatibility, please use the AFF3CT <a target="_blank" href="https://github.com/aff3ct/aff3ct/tree/development" onclick="return trackOutboundLink(\"https://github.com/aff3ct/aff3ct/tree/development\");"><i>development</i> branch</a>.
+                  </p>
+                </div>
+                <div class="col-3">
+                  <input id="commandInput{{hash.id}}" type="hidden" value="{{metadata.command}}" readonly>
+                  <button id="copyClipboardCmd{{hash.id}}" type="button" class="btn btn-outline-primary">
+                    <i class="fas fa-clipboard"></i> Copy to Clipboard
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
