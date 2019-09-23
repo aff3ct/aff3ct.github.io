@@ -34,6 +34,8 @@ var Global = {
 				showlegend:false,
 				margin: { l: 100, r: 40, b: 40, t: 40, pad: 4 },
 				hovermode: 'x',
+				xaxis: { autorange: true },
+				yaxis: { autorange: true },
 			},
 			x: {
 				"Eb/N0": {
@@ -63,52 +65,52 @@ var Global = {
 			},
 			y: {
 				"BER": {
-					yaxis: { title: 'Bit Error Rate (BER)', type: 'log', autorange: true, hoverformat: '.2e' },
+					yaxis: { title: 'Bit Error Rate (BER)', type: 'log', hoverformat: '.2e' },
 					compatible: ["FER"],
 					default: true,
 					enabled: false,
 					divId: "BER",
 				},
 				"FER": {
-					yaxis: { title: 'Frame Error Rate (FER)', type: 'log', autorange: true, hoverformat: '.2e' },
+					yaxis: { title: 'Frame Error Rate (FER)', type: 'log', hoverformat: '.2e' },
 					compatible: ["BER"],
 					default: true,
 					enabled: false,
 					divId: "FER",
 				},
 				"FRA": {
-					yaxis: { title: 'Simulated Frames', type: 'log', autorange: true },
+					yaxis: { title: 'Simulated Frames', type: 'log' },
 					default: false,
 					enabled: false,
 					divId: "FRA",
 				},
 				"FE": {
-					yaxis: { title: 'Number of Frame Errors (FE)', autorange: true },
+					yaxis: { title: 'Number of Frame Errors (FE)' },
 					default: false,
 					enabled: false,
 					divId: "FE",
 				},
 				"BE": {
-					yaxis: { title: 'Number of Bit Errors (BE)', autorange: true },
+					yaxis: { title: 'Number of Bit Errors (BE)' },
 					default: false,
 					enabled: false,
 					divId: "BE",
 				},
 				"BE/FE": {
-					yaxis: { title: 'Bit Errors on Frame Errors Ratio (BE/FE)', autorange: true },
+					yaxis: { title: 'Bit Errors on Frame Errors Ratio (BE/FE)' },
 					default: false,
 					enabled: false,
 					divId: "BEFE",
 				},
 				"SIM_THR": {
-					yaxis: { title: 'Simulation Throughput (Mb/s)', autorange: true },
+					yaxis: { title: 'Simulation Throughput (Mb/s)' },
 					default: false,
 					enabled: false,
 					alt: "THR",
 					divId: "THR",
 				},
 				"ET/RT": {
-					yaxis: { title: 'Elapsed Time (sec)', type: 'log', autorange: true },
+					yaxis: { title: 'Elapsed Time (sec)', type: 'log' },
 					default: false,
 					enabled: false,
 					alt: "TIME",
@@ -427,7 +429,7 @@ function plotSelectedRefs() {
 	let xaxis = "";
 	Object.keys(Global.plot.layouts.x).forEach(function(key) {
 		if (Global.plot.layouts.x[key].enabled) {
-			$.extend(layoutCommon, {xaxis: Global.plot.layouts.x[key].xaxis});
+			$.extend(layoutCommon.xaxis, Global.plot.layouts.x[key].xaxis);
 			xaxis = key;
 		}
 	});
@@ -472,6 +474,25 @@ function plotSelectedRefs() {
 		layout.yaxis["title"]=title;
 	}
 	Plotly.newPlot(Global.plot.div, data, layout, { displayModeBar: true, displaylogo: false });
+
+	Global.plot.div.on('plotly_relayout',
+		function(eventdata){
+			if (eventdata['xaxis.range[0]'] && eventdata['xaxis.range[1]']) {
+				Global.plot.layouts.common.xaxis.autorange=false;
+				$.extend(Global.plot.layouts.common.xaxis, { range: eventdata['xaxis.range'] });
+			}
+			if (eventdata['xaxis.autorange']) {
+				Global.plot.layouts.common.xaxis.autorange=true;
+			}
+			if (eventdata['yaxis.range[0]'] && eventdata['yaxis.range[1]']) {
+				Global.plot.layouts.common.yaxis.autorange=false;
+				$.extend(Global.plot.layouts.common.yaxis, { range: eventdata['yaxis.range'] });
+			}
+			if (eventdata['yaxis.autorange']) {
+				Global.plot.layouts.common.yaxis.autorange=true;
+			}
+	});
+
 	updateURI();
 }
 
@@ -511,6 +532,16 @@ function generateURI(local=true) {
 			isFirst=false;
 		}
 	});
+	if (!Global.plot.layouts.common.xaxis.autorange) {
+		let x0=Global.plot.layouts.common.xaxis.range[0].toString();
+		let x1=Global.plot.layouts.common.xaxis.range[1].toString();
+		uri+="&xrange="+encodeURIComponent(x0)+","+encodeURIComponent(x1);
+	}
+	if (!Global.plot.layouts.common.yaxis.autorange) {
+		let y0=Global.plot.layouts.common.yaxis.range[0].toString();
+		let y1=Global.plot.layouts.common.yaxis.range[1].toString();
+		uri+="&yrange="+encodeURIComponent(y0)+","+encodeURIComponent(y1);
+	}
 	return uri;
 }
 
@@ -792,6 +823,8 @@ function deleteSelectedRef(id) {
 			$("#scurve" ).css("display", "none" );
 			removeAxes();
 			cleanURI();
+			Global.plot.layouts.common.xaxis.autorange=true;
+			Global.plot.layouts.common.yaxis.autorange=true;
 		}
 		else
 			plotSelectedRefs();
@@ -1072,6 +1105,18 @@ function displaySelectors(except="") {
 }
 
 function displayRefsFromURI() {
+	let xrange=findGetParameter("xrange");
+	if (xrange) {
+		Global.plot.layouts.common.xaxis.autorange = false;
+		let range=decodeURIComponent(xrange).split(',');
+		$.extend(Global.plot.layouts.common.xaxis, {range: [parseFloat(range[0]), parseFloat(range[1])]});
+	}
+	let yrange=findGetParameter("yrange");
+	if (yrange) {
+		Global.plot.layouts.common.yaxis.autorange = false;
+		let range=decodeURIComponent(yrange).split(',');
+		$.extend(Global.plot.layouts.common.yaxis, {range: [parseFloat(range[0]), parseFloat(range[1])]});
+	}
 	let xaxis=findGetParameter("xaxis");
 	let xaxisEnabled=xaxis?decodeURIComponent(xaxis):"";
 	let yaxes=findGetParameter("yaxes");
