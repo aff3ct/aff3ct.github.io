@@ -177,7 +177,7 @@ function precomputeData(id) {
 			ref.metadata["niceCommand"] = niceCmd;
 		}
 	}
-	if (!ref.metadata || !ref.metadata.title) {
+	if (!ref.metadata || !ref.metadata.title || ref.metadata.title=="Undefined") {
 		let subtt = ref.filename ? ref.filename : "";
 		$.extend(ref["metadata"], {title: "Undefined", bigtitle: "Undefined", subtitle: subtt});
 	}
