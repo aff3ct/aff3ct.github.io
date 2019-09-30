@@ -181,7 +181,7 @@
                 <span class="curveIcon"><a href="https://github.com/aff3ct/error_rate_references/blob/{{branch}}/{{filename}}" target="_blank" title="GitHub" onclick="return trackOutboundLink('https://github.com/aff3ct/error_rate_references/blob/{{branch}}/{{filename}}');"><i class="fab fa-github"></i></a></span>
               {{/metadata.aff3ct}}
               {{#metadata.couchdb}}
-                <span class="curveIcon"><a href="{{serverCDB}}/_utils/document.html?{{nameCDB}}/{{hash.id}}" target="_blank" title="CouchDB" onclick="return trackOutboundLink('{{serverCDB}}/_utils/document.html?{{nameCDB}}/{{hash.id}}');""><i class="fas fa-couch"></i></a></span>
+                <span class="curveIcon"><a href="{{serverCDB}}/_utils/#database/{{nameCDB}}/{{hash.id}}" target="_blank" title="CouchDB Fauxton" onclick="return trackOutboundLink('{{serverCDB}}/_utils/#database/{{nameCDB}}/{{hash.id}}');""><i class="fas fa-couch"></i></a></span>
               {{/metadata.couchdb}}
               {{#metadata.local}}
                 <span class="curveIcon"><i class="fas fa-database"></i></span>
