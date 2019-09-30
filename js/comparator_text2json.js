@@ -13,7 +13,7 @@ function text2jsonContentsGeneric(txt) {
 		"ET/RT"  : ["simulation time", "sim time", "time", "ET/RT"],
 	};
 	let delims = ["|", ",", ";", "	", " "];
-	let lines = txt.split("\n");
+	let lines = txt.split(/[\n\r]+/);
 	for (let ln = 0; ln < lines.length; ln++) {
 		let l = lines[ln];
 		let cols=[];
@@ -116,7 +116,7 @@ function text2jsonAFF3CT(txt, filename = "") {
 	let headers = {};
 	let section = {};
 
-	let lines = txt.split("\n");
+	let lines = txt.split(/[\n\r]+/);
 	for (let ln = 0; ln < lines.length; ln++) {
 		let l = lines[ln];
 
@@ -280,7 +280,7 @@ function text2jsonKaiserslautern(txt, filename = "", codeType = "") {
 	if (codeType!="")
 		headers.Codec = {"Type": codeType};
 
-	let lines = txt.split("\n");
+	let lines = txt.split(/[\n\r]+/);
 	for (let ln = 0; ln < lines.length; ln++) {
 		let l = lines[ln];
 		if (ln==0) {
