@@ -8,8 +8,8 @@
     <meta name="author" content="Adrien CASSAGNE">
     <title>AFF3CT - A Fast Forward Error Correction Toolbox</title>
     <link rel="stylesheet" href="./css/lib/bootstrap-4.1.1.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/bootstrap_carousel.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <script src="./js/lib/jquery-3.3.1.min.js"></script>
     <script src="./js/lib/popper-1.14.3.min.js"></script>
     <script src="./js/lib/bootstrap-4.1.1.min.js"></script>
@@ -57,10 +57,10 @@
           <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home" aria-hidden="true">&nbsp;</i>Home</a></li>
           <li class="nav-item"><a class="nav-link" href="publications.html"><i class="fa fa-newspaper" aria-hidden="true">&nbsp;</i>Publications</a></li>
           <li class="nav-item"><a class="nav-link" href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
-          <li class="nav-item active"><a class="nav-link" href="download.html"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>
+          <li class="nav-item"><a class="nav-link" href="download.html"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>
           <li class="nav-item"><a class="nav-link" href="https://aff3ct.readthedocs.io" target="_blank" onclick="return trackOutboundLink('https://aff3ct.readthedocs.io');"><i class="fas fa-book" aria-hidden="true">&nbsp;</i>Documentation</a></li>
           <li class="nav-item"><a class="nav-link" href="https://github.com/aff3ct/aff3ct" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/aff3ct');"><i class="fab fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
-          <li class="nav-item"><a class="nav-link" href="consortium.html"><i class="fas fa-hands-helping" aria-hidden="true">&nbsp;</i>Consortium <span class="excl"><i class="fas fa-exclamation"></i></span></a></li>
+          <li class="nav-item active"><a class="nav-link" href="consortium.html"><i class="fas fa-hands-helping" aria-hidden="true">&nbsp;</i>Consortium <span class="excl"><i class="fas fa-exclamation"></i></span></a></li>
         </ul>
         <ul class="navbar-nav navbar-right">
           <li class="nav-item"><a class="nav-link" href="comparator.html"><i class="fas fa-chart-bar" aria-hidden="true">&nbsp;</i>BER/FER Comparator</a></li>
@@ -77,33 +77,26 @@
         </ul>
       </div>
     </nav>
+    <div class="jumbotron">
+      <div class="container marketing">
+        <h1 class="display-4">Call for Consortium <i class="fas fa-hands-helping" aria-hidden="true"></i></h1>
+        <p class="lead">Over the years AFF3CT has become one major open-source software toolbox for digital communications, with a special focus on FEC codes, among which Turbo codes, Polar codes and Low-Density Parity-Check codes. AFF3CT provides an easy way to evaluate different coding schemes, perform high speed simulations and assess software implementations. The source code is currently supported by <a href="http://www.inria.fr/" target="_blank" onclick="return trackOutboundLink('http://www.inria.fr/');">Inria</a> and <a href="https://www.ims-bordeaux.fr" target="_blank" onclick="return trackOutboundLink('https://www.ims-bordeaux.fr');">IMS laboratory</a> in Bordeaux.</p>
+        <p class="lead">In 2020, we aim to bring AFF3CT to an even more mature level in order to ensure a long-term vision for the toolbox. To do so, we are exploring switching to a consortium-based management model for the development and maintenance of the Open Source toolbox. Consortium members would be funding that effort, but could also request, for an additional fee, private developments or studies based on AFF3CT. The consortium members will advise the development team on the relevant digital communication standards (DVB, 5G, Wifi, LoRA...)  that should be integrated in AFF3CT. The same team will provide private developments of custom digital communication schemes for specific industrial applications. This will help AFF3CT to stick to the needs of joining partners.</p>
+        <p class="lead">The investments will be used to fund full-time engineering staff to carry out strategic AFF3CT R&D important to the consortium members.</p>
+        <p class="lead">We are currently identifying ambitious key parties interested in joining this new consortium in order to shape the future of AFF3CT.</p>
+        <p class="lead">If you are such a party or simply interested in shaping the consortium, please contact us by email so we can send you an initial proposal draft and get your feedback. We aim to make a public draft available in the first semester of 2020.</p>
+      </div>
+    </div>
+
     <div class="container marketing">
       <div class="mb-4"></div>
-      <h1 class="display-4">Download</h1>
-      <p class="lead">
-        Various builds of the AFF3CT software are provided below.
-        Each build archive contains:
-        the runnable simulator (<span class="badge badge-secondary">bin</span> dir.), the linkable library (<span class="badge badge-secondary">lib</span> dir.), the header files (<span class="badge badge-secondary">include</span> dir.) and the documentation, some configuration files and some references to be used with the simulator (<span class="badge badge-secondary">share</span> dir.).
+      <p>
+        <strong>Contact e-mail address</strong>: <a href="mailto:team-aff3ct@gmail.com" onclick="return trackOutboundLink('mailto:team-aff3ct@gmail.com', true);">team-aff3ct@gmail.com</a>.
       </p>
-      <p class="lead">
-        The number of dependencies is reduced to be compatible with a large range of systems.
-        Therefore, AFF3CT should run seamlessly on yours (<b>Windows</b>, <b>macOS</b> and <b>Linux</b> are supported).
-        The proposed builds are compatible with <b>x86-64 architectures</b> (<b>Intel</b> or <b>AMD</b> CPUs).
-        Either <a target="_blank" href="https://en.wikipedia.org/wiki/SSE4" onclick="return trackOutboundLink('https://en.wikipedia.org/wiki/SSE4');">SSE4.2</a> or <a target="_blank" href="https://en.wikipedia.org/wiki/AVX2" onclick="return trackOutboundLink('https://en.wikipedia.org/wiki/AVX2');">AVX2</a> instruction sets can be selected.
-        The first one (SSE4.2) is for old CPUs starting approximately from 2007 whereas the second one (AVX2) takes advantage of modern CPUs (2014) but may not run on older computers.
-        If you have any doubts, SSE4.2 is the safest version.
+      <p>
+        <a href="http://www.inria.fr/" target="_blank" onclick="return trackOutboundLink('http://www.inria.fr/');"><img src="images/logo/inria2.jpg" style="width:400px; max-width:100%"/></a>
+        <a href="https://www.ims-bordeaux.fr" target="_blank" onclick="return trackOutboundLink('https://www.ims-bordeaux.fr');"><img src="images/logo/ims.jpg" style="width:400px; max-width:100%"/></a>
       </p>
-      <h2>Development versions</h2>
-      <div class="alert alert-warning" role="alert">
-        Development versions are released every time a developer makes a change to AFF3CT, several times every day! Using development versions enables you to use the latest and greatest improvements to the project. They are however less tested than stable versions of the toolbox.
-      </div>
-      <div id="development_builds"></div>
-      <br/>
-      <h2>Stable versions</h2>
-      <div class="alert alert-info" role="alert">
-        Stable versions are released after a lot of testing to ensure performance and stability. However, since they are released less often, they might be outdated and lacking some new features.
-      </div>
-      <div id="master_builds"></div>
       <div class="mb-4"></div>
       <hr>
       <footer class="container">
@@ -111,6 +104,5 @@
         <p>Funded by <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="return trackOutboundLink('http://www.agence-nationale-recherche.fr/');">ANR</a>: <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="return trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');">NAND</a> (ANR-15-CE25-0006-01) and <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="return trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');">CPU LabEx (Bordeaux)</a> (ANR-10-IDEX-03-02).</p>
       </footer>
     </div>
-    <script src="./js/download.js"></script>
   </body>
 </html>
