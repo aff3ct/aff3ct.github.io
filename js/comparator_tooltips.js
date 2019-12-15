@@ -116,6 +116,7 @@ var Tooltips = {
 	"PAM"                  : "Pulse-Amplitude Modulation",
 	"PDF"                  : "Probability Density Function",
 	"POLAR"                : "Polar code",
+	"POLAR_MK"             : "Polar Mono- or Multi-Kernel code",
 	"POW2"                 : "Distance between the quantified values is a power of 2",
 	"PRNG"                 : "Pseudo Random Number Generator",
 	"PRNGs"                : "Pseudo Random Number Generators",
