@@ -4,6 +4,8 @@ function text2jsonContentsGeneric(txt) {
 	let correspAxes = {
 		"Eb/N0"  : ["Eb/N0 (dB)", "EbN0", "SNRs", "SNR", "Eb/N0"],
 		"Es/N0"  : ["Es/N0 (dB)", "EsN0", "Es/N0"],
+		"EP"     : ["EP"],
+		"ROP"    : ["ROP"],
 		"BE"     : ["bit errors", "bits errors", "bits error", "BE"],
 		"FE"     : ["error frames", "frame errors", "frames errors", "frames error", "FE"],
 		"BER"    : ["bit error rate", "BER"],
@@ -41,6 +43,22 @@ function text2jsonContentsGeneric(txt) {
 						if (newl.includes(correspAxes["Eb/N0"][j])               ||
 						    newl.includes(correspAxes["Eb/N0"][j].toLowerCase()) ||
 						    newl.includes(correspAxes["Eb/N0"][j].toUpperCase()))
+							compatible=true;
+						j++;
+					}
+					j=0;
+					while (!compatible && j < correspAxes["EP"].length) {
+						if (newl.includes(correspAxes["EP"][j])               ||
+						    newl.includes(correspAxes["EP"][j].toLowerCase()) ||
+						    newl.includes(correspAxes["EP"][j].toUpperCase()))
+							compatible=true;
+						j++;
+					}
+					j=0;
+					while (!compatible && j < correspAxes["ROP"].length) {
+						if (newl.includes(correspAxes["ROP"][j])               ||
+						    newl.includes(correspAxes["ROP"][j].toLowerCase()) ||
+						    newl.includes(correspAxes["ROP"][j].toUpperCase()))
 							compatible=true;
 						j++;
 					}
