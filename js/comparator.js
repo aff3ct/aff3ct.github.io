@@ -183,10 +183,19 @@ function precomputeData(id) {
 	}
 	if (ref.headers && !ref.headers.list) {
 		ref["headers"]["list"] = [];
-		ref["headers"]["list"].push({"name": "Frame size", "value" : ref.headers.Codec["Frame size (N)"]});
-		if (ref.headers.Codec["Codeword size (N_cw)"] > ref.headers.Codec["Frame size (N)"])
-			ref["headers"]["list"].push({"name": "Codeword", "value" : ref.headers.Codec["Codeword size (N_cw)"]});
-		ref["headers"]["list"].push({"name": "Code rate", "value" : ref.headers.Codec["Code rate"].toFixed(3)});
+		if (ref.headers.Codec && ref.headers.Codec["Frame size (N)"])
+		{
+			ref["headers"]["list"].push({"name": "Frame size", "value" : ref.headers.Codec["Frame size (N)"]});
+		}
+		if (ref.headers.Codec && ref.headers.Codec["Frame size (N)"] && ref.headers.Codec["Codeword size (N_cw)"])
+		{
+			if (ref.headers.Codec["Codeword size (N_cw)"] > ref.headers.Codec["Frame size (N)"])
+				ref["headers"]["list"].push({"name": "Codeword", "value" : ref.headers.Codec["Codeword size (N_cw)"]});
+		}
+		if (ref.headers.Codec && ref.headers.Codec["Code rate"])
+		{
+			ref["headers"]["list"].push({"name": "Code rate", "value" : ref.headers.Codec["Code rate"].toFixed(3)});
+		}
 		for (let j in ref.headers) {
 			if (ref.headers[j].Type) {
 				let obj = {"name": j, "value" : ref.headers[j].Type};
