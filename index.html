@@ -175,6 +175,7 @@
                           <!-- CPU         --> <th class=""><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Central Process Unit">CPU</span></th>
                           <!-- Vendor      --> <th class=""><span>Vendor</span></th>
                           <!-- Archi       --> <th class=""><span>Architecture</span></th>
+                          <!-- ISA         --> <th class=""><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Instruction Set Architecture">ISA</span></th>
                           <!-- SIMD        --> <th class=""><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Single Instruction Multiple Data">SIMD</span></th>
                           <!-- SIMD length --> <th class=""><span>SIMD length</span></th>
                           <!-- Proc.       --> <th class=""><span class="tt" data-toggle="tooltip" data-placement="top" data-html="true" title="Number of processors"># Proc.</span></th>
@@ -188,7 +189,8 @@
                         <tr>
                           <!-- CPU         --> <td><a href="https://en.wikichip.org/wiki/cavium/thunderx2/cn9975" target="_blank" onclick="return trackOutboundLink('https://en.wikichip.org/wiki/cavium/thunderx2/cn9975');">ThunderX2 CN9975</a></td>
                           <!-- Vendor      --> <td>Cavium</td>
-                          <!-- Archi       --> <td>ARMv8.1</td>
+                          <!-- Archi       --> <td>Vulcan</td>
+                          <!-- ISA         --> <td>ARMv8.1</td>
                           <!-- SIMD        --> <td>NEON</td>
                           <!-- SIMD length --> <td>128-bit</td>
                           <!-- Proc.       --> <td>2</td>
@@ -201,6 +203,7 @@
                           <!-- CPU         --> <td><a href="https://ark.intel.com/fr/products/94034/Intel-Xeon-Phi-Processor-7230-16GB-1-30-GHz-64-core-" target="_blank" onclick="return trackOutboundLink('https://ark.intel.com/fr/products/94034/Intel-Xeon-Phi-Processor-7230-16GB-1-30-GHz-64-core-');">Xeon Phi 7230</a></td>
                           <!-- Vendor      --> <td>Intel</td>
                           <!-- Archi       --> <td>Knights Landing</td>
+                          <!-- ISA         --> <td>x86_64</td>
                           <!-- SIMD        --> <td>AVX-512F</td>
                           <!-- SIMD length --> <td>512-bit</td>
                           <!-- Proc.       --> <td>1</td>
@@ -213,6 +216,7 @@
                           <!-- CPU         --> <td><a href="https://ark.intel.com/fr/products/81908/Intel-Xeon-Processor-E5-2680-v3-30M-Cache-2-50-GHz-" target="_blank" onclick="return trackOutboundLink('https://ark.intel.com/fr/products/81908/Intel-Xeon-Processor-E5-2680-v3-30M-Cache-2-50-GHz-');">Xeon E5-2680 v3</a></td>
                           <!-- Vendor      --> <td>Intel</td>
                           <!-- Archi       --> <td>Haswell</td>
+                          <!-- ISA         --> <td>x86_64</td>
                           <!-- SIMD        --> <td>AVX2</td>
                           <!-- SIMD length --> <td>256-bit</td>
                           <!-- Proc.       --> <td>2</td>
@@ -225,6 +229,7 @@
                           <!-- CPU         --> <td><a href="https://ark.intel.com/products/120485/Intel-Xeon-Gold-6140-Processor-24-75M-Cache-2-30-GHz-" target="_blank" onclick="return trackOutboundLink('https://ark.intel.com/products/120485/Intel-Xeon-Gold-6140-Processor-24-75M-Cache-2-30-GHz-');">Xeon Gold 6140</a></td>
                           <!-- Vendor      --> <td>Intel</td>
                           <!-- Archi       --> <td>Skylake</td>
+                          <!-- ISA         --> <td>x86_64</td>
                           <!-- SIMD        --> <td>AVX-512F+BW</td>
                           <!-- SIMD length --> <td>512-bit</td>
                           <!-- Proc.       --> <td>2</td>
@@ -233,17 +238,57 @@
                           <!-- SMT         --> <td>2</td>
                           <!-- TB          --> <td>On</td>
                         </tr>
+                        <!-- <tr> -->
+                          <!-- CPU         --> <!-- <td><a href="https://ark.intel.com/products/120487/Intel-Xeon-Gold-6142-Processor-22M-Cache-2-60-GHz-" target="_blank" onclick="return trackOutboundLink('https://ark.intel.com/products/120487/Intel-Xeon-Gold-6142-Processor-22M-Cache-2-60-GHz-');">Xeon Gold 6142</a></td> -->
+                          <!-- Vendor      --> <!-- <td>Intel</td> -->
+                          <!-- Archi       --> <!-- <td>Skylake</td> -->
+                          <!-- ISA         --> <!-- <td>x86_64</td> -->
+                          <!-- SIMD        --> <!-- <td>AVX-512F+BW</td> -->
+                          <!-- SIMD length --> <!-- <td>512-bit</td> -->
+                          <!-- Proc.       --> <!-- <td>2</td> -->
+                          <!-- Cores       --> <!-- <td>16</td> -->
+                          <!-- Freq.       --> <!-- <td>2.60</td> -->
+                          <!-- SMT         --> <!-- <td>1</td> -->
+                          <!-- TB          --> <!-- <td>Off</td> -->
+                        <!-- </tr> -->
                         <tr>
-                          <!-- CPU         --> <td><a href="https://ark.intel.com/products/120487/Intel-Xeon-Gold-6142-Processor-22M-Cache-2-60-GHz-" target="_blank" onclick="return trackOutboundLink('https://ark.intel.com/products/120487/Intel-Xeon-Gold-6142-Processor-22M-Cache-2-60-GHz-');">Xeon Gold 6142</a></td>
+                          <!-- CPU         --> <td><a href="https://www.intel.fr/content/www/fr/fr/products/sku/192443/intel-xeon-gold-6240-processor-24-75m-cache-2-60-ghz/specifications.html" target="_blank" onclick="return trackOutboundLink('https://www.intel.fr/content/www/fr/fr/products/sku/192443/intel-xeon-gold-6240-processor-24-75m-cache-2-60-ghz/specifications.html');">Xeon Gold 6240</a></td>
                           <!-- Vendor      --> <td>Intel</td>
                           <!-- Archi       --> <td>Skylake</td>
+                          <!-- ISA         --> <td>x86_64</td>
                           <!-- SIMD        --> <td>AVX-512F+BW</td>
                           <!-- SIMD length --> <td>512-bit</td>
                           <!-- Proc.       --> <td>2</td>
-                          <!-- Cores       --> <td>16</td>
+                          <!-- Cores       --> <td>18</td>
                           <!-- Freq.       --> <td>2.60</td>
                           <!-- SMT         --> <td>1</td>
                           <!-- TB          --> <td>Off</td>
+                        </tr>
+                        <tr>
+                          <!-- CPU         --> <td><a href="https://www.amd.com/fr/products/cpu/amd-epyc-7702" target="_blank" onclick="return trackOutboundLink('https://www.amd.com/fr/products/cpu/amd-epyc-7702');">EPYC 7702</a></td>
+                          <!-- Vendor      --> <td>AMD</td>
+                          <!-- Archi       --> <td>Zen 2</td>
+                          <!-- ISA         --> <td>x86_64</td>
+                          <!-- SIMD        --> <td>AVX2</td>
+                          <!-- SIMD length --> <td>256-bit</td>
+                          <!-- Proc.       --> <td>2</td>
+                          <!-- Cores       --> <td>64</td>
+                          <!-- Freq.       --> <td>2.00</td>
+                          <!-- SMT         --> <td>1</td>
+                          <!-- TB          --> <td>Off</td>
+                        </tr>
+                        <tr>
+                          <!-- CPU         --> <td><a href="https://www.notebookcheck.net/Apple-M1-Pro-Processor-Benchmarks-and-Specs.579915.0.html" target="_blank" onclick="return trackOutboundLink('https://www.notebookcheck.net/Apple-M1-Pro-Processor-Benchmarks-and-Specs.579915.0.html');">M1 Pro</a></td>
+                          <!-- Vendor      --> <td>Apple Silicon</td>
+                          <!-- Archi       --> <td>Firestorm</td>
+                          <!-- ISA         --> <td>ARMv8</td>
+                          <!-- SIMD        --> <td>NEON</td>
+                          <!-- SIMD length --> <td>128-bit</td>
+                          <!-- Proc.       --> <td>1</td>
+                          <!-- Cores       --> <td>10 (8 big, 2 LITTLE)</td>
+                          <!-- Freq.       --> <td>2.00</td>
+                          <!-- SMT         --> <td>1</td>
+                          <!-- TB          --> <td>On</td>
                         </tr>
                       </tbody>
                     </table>
@@ -253,10 +298,10 @@
               <div class="mb-4"></div>
               <div class="row">
                 <div class="col-xl-6">
-                  <img src="images/speedup.svg" alt="speedup" title="AFF3CT Simulator Speedups" class="img-fluid d-block mx-auto" style="width: 100%">
+                  <img src="images/throughput-new.svg" alt="throughput" title="AFF3CT Simulator Throughputs" class="img-fluid d-block mx-auto" style="width: 100%">
                 </div>
-                <div class="col-xl-6">
-                  <img src="images/throughput.svg" alt="throughput" title="AFF3CT Simulator Throughputs" class="img-fluid d-block mx-auto" style="width: 100%">
+                <div class="col-xl-6 align-self-end">
+                  <img src="images/speedup-new.svg" alt="speedup" title="AFF3CT Simulator Speedups" class="img-fluid d-block mx-auto" style="width: 100%">
                 </div>
               </div>
               <div class="mb-4"></div>
