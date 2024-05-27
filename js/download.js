@@ -143,6 +143,6 @@ function addBuild(branch,tag,hash,date,message,author,path,buildsList) {
 //main
 $(document).ready(function() {
   setMIME("text/plain");
-  addBuilds("development",5);
+  addBuilds("devel",5);
   addBuilds("master",5);
 });
