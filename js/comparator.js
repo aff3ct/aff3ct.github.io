@@ -1,5 +1,5 @@
 const GITLAB="https://gitlab.com/api/v4/projects/10354484/";
-const BRANCH="devel";
+const BRANCH="develop";
 
 // connexion to the CouchDB server (this code do not connect to the CouchDB until the first usage)
 const ServerCDB = "https://panoramix.potionmagic.eu:5985";
