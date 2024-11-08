@@ -8,6 +8,12 @@ import csv
 
 # Charger les données si elles existent
 def load_data():
+    # Chemins vers les fichiers CSV
+    config_csv_path = args.database_path + 'config.csv'
+    task_csv_path = args.database_path + 'task_noise.csv'
+    performance_csv_path = args.database_path + 'performance_noise.csv'
+    git_version_csv_path = args.database_path + 'log_commit_aff3ct.csv'  # Ajouter le fichier des versions Git
+        
     config_df       = pd.read_csv(config_csv_path) if os.path.exists(config_csv_path) else pd.DataFrame()
     task_df         = pd.read_csv(task_csv_path) if os.path.exists(task_csv_path) else pd.DataFrame()
     performance_df  = pd.read_csv(performance_csv_path) if os.path.exists(performance_csv_path) else pd.DataFrame()
@@ -124,7 +130,7 @@ def update_config_selector(config_selector):
         f"{config_aliases.get(config_hash)}"
         for config_hash in config_df['Config_Hash'].unique()
     ]
-    
+    config_options = [config_aliases.get(config, config) for config in config_df['Config_Hash'].unique()]
     # Mise à jour dynamique du widget
     config_selector.options = config_options
 
@@ -146,18 +152,11 @@ class DefaultArgs:
     local = False
     database_path = "./comit_dashboard/database/"
 args = DefaultArgs()
-
 if __name__ == "__main__":
     args = parse_arguments()  # Appel unique de argparse ici
 
 # Initialiser Panel
 pn.extension(sizing_mode="stretch_width")  # Adapter la taille des widgets et graphiques à la largeur de l'écran
-
-# Chemins vers les fichiers CSV
-config_csv_path = args.database_path + 'config.csv'
-task_csv_path = args.database_path + 'task_noise.csv'
-performance_csv_path = args.database_path + 'performance_noise.csv'
-git_version_csv_path = args.database_path + 'log_commit_aff3ct.csv'  # Ajouter le fichier des versions Git
 
 # Charger les données initiales
 config_df, task_df, performance_df, git_df, config_aliases = load_data()
@@ -165,8 +164,10 @@ config_df, task_df, performance_df, git_df, config_aliases = load_data()
 # Widgets d'affichage des informations
 config_count = pn.indicators.Number(name="Nombre de configurations", value=config_df['Config_Hash'].nunique() if not config_df.empty else 0)
 git_version_count = pn.indicators.Number(name="Nombre de versions Git avec des données", value=config_df['Meta.Git version'].nunique() if not config_df.empty else 0)
-commit_count = pn.indicators.Number(name="Nombre de commits historisés dans Git", value=config_df['Meta.Git version'].nunique() if not config_df.empty else 0)
+commit_count = pn.indicators.Number(name="Nombre de commits historisés dans Git", value=git_df.id.nunique() if not git_df.empty else 0)
 
+
+#TODO Remplacer par la date du dernier commit avec des données
 last_commit_date = pn.widgets.DatetimePicker(name="Dernière mise à jour", value=datetime.now())
 
 # Multi-sélecteur de configurations
@@ -175,6 +176,8 @@ config_options = [config_aliases.get(config, config) for config in config_df['Co
 config_selector = pn.widgets.MultiChoice(name="Sélectionnez les configurations", options=config_options)
 
 # Sélecteur de version Git
+
+#TODO
 git_versions = config_df['Meta.Git version'].unique().tolist() if not config_df.empty else []
 git_version_selector = pn.widgets.Select(name="Sélectionnez la version Git", options=git_versions)
 
@@ -205,7 +208,7 @@ config_options = [
         f"{config_aliases.get(config_hash)}"
         for config_hash in config_df['Config_Hash'].unique()
     ]
-#config_options = config_df['Config_Hash'].unique().tolist() if not config_df.empty else []
+config_options = config_df['Config_Hash'].unique().tolist() if not config_df.empty else []
 config_selector = pn.widgets.MultiChoice(name="Sélectionnez les configurations", options=config_options)
 
 # Sélecteur de version Git
@@ -225,7 +228,7 @@ dashboard = pn.Column(
     "# Tableau de Bord de Suivi des Commits",
     pn.pane.HTML("<div style='background-color: #f0f0f0; padding: 10px;'><h2>Données</h2></div>"),
     pn.Row(
-        pn.Column(pn.Row(config_count, git_version_count), last_commit_date, refresh_button),
+        pn.Column(pn.Row(config_count, git_version_count, commit_count), last_commit_date, refresh_button),
         sizing_mode="stretch_width"
     ),
     pn.pane.HTML("<div style='background-color: #e0e0e0; padding: 10px;'><h2>Statistiques des Commits</h2></div>"),
