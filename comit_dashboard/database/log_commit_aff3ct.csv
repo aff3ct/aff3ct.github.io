@@ -1,3 +1,4 @@
+id,author,date,description
 dcab22648,Adrien Cassagne,il y a 9 jours,Merge pull request #198 from gerhardbaer/hotfix/system_spu_shared_libs
 d1423d828,Gerhard Baer,il y a 9 jours,cmake: fix build with StreamPU shared-lib only.
 30ca0b504,Adrien Cassagne,il y a 3 mois,Set replicability to true in the tasks that have clonable module.
