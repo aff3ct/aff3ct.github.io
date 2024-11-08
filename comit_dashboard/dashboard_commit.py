@@ -4,13 +4,24 @@ from datetime import datetime
 import os
 import matplotlib.pyplot as plt
 import argparse
+import csv
 
 # Charger les données si elles existent
 def load_data():
     config_df       = pd.read_csv(config_csv_path) if os.path.exists(config_csv_path) else pd.DataFrame()
     task_df         = pd.read_csv(task_csv_path) if os.path.exists(task_csv_path) else pd.DataFrame()
     performance_df  = pd.read_csv(performance_csv_path) if os.path.exists(performance_csv_path) else pd.DataFrame()
-    git_df =pd.DataFrame()
+    
+    
+    # la dernière colonne du log de Git contient des ",". Il faut 
+    with open(git_version_csv_path, "r", newline="") as fp:
+        reader = csv.reader(fp, delimiter=",")
+        rows = [x[:4] + [','.join(x[4:-1])] for x in reader] 
+        git_df = pd.DataFrame(rows)
+    
+    new_header = git_df.iloc[0] #grab the first row for the header
+    git_df = git_df[1:] #take the data less the header row
+    git_df.columns = new_header #set the header row as the df header
     #git_df          = pd.read_csv(git_version_csv_path) if os.path.exists(git_version_csv_path) else pd.DataFrame()
     
     # Créer un dictionnaire de correspondance Config_Hash → Config_Alias
@@ -172,7 +183,7 @@ def update_config_count(event = None):
     config_df, task_df, performance_df, git_df, config_aliases = load_data()
     config_count.value = config_df['Config_Hash'].nunique() if not config_df.empty else 0
     git_version_count.value = config_df['Meta.Git version'].nunique() if not config_df.empty else 0
-    commit_count.value = git_df[0].nunique() if not config_df.empty else 0
+    commit_count.value = git_df.id.nunique() if not config_df.empty else 0
     last_commit_date.value = datetime.now()
     update_config_selector(config_selector)
 
