@@ -4,7 +4,6 @@ from datetime import datetime
 import os
 import matplotlib.pyplot as plt
 import argparse
-import csv
 
 # Charger les données si elles existent
 def load_data():
@@ -12,23 +11,12 @@ def load_data():
     config_csv_path = args.database_path + 'config.csv'
     task_csv_path = args.database_path + 'task_noise.csv'
     performance_csv_path = args.database_path + 'performance_noise.csv'
-    git_version_csv_path = args.database_path + 'log_commit_aff3ct.csv'  # Ajouter le fichier des versions Git
+    git_version_csv_path = args.database_path + 'log_git.csv' 
         
-    config_df       = pd.read_csv(config_csv_path) if os.path.exists(config_csv_path) else pd.DataFrame()
-    task_df         = pd.read_csv(task_csv_path) if os.path.exists(task_csv_path) else pd.DataFrame()
-    performance_df  = pd.read_csv(performance_csv_path) if os.path.exists(performance_csv_path) else pd.DataFrame()
-    
-    
-    # la dernière colonne du log de Git contient des ",". Il faut 
-    with open(git_version_csv_path, "r", newline="") as fp:
-        reader = csv.reader(fp, delimiter=",")
-        rows = [x[:4] + [','.join(x[4:-1])] for x in reader] 
-        git_df = pd.DataFrame(rows)
-    
-    new_header = git_df.iloc[0] #grab the first row for the header
-    git_df = git_df[1:] #take the data less the header row
-    git_df.columns = new_header #set the header row as the df header
-    #git_df          = pd.read_csv(git_version_csv_path) if os.path.exists(git_version_csv_path) else pd.DataFrame()
+    config_df       = pd.read_csv(config_csv_path)                  if os.path.exists(config_csv_path       ) else pd.DataFrame()
+    task_df         = pd.read_csv(task_csv_path)                    if os.path.exists(task_csv_path         ) else pd.DataFrame()
+    performance_df  = pd.read_csv(performance_csv_path)             if os.path.exists(performance_csv_path  ) else pd.DataFrame()
+    git_df          = pd.read_csv(git_version_csv_path,sep="*!/§")  if os.path.exists(git_version_csv_path  ) else pd.DataFrame()
     
     # Créer un dictionnaire de correspondance Config_Hash → Config_Alias
     config_df['Config_Alias'] = config_df['Meta.Git version'] + "_"  +  config_df['Meta.Command Line'] + "(" + config_df['Config_Hash'] + ")"
@@ -36,7 +24,7 @@ def load_data():
     
     return config_df, task_df, performance_df, git_df, config_aliases
 
-# 1. Graphique du débit moyen par version Git
+# Graphique du débit moyen par version Git
 def plot_git_throughput(git_version):
     config_df, task_df, performance_df, git_df, config_aliases = load_data()
 
@@ -65,7 +53,7 @@ def plot_git_throughput(git_version):
 
     return pn.pane.Matplotlib(fig, sizing_mode="stretch_width")
 
-# 2. Performance par niveau de bruit pour les configurations sélectionnées
+# Performance par niveau de bruit pour les configurations sélectionnées
 def plot_performance_metrics(configs):
     config_df, task_df, performance_df, git_df, config_aliases = load_data()
 
@@ -95,7 +83,7 @@ def plot_performance_metrics(configs):
     
     return pn.pane.Matplotlib(fig, sizing_mode="stretch_width")
 
-# 3. Graphe de valorisation des données de tâches pour les configurations sélectionnées
+# Graphe de valorisation des données de tâches pour les configurations sélectionnées
 def plot_task_data(configs):
     config_df, task_df, performance_df, git_df, config_aliases = load_data()
     
