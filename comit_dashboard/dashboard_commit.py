@@ -128,9 +128,16 @@ def initialize_dashboard(args):
     # Initialisez ici votre tableau de bord avec les arguments `args`
     print("Initialisation du tableau de bord avec les arguments:", args)
 
+
+
+ # Utiliser des valeurs par défaut dans le cas d'un export
+class DefaultArgs:
+    local = False
+    database_path = "./comit_dashboard/database/"
+args = DefaultArgs()
+
 if __name__ == "__main__":
     args = parse_arguments()  # Appel unique de argparse ici
-
 
 # Initialiser Panel
 pn.extension(sizing_mode="stretch_width")  # Adapter la taille des widgets et graphiques à la largeur de l'écran
@@ -236,9 +243,11 @@ dashboard = pn.Column(
 
 #dashboard.save(filename='test_dashboard.html', embed=True)
 
+
 # Lancer le tableau de bord
 if args.local :
     dashboard.show()
 else :
     dashboard.servable()
+
 
