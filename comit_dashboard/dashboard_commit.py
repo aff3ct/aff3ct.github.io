@@ -133,7 +133,7 @@ def parse_arguments():
 
 ##################################### Chargement ####################################
 
- # Utiliser des valeurs par défaut dans le cas d'un export
+ # Utiliser des valeurs par défaut dans le cas d'un export qui ne supporte pas argparse
 class DefaultArgs:
     local = False
     database_path = "./comit_dashboard/database/"
@@ -332,7 +332,6 @@ config_accordion = pn.Accordion(
         accordion_families
     ))
 )
-
 
 # panel des configs
 panelConfig = pn.Row(
