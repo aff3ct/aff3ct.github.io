@@ -1,0 +1,20 @@
+id,author,date,description
+0ed50864f,Francois Cheminade,31 hours ago,snake notation in the filename of Statistics_to_json
+86c2d4579,Francois Cheminade,3 days ago,Add AFF3CT_JSON building option (default OFF)
+01c0384eb,Francois Cheminade,7 days ago,Introduce last Merge from trunk.
+d2dcfe9db,Francois Cheminade,7 days ago,In StreamPU, snake notation and no  camel. StatisticsToJson -> Statistics_to_json
+4312bb073,Francois Cheminade,10 days ago,CI : build-linux-icpc #1 - wget -qO - https://repositories.intel.com/gpu/intel-graphics.key | gpg --yes --dearmor --output /usr/share/keyrings/intel-graphics-archive-keyring.gpg
+19c6cc20c,Francois Cheminade,2 weeks ago,Add condition export_json=true for json export.
+b61cf4bd3,Francois Cheminade,2 weeks ago,CI : Try using MSYS2     - if (Test-Path build){Remove-Item -Force -Recurse build-msys2}     - bash.exe -lc "Start menu/MSYS2/MSYS2 MINGW64"     - bash.exe -lc "pacman -S mingw-w64-i686-nlohmann-json"
+7dc2ebda8,Francois Cheminade,3 weeks ago,Update .gitlab-ci.yml file building jsonlibrary  directly from sources for build-linux-icpc (deprecated)
+0db433794,Francois Cheminade,3 weeks ago,Cmake add library requirement find_package(nlohmann_json REQUIRED) aff3ct_target_link_libraries(PRIVATE nlohmann_json::nlohmann_json)
+494c2cc88,Francois Cheminade,3 weeks ago,Add a  condition for option --term-no to activate collection of throughput and latency which remains at 0 in this case.
+e556fa250,CHEMINADE Francois,4 weeks ago,Update .gitlab-ci.yml file - apt-get install -y nlohmann-json3-dev
+75ce2a34b,Francois Cheminade,4 weeks ago,Statistictojson declaration in streampu.hpp
+3a78ab23b,Francois Cheminade,4 weeks ago,add collecting "mutual information"
+6fc379b3c,CHEMINADE Francois,4 weeks ago,Update .gitlab-ci.yml file add apt-get install -y nlohmann-json3-dev
+1837c80d7,Francois Cheminade,4 weeks ago,The run showed with option --term-no thebellow  titles at each run. That's ended.
+84568af6e,Francois Cheminade,4 weeks ago,Decoupling of the terminal except for the reporter_throughput value at 0 for all runs.
+71dff0e05,Francois Cheminade,4 weeks ago,recovery of the command line in the json (Meta branch)
+0653a7687,Francois Cheminade,5 weeks ago,Parameters Generalisation to  factory to switch exportJson to sreampu.
+f59296cdc,Francois Cheminade,5 weeks ago,first version of Json  export for glabal parameters.

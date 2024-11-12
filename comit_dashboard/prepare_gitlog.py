@@ -19,17 +19,19 @@ def format_git_log(git_version_csv_path, key) :
     git_df = git_df[1:] #take the data less the header row
     git_df.columns = new_header #set the header row as the df header
     
-    git_df["key"] = key
+    git_df["Project"] = key
     
     return git_df
 
-database_path = "./"
+database_path = "./comit_dashboard/database/"
 log_affect_git_path  = database_path + 'log_commit_aff3ct.csv'  
 log_streampu_git_path  = database_path + 'log_commit_streampu.csv'  
 
 df_git_aff3ct = format_git_log(log_affect_git_path  , "Aff3ct")
 df_git_spu    = format_git_log(log_streampu_git_path, "StreamPu")
 
-df_git = df_git_aff3ct.append(df_git_spu)
-df_git.to_csv('log_git.csv', index=False, sep="*!/§")
+df_git = pd.concat([df_git_aff3ct, df_git_spu], ignore_index=True)
+df_git.to_parquet(database_path + 'log_git.parquet',  engine="pyarrow")
+#df_git.to_csv('log_git.csv', index=False, sep="")
+
 

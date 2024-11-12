@@ -4,6 +4,7 @@ from datetime import datetime
 import os
 import matplotlib.pyplot as plt
 import argparse
+import re
 
 # Charger les données si elles existent
 def load_data():
@@ -11,12 +12,12 @@ def load_data():
     config_csv_path = args.database_path + 'config.csv'
     task_csv_path = args.database_path + 'task_noise.csv'
     performance_csv_path = args.database_path + 'performance_noise.csv'
-    git_version_csv_path = args.database_path + 'log_git.csv' 
+    git_version_pqt_path = args.database_path + 'log_git.parquet' 
         
-    config_df       = pd.read_csv(config_csv_path)                  if os.path.exists(config_csv_path       ) else pd.DataFrame()
-    task_df         = pd.read_csv(task_csv_path)                    if os.path.exists(task_csv_path         ) else pd.DataFrame()
-    performance_df  = pd.read_csv(performance_csv_path)             if os.path.exists(performance_csv_path  ) else pd.DataFrame()
-    git_df          = pd.read_csv(git_version_csv_path,sep="*!/§")  if os.path.exists(git_version_csv_path  ) else pd.DataFrame()
+    config_df       = pd.read_csv       (config_csv_path)        if os.path.exists(config_csv_path       ) else pd.DataFrame()
+    task_df         = pd.read_csv       (task_csv_path)          if os.path.exists(task_csv_path         ) else pd.DataFrame()
+    performance_df  = pd.read_csv       (performance_csv_path)   if os.path.exists(performance_csv_path  ) else pd.DataFrame()
+    git_df          = pd.read_parquet   (git_version_pqt_path)   if os.path.exists(git_version_pqt_path  ) else pd.DataFrame()
     
     # Créer un dictionnaire de correspondance Config_Hash → Config_Alias
     config_df['Config_Alias'] = config_df['Meta.Git version'] + "_"  +  config_df['Meta.Command Line'] + "(" + config_df['Config_Hash'] + ")"
@@ -211,6 +212,46 @@ clear_button = pn.widgets.Button(name="Tout désélectionner", button_type="warn
 select_all_button.on_click(select_all_configs)
 clear_button.on_click(clear_configs)
 
+
+# Ajout d'un panneau repliable avec pn.Accordion pour les sélecteurs de configuration
+# config_accordion = pn.Accordion(
+#     ("Sélection de configurations", pn.Column(
+#         pn.Row(select_all_button, clear_button),
+#         config_selector
+#     ))
+# )
+
+# Charger config.csv et identifier les familles et leurs colonnes
+def create_family_widgets(config_df):
+    # Filtrer les colonnes qui suivent le format "FAMILLE.nom"
+    family_columns = {}
+    for col in config_df.columns:
+        match = re.match(r"(\w+)\.(\w+)", col)
+        if match:
+            family, name = match.groups()
+            if family not in family_columns:
+                family_columns[family] = []
+            family_columns[family].append(col)
+        else:
+            # Ajoute les colonnes sans famille dans une clé générale
+            family_columns.setdefault("Autres", []).append(col)
+    
+    # Créer les widgets de sélection pour chaque famille
+    family_widgets = {}
+    for family, columns in family_columns.items():
+        widgets = [pn.widgets.Select(name=col, options=config_df[col].unique().tolist()) for col in columns]
+        family_widgets[family] = pn.Column(*widgets, name=family)
+
+    return family_widgets
+
+# Créer les widgets de sélection selon les familles du fichier config.csv
+family_widgets = create_family_widgets(config_df)
+
+# Ajouter chaque groupe de widgets dans un Accordion pour permettre le repli
+accordion_families = pn.Accordion(*[(f"{family}", widget) for family, widget in family_widgets.items()])
+
+
+
 # Layout du tableau de bord avec tout dans une colonne et des arrières-plans différents
 dashboard = pn.Column(
     "# Tableau de Bord de Suivi des Commits",
@@ -231,6 +272,7 @@ dashboard = pn.Column(
     #    ), 
 
     pn.pane.HTML("<div style='background-color: #d0d0d0; padding: 10px;'><h2>Courbes et Graphiques</h2></div>"),
+    accordion_families,  # Ajout des groupes de sélecteurs dans un panneau repliable
     pn.Row(
         pn.Column(select_all_button, clear_button),
         pn.Column(config_selector),
@@ -242,8 +284,6 @@ dashboard = pn.Column(
         sizing_mode="stretch_width"
     )
 )
-
-#dashboard.save(filename='test_dashboard.html', embed=True)
 
 
 # Lancer le tableau de bord
