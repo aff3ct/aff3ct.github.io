@@ -25,33 +25,6 @@ def load_data():
     
     return config_df, task_df, performance_df, git_df, config_aliases
 
-# Graphique du débit moyen par version Git
-def plot_git_throughput(git_version):
-    config_df, task_df, performance_df, git_df, config_aliases = load_data()
-
-    # Vérifier si une version Git est sélectionnée
-    if not git_version:
-        return pn.pane.Markdown("Veuillez sélectionner une version Git pour afficher le débit.")
-
-    # Filtrer les données par la version Git sélectionnée
-    config_filtered_git_df = config_df[config_df['Meta.Git version'] == git_version]
-    if config_filtered_git_df.empty:
-        return pn.pane.Markdown("Pas de données disponibles pour la version Git sélectionnée.")
-
-    # Calculer le débit moyen par version Git
-    config_filtered_git_df['Throughput'] = config_filtered_git_df['Total_Bytes'] / config_filtered_git_df['Time_Spent']
-    mean_throughput = config_filtered_git_df['Throughput'].mean()
-
-    # Créer le graphique
-    fig, ax = plt.subplots(figsize=(8, 4))
-    ax.bar(git_version, mean_throughput, color='skyblue')
-    
-    ax.set_title(f"Débit moyen pour la version Git {git_version}")
-    ax.set_ylabel("Débit Moyen (Bytes/s)")
-    ax.set_xlabel("Version Git")
-    ax.grid(True, which="both", linestyle='--', linewidth=0.5)
-
-    return pn.pane.Matplotlib(fig, sizing_mode="stretch_width")
 
 # Performance par niveau de bruit pour les configurations sélectionnées
 def plot_performance_metrics(configs):
