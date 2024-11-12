@@ -307,12 +307,6 @@ family_widgets = create_family_widgets(config_df)
 # Ajouter chaque groupe de widgets dans un Accordion pour permettre le repli
 accordion_families = pn.Accordion(*[(f"{family}", widget) for family, widget in family_widgets.items()])
 
-# Panneau repliable avec les filtres sur les configurations
-config_accordion = pn.Accordion(
-    ("Sélection de configurations", pn.Column(
-        accordion_families
-    ))
-)
 
 # panel des configs
 panelConfig = pn.Row(
@@ -327,14 +321,21 @@ panelConfig = pn.Row(
 
 ##################################### Tableau de bord ####################################
 
+# Panneaux repliables
+config_accordion_data = pn.Accordion(
+    ("Données", pn.Column(
+        #pn.pane.HTML("<div style='font-size: 32px;background-color: #e0e0e0; padding: 10px;'><h2>Données</h2></div>"),
+        panelData
+    ))
+)
+
 # Layout du tableau de bord avec tout dans une colonne et des arrières-plans différents
 dashboard = pn.Column(
     pn.pane.HTML("<div style='font-size: 64px; font-weight: bold;'>Tableau de Bord de Suivi des Commits</div>"),
-    pn.pane.HTML("<div style='font-size: 32px;background-color: #e0e0e0; padding: 10px;'><h2>Données</h2></div>"),
-    panelData,
-    pn.pane.HTML("<div style='font-size: 32px;background-color: #e0e0e0; padding: 10px;'><h2>Statistiques des Commits</h2></div>"),
+    config_accordion_data,
+    pn.pane.HTML("<div style='font-size: 28px;background-color: #e0e0e0; padding: 10px;line-height : 0px;'><h2>Statistiques des Commits</h2></div>"),
     panelCommit,
-    pn.pane.HTML("<div style='font-size: 32px;background-color: #e0e0e0; padding: 10px;'><h2>Courbes et Graphiques</h2></div>"),
+    pn.pane.HTML("<div style='font-size: 28px;background-color: #e0e0e0; padding: 10px;line-height : 0px;'><h2>Courbes et Graphiques</h2></div>"),
     panelConfig
 )
 
