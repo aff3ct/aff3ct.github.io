@@ -30,8 +30,16 @@ log_streampu_git_path  = database_path + 'log_commit_streampu.csv'
 df_git_aff3ct = format_git_log(log_affect_git_path  , "Aff3ct")
 df_git_spu    = format_git_log(log_streampu_git_path, "StreamPu")
 
+
 df_git = pd.concat([df_git_aff3ct, df_git_spu], ignore_index=True)
+
+df_git['date'] = pd.to_datetime(df_git['date'])  # Conversion au format datetime
+
+df_git = df_git.reindex(['Project','date','contributor', 'echo sha', 'message' ], axis=1)
+
+
+
 df_git.to_parquet(database_path + 'log_git.parquet',  engine="pyarrow")
-#df_git.to_csv('log_git.csv', index=False, sep="")
+
 
 

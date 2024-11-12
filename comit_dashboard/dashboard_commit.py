@@ -38,7 +38,6 @@ def plot_git_throughput(git_version):
     if config_filtered_git_df.empty:
         return pn.pane.Markdown("Pas de données disponibles pour la version Git sélectionnée.")
 
-    
     # Calculer le débit moyen par version Git
     config_filtered_git_df['Throughput'] = config_filtered_git_df['Total_Bytes'] / config_filtered_git_df['Time_Spent']
     mean_throughput = config_filtered_git_df['Throughput'].mean()
@@ -130,11 +129,9 @@ def parse_arguments():
     parser.add_argument('--database_path', default='./comit_dashboard/database/', help="Remplace le chemin par défaut (./comit_dashboard/database/) vers la base de données.")  # on/off flag
     return parser.parse_args()
 
-def initialize_dashboard(args):
-    # Initialisez ici votre tableau de bord avec les arguments `args`
-    print("Initialisation du tableau de bord avec les arguments:", args)
 
 
+##################################### Chargement ####################################
 
  # Utiliser des valeurs par défaut dans le cas d'un export
 class DefaultArgs:
@@ -150,34 +147,131 @@ pn.extension(sizing_mode="stretch_width")  # Adapter la taille des widgets et gr
 # Charger les données initiales
 config_df, task_df, performance_df, git_df, config_aliases = load_data()
 
+
+##################################### Données ####################################
+
+# Rafraîchir les données
+# def update_config_count(event = None):
+#     config_df, task_df, performance_df, git_df, config_aliases = load_data()
+#     config_count.value = config_df['Config_Hash'].nunique() if not config_df.empty else 0
+#     git_version_count.value = config_df['Meta.Git version'].nunique() if not config_df.empty else 0
+#     commit_count.value = git_df.id.nunique() if not config_df.empty else 0
+#     latest_commit_indicator.value = git_df['Date'].max()
+#     update_config_selector(config_selector)
+
+
 # Widgets d'affichage des informations
 config_count = pn.indicators.Number(name="Nombre de configurations", value=config_df['Config_Hash'].nunique() if not config_df.empty else 0)
 git_version_count = pn.indicators.Number(name="Nombre de versions Git avec des données", value=config_df['Meta.Git version'].nunique() if not config_df.empty else 0)
-commit_count = pn.indicators.Number(name="Nombre de commits historisés dans Git", value=git_df.id.nunique() if not git_df.empty else 0)
+commit_count = pn.indicators.Number(name="Nombre de commits historisés dans Git", value=git_df ['echo sha'].nunique() if not git_df.empty else 0)
 
 
-#TODO Remplacer par la date du dernier commit avec des données
-last_commit_date = pn.widgets.DatetimePicker(name="Dernière mise à jour", value=datetime.now())
+# Créer un indicateur pour afficher la date du commit le plus récent
+latest_commit_date = git_df['date'].max() if not git_df.empty else "Aucune date disponible"
+latest_commit_date_str = latest_commit_date.strftime('%Y-%m-%d %H:%M:%S') if latest_commit_date != "Aucune date disponible" else latest_commit_date
 
-# Multi-sélecteur de configurations
-#config_options = config_df['Config_Hash'].unique().tolist() if not config_df.empty else []
-config_options = [config_aliases.get(config, config) for config in config_df['Config_Hash'].unique()]
-config_selector = pn.widgets.MultiChoice(name="Sélectionnez les configurations", options=config_options)
+# Créer un composant Markdown pour afficher la date du commit le plus récent
+# Extraire la date du commit le plus récent
+latest_commit_date = git_df['date'].max() if not git_df.empty else "Aucune date disponible"
 
-# Sélecteur de version Git
+# Créer un widget statique pour afficher la date du commit le plus récent
+latest_commit_date_display = pn.Column(
+        pn.widgets.StaticText(name="Date du dernier commit",css_classes=["tittle_indicator-text"]),
+        pn.widgets.StaticText(value=str(latest_commit_date),css_classes=["indicator-text"])
+)
 
-#TODO
-git_versions = config_df['Meta.Git version'].unique().tolist() if not config_df.empty else []
-git_version_selector = pn.widgets.Select(name="Sélectionnez la version Git", options=git_versions)
+pn.config.raw_css = [
+    """
+    .tittle_indicator-text {
+        font-size: 20px;
+        font-weight: normal;
+        color: #333333;
+    }
+    .indicator-text {
+        font-size: 64px;
+        font-weight: normal;
+        color: #333333;
+    }
+    """
+]
 
-# Rafraîchir les données
-def update_config_count(event = None):
-    config_df, task_df, performance_df, git_df, config_aliases = load_data()
-    config_count.value = config_df['Config_Hash'].nunique() if not config_df.empty else 0
-    git_version_count.value = config_df['Meta.Git version'].nunique() if not config_df.empty else 0
-    commit_count.value = git_df.id.nunique() if not config_df.empty else 0
-    last_commit_date.value = datetime.now()
-    update_config_selector(config_selector)
+# # Bouton pour rafraîchir les données
+# refresh_button = pn.widgets.Button(name="Rafraîchir les données", button_type="primary")
+# refresh_button.on_click(update_config_count)
+
+#panel de la partie data
+panelData = pn.Row(config_count, git_version_count, commit_count,latest_commit_date_display,
+        sizing_mode="stretch_width")
+
+##################################### Git ####################################
+
+def filter_data(git_df, project, date_range):
+    start_date, end_date = date_range
+    # Filtrage par date 
+    start_date = datetime.combine(date_range[0], datetime.min.time())
+    end_date = datetime.combine(date_range[1], datetime.min.time())
+    
+    # Convertir les dates de la colonne 'date' de git_df en tz-naive
+    git_df['date'] = git_df['date'].dt.tz_localize(None)
+
+    # Filtrage des données en fonction de la plage de dates
+    filtered_df = git_df[(git_df['date'] >= start_date) & (git_df['date'] <= end_date)]   
+    
+    # Filtrage par projet, si ce n'est pas 'Tous'
+    if project != 'Tous':
+        filtered_df = filtered_df[filtered_df['Project'] == project]
+    
+    # Mise à jour de la table avec les données filtrées
+    table_commit.value = filtered_df
+
+# Lier le filtre au slider et au RadioButton
+def update_filter(event):
+    project = project_radio_button.value
+    date_range = date_range_slider.value
+    filter_data(git_df, project, date_range)
+
+# Radiobouton
+# Extraire les projets uniques de git_df et ajouter "Tous"
+projects = git_df['Project'].unique().tolist()
+projects.append('Tous')  # Ajout de l'option 'Tous'
+
+# Créer le widget RadioButton
+project_radio_button = pn.widgets.RadioButtonGroup(
+    name='Sélectionner un projet',
+    options=projects,
+    value='Tous'  # Option par défaut
+)
+
+# Configuration de l'intervalle de dates pour le DateRangeSlider
+min_date = git_df['date'].min() if not git_df.empty else datetime(2000, 1, 1)
+max_date = git_df['date'].max() if not git_df.empty else datetime.now()
+
+# Création du DateRangeSlider
+date_range_slider = pn.widgets.DateRangeSlider(
+    name="Sélectionnez l'intervalle de dates",
+    start=min_date,
+    end=max_date,
+    value=(min_date, max_date),
+)
+
+#table de données Git
+table_commit = pn.widgets.DataFrame(git_df, name='Table de Données', show_index=False)
+
+
+# Lier les événements aux widgets
+project_radio_button.param.watch(update_filter, 'value')
+date_range_slider.param.watch(update_filter, 'value')
+
+# Initialisation de la table avec les données filtrées par défaut
+filter_data(git_df, project_radio_button.value, date_range_slider.value)
+
+
+panelCommit = pn.Column(
+    pn.Column(project_radio_button, date_range_slider),
+    table_commit
+)
+
+##################################### Config ####################################
 
 # Boutons d'agrégat
 def select_all_configs(event=None):
@@ -186,13 +280,9 @@ def select_all_configs(event=None):
 def clear_configs(event=None):
     config_selector.value = []
 
-table_commit = pn.widgets.DataFrame(git_df, name='Table de Données', width=400, height=200)
-
-# Bouton pour rafraîchir les données
-refresh_button = pn.widgets.Button(name="Rafraîchir les données", button_type="primary")
-refresh_button.on_click(update_config_count)
-
 # Multi-sélecteur de configurations
+#config_options = config_df['Config_Hash'].unique().tolist() if not config_df.empty else []
+#config_options = [config_aliases.get(config, config) for config in config_df['Config_Hash'].unique()]
 config_options = [
         f"{config_aliases.get(config_hash)}"
         for config_hash in config_df['Config_Hash'].unique()
@@ -200,26 +290,12 @@ config_options = [
 config_options = config_df['Config_Hash'].unique().tolist() if not config_df.empty else []
 config_selector = pn.widgets.MultiChoice(name="Sélectionnez les configurations", options=config_options)
 
-# Sélecteur de version Git
-#git_versions = git_version_df['Meta.Git version'].unique().tolist() if not git_version_df.empty else []
-git_versions = config_df['Meta.Git version'].unique().tolist() if not config_df.empty else []
-git_version_selector = pn.widgets.Select(name="Sélectionnez la version Git", options=git_versions)
-
 # Sélecteur des configs
 select_all_button = pn.widgets.Button(name="Tout sélectionner", button_type="success")
 clear_button = pn.widgets.Button(name="Tout désélectionner", button_type="warning")
 
 select_all_button.on_click(select_all_configs)
 clear_button.on_click(clear_configs)
-
-
-# Ajout d'un panneau repliable avec pn.Accordion pour les sélecteurs de configuration
-# config_accordion = pn.Accordion(
-#     ("Sélection de configurations", pn.Column(
-#         pn.Row(select_all_button, clear_button),
-#         config_selector
-#     ))
-# )
 
 # Charger config.csv et identifier les familles et leurs colonnes
 def create_family_widgets(config_df):
@@ -250,39 +326,36 @@ family_widgets = create_family_widgets(config_df)
 # Ajouter chaque groupe de widgets dans un Accordion pour permettre le repli
 accordion_families = pn.Accordion(*[(f"{family}", widget) for family, widget in family_widgets.items()])
 
+# Panneau repliable avec les filtres sur les configurations
+config_accordion = pn.Accordion(
+    ("Sélection de configurations", pn.Column(
+        accordion_families
+    ))
+)
 
 
-# Layout du tableau de bord avec tout dans une colonne et des arrières-plans différents
-dashboard = pn.Column(
-    "# Tableau de Bord de Suivi des Commits",
-    pn.pane.HTML("<div style='background-color: #f0f0f0; padding: 10px;'><h2>Données</h2></div>"),
-    pn.Row(
-        pn.Column(pn.Row(config_count, git_version_count, commit_count), last_commit_date, refresh_button),
-        sizing_mode="stretch_width"
-    ),
-    pn.pane.HTML("<div style='background-color: #e0e0e0; padding: 10px;'><h2>Statistiques des Commits</h2></div>"),
-    pn.Row(
-        pn.Column(git_version_selector, table_commit),
-        sizing_mode="stretch_width"
-    ),
-
-    #pn.Row(
-    #    pn.bind(plot_git_throughput, git_version_selector),
-    #    sizing_mode="stretch_width"
-    #    ), 
-
-    pn.pane.HTML("<div style='background-color: #d0d0d0; padding: 10px;'><h2>Courbes et Graphiques</h2></div>"),
-    accordion_families,  # Ajout des groupes de sélecteurs dans un panneau repliable
-    pn.Row(
-        pn.Column(select_all_button, clear_button),
-        pn.Column(config_selector),
-        sizing_mode="stretch_width"
-    ),    
-    pn.Row(
+# panel des configs
+panelConfig = pn.Row(
+    pn.Column(select_all_button, clear_button, config_selector, accordion_families, width=300),
+    pn.Column(
         pn.bind(plot_performance_metrics, config_selector),
         pn.bind(plot_task_data, config_selector),
         sizing_mode="stretch_width"
     )
+)
+
+
+##################################### Tableau de bord ####################################
+
+# Layout du tableau de bord avec tout dans une colonne et des arrières-plans différents
+dashboard = pn.Column(
+    pn.pane.HTML("<div style='font-size: 64px; font-weight: bold;'>Tableau de Bord de Suivi des Commits</div>"),
+    pn.pane.HTML("<div style='font-size: 32px;background-color: #e0e0e0; padding: 10px;'><h2>Données</h2></div>"),
+    panelData,
+    pn.pane.HTML("<div style='font-size: 32px;background-color: #e0e0e0; padding: 10px;'><h2>Statistiques des Commits</h2></div>"),
+    panelCommit,
+    pn.pane.HTML("<div style='font-size: 32px;background-color: #e0e0e0; padding: 10px;'><h2>Courbes et Graphiques</h2></div>"),
+    panelConfig
 )
 
 
@@ -291,5 +364,12 @@ if args.local :
     dashboard.show()
 else :
     dashboard.servable()
+
+
+
+
+
+
+
 
 
