@@ -129,8 +129,6 @@ def parse_arguments():
     parser.add_argument('--database_path', default='./comit_dashboard/database/', help="Remplace le chemin par défaut (./comit_dashboard/database/) vers la base de données.")  # on/off flag
     return parser.parse_args()
 
-
-
 ##################################### Chargement ####################################
 
  # Utiliser des valeurs par défaut dans le cas d'un export qui ne supporte pas argparse
@@ -147,30 +145,17 @@ pn.extension(sizing_mode="stretch_width")  # Adapter la taille des widgets et gr
 # Charger les données initiales
 config_df, task_df, performance_df, git_df, config_aliases = load_data()
 
-
 ##################################### Données ####################################
-
-# Rafraîchir les données
-# def update_config_count(event = None):
-#     config_df, task_df, performance_df, git_df, config_aliases = load_data()
-#     config_count.value = config_df['Config_Hash'].nunique() if not config_df.empty else 0
-#     git_version_count.value = config_df['Meta.Git version'].nunique() if not config_df.empty else 0
-#     commit_count.value = git_df.id.nunique() if not config_df.empty else 0
-#     latest_commit_indicator.value = git_df['Date'].max()
-#     update_config_selector(config_selector)
-
 
 # Widgets d'affichage des informations
 config_count = pn.indicators.Number(name="Nombre de configurations", value=config_df['Config_Hash'].nunique() if not config_df.empty else 0)
 git_version_count = pn.indicators.Number(name="Nombre de versions Git avec des données", value=config_df['Meta.Git version'].nunique() if not config_df.empty else 0)
 commit_count = pn.indicators.Number(name="Nombre de commits historisés dans Git", value=git_df ['echo sha'].nunique() if not git_df.empty else 0)
 
-
 # Créer un indicateur pour afficher la date du commit le plus récent
 latest_commit_date = git_df['date'].max() if not git_df.empty else "Aucune date disponible"
 latest_commit_date_str = latest_commit_date.strftime('%Y-%m-%d %H:%M:%S') if latest_commit_date != "Aucune date disponible" else latest_commit_date
 
-# Créer un composant Markdown pour afficher la date du commit le plus récent
 # Extraire la date du commit le plus récent
 latest_commit_date = git_df['date'].max() if not git_df.empty else "Aucune date disponible"
 
@@ -194,10 +179,6 @@ pn.config.raw_css = [
     }
     """
 ]
-
-# # Bouton pour rafraîchir les données
-# refresh_button = pn.widgets.Button(name="Rafraîchir les données", button_type="primary")
-# refresh_button.on_click(update_config_count)
 
 #panel de la partie data
 panelData = pn.Row(config_count, git_version_count, commit_count,latest_commit_date_display,
