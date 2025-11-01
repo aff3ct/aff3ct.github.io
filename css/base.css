@@ -1,0 +1,11 @@
+body {
+  padding-top: 40px; /* equal to or slightly more than navbar height */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:target {
+  scroll-margin-top: 70px; /* adjust to your navbar height */
+}
