@@ -44,7 +44,22 @@
     </script>
     <style>
       .excl { color:#EA5678; }
+      .logo-item {
+        padding: 20px;
+        text-align: center;
+      }
+      .logo-item img {
+        max-width: 100%;
+        height: auto;
+        max-height: 80px; /* limite la hauteur des logos */
+        /*filter: grayscale(100%); /* optionnel : effet N&B */*/
+        transition: filter 0.3s;
+      }
+      .logo-item img:hover {
+        filter: grayscale(0%);
+      }
     </style>
+
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -58,8 +73,9 @@
           <li class="nav-item"><a class="nav-link" href="publications.html"><i class="fa fa-newspaper" aria-hidden="true">&nbsp;</i>Publications</a></li>
           <li class="nav-item active"><a class="nav-link" href="contributors.html"><i class="fa fa-users" aria-hidden="true">&nbsp;</i>Contributors</a></li>
           <li class="nav-item"><a class="nav-link" href="download.html"><i class="fas fa-download" aria-hidden="true">&nbsp;</i>Download</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://aff3ct.readthedocs.io" target="_blank" onclick="return trackOutboundLink('https://aff3ct.readthedocs.io');"><i class="fas fa-book" aria-hidden="true">&nbsp;</i>Documentation</a></li>
+          <li class="nav-item"><a class="nav-link" href="spinoffs.html"><i class="fas fa-project-diagram" aria-hidden="true">&nbsp;</i>Spin-offs</a></li>
           <!--
+          <li class="nav-item"><a class="nav-link" href="https://aff3ct.readthedocs.io" target="_blank" onclick="return trackOutboundLink('https://aff3ct.readthedocs.io');"><i class="fas fa-book" aria-hidden="true">&nbsp;</i>Doc</a></li>
           <li class="nav-item"><a class="nav-link" href="https://github.com/aff3ct/aff3ct" target="_blank" onclick="return trackOutboundLink('https://github.com/aff3ct/aff3ct');"><i class="fab fa-github" aria-hidden="true">&nbsp;</i>GitHub Repository</a></li>
           <li class="nav-item"><a class="nav-link" href="consortium.html"><i class="fas fa-hands-helping" aria-hidden="true">&nbsp;</i>Consortium <span class="excl"><i class="fas fa-exclamation"></i></span></a></li>
           -->
@@ -83,29 +99,66 @@
     </nav>
     <div class="container marketing">
       <div class="mb-4"></div>
-      <h1 class="display-4">Partners and Contributors</h1>
-      <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="return trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');"><img src="images/logo/cpu_labex.jpg" style="width:400px; max-width:100%"/></a>&nbsp
-      <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="return trackOutboundLink('http://www.agence-nationale-recherche.fr/');"><img src="images/logo/anr.gif" style="width:200px; max-width:100%"/></a>&nbsp
-      <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="return trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');"><img src="images/logo/nand.png" style="width:200px; max-width:100%"/></a>&nbsp
-      <a href="https://www.ims-bordeaux.fr" target="_blank" onclick="return trackOutboundLink('https://www.ims-bordeaux.fr');"><img src="images/logo/ims2.png" style="width:180px; max-width:100%"/></a>&nbsp
-      <a href="http://www.inria.fr/" target="_blank" onclick="return trackOutboundLink('http://www.inria.fr/');"><img src="images/logo/inria3.png" style="width:220px; max-width:100%"/></a>&nbsp
-      <a href="https://www.bordeaux-inp.fr/" target="_blank" onclick="return trackOutboundLink('https://www.bordeaux-inp.fr/');"><img src="images/logo/inp2.jpg" style="width:150px; max-width:100%"/></a>&nbsp
-      <a href="https://www.sorbonne-universite.fr/" target="_blank" onclick="return trackOutboundLink('https://www.sorbonne-universite.fr/');"><img src="images/logo/su.png" style="width:250px; max-width:100%"/></a>&nbsp
-      <a href="https://www.labri.fr/" target="_blank" onclick="return trackOutboundLink('https://www.labri.fr/');"><img src="images/logo/labri.png" style="width:200px; max-width:100%"/></a>&nbsp&nbsp
-      <a href="https://www.cnrs.fr/" target="_blank" onclick="return trackOutboundLink('https://www.cnrs.fr/');"><img src="images/logo/cnrs.jpg" style="width:100px; max-width:100%"/></a>&nbsp&nbsp
-      <a href="https://www.lip6.fr/" target="_blank" onclick="return trackOutboundLink('https://www.lip6.fr/');"><img src="images/logo/lip6.png" style="width:120px; max-width:100%"/></a>
-      <h2 style="margin-top:10px">List of contributors</h2>
+      <h1 class="display-4">Partners</h1>
+      <div class="row">
+        <div class="col-6 col-md-3 logo-item">
+          <a href="https://www.ims-bordeaux.fr" target="_blank" onclick="return trackOutboundLink('https://www.ims-bordeaux.fr');"><img src="images/logo/ims.svg" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="http://www.inria.fr/" target="_blank" onclick="return trackOutboundLink('http://www.inria.fr/');"><img src="images/logo/inria3.png" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="https://www.bordeaux-inp.fr/" target="_blank" onclick="return trackOutboundLink('https://www.bordeaux-inp.fr/');"><img src="images/logo/inp2.jpg" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="https://www.sorbonne-universite.fr/" target="_blank" onclick="return trackOutboundLink('https://www.sorbonne-universite.fr/');"><img src="images/logo/su.png" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="https://www.imt-atlantique.fr/" target="_blank" onclick="return trackOutboundLink('https://www.imt-atlantique.fr/');"><img src="images/logo/imt.png" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="https://www.labri.fr/" target="_blank" onclick="return trackOutboundLink('https://www.labri.fr/');"><img src="images/logo/labri.png" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="https://www.cnrs.fr/" target="_blank" onclick="return trackOutboundLink('https://www.cnrs.fr/');"><img src="images/logo/cnrs.svg" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="https://www.lip6.fr/" target="_blank" onclick="return trackOutboundLink('https://www.lip6.fr/');"><img src="images/logo/lip6.png" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="https://labsticc.fr/" target="_blank" onclick="return trackOutboundLink('https://labsticc.fr/fr');"><img src="images/logo/lab-sticc.png" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="https://www.defense.gouv.fr/dga" target="_blank" onclick="return trackOutboundLink('https://www.defense.gouv.fr/dga');"><img src="images/logo/dga.png" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="https://www.defense.gouv.fr/aid" target="_blank" onclick="return trackOutboundLink('https://www.defense.gouv.fr/aid');"><img src="images/logo/aid.png" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="http://www.agence-nationale-recherche.fr/" target="_blank" onclick="return trackOutboundLink('http://www.agence-nationale-recherche.fr/');"><img src="images/logo/anr.jpg" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="http://www-labsticc.univ-ubs.fr/~boutillon/NAND/" target="_blank" onclick="return trackOutboundLink('http://www-labsticc.univ-ubs.fr/~boutillon/NAND/');"><img src="images/logo/nand.png" /></a>
+        </div>
+        <div class="col-6 col-md-3 logo-item">
+          <a href="http://cpu.labex.u-bordeaux.fr/" target="_blank" onclick="return trackOutboundLink('http://cpu.labex.u-bordeaux.fr/');"><img src="images/logo/cpu_labex.jpg" /></a>
+        </div>
+      </div>
+      <h1 class="display-4">Contributors</h1>
       <p><strong>Active contributors:</strong></p>
       <p>
         <ul>
-          <li><a href="http://adrien.cassagne.free.fr" target="_blank" onclick="return trackOutboundLink('http://adrien.cassagne.free.fr');">Adrien Cassagne</a> <strong>(main architect)</strong> - <i>Ass. Prof., LIP6 lab., Sorbonne University, Paris, France</i></li>
+          <li><a href="http://adrien.cassagne.free.fr" target="_blank" onclick="return trackOutboundLink('http://adrien.cassagne.free.fr');">Adrien Cassagne</a> - <i>Ass. Prof., LIP6 lab., Sorbonne University, Paris, France</i></li>
           <li><a href="https://www.mathieuleonardon.com" target="_blank" onclick="return trackOutboundLink('https://www.mathieuleonardon.com');">Mathieu Léonardon</a> - <i>Ass. Prof., IMT Atlantique, Brest, France</i></li>
           <li>Romain Tajan - <i>Ass. Prof., IMS lab., Bordeaux INP, France</i></li>
           <li>Diane Orhan - <i>Ph.D. student, Inria, University of Bordeaux, France</i></li>
           <li>Afaf Alaoui Mrani - <i>Ph.D student, IMS lab., University of Bordeaux, France</i></li>
           <li><a href="https://andlesav.github.io/" target="_blank" onclick="return trackOutboundLink('https://andlesav.github.io/');">Andrea Lesavourey</a> - <i>Post-doc., Inria, Bordeaux, France (Now Ass. Prof., University of Limoges, France)</i></li>
           <li>Alexandre Valade - <i>Ph.D student, IMS lab., University of Bordeaux, Paris, France</i></li>
+          <li>Joachim Rosseel - <i>Postdoc. researcher, Inria, France (now teaching assistant, IMS lab., Bordeaux INP, France)</i></li>
           <li>Yacine Idouar - <i>Ph.D student, LIP6 lab., Sorbonne University, Paris, France</i></li>
+          <li>Murad Abdullah - <i>Research Ass., Hong Kong University of Science and Technology, China</i></li>
+          <li>Mohammed El Houcine Ayoubi - <i>MSc student, IMT Atlantique, Brest, France</i></li>
         </ul>
       </p>
       <p><strong>Development supervisors:</strong></p>
@@ -120,7 +173,7 @@
       <p>
         <ul>
           <li>Olivier Hartmann - <i>Engineer, IMS lab., Bordeaux INP, France (Now engineer, BeTomorrow, Bordeaux, France)</i></li>
-          <li><a href="http://blegal.github.io/" target="_blank" onclick="return trackOutboundLink('http://blegal.github.io/');">Bertrand Le Gal</a> - <i>Ass. Prof., IMS lab., Bordeaux INP, France (Now Ass. Prof., Univ. Rennes, Lannion, France)</i></li>
+          <li><a href="http://blegal.github.io/" target="_blank" onclick="return trackOutboundLink('http://blegal.github.io/');">Bertrand Le Gal</a> - <i>Ass. Prof., Univ. Rennes, Lannion, France</i></li>
           <!--<li>Tarik Benaddi - <i>Ass. Prof., IMT Atlantique, Toulouse, France</i></li>-->
           <!--<li><a href="http://poulliat.perso.enseeiht.fr/" target="_blank" onclick="return trackOutboundLink('http://poulliat.perso.enseeiht.fr/');">Charly Poulliat</a> - <i>Full Prof., INP Toulouse, France</i></li>-->
           <!--<li><a href="http://dcn.icc.spbstu.ru/index.php?id=319&L=2" target="_blank" onclick="return trackOutboundLink('http://dcn.icc.spbstu.ru/index.php?id=319&L=2');">Peter Trifonov</a> - <i>Ass. Prof., Polytechnique Saint-Petersburg, Russia</i></li>-->
@@ -134,7 +187,7 @@
           <li><a href="https://ttonnellier.github.io/" target="_blank" onclick="return trackOutboundLink('https://ttonnellier.github.io/');">Thibaud Tonnellier</a> - <i>Ph.D. student, IMS lab., Bordeaux INP, France (Now engineer, Airbus Defence and Space, Toulouse, France)</i></li>
           <li>Vincent Pignoly - <i>Ph.D. student, IMS lab., Bordeaux INP, France (Now engineer, Thales Alenia Space, Toulouse, France)</i></li>
           <li>Kun He - <i>Engineer, Inria, Bordeaux, France</i></li>
-          <li>Mehdi Naciri - <i>Master student, Inria, Bordeaux, France</i></li>
+          <li>Mehdi Naciri - <i>MSc, Inria, Bordeaux, France</i></li>
         </ul>
       </p>
       <hr>
