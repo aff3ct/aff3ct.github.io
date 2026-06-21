@@ -243,46 +243,6 @@
         -->
       </div>
       <br />
-      <div class="card" id="pystreampu">
-        <h5 class="card-header">pyStreamPU <a href="#pystreampu" class="anchor-link">¶</a>
-          <div style="float: right">
-            <a href="https://github.com/aff3ct/pystreampu/stargazers" target="_blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/aff3ct/pystreampu"></a>&nbsp;
-            <a href="https://github.com/aff3ct/pystreampu/forks" target="_blank"><img alt="GitHub forks" src="https://img.shields.io/github/forks/aff3ct/pystreampu"></a>&nbsp;
-            <a href="https://github.com/aff3ct/pystreampu/commits/develop" target="_blank"><img alt="last_commit" src="https://img.shields.io/github/last-commit/aff3ct/pystreampu.svg?style=flat"></a>
-          </div>
-        </h5>
-        <div class="card-body">
-          <p class="card-text">pyStreamPU provides a <strong>Python interface to the StreamPU runtime</strong>, enabling users to <strong>define and execute multi-threaded streaming systems in Python</strong>. It wraps the StreamPU C++ core while presenting <strong>a Pythonic API for rapid prototyping</strong>.</p>
-          <p class="card-text">Installation supports <strong>building with custom C++ flags for performance tuning</strong>. Typical use includes creating arrays, applying operations in <strong>streaming pipelines</strong> (e.g., standard vector operators like x + y) within Python while leveraging the underlying <strong>C++ multi-threaded runtime</strong>.</p>
-          <a href="https://github.com/aff3ct/pystreampu" target="_blank" class="btn btn-primary" style="margin-top:5px"><i class="fab fa-github fa-lg" aria-hidden="true">&nbsp;</i> Source code on GitHub &raquo;</a>
-        </div>
-        <!--
-        <div class="card-footer text-muted">
-          Contact: Romain Tajan
-        </div>
-        -->
-      </div>
-      <br />
-      <div class="card" id="amp-scheduling">
-        <h5 class="card-header">AMP-scheduling <a href="#amp-scheduling" class="anchor-link">¶</a>
-          <div style="float: right">
-            <a href="https://github.com/aff3ct/amp-scheduling/stargazers" target="_blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/aff3ct/amp-scheduling"></a>&nbsp;
-            <a href="https://github.com/aff3ct/amp-scheduling/forks" target="_blank"><img alt="GitHub forks" src="https://img.shields.io/github/forks/aff3ct/amp-scheduling"></a>&nbsp;
-            <a href="https://github.com/aff3ct/amp-scheduling/commits/main" target="_blank"><img alt="last_commit" src="https://img.shields.io/github/last-commit/aff3ct/amp-scheduling.svg?style=flat"></a>
-          </div>
-        </h5>
-        <div class="card-body">
-          <p class="card-text">AMP-scheduling implements <strong>a set of scheduling strategies for partially-replicable task chains running on Asymmetric MultiProcessing (AMP) architectures</strong> (or simply heterogeneous architectures). It includes algorithms named <strong>OTAC</strong>, <strong>FERTAC</strong>, <strong>2CATAC</strong> and <strong>HeRAD</strong> designed to allocate and replicate tasks under varying resource constraints.</p>
-          <p class="card-text">The repository provides both <strong>simulation scripts and performance profiling tools</strong> to evaluate <strong>scheduler behaviour</strong>. A notable example use-case is <strong>generating and analysing schedules for the DVB‑S2 SDR receiver</strong> on four different heterogeneous computing platforms.</p>
-          <a href="https://github.com/aff3ct/amp-scheduling" target="_blank" class="btn btn-primary" style="margin-top:5px"><i class="fab fa-github fa-lg" aria-hidden="true">&nbsp;</i> Source code on GitHub &raquo;</a>
-        </div>
-        <!--
-        <div class="card-footer text-muted">
-          Contact: Laércio Lima Pilla
-        </div>
-        -->
-      </div>
-      <br />
       <div class="card" id="pqc">
         <h5 class="card-header">PQC <a href="#pqc" class="anchor-link">¶</a>
           <div style="float: right">
@@ -299,6 +259,48 @@
         <!--
         <div class="card-footer text-muted">
           Contacts: Andrea Lesavourey, Olivier Aumage
+        </div>
+        -->
+      </div>
+      <br />
+      <div class="card" id="hdirac">
+        <h5 class="card-header">HDirac <a href="#hdirac" class="anchor-link">¶</a>
+          <div style="float: right">
+            <a href="https://github.com/aff3ct/hdirac/stargazers" target="_blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/aff3ct/hdirac"></a>&nbsp;
+            <a href="https://github.com/aff3ct/hdirac/forks" target="_blank"><img alt="GitHub forks" src="https://img.shields.io/github/forks/aff3ct/hdirac"></a>&nbsp;
+            <a href="https://github.com/aff3ct/hdirac/commits/develop" target="_blank"><img alt="last_commit" src="https://img.shields.io/github/last-commit/aff3ct/hdirac.svg?style=flat"></a>
+          </div>
+        </h5>
+        <div class="card-body">
+          <p class="card-text">HDirac is a <strong>simulator that focuses on multidimensional information reconciliation for Continuous-Variable Quantum Key Distribution (CV-QKD)</strong> across arbitrary high dimensions. It emulates the CV-QKD virtual channel using various modelling approaches. Acting as a black box, the tool <strong>allows users to experiment with different virtual channel methods, dimensional settings, and coding schemes</strong>, while comparing the results with those of a Binary Input Additive White Gaussian Noise Channel (BIAWGNC).</p>
+          <p class="card-text">As well as being used independently, <strong>the project can also serve as a library</strong>. Users can design custom channels, modify components, or integrate modules, such as channel models, decoders and more, either developed within this project or provided by AFF3CT.</p>
+          <a href="https://github.com/aff3ct/hdirac" target="_blank" class="btn btn-primary" style="margin-top:5px"><i class="fab fa-github fa-lg" aria-hidden="true">&nbsp;</i> Source code on GitHub &raquo;</a>
+          <a href="https://aff3ct.github.io/HDirac/" class="btn btn-info" role="button" target="_blank" style="margin-top:5px"><i class="fas fa-book" aria-hidden="true">&nbsp;</i>Documentation &raquo;</a>
+          <a href="https://arxiv.org/pdf/2606.02323" target="_blank" class="btn btn-info" style="margin-top:5px"><i class="fas fa-file-pdf" aria-hidden="true">&nbsp;</i> Reference paper &raquo;</a>
+        </div>
+        <!--
+        <div class="card-footer text-muted">
+          Contacts: Lucien Martial
+        </div>
+        -->
+      </div>
+      <br />
+      <div class="card" id="pystreampu">
+        <h5 class="card-header">pyStreamPU <a href="#pystreampu" class="anchor-link">¶</a>
+          <div style="float: right">
+            <a href="https://github.com/aff3ct/pystreampu/stargazers" target="_blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/aff3ct/pystreampu"></a>&nbsp;
+            <a href="https://github.com/aff3ct/pystreampu/forks" target="_blank"><img alt="GitHub forks" src="https://img.shields.io/github/forks/aff3ct/pystreampu"></a>&nbsp;
+            <a href="https://github.com/aff3ct/pystreampu/commits/develop" target="_blank"><img alt="last_commit" src="https://img.shields.io/github/last-commit/aff3ct/pystreampu.svg?style=flat"></a>
+          </div>
+        </h5>
+        <div class="card-body">
+          <p class="card-text">pyStreamPU provides a <strong>Python interface to the StreamPU runtime</strong>, enabling users to <strong>define and execute multi-threaded streaming systems in Python</strong>. It wraps the StreamPU C++ core while presenting <strong>a Pythonic API for rapid prototyping</strong>.</p>
+          <p class="card-text">Installation supports <strong>building with custom C++ flags for performance tuning</strong>. Typical use includes creating arrays, applying operations in <strong>streaming pipelines</strong> (e.g., standard vector operators like x + y) within Python while leveraging the underlying <strong>C++ multi-threaded runtime</strong>.</p>
+          <a href="https://github.com/aff3ct/pystreampu" target="_blank" class="btn btn-primary" style="margin-top:5px"><i class="fab fa-github fa-lg" aria-hidden="true">&nbsp;</i> Source code on GitHub &raquo;</a>
+        </div>
+        <!--
+        <div class="card-footer text-muted">
+          Contact: Romain Tajan
         </div>
         -->
       </div>
@@ -323,6 +325,26 @@
         <!--
         <div class="card-footer text-muted">
           Contacts: Mathieu Léonardon, Mohammed El Houcine Ayoubi
+        </div>
+        -->
+      </div>
+      <br />
+      <div class="card" id="amp-scheduling">
+        <h5 class="card-header">AMP-scheduling <a href="#amp-scheduling" class="anchor-link">¶</a>
+          <div style="float: right">
+            <a href="https://github.com/aff3ct/amp-scheduling/stargazers" target="_blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/aff3ct/amp-scheduling"></a>&nbsp;
+            <a href="https://github.com/aff3ct/amp-scheduling/forks" target="_blank"><img alt="GitHub forks" src="https://img.shields.io/github/forks/aff3ct/amp-scheduling"></a>&nbsp;
+            <a href="https://github.com/aff3ct/amp-scheduling/commits/main" target="_blank"><img alt="last_commit" src="https://img.shields.io/github/last-commit/aff3ct/amp-scheduling.svg?style=flat"></a>
+          </div>
+        </h5>
+        <div class="card-body">
+          <p class="card-text">AMP-scheduling implements <strong>a set of scheduling strategies for partially-replicable task chains running on Asymmetric MultiProcessing (AMP) architectures</strong> (or simply heterogeneous architectures). It includes algorithms named <strong>OTAC</strong>, <strong>FERTAC</strong>, <strong>2CATAC</strong> and <strong>HeRAD</strong> designed to allocate and replicate tasks under varying resource constraints.</p>
+          <p class="card-text">The repository provides both <strong>simulation scripts and performance profiling tools</strong> to evaluate <strong>scheduler behaviour</strong>. A notable example use-case is <strong>generating and analysing schedules for the DVB‑S2 SDR receiver</strong> on four different heterogeneous computing platforms.</p>
+          <a href="https://github.com/aff3ct/amp-scheduling" target="_blank" class="btn btn-primary" style="margin-top:5px"><i class="fab fa-github fa-lg" aria-hidden="true">&nbsp;</i> Source code on GitHub &raquo;</a>
+        </div>
+        <!--
+        <div class="card-footer text-muted">
+          Contact: Laércio Lima Pilla
         </div>
         -->
       </div>
