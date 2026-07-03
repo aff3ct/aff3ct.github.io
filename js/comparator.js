@@ -1,4 +1,5 @@
-const GITLAB="https://gitlab.com/api/v4/projects/10354484/";
+// const GITLAB="https://gitlab.com/api/v4/projects/10354484/";
+const GITHUB="https://raw.githubusercontent.com/aff3ct/error_rate_references/refs/heads/";
 const BRANCH="develop";
 
 // connexion to the CouchDB server (this code do not connect to the CouchDB until the first usage)
@@ -227,7 +228,8 @@ function loadDatabase() {
 		},
 		isLocal:false
 	});
-	let AFF3CTdatabaseURL = GITLAB+"jobs/artifacts/"+BRANCH+"/raw/database.json?job=deploy-database-json";
+	// let AFF3CTdatabaseURL = GITLAB+"jobs/artifacts/"+BRANCH+"/raw/database.json?job=deploy-database-json";
+    let AFF3CTdatabaseURL = GITHUB+"gh-pages/develop/database.json"
 	$.ajax(AFF3CTdatabaseURL,
 		{error:function(xhr,status,error) {
 			logger("**Error loading \"" + AFF3CTdatabaseURL + "\"\n"+status+" "+error);
