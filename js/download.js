@@ -61,13 +61,18 @@ function addLink(branch,hash,path,build)
   var arch="";
   var name="";
   var simd="";
-  if (~build.indexOf("x86")) { name="x86"; arch="x86"; }
-  else if (~build.indexOf("x64")) { name="x64"; arch="x64"; }
-  else { name="x64"; arch="x64"; }
-  name+=" ";
-  if (~build.indexOf("avx2")) { name+="AVX2"; simd="avx2"; }
-  else if (~build.indexOf("sse4_2")) { name+="SSE4.2"; simd="sse4_2"; }
-  else { name="NONAME"; simd="unknown"; }
+  if (~build.indexOf("arm64") || ~build.indexOf("aarch64")) {
+    // Apple Silicon / ARM: NEON is implied, no x86 SIMD suffix.
+    name="ARM64"; arch="arm64"; simd="neon";
+  } else {
+    if (~build.indexOf("x86")) { name="x86"; arch="x86"; }
+    else if (~build.indexOf("x64")) { name="x64"; arch="x64"; }
+    else { name="x64"; arch="x64"; }
+    name+=" ";
+    if (~build.indexOf("avx2")) { name+="AVX2"; simd="avx2"; }
+    else if (~build.indexOf("sse4_2")) { name+="SSE4.2"; simd="sse4_2"; }
+    else { name="NONAME"; simd="unknown"; }
+  }
 
   var idLink="build_"+sys+"_"+branch+"_"+hash+"_"+arch+"_"+simd;
   var idLinks="builds_"+sys+"_"+branch+"_"+hash;
