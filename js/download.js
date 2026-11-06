@@ -69,7 +69,8 @@ function addLink(branch,hash,path,build)
     else if (~build.indexOf("x64")) { name="x64"; arch="x64"; }
     else { name="x64"; arch="x64"; }
     name+=" ";
-    if (~build.indexOf("avx2")) { name+="AVX2"; simd="avx2"; }
+    if (~build.indexOf("avx512")) { name+="AVX-512"; simd="avx512"; }
+    else if (~build.indexOf("avx2")) { name+="AVX2 <span class=\"badge badge-success\">recommended</span>"; simd="avx2"; }
     else if (~build.indexOf("sse4_2")) { name+="SSE4.2"; simd="sse4_2"; }
     else { name="NONAME"; simd="unknown"; }
   }

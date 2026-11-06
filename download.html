@@ -95,9 +95,18 @@
         The number of dependencies is reduced to be compatible with a large range of systems.
         Therefore, AFF3CT should run seamlessly on yours (<b>Windows</b>, <b>macOS</b> and <b>Linux</b> are supported).
         The proposed builds are compatible with <b>x86-64 architectures</b> (<b>Intel</b> or <b>AMD</b> CPUs).
-        Either <a target="_blank" href="https://en.wikipedia.org/wiki/SSE4" onclick="return trackOutboundLink('https://en.wikipedia.org/wiki/SSE4');">SSE4.2</a> or <a target="_blank" href="https://en.wikipedia.org/wiki/AVX2" onclick="return trackOutboundLink('https://en.wikipedia.org/wiki/AVX2');">AVX2</a> instruction sets can be selected.
-        The first one (SSE4.2) is for old CPUs starting approximately from 2007 whereas the second one (AVX2) takes advantage of modern CPUs (2014) but may not run on older computers.
-        If you have any doubts, SSE4.2 is the safest version.
+        The builds are available for several instruction sets, from the most compatible to the fastest:
+      </p>
+      <ul class="lead">
+        <li><b>SSE4.2</b>: runs on any x86-64 CPU from 2008 or newer;</li>
+        <li><b>AVX2</b> (<b>recommended</b>): runs on almost any CPU from 2013 or newer, and is much faster than SSE4.2;</li>
+        <li><b>AVX-512</b> (Linux only): faster on some codes, but only runs on recent Intel Xeon / Core-X and AMD Zen 4 or newer CPUs.</li>
+      </ul>
+      <p class="lead">
+        Not sure? On Linux, this command prints the best build for your CPU:
+        <code>grep -q avx512bw /proc/cpuinfo &amp;&amp; echo AVX-512 || (grep -q avx2 /proc/cpuinfo &amp;&amp; echo AVX2 || echo SSE4.2)</code>.
+        On macOS, choose ARM64 if your Mac has an Apple chip (M1, M2...), x64 otherwise.
+        A build that is too recent for your CPU stops immediately with an "illegal instruction" error: just take the previous one.
       </p>
       <h2>Released versions</h2>
       <div class="alert alert-info" role="alert">
